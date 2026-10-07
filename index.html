@@ -124,7 +124,39 @@
             cursor: pointer;
             text-align: center;
         }
+.options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+}
 
+.option {
+    padding: 18px;
+    background: #1b1b1b;
+    color: white;
+    border: 1px solid #333;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.option strong {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.option span {
+    color: #aaa;
+}
+
+@media (max-width: 500px) {
+    .options {
+        grid-template-columns: 1fr;
+    }
+}
         .highlights {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
