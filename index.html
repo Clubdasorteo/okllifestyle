@@ -45,7 +45,6 @@
             letter-spacing: 1px;
             margin-bottom: 15px;
             color: #d4af37;
-            text-align: center;
         }
 
         .hero p {
@@ -154,6 +153,37 @@
             text-decoration: none;
         }
 
+        .button:hover {
+            opacity: 0.9;
+        }
+
+        .how {
+            background: #111111;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            border: 1px solid #292929;
+        }
+
+        .how h2 {
+            font-size: 23px;
+            font-weight: 800;
+            color: #d4af37;
+            margin-bottom: 15px;
+        }
+
+        .how p {
+            color: #f2f0e8;
+            margin: 15px 0;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .how p strong {
+            color: #d4af37;
+            font-weight: 800;
+        }
+
         .options {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -170,6 +200,16 @@
             font-size: 16px;
             cursor: pointer;
             text-align: center;
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            border-color: #d4af37;
+        }
+
+        .option.selected {
+            border: 2px solid #d4af37;
+            background: #181818;
         }
 
         .option strong {
@@ -184,6 +224,47 @@
             color: #d4af37;
             font-size: 16px;
             font-weight: 700;
+        }
+
+        .selected-info {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #080808;
+            border: 1px solid #292929;
+            text-align: center;
+            display: none;
+        }
+
+        .selected-info strong {
+            color: #d4af37;
+        }
+
+        .form-section {
+            display: none;
+            margin-top: 25px;
+        }
+
+        .form-section h3 {
+            color: #d4af37;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .form-section input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 12px;
+            background: #050505;
+            border: 1px solid #3a3a3a;
+            border-radius: 10px;
+            color: #f2f0e8;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .form-section input:focus {
+            border-color: #d4af37;
         }
 
         .highlights {
@@ -217,31 +298,29 @@
             font-weight: 600;
         }
 
-        .how {
+        /* Estrutura preparada para os bilhetes premiados */
+        .winning-tickets {
+            display: none;
+        }
+
+        .winning-ticket {
             background: #111111;
-            padding: 25px;
-            border-radius: 16px;
-            margin-bottom: 40px;
             border: 1px solid #292929;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
         }
 
-        .how h2 {
-            font-size: 23px;
-            font-weight: 800;
+        .winning-ticket .number {
             color: #d4af37;
-            margin-bottom: 15px;
+            font-size: 22px;
+            font-weight: 800;
         }
 
-        .how p {
+        .winning-ticket .prize-value {
             color: #f2f0e8;
-            margin: 15px 0;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        .how p strong {
-            color: #d4af37;
-            font-weight: 800;
+            font-size: 14px;
+            margin-top: 5px;
         }
 
         footer {
@@ -359,7 +438,7 @@
 
 </main>
 
-<section id="participar" class="how">
+<section id="participar" class="how container">
 
     <h2>Participar da Electric Collection</h2>
 
@@ -367,49 +446,74 @@
 
     <div class="options">
 
-        <button class="option">
+        <button class="option" onclick="selecionar(10, 17.90, this)">
             <strong>10 números</strong>
             <span>R$ 17,90</span>
         </button>
 
-        <button class="option">
+        <button class="option" onclick="selecionar(15, 26.85, this)">
             <strong>15 números</strong>
             <span>R$ 26,85</span>
         </button>
 
-        <button class="option">
+        <button class="option" onclick="selecionar(50, 89.50, this)">
             <strong>50 números</strong>
             <span>R$ 89,50</span>
         </button>
 
-        <button class="option">
+        <button class="option" onclick="selecionar(100, 179.00, this)">
             <strong>100 números</strong>
             <span>R$ 179,00</span>
         </button>
 
-        <button class="option">
+        <button class="option" onclick="selecionar(200, 358.00, this)">
             <strong>200 números</strong>
             <span>R$ 358,00</span>
         </button>
 
-        <button class="option">
+        <button class="option" onclick="selecionar(500, 895.00, this)">
             <strong>500 números</strong>
             <span>R$ 895,00</span>
         </button>
 
     </div>
 
-    <p>
-        <strong>Valor por número: R$ 1,79</strong>
-    </p>
+    <div class="selected-info" id="selectedInfo">
 
-    <button class="button">
-        CONTINUAR
-    </button>
+        Você selecionou
+        <strong id="selectedNumbers"></strong>
+        por
+        <strong id="selectedPrice"></strong>.
+
+    </div>
+
+    <div class="form-section" id="formSection">
+
+        <h3>Seus dados</h3>
+
+        <input
+            type="text"
+            id="nome"
+            placeholder="Nome completo"
+        >
+
+        <input
+            type="tel"
+            id="telefone"
+            placeholder="WhatsApp"
+        >
+
+        <button class="button" onclick="continuar()">
+            CONTINUAR
+        </button>
+
+    </div>
 
 </section>
 
-<h2 class="section-title container">🏆 Destaques</h2>
+<h2 class="section-title container">
+    🏆 Destaques
+</h2>
 
 <div class="highlights container">
 
@@ -434,10 +538,31 @@
     <div class="highlight">
         🎫
         <strong>Bilhetes Premiados</strong>
-        <small>Prêmios extras</small>
+        <small>6 a 8 prêmios extras</small>
     </div>
 
 </div>
+
+<!--
+    ÁREA RESERVADA PARA OS BILHETES PREMIADOS
+
+    Futuramente os bilhetes poderão ser cadastrados
+    pelo sistema/painel administrativo.
+
+    Não coloque números fictícios aqui.
+-->
+
+<section class="container winning-tickets" id="winningTickets">
+
+    <h2 class="section-title">
+        🎫 Bilhetes Premiados
+    </h2>
+
+    <div id="winningTicketsList">
+        <!-- Os bilhetes serão carregados aqui futuramente -->
+    </div>
+
+</section>
 
 <section class="how container">
 
@@ -464,6 +589,71 @@
 <footer>
     ©️ 2026 OKL Lifestyle
 </footer>
+
+<script>
+
+let quantidadeSelecionada = 0;
+let valorSelecionado = 0;
+
+function selecionar(quantidade, valor, elemento) {
+
+    quantidadeSelecionada = quantidade;
+    valorSelecionado = valor;
+
+    document.querySelectorAll(".option").forEach(function(opcao) {
+        opcao.classList.remove("selected");
+    });
+
+    elemento.classList.add("selected");
+
+    document.getElementById("selectedNumbers").textContent =
+        quantidade + " números";
+
+    document.getElementById("selectedPrice").textContent =
+        "R$ " + valor.toFixed(2).replace(".", ",");
+
+    document.getElementById("selectedInfo").style.display = "block";
+
+    document.getElementById("formSection").style.display = "block";
+
+    document.getElementById("formSection").scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+}
+
+function continuar() {
+
+    const nome = document.getElementById("nome").value.trim();
+    const telefone = document.getElementById("telefone").value.trim();
+
+    if (quantidadeSelecionada === 0) {
+        alert("Escolha uma participação primeiro.");
+        return;
+    }
+
+    if (nome === "") {
+        alert("Digite seu nome completo.");
+        document.getElementById("nome").focus();
+        return;
+    }
+
+    if (telefone === "") {
+        alert("Digite seu WhatsApp.");
+        document.getElementById("telefone").focus();
+        return;
+    }
+
+    alert(
+        "Participação selecionada!\n\n" +
+        "Quantidade: " + quantidadeSelecionada + " números\n" +
+        "Valor: R$ " +
+        valorSelecionado.toFixed(2).replace(".", ",") +
+        "\n\nPróxima etapa: pagamento."
+    );
+}
+
+</script>
 
 </body>
 </html>
