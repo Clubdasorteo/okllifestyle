@@ -16,7 +16,8 @@
         body {
             font-family: Arial, sans-serif;
             background: #050505;
-color: #f2f0e8;
+            color: #f2f0e8;
+            line-height: 1.5;
         }
 
         header {
@@ -26,11 +27,11 @@ color: #f2f0e8;
         }
 
         .logo {
-    font-size: 28px;
-    font-weight: bold;
-    letter-spacing: 3px;
-    color: #d4af37;
-}
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: #d4af37;
+            text-align: center;
         }
 
         .hero {
@@ -40,13 +41,17 @@ color: #f2f0e8;
 
         .hero h1 {
             font-size: 38px;
+            font-weight: 800;
+            letter-spacing: 1px;
             margin-bottom: 15px;
             color: #d4af37;
+            text-align: center;
         }
 
         .hero p {
-            color: #aaa;
+            color: #f2f0e8;
             font-size: 17px;
+            font-weight: 600;
         }
 
         .container {
@@ -56,12 +61,14 @@ color: #f2f0e8;
         }
 
         .section-title {
-            margin: 25px 0 15px;
+            margin: 30px 0 15px;
             font-size: 24px;
+            font-weight: 800;
+            color: #d4af37;
         }
 
         .card {
-            background: #151515;
+            background: #111111;
             border: 1px solid #292929;
             border-radius: 16px;
             overflow: hidden;
@@ -69,20 +76,20 @@ color: #f2f0e8;
         }
 
         .prize {
-    background: linear-gradient(135deg, #222, #111);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 15px;
-}
+            background: linear-gradient(135deg, #222, #111);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
 
-.prize img {
-    width: 100%;
-    height: auto;
-    max-height: 400px;
-    object-fit: contain;
-    display: block;
-}
+        .prize img {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+            display: block;
+        }
 
         .card-content {
             padding: 22px;
@@ -90,6 +97,22 @@ color: #f2f0e8;
 
         .card h2 {
             margin-bottom: 10px;
+            font-size: 25px;
+            font-weight: 800;
+            color: #f2f0e8;
+        }
+
+        .card-content p {
+            color: #f2f0e8;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .card-content p strong {
+            color: #d4af37;
+            font-size: 19px;
+            font-weight: 800;
         }
 
         .progress {
@@ -97,20 +120,22 @@ color: #f2f0e8;
             background: #292929;
             border-radius: 20px;
             overflow: hidden;
-            margin: 15px 0;
+            margin: 18px 0;
         }
 
         .progress-bar {
-            width: 35%;
+            width: 0%;
             height: 100%;
-            background: white;
+            background: #d4af37;
         }
 
         .info {
             display: flex;
             justify-content: space-between;
-            color: #aaa;
+            color: #f2f0e8;
             font-size: 14px;
+            font-weight: 600;
+            gap: 15px;
         }
 
         .button {
@@ -120,55 +145,56 @@ color: #f2f0e8;
             padding: 16px;
             border: none;
             border-radius: 10px;
-            background: white;
-            color: black;
+            background: #d4af37;
+            color: #050505;
             font-size: 17px;
-            font-weight: bold;
+            font-weight: 800;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .option {
+            padding: 18px;
+            background: #111111;
+            color: #f2f0e8;
+            border: 1px solid #3a3a3a;
+            border-radius: 12px;
+            font-size: 16px;
             cursor: pointer;
             text-align: center;
         }
-.options {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-top: 20px;
-}
 
-.option {
-    padding: 18px;
-    background: #1b1b1b;
-    color: white;
-    border: 1px solid #333;
-    border-radius: 12px;
-    font-size: 16px;
-    cursor: pointer;
-    text-align: center;
-}
+        .option strong {
+            display: block;
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: #f2f0e8;
+        }
 
-.option strong {
-    display: block;
-    font-size: 18px;
-    margin-bottom: 6px;
-}
+        .option span {
+            color: #d4af37;
+            font-size: 16px;
+            font-weight: 700;
+        }
 
-.option span {
-    color: #aaa;
-}
-
-@media (max-width: 500px) {
-    .options {
-        grid-template-columns: 1fr;
-    }
-}
         .highlights {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 15px;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
         .highlight {
-            background: #151515;
+            background: #111111;
             border: 1px solid #292929;
             padding: 25px 15px;
             border-radius: 14px;
@@ -178,34 +204,107 @@ color: #f2f0e8;
         .highlight strong {
             display: block;
             margin-top: 10px;
+            color: #d4af37;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .highlight small {
+            display: block;
+            margin-top: 5px;
+            color: #f2f0e8;
+            font-size: 13px;
+            font-weight: 600;
         }
 
         .how {
-            background: #151515;
+            background: #111111;
             padding: 25px;
             border-radius: 16px;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
+            border: 1px solid #292929;
+        }
+
+        .how h2 {
+            font-size: 23px;
+            font-weight: 800;
+            color: #d4af37;
+            margin-bottom: 15px;
         }
 
         .how p {
-            color: #aaa;
+            color: #f2f0e8;
             margin: 15px 0;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .how p strong {
+            color: #d4af37;
+            font-weight: 800;
         }
 
         footer {
             text-align: center;
             padding: 30px;
-            color: #666;
+            color: #777;
             border-top: 1px solid #222;
+            font-size: 14px;
+            font-weight: 600;
         }
 
         @media (max-width: 700px) {
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .hero {
+                padding: 45px 18px;
+            }
+
             .hero h1 {
                 font-size: 30px;
+                line-height: 1.2;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 22px;
             }
 
             .highlights {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .info {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .options {
+                grid-template-columns: 1fr;
+            }
+
+            .card-content {
+                padding: 20px;
+            }
+
+            .card h2 {
+                font-size: 23px;
+            }
+
+            .option {
+                padding: 17px;
+            }
+
+            .highlight {
+                padding: 22px 10px;
             }
         }
     </style>
@@ -237,7 +336,10 @@ color: #f2f0e8;
             <h2>ELECTRIC COLLECTION</h2>
 
             <p>Bike elétrica + prêmios Oakley</p>
-            <p><strong>A partir de R$ 1,79</strong></p>
+
+            <p>
+                <strong>A partir de R$ 1,79</strong>
+            </p>
 
             <div class="progress">
                 <div class="progress-bar"></div>
@@ -249,79 +351,67 @@ color: #f2f0e8;
             </div>
 
             <a href="#participar" class="button">
-    PARTICIPAR
-</a>
+                PARTICIPAR
+            </a>
 
         </div>
     </div>
 
-    
-
-        
-
-    <h2 class="section-title">📋 Como funciona</h2>
-
-    <div class="how">
-
-        <p><strong>01.</strong> Escolha sua participação.</p>
-
-        <p><strong>02.</strong> Realize o pagamento.</p>
-
-        <p><strong>03.</strong> Receba seus números.</p>
-
-        <p><strong>04.</strong> Acompanhe o resultado.</p>
-
-    </div>
-
 </main>
+
 <section id="participar" class="how">
+
     <h2>Participar da Electric Collection</h2>
 
     <p>Escolha quantas participações deseja.</p>
 
     <div class="options">
 
-    <button class="option">
-        <strong>10 números</strong>
-        <span>R$ 17,90</span>
-    </button>
+        <button class="option">
+            <strong>10 números</strong>
+            <span>R$ 17,90</span>
+        </button>
 
-    <button class="option">
-        <strong>15 números</strong>
-        <span>R$ 26,85</span>
-    </button>
+        <button class="option">
+            <strong>15 números</strong>
+            <span>R$ 26,85</span>
+        </button>
 
-    <button class="option">
-        <strong>50 números</strong>
-        <span>R$ 89,50</span>
-    </button>
+        <button class="option">
+            <strong>50 números</strong>
+            <span>R$ 89,50</span>
+        </button>
 
-    <button class="option">
-        <strong>100 números</strong>
-        <span>R$ 179,00</span>
-    </button>
+        <button class="option">
+            <strong>100 números</strong>
+            <span>R$ 179,00</span>
+        </button>
 
-    <button class="option">
-        <strong>200 números</strong>
-        <span>R$ 358,00</span>
-    </button>
+        <button class="option">
+            <strong>200 números</strong>
+            <span>R$ 358,00</span>
+        </button>
 
-    <button class="option">
-        <strong>500 números</strong>
-        <span>R$ 895,00</span>
-    </button>
+        <button class="option">
+            <strong>500 números</strong>
+            <span>R$ 895,00</span>
+        </button>
 
-</div>
+    </div>
 
-    <p><strong>Valor por número: R$ 1,79</strong></p>
+    <p>
+        <strong>Valor por número: R$ 1,79</strong>
+    </p>
 
     <button class="button">
         CONTINUAR
     </button>
-</section>
-   <h2 class="section-title">🏆 Destaques</h2>
 
-<div class="highlights">
+</section>
+
+<h2 class="section-title container">🏆 Destaques</h2>
+
+<div class="highlights container">
 
     <div class="highlight">
         🥇
@@ -348,13 +438,31 @@ color: #f2f0e8;
     </div>
 
 </div>
-    
 
-    <div class="highlights">
+<section class="how container">
 
-        
+    <h2>📋 Como funciona</h2>
+
+    <p>
+        <strong>01.</strong> Escolha sua participação.
+    </p>
+
+    <p>
+        <strong>02.</strong> Realize o pagamento.
+    </p>
+
+    <p>
+        <strong>03.</strong> Receba seus números.
+    </p>
+
+    <p>
+        <strong>04.</strong> Acompanhe o resultado.
+    </p>
+
+</section>
+
 <footer>
-    © 2026 OKL Lifestyle
+    ©️ 2026 OKL Lifestyle
 </footer>
 
 </body>
