@@ -3,28 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Painel Administrativo - Club da Sorte</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 30px;
-            background: #f5f5f5;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: #fff;
         }
 
         .container {
-            max-width: 900px;
-            margin: auto;
-            background: white;
-            padding: 30px;
+            max-width: 600px;
+            margin: 40px auto;
+            background: #1c1c1c;
+            padding: 25px;
             border-radius: 12px;
         }
 
         h1 {
-            margin-top: 0;
+            text-align: center;
+            margin-bottom: 25px;
         }
 
         .form-group {
@@ -40,10 +47,12 @@
         input,
         textarea {
             width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
+            padding: 12px;
+            border: 1px solid #444;
             border-radius: 6px;
+            background: #292929;
+            color: #fff;
+            font-size: 16px;
         }
 
         textarea {
@@ -51,32 +60,32 @@
             resize: vertical;
         }
 
-        button {
-            padding: 12px 20px;
-            border: 0;
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
             border-radius: 6px;
-            cursor: pointer;
+            background: #d4af37;
+            color: #000;
+            font-size: 16px;
             font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
         }
 
-        .btn {
-            background: #111;
-            color: white;
+        .btn:hover {
+            opacity: 0.9;
         }
 
         .btn-sair {
-            background: #ddd;
-            color: #111;
-            margin-bottom: 20px;
-        }
-
-        #login,
-        #painel {
-            max-width: 900px;
-            margin: auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background: #444;
+            color: #fff;
+            cursor: pointer;
+            margin-bottom: 25px;
         }
 
         #painel {
@@ -86,6 +95,7 @@
         #mensagem,
         #loginMensagem {
             margin-top: 15px;
+            text-align: center;
             font-weight: bold;
         }
     </style>
@@ -93,242 +103,342 @@
 
 <body>
 
-<!-- LOGIN -->
+    <!-- LOGIN -->
+    <div class="container" id="login">
 
-<div id="login">
-
-    <h1>Acesso administrativo</h1>
-
-    <div class="form-group">
-        <label>E-mail</label>
-        <input type="email" id="email" required>
-    </div>
-
-    <div class="form-group">
-        <label>Senha</label>
-        <input type="password" id="senha" required>
-    </div>
-
-    <button class="btn" id="btnLogin">
-        Entrar
-    </button>
-
-    <div id="loginMensagem"></div>
-
-</div>
-
-
-<!-- PAINEL -->
-
-<div id="painel">
-
-    <h1>Painel Administrativo</h1>
-
-    <button class="btn-sair" id="btnSair">
-        Sair
-    </button>
-
-    <p>Criar nova ação</p>
-
-    <form id="formAcao">
+        <h1>Acesso administrativo</h1>
 
         <div class="form-group">
-            <label>Nome da ação</label>
-            <input type="text" id="nome" required>
+            <label for="email">E-mail</label>
+            <input type="email" id="email" required>
         </div>
 
         <div class="form-group">
-            <label>Prêmio</label>
-            <input type="text" id="premio" required>
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" required>
         </div>
 
-        <div class="form-group">
-            <label>Descrição do prêmio</label>
-            <textarea id="premio_descricao"></textarea>
-        </div>
-
-        <div class="form-group">
-            <label>Descrição da ação</label>
-            <textarea id="descricao"></textarea>
-        </div>
-
-        <div class="form-group">
-            <label>URL da foto do prêmio</label>
-            <input type="text" id="foto_url">
-        </div>
-
-        <div class="form-group">
-            <label>Valor de cada número</label>
-            <input type="number" id="valor_numero" step="0.01" required>
-        </div>
-
-        <div class="form-group">
-            <label>Total de números</label>
-            <input type="number" id="total_numeros" required>
-        </div>
-
-        <div class="form-group">
-            <label>Quantidade</label>
-            <input type="number" id="quantidade" required>
-        </div>
-
-        <div class="form-group">
-            <label>Data e hora do sorteio</label>
-            <input type="datetime-local" id="data_sorteio">
-        </div>
-
-        <div class="form-group">
-            <label>Link de pagamento</label>
-            <input type="text" id="link_pagamento">
-        </div>
-
-        <div class="form-group">
-            <label>Observações</label>
-            <textarea id="observacoes"></textarea>
-        </div>
-
-        <button type="submit" class="btn">
-            Criar ação
+        <button type="button" class="btn" id="btnLogin">
+            Entrar
         </button>
 
-    </form>
+        <div id="loginMensagem"></div>
 
-    <div id="mensagem"></div>
-
-</div>
+    </div>
 
 
-<script>
+    <!-- PAINEL -->
+    <div class="container" id="painel">
 
-const SUPABASE_URL =
-    "https://vlirpvuramslfiftshio.supabase.co";
+        <h1>Painel Administrativo</h1>
 
-const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
+        <button type="button" class="btn-sair" id="btnSair">
+            Sair
+        </button>
 
-const supabase =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-    );
+        <p><strong>Criar nova ação</strong></p>
+
+        <form id="formAcao">
+
+            <div class="form-group">
+                <label for="nome">Nome da ação</label>
+                <input type="text" id="nome" required>
+            </div>
+
+            <div class="form-group">
+                <label for="premio">Prêmio</label>
+                <input type="text" id="premio" required>
+            </div>
+
+            <div class="form-group">
+                <label for="premio_descricao">
+                    Descrição do prêmio
+                </label>
+                <textarea id="premio_descricao"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="descricao">
+                    Descrição da ação
+                </label>
+                <textarea id="descricao"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="foto_url">
+                    URL da foto do prêmio
+                </label>
+                <input type="text" id="foto_url">
+            </div>
+
+            <div class="form-group">
+                <label for="valor_numero">
+                    Valor de cada número
+                </label>
+                <input
+                    type="number"
+                    id="valor_numero"
+                    step="0.01"
+                    min="0"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="total_numeros">
+                    Total de números
+                </label>
+                <input
+                    type="number"
+                    id="total_numeros"
+                    min="1"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="quantidade">
+                    Quantidade
+                </label>
+                <input
+                    type="number"
+                    id="quantidade"
+                    min="1"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="data_sorteio">
+                    Data e hora do sorteio
+                </label>
+                <input
+                    type="datetime-local"
+                    id="data_sorteio"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="link_pagamento">
+                    Link de pagamento
+                </label>
+                <input
+                    type="text"
+                    id="link_pagamento"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="observacoes">
+                    Observações
+                </label>
+                <textarea id="observacoes"></textarea>
+            </div>
+
+            <button type="submit" class="btn">
+                Criar ação
+            </button>
+
+        </form>
+
+        <div id="mensagem"></div>
+
+    </div>
 
 
-// VERIFICAR SESSÃO
+    <script>
 
-async function verificarSessao() {
+        // CONFIGURAÇÃO DO SUPABASE
+        const SUPABASE_URL =
+            "https://vlirpvuramslfiftshio.supabase.co";
 
-    const { data: { session } } =
-        await supabase.auth.getSession();
+        const SUPABASE_PUBLISHABLE_KEY =
+            "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
 
-    if (session) {
-        document.getElementById("login").style.display = "none";
-        document.getElementById("painel").style.display = "block";
-    } else {
-        document.getElementById("login").style.display = "block";
-        document.getElementById("painel").style.display = "none";
-    }
-}
-
-
-// LOGIN
-
-document.getElementById("btnLogin").addEventListener("click", async function() {
-
-    const email =
-        document.getElementById("email").value;
-
-    const senha =
-        document.getElementById("senha").value;
-
-    const mensagem =
-        document.getElementById("loginMensagem");
-
-    mensagem.textContent = "Entrando...";
-
-    const { error } =
-        await supabase.auth.signInWithPassword({
-            email: email,
-            password: senha
-        });
-
-    if (error) {
-        mensagem.textContent =
-            "E-mail ou senha incorretos.";
-
-        return;
-    }
-
-    mensagem.textContent = "";
-
-    verificarSessao();
-
-});
+        const supabase =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_PUBLISHABLE_KEY
+            );
 
 
-// SAIR
+        // VERIFICAR LOGIN
+        async function verificarSessao() {
 
-document.getElementById("btnSair").addEventListener("click", async function() {
+            const {
+                data: { session }
+            } = await supabase.auth.getSession();
 
-    await supabase.auth.signOut();
+            if (session) {
 
-    verificarSessao();
+                document.getElementById("login").style.display = "none";
+                document.getElementById("painel").style.display = "block";
 
-});
+            } else {
 
+                document.getElementById("login").style.display = "block";
+                document.getElementById("painel").style.display = "none";
 
-// CRIAR AÇÃO
-
-document.getElementById("formAcao").addEventListener("submit", async function(event) {
-
-    event.preventDefault();
-
-    const mensagem =
-        document.getElementById("mensagem");
-
-    mensagem.textContent = "Criando ação...";
-
-    const { error } =
-        await supabase
-        .from("acoes")
-        .insert([
-            {
-                nome: document.getElementById("nome").value,
-                premio: document.getElementById("premio").value,
-                premio_descricao: document.getElementById("premio_descricao").value,
-                descricao: document.getElementById("descricao").value,
-                foto_url: document.getElementById("foto_url").value,
-                valor_numero: Number(document.getElementById("valor_numero").value),
-                total_numeros: Number(document.getElementById("total_numeros").value),
-                quantidade: Number(document.getElementById("quantidade").value),
-                data_sorteio: document.getElementById("data_sorteio").value || null,
-                link_pagamento: document.getElementById("link_pagamento").value,
-                observacoes: document.getElementById("observacoes").value
             }
-        ]);
-
-    if (error) {
-
-        console.error(error);
-
-        mensagem.textContent =
-            "Erro ao criar ação: " + error.message;
-
-        return;
-    }
-
-    mensagem.textContent =
-        "Ação criada com sucesso!";
-
-    document.getElementById("formAcao").reset();
-
-});
+        }
 
 
-// INICIAR
+        // LOGIN
+        document
+            .getElementById("btnLogin")
+            .addEventListener("click", async function () {
 
-verificarSessao();
+                const email =
+                    document.getElementById("email").value;
 
-</script>
+                const senha =
+                    document.getElementById("senha").value;
+
+                const mensagem =
+                    document.getElementById("loginMensagem");
+
+                mensagem.textContent = "Entrando...";
+
+                const { error } =
+                    await supabase.auth.signInWithPassword({
+                        email: email,
+                        password: senha
+                    });
+
+                if (error) {
+
+                    console.error(error);
+
+                    mensagem.textContent =
+                        "E-mail ou senha incorretos.";
+
+                    return;
+                }
+
+                mensagem.textContent = "";
+
+                verificarSessao();
+            });
+
+
+        // SAIR
+        document
+            .getElementById("btnSair")
+            .addEventListener("click", async function () {
+
+                await supabase.auth.signOut();
+
+                verificarSessao();
+            });
+
+
+        // CRIAR AÇÃO
+        document
+            .getElementById("formAcao")
+            .addEventListener("submit", async function (event) {
+
+                event.preventDefault();
+
+                const mensagem =
+                    document.getElementById("mensagem");
+
+                mensagem.textContent = "Criando ação...";
+
+
+                const { error } =
+                    await supabase
+                        .from("acoes")
+                        .insert([{
+
+                            nome:
+                                document
+                                    .getElementById("nome")
+                                    .value,
+
+                            premio:
+                                document
+                                    .getElementById("premio")
+                                    .value,
+
+                            premio_descricao:
+                                document
+                                    .getElementById("premio_descricao")
+                                    .value,
+
+                            descricao:
+                                document
+                                    .getElementById("descricao")
+                                    .value,
+
+                            foto_url:
+                                document
+                                    .getElementById("foto_url")
+                                    .value,
+
+                            valor_numero:
+                                Number(
+                                    document
+                                        .getElementById("valor_numero")
+                                        .value
+                                ),
+
+                            total_numeros:
+                                Number(
+                                    document
+                                        .getElementById("total_numeros")
+                                        .value
+                                ),
+
+                            quantidade:
+                                Number(
+                                    document
+                                        .getElementById("quantidade")
+                                        .value
+                                ),
+
+                            data_sorteio:
+                                document
+                                    .getElementById("data_sorteio")
+                                    .value || null,
+
+                            link_pagamento:
+                                document
+                                    .getElementById("link_pagamento")
+                                    .value,
+
+                            observacoes:
+                                document
+                                    .getElementById("observacoes")
+                                    .value
+
+                        }]);
+
+
+                if (error) {
+
+                    console.error(error);
+
+                    mensagem.textContent =
+                        "Erro ao criar ação: " + error.message;
+
+                    return;
+                }
+
+
+                mensagem.textContent =
+                    "Ação criada com sucesso!";
+
+                document
+                    .getElementById("formAcao")
+                    .reset();
+
+            });
+
+
+        // INICIAR
+        verificarSessao();
+
+    </script>
 
 </body>
 </html>
