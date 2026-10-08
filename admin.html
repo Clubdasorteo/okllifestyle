@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -34,6 +33,11 @@
             text-align: center;
             color: #d4af37;
             margin-bottom: 25px;
+        }
+
+        h2 {
+            color: #d4af37;
+            margin-bottom: 15px;
         }
 
         .form-group {
@@ -98,12 +102,20 @@
             margin-bottom: 25px;
         }
 
+        .btn-atualizar {
+            background: #222;
+            color: #d4af37;
+            border: 1px solid #d4af37;
+            margin-bottom: 20px;
+        }
+
         #painel {
             display: none;
         }
 
         #mensagem,
-        #loginMensagem {
+        #loginMensagem,
+        #listaMensagem {
             margin-top: 15px;
             text-align: center;
             font-weight: bold;
@@ -130,6 +142,58 @@
             height: 1px;
             background: #333;
             margin: 25px 0;
+        }
+
+        /* =========================
+           AÇÕES CADASTRADAS
+        ========================= */
+
+        .acao-card {
+            background: #0d0d0d;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .acao-card img {
+            width: 100%;
+            max-height: 260px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: #000;
+            margin-bottom: 12px;
+        }
+
+        .acao-nome {
+            font-size: 20px;
+            font-weight: bold;
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+
+        .acao-info {
+            color: #ddd;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .status-ativa {
+            display: inline-block;
+            background: #173b20;
+            color: #65d47a;
+            border: 1px solid #2d743d;
+            padding: 4px 9px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .sem-acoes {
+            text-align: center;
+            color: #999;
+            padding: 20px 0;
         }
     </style>
 </head>
@@ -189,8 +253,35 @@
         Sair
     </button>
 
+
+    <!-- =========================
+         AÇÕES CADASTRADAS
+    ========================= -->
+
+    <h2>🎯 Ações cadastradas</h2>
+
+    <button
+        type="button"
+        class="btn btn-atualizar"
+        id="btnAtualizar"
+    >
+        🔄 Atualizar lista
+    </button>
+
+    <div id="listaAcoes"></div>
+
+    <div id="listaMensagem"></div>
+
+
+    <div class="separador"></div>
+
+
+    <!-- =========================
+         NOVA AÇÃO
+    ========================= -->
+
     <p>
-        <strong>Criar nova ação</strong>
+        <strong>➕ Criar nova ação</strong>
     </p>
 
     <div class="separador"></div>
@@ -248,10 +339,6 @@
 
         </div>
 
-
-        <!-- =========================
-             FOTO DO PRÊMIO
-        ========================= -->
 
         <div class="form-group">
 
@@ -379,17 +466,14 @@
 const URL_SUPABASE =
     "https://vlirpvuramslfiftshio.supabase.co";
 
-
 const CHAVE_SUPABASE =
     "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
-
 
 const clienteSupabase =
     window.supabase.createClient(
         URL_SUPABASE,
         CHAVE_SUPABASE
     );
-
 
 const NOME_BUCKET =
     "fotos-premios";
@@ -416,6 +500,8 @@ async function verificarSessao() {
         document.getElementById(
             "painel"
         ).style.display = "block";
+
+        carregarAcoes();
 
     } else {
 
@@ -509,6 +595,183 @@ document
 
 
 /* =========================
+   CARREGAR AÇÕES
+========================= */
+
+async function carregarAcoes() {
+
+    const lista =
+        document.getElementById(
+            "listaAcoes"
+        );
+
+    const mensagem =
+        document.getElementById(
+            "listaMensagem"
+        );
+
+    lista.innerHTML =
+        "";
+
+    mensagem.textContent =
+        "Carregando ações...";
+
+
+    const resultado =
+        await clienteSupabase
+
+            .from("AÇÕES")
+
+            .select(`
+                id,
+                nome,
+                descricao,
+                foto_url,
+                valor_numero,
+                total_numeros,
+                status,
+                created_at
+            `)
+
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
+
+
+    if (resultado.error) {
+
+        console.error(
+            resultado.error
+        );
+
+        mensagem.textContent =
+            "❌ Erro ao carregar ações: " +
+            resultado.error.message;
+
+        return;
+    }
+
+
+    const acoes =
+        resultado.data || [];
+
+
+    if (acoes.length === 0) {
+
+        mensagem.textContent =
+            "";
+
+        lista.innerHTML =
+            `<div class="sem-acoes">
+                Nenhuma ação cadastrada.
+            </div>`;
+
+        return;
+    }
+
+
+    mensagem.textContent =
+        "";
+
+
+    acoes.forEach(
+        function (acao) {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+            card.className =
+                "acao-card";
+
+
+            let fotoHTML = "";
+
+            if (acao.foto_url) {
+
+                fotoHTML =
+                    `
+                    <img
+                        src="${acao.foto_url}"
+                        alt="Foto da ação"
+                    >
+                    `;
+            }
+
+
+            const valor =
+                Number(
+                    acao.valor_numero || 0
+                ).toLocaleString(
+                    "pt-BR",
+                    {
+                        style: "currency",
+                        currency: "BRL"
+                    }
+                );
+
+
+            const status =
+                acao.status || "sem status";
+
+
+            card.innerHTML =
+
+                fotoHTML +
+
+                `
+                <div class="acao-nome">
+                    ${acao.nome || "Sem nome"}
+                </div>
+
+                <div class="acao-info">
+
+                    <strong>💰 Valor por número:</strong>
+                    ${valor}
+                    <br>
+
+                    <strong>🎟️ Total de números:</strong>
+                    ${acao.total_numeros || 0}
+                    <br>
+
+                    <strong>📝 Descrição:</strong>
+                    ${acao.descricao || "Sem descrição"}
+                    <br>
+
+                    <span class="status-ativa">
+                        ${status}
+                    </span>
+
+                </div>
+                `;
+
+
+            lista.appendChild(
+                card
+            );
+
+        }
+    );
+}
+
+
+/* =========================
+   BOTÃO ATUALIZAR
+========================= */
+
+document
+    .getElementById("btnAtualizar")
+    .addEventListener(
+        "click",
+        carregarAcoes
+    );
+
+
+/* =========================
    PRÉVIA DA FOTO
 ========================= */
 
@@ -589,7 +852,6 @@ async function enviarFoto(arquivo) {
         "." +
         extensao;
 
-
     const caminho =
         nomeArquivo;
 
@@ -656,23 +918,17 @@ document
 
             try {
 
-                /* =========================
-                   PEGAR DADOS
-                ========================= */
-
                 const nome =
                     document
                         .getElementById("nome")
                         .value
                         .trim();
 
-
                 const descricao =
                     document
                         .getElementById("descricao")
                         .value
                         .trim();
-
 
                 const valor_numero =
                     Number(
@@ -683,7 +939,6 @@ document
                             .value
                     );
 
-
                 const total_numeros =
                     Number(
                         document
@@ -693,16 +948,11 @@ document
                             .value
                     );
 
-
                 const arquivoFoto =
                     document
                         .getElementById("foto")
                         .files[0];
 
-
-                /* =========================
-                   VALIDAR FOTO
-                ========================= */
 
                 if (!arquivoFoto) {
 
@@ -716,10 +966,6 @@ document
                 }
 
 
-                /* =========================
-                   ENVIAR FOTO
-                ========================= */
-
                 mensagem.textContent =
                     "Enviando foto do prêmio...";
 
@@ -729,16 +975,6 @@ document
                         arquivoFoto
                     );
 
-
-                console.log(
-                    "Foto enviada:",
-                    foto_url
-                );
-
-
-                /* =========================
-                   CRIAR AÇÃO
-                ========================= */
 
                 mensagem.textContent =
                     "Foto enviada. Criando ação...";
@@ -793,10 +1029,6 @@ document
                     resultado.data.id;
 
 
-                /* =========================
-                   GERAR NÚMEROS
-                ========================= */
-
                 mensagem.textContent =
                     "Ação criada. Gerando números...";
 
@@ -824,10 +1056,6 @@ document
                     );
                 }
 
-
-                /* =========================
-                   SUCESSO
-                ========================= */
 
                 mensagem.innerHTML =
                     "✅ Ação criada com sucesso!<br>" +
@@ -857,6 +1085,11 @@ document
                         "fotoPreview"
                     )
                     .src = "";
+
+
+                /* ATUALIZAR LISTA */
+
+                await carregarAcoes();
 
             }
 
@@ -892,4 +1125,3 @@ verificarSessao();
 
 </body>
 </html>
-```
