@@ -1,741 +1,599 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OKL Lifestyle</title>
-
-<style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-body{
-    font-family:Arial,sans-serif;
-    background:#050505;
-    color:#f2f0e8;
-    line-height:1.5;
-}
-
-header{
-    padding:22px;
-    text-align:center;
-    border-bottom:1px solid #242424;
-}
-
-.logo-img{
-    width:150px;
-    max-width:70%;
-    height:auto;
-    display:block;
-    margin:0 auto;
-    object-fit:contain;
-}
-
-.hero{
-    padding:45px 20px;
-    text-align:center;
-}
-
-.hero h1{
-    font-size:38px;
-    font-weight:800;
-    letter-spacing:1px;
-    margin-bottom:15px;
-    color:#d4af37;
-}
-
-.hero p{
-    color:#f2f0e8;
-    font-size:17px;
-    font-weight:600;
-}
-
-.container{
-    width:92%;
-    max-width:1000px;
-    margin:auto;
-}
-
-.section-title{
-    margin:30px 0 15px;
-    font-size:24px;
-    font-weight:800;
-    color:#d4af37;
-}
-
-.card{
-    background:#111;
-    border:1px solid #292929;
-    border-radius:16px;
-    overflow:hidden;
-    margin-bottom:25px;
-}
-
-.prize{
-    background:linear-gradient(135deg,#222,#111);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:15px;
-    min-height:180px;
-}
-
-.prize img{
-    width:100%;
-    height:auto;
-    max-height:400px;
-    object-fit:contain;
-    display:block;
-}
-
-.card-content{
-    padding:22px;
-}
-
-.card h2{
-    margin-bottom:10px;
-    font-size:25px;
-    font-weight:800;
-}
-
-.card-content p{
-    font-size:16px;
-    font-weight:500;
-    margin-bottom:8px;
-}
-
-.card-content p strong{
-    color:#d4af37;
-    font-size:19px;
-    font-weight:800;
-}
-
-.progress{
-    height:10px;
-    background:#292929;
-    border-radius:20px;
-    overflow:hidden;
-    margin:18px 0;
-}
-
-.progress-bar{
-    width:0%;
-    height:100%;
-    background:#d4af37;
-    transition:width .3s ease;
-}
-
-.info{
-    display:flex;
-    justify-content:space-between;
-    color:#f2f0e8;
-    font-size:14px;
-    font-weight:600;
-    gap:15px;
-}
-
-.button{
-    display:block;
-    width:100%;
-    margin-top:20px;
-    padding:16px;
-    border:none;
-    border-radius:10px;
-    background:#d4af37;
-    color:#050505;
-    font-size:17px;
-    font-weight:800;
-    cursor:pointer;
-    text-align:center;
-    text-decoration:none;
-}
-
-.button:hover{
-    opacity:.9;
-}
-
-.how{
-    background:#111;
-    padding:25px;
-    border-radius:16px;
-    margin-bottom:40px;
-    border:1px solid #292929;
-}
-
-.how h2{
-    font-size:23px;
-    font-weight:800;
-    color:#d4af37;
-    margin-bottom:15px;
-}
-
-.how p{
-    margin:15px 0;
-    font-size:16px;
-    font-weight:500;
-}
-
-.how p strong{
-    color:#d4af37;
-}
-
-/* =========================
-   PACOTES
-========================= */
-
-.options{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-    margin-top:20px;
-}
-
-.option{
-    padding:18px;
-    background:#111;
-    color:#f2f0e8;
-    border:1px solid #3a3a3a;
-    border-radius:12px;
-    font-size:16px;
-    cursor:pointer;
-    text-align:center;
-    transition:.2s;
-}
-
-.option:hover{
-    border-color:#d4af37;
-    transform:translateY(-2px);
-}
-
-.option.selected{
-    border:2px solid #d4af37;
-    background:#181818;
-}
-
-.option strong{
-    display:block;
-    font-size:18px;
-    margin-bottom:6px;
-}
-
-.option span{
-    color:#d4af37;
-    font-size:16px;
-    font-weight:700;
-}
-
-/* =========================
-   QUANTIDADE PERSONALIZADA
-========================= */
-
-.custom-quantity{
-    margin-top:20px;
-    padding:20px;
-    background:#080808;
-    border:1px solid #292929;
-    border-radius:12px;
-    text-align:center;
-}
-
-.custom-quantity-title{
-    font-size:17px;
-    font-weight:800;
-    margin-bottom:5px;
-}
-
-.custom-quantity-subtitle{
-    color:#999;
-    font-size:14px;
-    margin-bottom:15px;
-}
-
-.quantity-control{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-}
-
-.quantity-control button{
-    width:48px;
-    height:48px;
-    border:1px solid #3a3a3a;
-    border-radius:10px;
-    background:#111;
-    color:#d4af37;
-    font-size:28px;
-    cursor:pointer;
-}
-
-.quantity-control button:hover{
-    border-color:#d4af37;
-}
-
-.quantity-control input{
-    width:120px;
-    height:48px;
-    text-align:center;
-    background:#050505;
-    border:1px solid #3a3a3a;
-    border-radius:10px;
-    color:#f2f0e8;
-    font-size:20px;
-    font-weight:800;
-    outline:none;
-}
-
-.quantity-control input:focus{
-    border-color:#d4af37;
-}
-
-.custom-price{
-    margin-top:15px;
-    font-size:17px;
-}
-
-.custom-price strong{
-    color:#d4af37;
-    font-size:21px;
-}
-
-.selected-info{
-    margin-top:20px;
-    padding:15px;
-    border-radius:10px;
-    background:#080808;
-    border:1px solid #292929;
-    text-align:center;
-    display:none;
-}
-
-.selected-info strong{
-    color:#d4af37;
-}
-
-.form-section{
-    display:none;
-    margin-top:25px;
-}
-
-.form-section h3{
-    color:#d4af37;
-    margin-bottom:15px;
-    font-size:22px;
-}
-
-.form-section input{
-    width:100%;
-    padding:15px;
-    margin-bottom:12px;
-    background:#050505;
-    border:1px solid #3a3a3a;
-    border-radius:10px;
-    color:#f2f0e8;
-    font-size:16px;
-    outline:none;
-}
-
-.form-section input:focus{
-    border-color:#d4af37;
-}
-
-.highlights{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-    margin-bottom:40px;
-}
-
-.highlight{
-    background:#111;
-    border:1px solid #292929;
-    padding:25px 15px;
-    border-radius:14px;
-    text-align:center;
-}
-
-.highlight strong{
-    display:block;
-    margin-top:10px;
-    color:#d4af37;
-    font-size:16px;
-}
-
-.highlight small{
-    display:block;
-    margin-top:5px;
-    font-size:13px;
-    font-weight:600;
-}
-
-.loading,
-.error{
-    text-align:center;
-    padding:30px;
-    font-weight:700;
-}
-
-.loading{
-    color:#d4af37;
-}
-
-.error{
-    color:#ff6b6b;
-}
-
-footer{
-    text-align:center;
-    padding:30px;
-    color:#777;
-    border-top:1px solid #222;
-    font-size:14px;
-}
-
-@media(max-width:700px){
-
-    .logo-img{
-        width:135px;
-    }
-
-    .hero h1{
-        font-size:30px;
-        line-height:1.2;
-    }
-
-    .highlights{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .info{
-        font-size:13px;
-    }
-
-    .options{
-        grid-template-columns:repeat(2,1fr);
-    }
-}
-
-@media(max-width:500px){
-
-    .options{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .card-content{
-        padding:20px;
-    }
-
-    .card h2{
-        font-size:23px;
-    }
-
-    .option{
-        padding:15px 8px;
-    }
-
-    .option strong{
-        font-size:16px;
-    }
-
-    .option span{
-        font-size:14px;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Club da Sorte | OKL Lifestyle</title>
+
+    <meta name="description" content="Club da Sorte - Ações e experiências exclusivas OKL Lifestyle.">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #050505;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            padding: 18px 20px;
+            text-align: center;
+            border-bottom: 1px solid #222;
+            background: #050505;
+        }
+
+        header img {
+            width: 150px;
+            max-width: 70%;
+            height: auto;
+            display: block;
+            margin: auto;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 45px 20px 35px;
+            background:
+                radial-gradient(circle at top, rgba(212,175,55,0.14), transparent 45%),
+                #050505;
+        }
+
+        .hero h1 {
+            font-size: 34px;
+            margin-bottom: 12px;
+            color: #d4af37;
+            font-weight: 800;
+        }
+
+        .hero p {
+            color: #cfcfcf;
+            font-size: 16px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 25px;
+        }
+
+        .acao-card {
+            background: linear-gradient(145deg, #111111, #080808);
+            border: 1px solid #292929;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.45);
+        }
+
+        .acao-foto {
+            width: 100%;
+            height: 360px;
+            object-fit: contain;
+            background: #090909;
+            display: block;
+        }
+
+        .acao-conteudo {
+            padding: 25px;
+        }
+
+        .acao-conteudo h2 {
+            color: #d4af37;
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .descricao {
+            color: #cfcfcf;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .info-box {
+            background: #111;
+            border: 1px solid #262626;
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .info-box small {
+            display: block;
+            color: #888;
+            margin-bottom: 6px;
+        }
+
+        .info-box strong {
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .preco {
+            color: #d4af37 !important;
+        }
+
+        .participacao {
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 18px;
+            border: 1px solid #292929;
+            background: #0b0b0b;
+        }
+
+        .participacao h2 {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .participacao-subtitulo {
+            text-align: center;
+            color: #999;
+            margin-bottom: 22px;
+        }
+
+        .pacotes {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .pacote {
+            border: 1px solid #333;
+            background: #111;
+            color: white;
+            padding: 16px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+        }
+
+        .pacote:hover,
+        .pacote.ativo {
+            border-color: #d4af37;
+            transform: translateY(-2px);
+            background: #161616;
+        }
+
+        .pacote strong {
+            display: block;
+            font-size: 21px;
+            color: #d4af37;
+        }
+
+        .pacote span {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .custom-label {
+            display: block;
+            color: #ccc;
+            margin-bottom: 8px;
+        }
+
+        .custom-input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            background: #111;
+            color: white;
+            font-size: 17px;
+            outline: none;
+        }
+
+        .custom-input:focus {
+            border-color: #d4af37;
+        }
+
+        .resumo {
+            margin-top: 18px;
+            padding: 18px;
+            border-radius: 12px;
+            background: #151515;
+            border: 1px solid #292929;
+            text-align: center;
+        }
+
+        .resumo p {
+            color: #aaa;
+            margin-bottom: 7px;
+        }
+
+        .resumo strong {
+            color: #d4af37;
+            font-size: 30px;
+        }
+
+        .formulario {
+            margin-top: 20px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .formulario input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            background: #111;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .formulario input:focus {
+            border-color: #d4af37;
+        }
+
+        .botao {
+            width: 100%;
+            border: none;
+            padding: 17px;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #b8941f, #e3c65b);
+            color: #050505;
+            font-size: 17px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .botao:hover {
+            filter: brightness(1.08);
+        }
+
+        .destaques {
+            margin-top: 35px;
+        }
+
+        .destaques-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .destaque {
+            background: #0d0d0d;
+            border: 1px solid #262626;
+            border-radius: 14px;
+            padding: 20px 12px;
+            text-align: center;
+        }
+
+        .destaque .icone {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .destaque strong {
+            display: block;
+            color: #d4af37;
+            margin-bottom: 5px;
+        }
+
+        .destaque span {
+            color: #999;
+            font-size: 13px;
+        }
+
+        .como-funciona {
+            margin-top: 35px;
+            padding: 25px;
+            background: #0b0b0b;
+            border: 1px solid #292929;
+            border-radius: 18px;
+        }
+
+        .passos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .passo {
+            text-align: center;
+            padding: 15px;
+        }
+
+        .passo-numero {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #d4af37;
+            color: #050505;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+        }
+
+        .passo strong {
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .passo p {
+            color: #999;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 35px 20px;
+            margin-top: 35px;
+            border-top: 1px solid #222;
+            color: #666;
+            font-size: 13px;
+        }
+
+        .carregando {
+            text-align: center;
+            padding: 60px 20px;
+            color: #aaa;
+        }
+
+        .erro {
+            text-align: center;
+            padding: 50px 20px;
+            color: #ff7777;
+        }
+
+        .sem-acao {
+            text-align: center;
+            padding: 50px 20px;
+            color: #aaa;
+        }
+
+        @media (max-width: 700px) {
+
+            .hero h1 {
+                font-size: 27px;
+            }
+
+            .acao-foto {
+                height: 280px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pacotes {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .destaques-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .passos {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
 <header>
-
     <img
         src="Design%20sem%20nome%20(1).jpg"
         alt="OKL Lifestyle"
-        class="logo-img"
+        onerror="this.style.display='none'"
     >
-
 </header>
 
-
 <section class="hero">
-
     <h1>BEM-VINDO AO CLUB</h1>
-
-    <p>
-        Uma experiência exclusiva OKL LIFESTYLE.
-    </p>
-
+    <p>Uma experiência exclusiva OKL LIFESTYLE.</p>
 </section>
-
 
 <main class="container">
 
-    <h2 class="section-title">
-        🔥 Ação em destaque
-    </h2>
-
+    <h2 class="section-title">🔥 Ação em destaque</h2>
 
     <div id="acaoContainer">
-
-        <div class="loading">
+        <div class="carregando">
             Carregando ação...
         </div>
-
     </div>
 
-</main>
+    <section class="participacao">
 
+        <h2>🎟️ PARTICIPE AGORA</h2>
 
-<section
-    id="participar"
-    class="how container"
->
+        <p class="participacao-subtitulo">
+            Escolha a quantidade de bilhetes que deseja adquirir.
+        </p>
 
-    <h2>
-        Participar
-    </h2>
+        <div class="pacotes">
 
-
-    <p>
-        Escolha uma das opções abaixo ou informe a quantidade que deseja.
-    </p>
-
-
-    <div
-        class="options"
-        id="optionsContainer"
-    ></div>
-
-
-    <div class="custom-quantity">
-
-        <div class="custom-quantity-title">
-            Ou escolha outra quantidade
-        </div>
-
-        <div class="custom-quantity-subtitle">
-            Mínimo de 10 números
-        </div>
-
-
-        <div class="quantity-control">
-
-            <button
-                type="button"
-                onclick="alterarQuantidade(-1)"
-            >
-                −
+            <button class="pacote" onclick="selecionarPacote(10)">
+                <strong>10</strong>
+                <span>bilhetes</span>
             </button>
 
+            <button class="pacote" onclick="selecionarPacote(20)">
+                <strong>20</strong>
+                <span>bilhetes</span>
+            </button>
 
-            <input
-                type="number"
-                id="quantidadePersonalizada"
-                min="10"
-                value="10"
-                oninput="quantidadeDigitada()"
-            >
+            <button class="pacote" onclick="selecionarPacote(50)">
+                <strong>50</strong>
+                <span>bilhetes</span>
+            </button>
 
+            <button class="pacote" onclick="selecionarPacote(100)">
+                <strong>100</strong>
+                <span>bilhetes</span>
+            </button>
 
-            <button
-                type="button"
-                onclick="alterarQuantidade(1)"
-            >
-                +
+            <button class="pacote" onclick="selecionarPacote(200)">
+                <strong>200</strong>
+                <span>bilhetes</span>
+            </button>
+
+            <button class="pacote" onclick="selecionarPacote(500)">
+                <strong>500</strong>
+                <span>bilhetes</span>
             </button>
 
         </div>
 
+        <label class="custom-label">
+            Ou informe outra quantidade:
+        </label>
 
-        <div class="custom-price">
+        <input
+            id="quantidade"
+            class="custom-input"
+            type="number"
+            min="10"
+            placeholder="Ex.: 17, 25, 37, 83..."
+            oninput="atualizarResumo()"
+        >
 
-            Total:
+        <div class="resumo">
 
-            <strong id="customPrice">
+            <p>Quantidade selecionada</p>
+
+            <strong id="quantidadeResumo">
+                0
+            </strong>
+
+            <p style="margin-top:12px;">
+                Valor total
+            </p>
+
+            <strong id="valorResumo">
                 R$ 0,00
             </strong>
 
         </div>
 
+        <div class="formulario">
 
-        <button
-            type="button"
-            class="button"
-            onclick="selecionarPersonalizado()"
-        >
-            ESCOLHER ESSA QUANTIDADE
-        </button>
+            <input
+                id="nome"
+                type="text"
+                placeholder="Seu nome completo"
+            >
 
-    </div>
+            <input
+                id="telefone"
+                type="tel"
+                placeholder="Seu WhatsApp"
+            >
 
+            <button class="botao" onclick="continuar()">
+                CONTINUAR
+            </button>
 
-    <div
-        class="selected-info"
-        id="selectedInfo"
-    >
+        </div>
 
-        Você selecionou
+    </section>
 
-        <strong id="selectedNumbers">
-        </strong>
+    <section class="destaques">
 
-        por
+        <h2 class="section-title">✨ Destaques</h2>
 
-        <strong id="selectedPrice">
-        </strong>.
+        <div class="destaques-grid">
 
-    </div>
+            <div class="destaque">
+                <div class="icone">🏆</div>
+                <strong>Top Comprador</strong>
+                <span>Quem mais participa.</span>
+            </div>
 
+            <div class="destaque">
+                <div class="icone">🎯</div>
+                <strong>Menor Cota</strong>
+                <span>Bilhetes distribuídos automaticamente.</span>
+            </div>
 
-    <div
-        class="form-section"
-        id="formSection"
-    >
+            <div class="destaque">
+                <div class="icone">🔥</div>
+                <strong>Maior Cota</strong>
+                <span>Mais chances na ação.</span>
+            </div>
 
-        <h3>
-            Seus dados
-        </h3>
+            <div class="destaque">
+                <div class="icone">🎁</div>
+                <strong>Bilhetes Premiados</strong>
+                <span>Confira os resultados.</span>
+            </div>
 
+        </div>
 
-        <input
-            type="text"
-            id="nome"
-            placeholder="Nome completo"
-        >
+    </section>
 
+    <section class="como-funciona">
 
-        <input
-            type="tel"
-            id="telefone"
-            placeholder="WhatsApp"
-        >
+        <h2 class="section-title">Como funciona?</h2>
 
+        <div class="passos">
 
-        <button
-            class="button"
-            onclick="continuar()"
-        >
-            CONTINUAR
-        </button>
+            <div class="passo">
+                <div class="passo-numero">1</div>
+                <strong>Escolha</strong>
+                <p>
+                    Escolha quantos bilhetes deseja adquirir.
+                </p>
+            </div>
 
-    </div>
+            <div class="passo">
+                <div class="passo-numero">2</div>
+                <strong>Pagamento</strong>
+                <p>
+                    Faça o pagamento pelo método disponibilizado.
+                </p>
+            </div>
 
-</section>
+            <div class="passo">
+                <div class="passo-numero">3</div>
+                <strong>Receba seus números</strong>
+                <p>
+                    Após a confirmação do pagamento, os números serão atribuídos automaticamente.
+                </p>
+            </div>
 
+        </div>
 
-<h2 class="section-title container">
+    </section>
 
-    🏆 Destaques
-
-</h2>
-
-
-<div class="highlights container">
-
-    <div class="highlight">
-
-        🥇
-
-        <strong>
-            Top Comprador
-        </strong>
-
-        <small>
-            Mais bilhetes
-        </small>
-
-    </div>
-
-
-    <div class="highlight">
-
-        ⬇️
-
-        <strong>
-            Menor Cota
-        </strong>
-
-        <small>
-            Menor número
-        </small>
-
-    </div>
-
-
-    <div class="highlight">
-
-        ⬆️
-
-        <strong>
-            Maior Cota
-        </strong>
-
-        <small>
-            Maior número
-        </small>
-
-    </div>
-
-
-    <div class="highlight">
-
-        🎫
-
-        <strong>
-            Bilhetes Premiados
-        </strong>
-
-        <small>
-            6 a 8 prêmios extras
-        </small>
-
-    </div>
-
-</div>
-
-
-<section class="how container">
-
-    <h2>
-        📋 Como funciona
-    </h2>
-
-
-    <p>
-        <strong>01.</strong>
-        Escolha sua participação.
-    </p>
-
-
-    <p>
-        <strong>02.</strong>
-        Realize o pagamento.
-    </p>
-
-
-    <p>
-        <strong>03.</strong>
-        Receba seus números.
-    </p>
-
-
-    <p>
-        <strong>04.</strong>
-        Acompanhe o resultado.
-    </p>
-
-</section>
-
+</main>
 
 <footer>
-
-    ©️ 2026 OKL Lifestyle
-
+    © 2026 OKL Lifestyle — Club da Sorte
 </footer>
-
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -744,41 +602,37 @@ footer{
 const SUPABASE_URL =
     "https://vlirpvuramslfiftshio.supabase.co";
 
-
-const SUPABASE_PUBLISHABLE_KEY =
+const SUPABASE_KEY =
     "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
 
-
-const supabase =
-    window.supabase.createClient(
+const clienteSupabase =
+    supabase.createClient(
         SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
+        SUPABASE_KEY
     );
 
+let acaoAtual = null;
 
 let quantidadeSelecionada = 0;
-let valorSelecionado = 0;
-let acaoAtual = null;
 
 
 /* =========================
    CARREGAR AÇÃO
 ========================= */
 
-async function carregarAcao(){
+async function carregarAcao() {
 
     const container =
-        document.getElementById(
-            "acaoContainer"
-        );
+        document.getElementById("acaoContainer");
 
-    try{
+    container.innerHTML =
+        '<div class="carregando">Carregando ação...</div>';
+
+    try {
 
         const { data, error } =
-            await supabase
-
+            await clienteSupabase
                 .from("AÇÕES")
-
                 .select(`
                     id,
                     nome,
@@ -789,90 +643,66 @@ async function carregarAcao(){
                     status,
                     created_at
                 `)
+                .eq("status", "ativa")
+                .order("created_at", {
+                    ascending: false
+                })
+                .limit(1);
 
-                .eq(
-                    "status",
-                    "ativa"
-                )
+        console.log("AÇÃO:", data);
+        console.log("ERRO:", error);
 
-                .order(
-                    "created_at",
-                    {
-                        ascending:false
-                    }
-                )
-
-                .limit(1)
-
-                .maybeSingle();
-
-
-        if(error){
-
+        if (error) {
             throw error;
-
         }
 
-
-        if(!data){
+        if (!data || data.length === 0) {
 
             container.innerHTML = `
-
-                <div class="error">
-
-                    Nenhuma ação disponível
-                    no momento.
-
+                <div class="sem-acao">
+                    <h3>Nenhuma ação disponível no momento.</h3>
+                    <p style="margin-top:10px;">
+                        Aguarde a próxima ação.
+                    </p>
                 </div>
-
             `;
 
             return;
-
         }
 
+        acaoAtual = data[0];
 
-        acaoAtual = data;
+        renderizarAcao();
 
+        atualizarResumo();
 
-        renderizarAcao(data);
-
-
-        criarOpcoes(
-            data.valor_numero
-        );
-
-
-        atualizarResumoAcao(
-            data
-        );
-
-
-        atualizarPrecoPersonalizado();
-
-    }
-
-    catch(error){
+    } catch (erro) {
 
         console.error(
             "Erro ao carregar ação:",
-            error
+            erro
         );
 
-
         container.innerHTML = `
+            <div class="erro">
 
-            <div class="error">
+                <h3>Não foi possível carregar a ação.</h3>
 
-                Não foi possível carregar
-                a ação.
+                <p style="margin-top:12px;">
+                    Verifique a conexão com o sistema.
+                </p>
+
+                <p style="
+                    margin-top:10px;
+                    font-size:12px;
+                    color:#777;
+                ">
+                    ${erro.message || "Erro desconhecido"}
+                </p>
 
             </div>
-
         `;
-
     }
-
 }
 
 
@@ -880,149 +710,82 @@ async function carregarAcao(){
    MOSTRAR AÇÃO
 ========================= */
 
-function renderizarAcao(acao){
+function renderizarAcao() {
 
     const container =
-        document.getElementById(
-            "acaoContainer"
-        );
+        document.getElementById("acaoContainer");
 
+    let foto = "";
+
+    if (
+        acaoAtual.foto_url &&
+        acaoAtual.foto_url.trim() !== ""
+    ) {
+
+        foto = `
+            <img
+                class="acao-foto"
+                src="${acaoAtual.foto_url}"
+                alt="${acaoAtual.nome}"
+                onerror="this.style.display='none'"
+            >
+        `;
+    }
 
     const valor =
-        Number(
-            acao.valor_numero || 0
-        )
-        .toFixed(2)
-        .replace(
-            ".",
-            ","
-        );
+        Number(acaoAtual.valor_numero || 0);
 
-
-    const imagem =
-        acao.foto_url || "";
-
+    const total =
+        Number(acaoAtual.total_numeros || 0);
 
     container.innerHTML = `
 
-        <div class="card">
+        <div class="acao-card">
 
-            <div class="prize">
+            ${foto}
 
-                ${
-                    imagem
+            <div class="acao-conteudo">
 
-                    ?
+                <h2>
+                    ${acaoAtual.nome || "Ação"}
+                </h2>
 
-                    `
+                <div class="descricao">
+                    ${acaoAtual.descricao || ""}
+                </div>
 
-                    <img
-                        src="${escapeHtml(imagem)}"
-                        alt="Prêmio"
-                    >
+                <div class="info-grid">
 
-                    `
+                    <div class="info-box">
 
-                    :
+                        <small>
+                            Valor por bilhete
+                        </small>
 
-                    `
-
-                    <div class="loading">
-
-                        Foto do prêmio
-                        não cadastrada.
+                        <strong class="preco">
+                            ${formatarMoeda(valor)}
+                        </strong>
 
                     </div>
 
-                    `
-                }
+                    <div class="info-box">
 
-            </div>
+                        <small>
+                            Total de bilhetes
+                        </small>
 
+                        <strong>
+                            ${formatarNumero(total)}
+                        </strong>
 
-            <div class="card-content">
-
-                <h2>
-
-                    ${escapeHtml(
-                        acao.nome
-                    )}
-
-                </h2>
-
-
-                <p>
-
-                    ${escapeHtml(
-                        acao.descricao || ""
-                    )}
-
-                </p>
-
-
-                <p>
-
-                    <strong>
-
-                        R$ ${valor}
-                        por número
-
-                    </strong>
-
-                </p>
-
-
-                <div class="progress">
-
-                    <div
-                        class="progress-bar"
-                        id="progressBar"
-                    ></div>
+                    </div>
 
                 </div>
-
-
-                <div class="info">
-
-                    <span id="vendidosInfo">
-
-                        0 vendidos
-
-                    </span>
-
-
-                    <span>
-
-                        ${
-                            Number(
-                                acao.total_numeros || 0
-                            ).toLocaleString(
-                                "pt-BR"
-                            )
-                        }
-
-                        números
-
-                    </span>
-
-                </div>
-
-
-                <a
-                    href="#participar"
-                    class="button"
-                >
-
-                    PARTICIPAR
-
-                </a>
 
             </div>
 
         </div>
-
     `;
-
 }
 
 
@@ -1030,563 +793,96 @@ function renderizarAcao(acao){
    PACOTES
 ========================= */
 
-function criarOpcoes(valorNumero){
+function selecionarPacote(quantidade) {
 
-    const container =
-        document.getElementById(
-            "optionsContainer"
-        );
+    quantidadeSelecionada =
+        Number(quantidade);
 
+    document.getElementById("quantidade").value =
+        quantidadeSelecionada;
 
-    const valor =
-        Number(
-            valorNumero || 0
-        );
+    document
+        .querySelectorAll(".pacote")
+        .forEach(botao => {
 
+            botao.classList.remove("ativo");
 
-    if(!valor){
-
-        container.innerHTML = `
-
-            <div class="error">
-
-                Valor do número
-                não cadastrado.
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    const quantidades = [
-        10,
-        20,
-        50,
-        100,
-        200,
-        500
-    ];
-
-
-    container.innerHTML = "";
-
-
-    quantidades.forEach(
-        function(quantidade){
-
-            const total =
-                quantidade * valor;
-
-
-            const button =
-                document.createElement(
-                    "button"
+            const numero =
+                Number(
+                    botao.querySelector("strong").textContent
                 );
 
+            if (
+                numero === quantidadeSelecionada
+            ) {
+                botao.classList.add("ativo");
+            }
 
-            button.type =
-                "button";
+        });
 
-
-            button.className =
-                "option";
-
-
-            button.innerHTML = `
-
-                <strong>
-
-                    ${quantidade}
-                    números
-
-                </strong>
-
-
-                <span>
-
-                    R$
-                    ${formatarMoeda(
-                        total
-                    )}
-
-                </span>
-
-            `;
-
-
-            button.onclick =
-                function(){
-
-                    selecionar(
-                        quantidade,
-                        total,
-                        button
-                    );
-
-                };
-
-
-            container.appendChild(
-                button
-            );
-
-        }
-    );
-
+    atualizarResumo();
 }
 
 
 /* =========================
-   RESUMO DA AÇÃO
+   RESUMO
 ========================= */
 
-function atualizarResumoAcao(acao){
+function atualizarResumo() {
 
-    /*
-       Por enquanto os números vendidos
-       serão calculados posteriormente
-       pela tabela numeros.
+    const input =
+        document.getElementById("quantidade");
 
-       Aqui deixamos inicialmente
-       como zero para não bloquear
-       o carregamento da ação.
-    */
-
-    const vendidos = 0;
-
-
-    const total =
-        Number(
-            acao.total_numeros || 0
-        );
-
-
-    const porcentagem =
-        total > 0
-        ?
-        (vendidos / total) * 100
-        :
-        0;
-
-
-    const vendidosInfo =
-        document.getElementById(
-            "vendidosInfo"
-        );
-
-
-    const progressBar =
-        document.getElementById(
-            "progressBar"
-        );
-
-
-    if(vendidosInfo){
-
-        vendidosInfo.textContent =
-            vendidos.toLocaleString(
-                "pt-BR"
-            ) +
-            " vendidos";
-
-    }
-
-
-    if(progressBar){
-
-        progressBar.style.width =
-            Math.min(
-                porcentagem,
-                100
-            ) +
-            "%";
-
-    }
-
-}
-
-
-/* =========================
-   SELECIONAR PACOTE
-========================= */
-
-function selecionar(
-    quantidade,
-    valor,
-    elemento
-){
+    const quantidade =
+        Number(input.value || 0);
 
     quantidadeSelecionada =
         quantidade;
 
-
-    valorSelecionado =
-        valor;
-
-
-    document
-        .querySelectorAll(
-            ".option"
-        )
-        .forEach(
-            function(opcao){
-
-                opcao.classList.remove(
-                    "selected"
-                );
-
-            }
-        );
-
-
-    elemento.classList.add(
-        "selected"
-    );
-
-
-    const input =
-        document.getElementById(
-            "quantidadePersonalizada"
-        );
-
-
-    if(input){
-
-        input.value =
-            quantidade;
-
-    }
-
-
-    atualizarPrecoPersonalizado();
-
-
     document.getElementById(
-        "selectedNumbers"
+        "quantidadeResumo"
     ).textContent =
-        quantidade +
-        " números";
-
-
-    document.getElementById(
-        "selectedPrice"
-    ).textContent =
-        "R$ " +
-        formatarMoeda(
-            valor
-        );
-
-
-    document.getElementById(
-        "selectedInfo"
-    ).style.display =
-        "block";
-
-
-    document.getElementById(
-        "formSection"
-    ).style.display =
-        "block";
-
-
-    document.getElementById(
-        "formSection"
-    ).scrollIntoView({
-
-        behavior:"smooth",
-
-        block:"center"
-
-    });
-
-}
-
-
-/* =========================
-   ALTERAR QUANTIDADE
-========================= */
-
-function alterarQuantidade(
-    valorAlteracao
-){
-
-    const input =
-        document.getElementById(
-            "quantidadePersonalizada"
-        );
-
-
-    let quantidade =
-        parseInt(
-            input.value,
-            10
-        );
-
-
-    if(isNaN(quantidade)){
-
-        quantidade = 10;
-
-    }
-
-
-    quantidade +=
-        valorAlteracao;
-
-
-    if(quantidade < 10){
-
-        quantidade = 10;
-
-    }
-
-
-    input.value =
         quantidade;
 
-
-    atualizarPrecoPersonalizado();
-
-}
-
-
-/* =========================
-   DIGITAR QUANTIDADE
-========================= */
-
-function quantidadeDigitada(){
-
-    const input =
-        document.getElementById(
-            "quantidadePersonalizada"
-        );
-
-
-    let quantidade =
-        parseInt(
-            input.value,
-            10
-        );
-
-
-    if(isNaN(quantidade)){
+    if (!acaoAtual) {
 
         document.getElementById(
-            "customPrice"
+            "valorResumo"
         ).textContent =
             "R$ 0,00";
 
         return;
-
     }
-
-
-    if(quantidade < 10){
-
-        quantidade = 10;
-
-        input.value =
-            quantidade;
-
-    }
-
-
-    atualizarPrecoPersonalizado();
-
-}
-
-
-/* =========================
-   ATUALIZAR PREÇO
-========================= */
-
-function atualizarPrecoPersonalizado(){
-
-    if(!acaoAtual){
-
-        return;
-
-    }
-
-
-    const input =
-        document.getElementById(
-            "quantidadePersonalizada"
-        );
-
-
-    if(!input){
-
-        return;
-
-    }
-
-
-    let quantidade =
-        parseInt(
-            input.value,
-            10
-        );
-
-
-    if(
-        isNaN(quantidade) ||
-        quantidade < 10
-    ){
-
-        quantidade = 10;
-
-    }
-
 
     const valor =
-        Number(
-            acaoAtual.valor_numero || 0
-        );
-
+        Number(acaoAtual.valor_numero || 0);
 
     const total =
         quantidade * valor;
 
-
-    const preco =
-        document.getElementById(
-            "customPrice"
-        );
-
-
-    if(preco){
-
-        preco.textContent =
-            "R$ " +
-            formatarMoeda(
-                total
-            );
-
-    }
-
-}
-
-
-/* =========================
-   ESCOLHER QUANTIDADE
-========================= */
-
-function selecionarPersonalizado(){
-
-    if(!acaoAtual){
-
-        alert(
-            "Ação ainda não carregada."
-        );
-
-        return;
-
-    }
-
-
-    const input =
-        document.getElementById(
-            "quantidadePersonalizada"
-        );
-
-
-    let quantidade =
-        parseInt(
-            input.value,
-            10
-        );
-
-
-    if(
-        isNaN(quantidade) ||
-        quantidade < 10
-    ){
-
-        quantidade = 10;
-
-        input.value =
-            quantidade;
-
-    }
-
-
-    const valorNumero =
-        Number(
-            acaoAtual.valor_numero || 0
-        );
-
-
-    const valor =
-        quantidade *
-        valorNumero;
-
-
-    quantidadeSelecionada =
-        quantidade;
-
-
-    valorSelecionado =
-        valor;
-
+    document.getElementById(
+        "valorResumo"
+    ).textContent =
+        formatarMoeda(total);
 
     document
-        .querySelectorAll(
-            ".option"
-        )
-        .forEach(
-            function(opcao){
+        .querySelectorAll(".pacote")
+        .forEach(botao => {
 
-                opcao.classList.remove(
-                    "selected"
+            botao.classList.remove("ativo");
+
+            const numero =
+                Number(
+                    botao.querySelector("strong").textContent
                 );
 
+            if (
+                numero === quantidade
+            ) {
+                botao.classList.add("ativo");
             }
-        );
 
-
-    document.getElementById(
-        "selectedNumbers"
-    ).textContent =
-        quantidade +
-        " números";
-
-
-    document.getElementById(
-        "selectedPrice"
-    ).textContent =
-        "R$ " +
-        formatarMoeda(
-            valor
-        );
-
-
-    document.getElementById(
-        "selectedInfo"
-    ).style.display =
-        "block";
-
-
-    document.getElementById(
-        "formSection"
-    ).style.display =
-        "block";
-
-
-    document.getElementById(
-        "formSection"
-    ).scrollIntoView({
-
-        behavior:"smooth",
-
-        block:"center"
-
-    });
-
+        });
 }
 
 
@@ -1594,150 +890,102 @@ function selecionarPersonalizado(){
    CONTINUAR
 ========================= */
 
-function continuar(){
+function continuar() {
 
     const nome =
-        document
-            .getElementById(
-                "nome"
-            )
-            .value
-            .trim();
-
+        document.getElementById("nome")
+            .value.trim();
 
     const telefone =
-        document
-            .getElementById(
-                "telefone"
-            )
-            .value
-            .trim();
+        document.getElementById("telefone")
+            .value.trim();
 
+    const quantidade =
+        Number(
+            document.getElementById("quantidade")
+                .value || 0
+        );
 
-    if(
-        quantidadeSelecionada === 0
-    ){
+    if (!acaoAtual) {
 
         alert(
-            "Escolha uma participação primeiro."
+            "Nenhuma ação disponível."
         );
 
         return;
-
     }
 
-
-    if(
-        quantidadeSelecionada < 10
-    ){
+    if (quantidade < 10) {
 
         alert(
-            "A participação mínima é de 10 números."
+            "A quantidade mínima é de 10 bilhetes."
         );
 
         return;
-
     }
 
+    if (
+        acaoAtual.total_numeros &&
+        quantidade > Number(acaoAtual.total_numeros)
+    ) {
 
-    if(!nome){
+        alert(
+            "A quantidade informada é maior que o total disponível nesta ação."
+        );
+
+        return;
+    }
+
+    if (!nome) {
 
         alert(
             "Digite seu nome completo."
         );
 
-
-        document
-            .getElementById(
-                "nome"
-            )
-            .focus();
-
-
         return;
-
     }
 
-
-    if(!telefone){
+    if (!telefone) {
 
         alert(
             "Digite seu WhatsApp."
         );
 
-
-        document
-            .getElementById(
-                "telefone"
-            )
-            .focus();
-
-
         return;
-
     }
 
+    const valor =
+        quantidade *
+        Number(acaoAtual.valor_numero || 0);
 
     alert(
-
-        "Participação selecionada!\n\n" +
-
-        "Quantidade: " +
-        quantidadeSelecionada +
-        " números\n" +
-
-        "Valor: R$ " +
-        formatarMoeda(
-            valorSelecionado
-        ) +
-
-        "\n\nPróxima etapa: pagamento."
-
+        "Pedido selecionado!\n\n" +
+        "Ação: " + acaoAtual.nome +
+        "\nQuantidade: " + quantidade +
+        "\nValor: " + formatarMoeda(valor) +
+        "\n\nA etapa de pagamento será integrada em seguida."
     );
-
 }
 
 
 /* =========================
-   FORMATAÇÃO
+   FORMATAÇÕES
 ========================= */
 
-function formatarMoeda(
-    valor
-){
+function formatarMoeda(valor) {
 
-    return Number(
-        valor
-    )
-    .toFixed(2)
-    .replace(
-        ".",
-        ","
-    );
-
+    return Number(valor || 0)
+        .toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+        });
 }
 
 
-/* =========================
-   SEGURANÇA DO TEXTO
-========================= */
+function formatarNumero(valor) {
 
-function escapeHtml(
-    text
-){
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-
-    div.textContent =
-        text ?? "";
-
-
-    return div.innerHTML;
-
+    return Number(valor || 0)
+        .toLocaleString("pt-BR");
 }
 
 
@@ -1745,9 +993,13 @@ function escapeHtml(
    INICIAR
 ========================= */
 
-carregarAcao();
+document.addEventListener(
+    "DOMContentLoaded",
+    carregarAcao
+);
 
 </script>
 
 </body>
 </html>
+```
