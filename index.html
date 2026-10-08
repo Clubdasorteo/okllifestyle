@@ -1,17 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Club da Sorte | OKL Lifestyle</title>
 
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -30,45 +26,14 @@
             background: #050505;
         }
 
-        header img {
-            max-width: 150px;
-            max-height: 70px;
-            object-fit: contain;
-        }
+        header img { max-width: 150px; max-height: 70px; object-fit: contain; }
 
-        .hero {
-            text-align: center;
-            padding: 50px 20px 35px;
-        }
+        .hero { text-align: center; padding: 50px 20px 35px; }
+        .hero h1 { font-size: 34px; font-weight: 900; margin-bottom: 12px; color: #fff; letter-spacing: .5px; }
+        .hero h1 span, .hero strong { color: #f5c542; }
+        .hero p { color: #cfcfcf; font-size: 16px; line-height: 1.5; }
 
-        .hero h1 {
-            font-size: 34px;
-            font-weight: 900;
-            margin-bottom: 12px;
-            color: #fff;
-            letter-spacing: .5px;
-        }
-
-        .hero h1 span {
-            color: #f5c542;
-        }
-
-        .hero p {
-            color: #cfcfcf;
-            font-size: 16px;
-            line-height: 1.5;
-        }
-
-        .hero strong {
-            color: #f5c542;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 16px 50px;
-        }
+        .container { width: 100%; max-width: 900px; margin: 0 auto; padding: 0 16px 50px; }
 
         .titulo-secao {
             font-size: 25px;
@@ -104,22 +69,9 @@
             background: #111;
         }
 
-        .foto-erro {
-            padding: 35px 20px;
-            text-align: center;
-            color: #aaa;
-            line-height: 1.5;
-        }
-
-        .acao-conteudo {
-            padding: 24px;
-        }
-
-        .acao-conteudo h3 {
-            font-size: 29px;
-            margin-bottom: 10px;
-            color: #fff;
-        }
+        .foto-erro { padding: 35px 20px; text-align: center; color: #aaa; line-height: 1.5; }
+        .acao-conteudo { padding: 24px; }
+        .acao-conteudo h3 { font-size: 29px; margin-bottom: 10px; color: #fff; }
 
         .acao-descricao {
             color: #c7c7c7;
@@ -128,32 +80,10 @@
             margin-bottom: 20px;
         }
 
-        .acao-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 18px;
-        }
-
-        .info-box {
-            background: #151515;
-            border: 1px solid #333;
-            border-radius: 12px;
-            padding: 16px;
-        }
-
-        .info-box span {
-            display: block;
-            color: #999;
-            font-size: 12px;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-        }
-
-        .info-box strong {
-            font-size: 21px;
-            color: #f5c542;
-        }
+        .acao-info { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
+        .info-box { background: #151515; border: 1px solid #333; border-radius: 12px; padding: 16px; }
+        .info-box span { display: block; color: #999; font-size: 12px; margin-bottom: 6px; text-transform: uppercase; }
+        .info-box strong { font-size: 21px; color: #f5c542; }
 
         .participacao {
             margin-top: 30px;
@@ -163,24 +93,10 @@
             padding: 24px;
         }
 
-        .participacao h2 {
-            font-size: 25px;
-            margin-bottom: 8px;
-            color: #fff;
-        }
+        .participacao h2 { font-size: 25px; margin-bottom: 8px; color: #fff; }
+        .participacao-subtitulo { color: #aaa; margin-bottom: 20px; line-height: 1.5; }
 
-        .participacao-subtitulo {
-            color: #aaa;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-
-        .pacotes {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+        .pacotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
 
         .pacote {
             border: 1px solid #3a3a3a;
@@ -193,32 +109,12 @@
             transition: .2s;
         }
 
-        .pacote:hover {
-            border-color: #f5c542;
-            transform: translateY(-2px);
-        }
+        .pacote:hover { border-color: #f5c542; transform: translateY(-2px); }
+        .pacote strong { display: block; font-size: 21px; margin-bottom: 5px; color: #f5c542; }
+        .pacote small { color: #aaa; }
 
-        .pacote strong {
-            display: block;
-            font-size: 21px;
-            margin-bottom: 5px;
-            color: #f5c542;
-        }
-
-        .pacote small {
-            color: #aaa;
-        }
-
-        .campo {
-            margin-top: 15px;
-        }
-
-        .campo label {
-            display: block;
-            margin-bottom: 7px;
-            font-size: 14px;
-            color: #ddd;
-        }
+        .campo { margin-top: 15px; }
+        .campo label { display: block; margin-bottom: 7px; font-size: 14px; color: #ddd; }
 
         .campo input {
             width: 100%;
@@ -231,9 +127,7 @@
             font-size: 16px;
         }
 
-        .campo input:focus {
-            border-color: #f5c542;
-        }
+        .campo input:focus { border-color: #f5c542; }
 
         .total-box {
             margin-top: 20px;
@@ -247,14 +141,8 @@
             gap: 10px;
         }
 
-        .total-box span {
-            color: #aaa;
-        }
-
-        .total-box strong {
-            font-size: 26px;
-            color: #f5c542;
-        }
+        .total-box span { color: #aaa; }
+        .total-box strong { font-size: 26px; color: #f5c542; }
 
         .botao {
             width: 100%;
@@ -270,16 +158,8 @@
             transition: .2s;
         }
 
-        .botao:hover {
-            background: #ffd75e;
-            transform: translateY(-1px);
-        }
-
-        .botao:disabled {
-            opacity: .6;
-            cursor: not-allowed;
-            transform: none;
-        }
+        .botao:hover { background: #ffd75e; transform: translateY(-1px); }
+        .botao:disabled { opacity: .6; cursor: not-allowed; transform: none; }
 
         .resultado-reserva {
             margin-top: 20px;
@@ -289,23 +169,10 @@
             padding: 20px;
         }
 
-        .resultado-reserva h3 {
-            color: #f5c542;
-            margin-bottom: 10px;
-        }
+        .resultado-reserva h3 { color: #f5c542; margin-bottom: 10px; }
+        .resultado-reserva p { color: #ccc; line-height: 1.5; margin-bottom: 8px; }
 
-        .resultado-reserva p {
-            color: #ccc;
-            line-height: 1.5;
-            margin-bottom: 8px;
-        }
-
-        .numeros-reservados {
-            margin-top: 15px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 7px;
-        }
+        .numeros-reservados { margin-top: 15px; display: flex; flex-wrap: wrap; gap: 7px; }
 
         .numero-reservado {
             background: #f5c542;
@@ -314,71 +181,21 @@
             padding: 8px 10px;
             font-weight: 900;
             font-size: 14px;
+            font-variant-numeric: tabular-nums;
         }
 
-        .destaques {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 18px;
-        }
+        .destaques { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 18px; }
+        .destaque { background: #0d0d0d; border: 1px solid #303030; border-radius: 14px; padding: 20px; }
+        .destaque h3 { font-size: 17px; margin-bottom: 8px; color: #f5c542; }
+        .destaque p { color: #999; font-size: 14px; }
 
-        .destaque {
-            background: #0d0d0d;
-            border: 1px solid #303030;
-            border-radius: 14px;
-            padding: 20px;
-        }
+        .passos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
+        .passo { background: #0d0d0d; border: 1px solid #303030; border-radius: 14px; padding: 20px; }
+        .passo-numero { font-size: 28px; font-weight: 900; margin-bottom: 10px; color: #f5c542; }
+        .passo h3 { margin-bottom: 8px; }
+        .passo p { color: #999; font-size: 14px; line-height: 1.5; }
 
-        .destaque h3 {
-            font-size: 17px;
-            margin-bottom: 8px;
-            color: #f5c542;
-        }
-
-        .destaque p {
-            color: #999;
-            font-size: 14px;
-        }
-
-        .passos {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-top: 18px;
-        }
-
-        .passo {
-            background: #0d0d0d;
-            border: 1px solid #303030;
-            border-radius: 14px;
-            padding: 20px;
-        }
-
-        .passo-numero {
-            font-size: 28px;
-            font-weight: 900;
-            margin-bottom: 10px;
-            color: #f5c542;
-        }
-
-        .passo h3 {
-            margin-bottom: 8px;
-        }
-
-        .passo p {
-            color: #999;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        footer {
-            border-top: 1px solid #292929;
-            text-align: center;
-            padding: 25px 15px;
-            color: #666;
-            font-size: 13px;
-        }
+        footer { border-top: 1px solid #292929; text-align: center; padding: 25px 15px; color: #666; font-size: 13px; }
 
         .sem-acao {
             background: #0d0d0d;
@@ -390,952 +207,378 @@
         }
 
         @media (max-width: 650px) {
-
-            .hero {
-                padding-top: 35px;
-            }
-
-            .hero h1 {
-                font-size: 28px;
-            }
-
-            .pacotes {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .acao-info {
-                grid-template-columns: 1fr;
-            }
-
-            .destaques {
-                grid-template-columns: 1fr;
-            }
-
-            .passos {
-                grid-template-columns: 1fr;
-            }
-
-            .acao-conteudo {
-                padding: 18px;
-            }
+            .hero { padding-top: 35px; }
+            .hero h1 { font-size: 28px; }
+            .pacotes { grid-template-columns: repeat(2, 1fr); }
+            .acao-info, .destaques, .passos { grid-template-columns: 1fr; }
+            .acao-conteudo { padding: 18px; }
         }
     </style>
 </head>
 
 <body>
-
 <header>
-
-    <img
-        src="Design%20sem%20nome%20(1).jpg"
-        alt="OKL Lifestyle"
-        onerror="this.style.display='none'"
-    >
-
+    <img src="Design%20sem%20nome%20(1).jpg" alt="OKL Lifestyle" onerror="this.style.display='none'">
 </header>
 
 <section class="hero">
-
-    <h1>
-        BEM-VINDO AO <span>CLUB</span>
-    </h1>
-
-    <p>
-        Uma experiência exclusiva
-        <strong>OKL LIFESTYLE.</strong>
-    </p>
-
+    <h1>BEM-VINDO AO <span>CLUB</span></h1>
+    <p>Uma experiência exclusiva <strong>OKL LIFESTYLE.</strong></p>
 </section>
 
 <main class="container">
-
-    <h2 class="titulo-secao">
-        🔥 Ação em destaque
-    </h2>
+    <h2 class="titulo-secao">🔥 Ação em destaque</h2>
 
     <div id="acaoContainer">
-
-        <div class="sem-acao">
-            Carregando ação...
-        </div>
-
+        <div class="sem-acao">Carregando ação...</div>
     </div>
 
     <section class="participacao">
-
-        <h2>
-            🎟️ Escolha sua quantidade
-        </h2>
+        <h2>🎟️ Escolha sua quantidade</h2>
 
         <p class="participacao-subtitulo">
-
-            Escolha uma quantidade de bilhetes
-            ou digite qualquer quantidade a partir
-            de 10. Os números serão atribuídos
-            automaticamente após a reserva.
-
+            Escolha uma quantidade de bilhetes ou digite qualquer quantidade a partir de 10.
+            Os números serão atribuídos automaticamente após a reserva.
         </p>
 
         <div class="pacotes">
-
-            <button
-                class="pacote"
-                onclick="selecionarQuantidade(10)"
-            >
-                <strong>10</strong>
-                <small>bilhetes</small>
-            </button>
-
-            <button
-                class="pacote"
-                onclick="selecionarQuantidade(20)"
-            >
-                <strong>20</strong>
-                <small>bilhetes</small>
-            </button>
-
-            <button
-                class="pacote"
-                onclick="selecionarQuantidade(50)"
-            >
-                <strong>50</strong>
-                <small>bilhetes</small>
-            </button>
-
-            <button
-                class="pacote"
-                onclick="selecionarQuantidade(100)"
-            >
-                <strong>100</strong>
-                <small>bilhetes</small>
-            </button>
-
-            <button
-                class="pacote"
-                onclick="selecionarQuantidade(200)"
-            >
-                <strong>200</strong>
-                <small>bilhetes</small>
-            </button>
-
-            <button
-                class="pacote"
-                onclick="selecionarQuantidade(500)"
-            >
-                <strong>500</strong>
-                <small>bilhetes</small>
-            </button>
-
+            <button class="pacote" onclick="selecionarQuantidade(10)"><strong>10</strong><small>bilhetes</small></button>
+            <button class="pacote" onclick="selecionarQuantidade(20)"><strong>20</strong><small>bilhetes</small></button>
+            <button class="pacote" onclick="selecionarQuantidade(50)"><strong>50</strong><small>bilhetes</small></button>
+            <button class="pacote" onclick="selecionarQuantidade(100)"><strong>100</strong><small>bilhetes</small></button>
+            <button class="pacote" onclick="selecionarQuantidade(200)"><strong>200</strong><small>bilhetes</small></button>
+            <button class="pacote" onclick="selecionarQuantidade(500)"><strong>500</strong><small>bilhetes</small></button>
         </div>
 
         <div class="campo">
-
-            <label for="quantidade">
-                Ou digite a quantidade desejada
-            </label>
-
-            <input
-                type="number"
-                id="quantidade"
-                min="10"
-                placeholder="Ex.: 17, 25, 37, 83..."
-                oninput="calcularTotal()"
-            >
-
+            <label for="quantidade">Ou digite a quantidade desejada</label>
+            <input type="number" id="quantidade" min="10" step="1" placeholder="Ex.: 17, 25, 37, 83..." oninput="calcularTotal()">
         </div>
 
         <div class="campo">
-
-            <label for="nome">
-                Nome
-            </label>
-
-            <input
-                type="text"
-                id="nome"
-                placeholder="Digite seu nome"
-            >
-
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" placeholder="Digite seu nome" autocomplete="name">
         </div>
 
         <div class="campo">
-
-            <label for="cpf">
-                CPF
-            </label>
-
-            <input
-                type="text"
-                id="cpf"
-                inputmode="numeric"
-                maxlength="14"
-                placeholder="000.000.000-00"
-            >
-
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00" autocomplete="off">
         </div>
 
         <div class="campo">
-
-            <label for="whatsapp">
-                WhatsApp
-            </label>
-
-            <input
-                type="tel"
-                id="whatsapp"
-                placeholder="(00) 00000-0000"
-            >
-
+            <label for="whatsapp">WhatsApp</label>
+            <input type="tel" id="whatsapp" placeholder="(00) 00000-0000" autocomplete="tel">
         </div>
 
         <div class="total-box">
-
-            <span>
-                Total
-            </span>
-
-            <strong id="valorTotal">
-                R$ 0,00
-            </strong>
-
+            <span>Total</span>
+            <strong id="valorTotal">R$ 0,00</strong>
         </div>
 
-        <button
-            class="botao"
-            id="botaoContinuar"
-            onclick="continuarCompra()"
-        >
-            CONTINUAR
-        </button>
-
-        <div
-            id="resultadoReserva"
-            style="display:none;"
-        ></div>
-
+        <button class="botao" id="botaoContinuar" onclick="continuarCompra()">CONTINUAR</button>
+        <div id="resultadoReserva" style="display:none;"></div>
     </section>
 
-    <h2 class="titulo-secao">
-        🏆 Destaques
-    </h2>
+    <h2 class="titulo-secao">🏆 Destaques</h2>
 
     <section class="destaques">
-
-        <div class="destaque">
-
-            <h3>
-                👑 Top Comprador
-            </h3>
-
-            <p>
-                Quem mais participa das ações.
-            </p>
-
-        </div>
-
-        <div class="destaque">
-
-            <h3>
-                🎯 Menor Cota
-            </h3>
-
-            <p>
-                Acompanhe as oportunidades.
-            </p>
-
-        </div>
-
-        <div class="destaque">
-
-            <h3>
-                🔥 Maior Cota
-            </h3>
-
-            <p>
-                Confira as maiores participações.
-            </p>
-
-        </div>
-
-        <div class="destaque">
-
-            <h3>
-                🎟️ Bilhetes Premiados
-            </h3>
-
-            <p>
-                Acompanhe os resultados.
-            </p>
-
-        </div>
-
+        <div class="destaque"><h3>👑 Top Comprador</h3><p>Quem mais participa das ações.</p></div>
+        <div class="destaque"><h3>🎯 Menor Cota</h3><p>Acompanhe as oportunidades.</p></div>
+        <div class="destaque"><h3>🔥 Maior Cota</h3><p>Confira as maiores participações.</p></div>
+        <div class="destaque"><h3>🎟️ Bilhetes Premiados</h3><p>Acompanhe os resultados.</p></div>
     </section>
 
-    <h2 class="titulo-secao">
-        📋 Como funciona
-    </h2>
+    <h2 class="titulo-secao">📋 Como funciona</h2>
 
     <section class="passos">
-
         <div class="passo">
-
-            <div class="passo-numero">
-                01
-            </div>
-
-            <h3>
-                Escolha
-            </h3>
-
-            <p>
-                Escolha quantos bilhetes
-                deseja adquirir.
-            </p>
-
+            <div class="passo-numero">01</div>
+            <h3>Escolha</h3>
+            <p>Escolha quantos bilhetes deseja adquirir.</p>
         </div>
-
         <div class="passo">
-
-            <div class="passo-numero">
-                02
-            </div>
-
-            <h3>
-                Pagamento
-            </h3>
-
-            <p>
-                Faça o pagamento da
-                sua participação.
-            </p>
-
+            <div class="passo-numero">02</div>
+            <h3>Pagamento</h3>
+            <p>Faça o pagamento da sua participação.</p>
         </div>
-
         <div class="passo">
-
-            <div class="passo-numero">
-                03
-            </div>
-
-            <h3>
-                Receba seus números
-            </h3>
-
-            <p>
-                Após a confirmação do pagamento,
-                os números são atribuídos
-                automaticamente.
-            </p>
-
+            <div class="passo-numero">03</div>
+            <h3>Receba seus números</h3>
+            <p>Após a confirmação do pagamento, os números são atribuídos automaticamente.</p>
         </div>
-
     </section>
-
 </main>
 
-<footer>
-
-    © 2026 Club da Sorte | OKL Lifestyle
-
-</footer>
+<footer>© 2026 Club da Sorte | OKL Lifestyle</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+const SUPABASE_URL = "https://vlirpvuramslfiftshio.supabase.co";
+const SUPABASE_KEY = "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
 
-const SUPABASE_URL =
-    "https://vlirpvuramslfiftshio.supabase.co";
-
-const SUPABASE_KEY =
-    "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
-
-const clienteSupabase =
-    supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
-
+const clienteSupabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let acaoAtual = null;
 
-
-/* ============================
-   CARREGAR AÇÃO
-============================ */
-
+/* CARREGAR AÇÃO */
 async function carregarAcao() {
+    const container = document.getElementById("acaoContainer");
+    container.innerHTML = '<div class="sem-acao">Carregando ação...</div>';
 
-    const container =
-        document.getElementById("acaoContainer");
-
-    container.innerHTML = `
-        <div class="sem-acao">
-            Carregando ação...
-        </div>
-    `;
-
-    const { data, error } =
-        await clienteSupabase
-            .from("AÇÕES")
-            .select(`
-                id,
-                nome,
-                descricao,
-                foto_url,
-                valor_numero,
-                total_numeros,
-                status,
-                created_at
-            `)
-            .eq("status", "ativa")
-            .order("created_at", {
-                ascending: false
-            })
-            .limit(1);
+    const { data, error } = await clienteSupabase
+        .from("AÇÕES")
+        .select("id,nome,descricao,foto_url,valor_numero,total_numeros,status,created_at")
+        .eq("status", "ativa")
+        .order("created_at", { ascending: false })
+        .limit(1);
 
     console.log("AÇÃO:", data);
     console.log("ERRO:", error);
 
     if (error) {
-
         console.error(error);
-
-        container.innerHTML = `
-            <div class="sem-acao">
-                Não foi possível carregar a ação.
-            </div>
-        `;
-
+        container.innerHTML = '<div class="sem-acao">Não foi possível carregar a ação.</div>';
         return;
     }
 
     if (!data || data.length === 0) {
-
         acaoAtual = null;
-
-        container.innerHTML = `
-            <div class="sem-acao">
-                Nenhuma ação disponível no momento.
-            </div>
-        `;
-
+        container.innerHTML = '<div class="sem-acao">Nenhuma ação disponível no momento.</div>';
         return;
     }
 
     acaoAtual = data[0];
-
     renderizarAcao();
-
     calcularTotal();
 }
 
-
-/* ============================
-   MOSTRAR AÇÃO
-============================ */
-
+/* MOSTRAR AÇÃO */
 function renderizarAcao() {
-
-    const container =
-        document.getElementById("acaoContainer");
-
+    const container = document.getElementById("acaoContainer");
     if (!acaoAtual) return;
 
     let fotoHTML = "";
 
-    if (
-        acaoAtual.foto_url &&
-        String(acaoAtual.foto_url).trim() !== ""
-    ) {
-
-        const urlFoto =
-            String(acaoAtual.foto_url).trim();
+    if (acaoAtual.foto_url && String(acaoAtual.foto_url).trim() !== "") {
+        const urlFoto = String(acaoAtual.foto_url).trim();
 
         fotoHTML = `
             <div class="acao-foto-area">
-
                 <img
                     class="acao-foto"
                     src="${escapeHtml(urlFoto)}"
-                    alt="${escapeHtml(
-                        acaoAtual.nome || "Prêmio"
-                    )}"
+                    alt="${escapeHtml(acaoAtual.nome || "Prêmio")}"
                     onerror="mostrarErroFoto(this)"
                 >
-
             </div>
         `;
-
     } else {
-
         fotoHTML = `
             <div class="acao-foto-area">
-
-                <div class="foto-erro">
-                    📷 Foto do prêmio
-                    ainda não cadastrada.
-                </div>
-
+                <div class="foto-erro">📷 Foto do prêmio ainda não cadastrada.</div>
             </div>
         `;
     }
 
-    const valor =
-        Number(acaoAtual.valor_numero || 0);
-
-    const total =
-        Number(acaoAtual.total_numeros || 0);
+    const valor = Number(acaoAtual.valor_numero || 0);
+    const total = Number(acaoAtual.total_numeros || 0);
 
     container.innerHTML = `
-
         <div class="acao-card">
-
             ${fotoHTML}
-
             <div class="acao-conteudo">
+                <h3>${escapeHtml(acaoAtual.nome || "")}</h3>
 
-                <h3>
-                    ${escapeHtml(
-                        acaoAtual.nome || ""
-                    )}
-                </h3>
-
-                ${
-                    acaoAtual.descricao
-                    ? `
-                        <p class="acao-descricao">
-                            ${escapeHtml(
-                                acaoAtual.descricao
-                            )}
-                        </p>
-                    `
-                    : ""
-                }
+                ${acaoAtual.descricao ? `
+                    <p class="acao-descricao">${escapeHtml(acaoAtual.descricao)}</p>
+                ` : ""}
 
                 <div class="acao-info">
-
                     <div class="info-box">
-
-                        <span>
-                            Valor por bilhete
-                        </span>
-
-                        <strong>
-                            ${formatarMoeda(valor)}
-                        </strong>
-
+                        <span>Valor por bilhete</span>
+                        <strong>${formatarMoeda(valor)}</strong>
                     </div>
-
                     <div class="info-box">
-
-                        <span>
-                            Total de bilhetes
-                        </span>
-
-                        <strong>
-                            ${total.toLocaleString("pt-BR")}
-                        </strong>
-
+                        <span>Total de bilhetes</span>
+                        <strong>${total.toLocaleString("pt-BR")}</strong>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
     `;
 }
 
-
-/* ============================
-   ERRO DA FOTO
-============================ */
-
+/* ERRO DA FOTO */
 function mostrarErroFoto(imagem) {
-
-    const area =
-        imagem.parentElement;
-
+    const area = imagem.parentElement;
     area.innerHTML = `
         <div class="foto-erro">
-
-            ⚠️ Não foi possível
-            carregar a foto do prêmio.
-
+            ⚠️ Não foi possível carregar a foto do prêmio.
             <br><br>
-
-            O cadastro da ação foi encontrado,
-            mas o endereço da imagem
-            não pôde ser aberto.
-
+            O cadastro da ação foi encontrado, mas o endereço da imagem não pôde ser aberto.
         </div>
     `;
-
-    console.error(
-        "Erro ao carregar foto:",
-        imagem.src
-    );
+    console.error("Erro ao carregar foto:", imagem.src);
 }
 
-
-/* ============================
-   QUANTIDADE
-============================ */
-
+/* QUANTIDADE */
 function selecionarQuantidade(quantidade) {
-
-    const campo =
-        document.getElementById("quantidade");
-
+    const campo = document.getElementById("quantidade");
     campo.value = quantidade;
-
     calcularTotal();
-
-    campo.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
+    campo.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
-
-/* ============================
-   TOTAL
-============================ */
-
+/* TOTAL */
 function calcularTotal() {
+    const quantidade = Number(document.getElementById("quantidade").value);
+    const valorPorNumero = Number(acaoAtual?.valor_numero || 0);
+    const total = quantidade * valorPorNumero;
 
-    const quantidade =
-        Number(
-            document.getElementById("quantidade").value
-        );
-
-    const valorPorNumero =
-        Number(
-            acaoAtual?.valor_numero || 0
-        );
-
-    const total =
-        quantidade * valorPorNumero;
-
-    document.getElementById(
-        "valorTotal"
-    ).textContent =
-        formatarMoeda(total);
+    document.getElementById("valorTotal").textContent = formatarMoeda(total);
 }
 
+/* MÁSCARA DO CPF */
+document.getElementById("cpf").addEventListener("input", function() {
+    let valor = this.value.replace(/\D/g, "").substring(0, 11);
 
-/* ============================
-   CPF
-============================ */
+    if (valor.length > 9) {
+        valor = valor.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, "$1.$2.$3-$4");
+    } else if (valor.length > 6) {
+        valor = valor.replace(/(\d{3})(\d{3})(\d{1,3})/, "$1.$2.$3");
+    } else if (valor.length > 3) {
+        valor = valor.replace(/(\d{3})(\d{1,3})/, "$1.$2");
+    }
 
-document
-    .getElementById("cpf")
-    .addEventListener("input", function() {
+    this.value = valor;
+});
 
-        let valor =
-            this.value.replace(/\D/g, "");
-
-        valor =
-            valor.substring(0, 11);
-
-        if (valor.length > 9) {
-
-            valor =
-                valor.replace(
-                    /(\d{3})(\d{3})(\d{3})(\d{1,2})/,
-                    "$1.$2.$3-$4"
-                );
-
-        } else if (valor.length > 6) {
-
-            valor =
-                valor.replace(
-                    /(\d{3})(\d{3})(\d{1,3})/,
-                    "$1.$2.$3"
-                );
-
-        } else if (valor.length > 3) {
-
-            valor =
-                valor.replace(
-                    /(\d{3})(\d{1,3})/,
-                    "$1.$2"
-                );
-        }
-
-        this.value = valor;
-    });
-
-
-/* ============================
-   CONTINUAR / CRIAR PEDIDO
-============================ */
-
+/* CONTINUAR / CRIAR PEDIDO */
 async function continuarCompra() {
-
     if (!acaoAtual) {
-
-        alert(
-            "Nenhuma ação disponível no momento."
-        );
-
+        alert("Nenhuma ação disponível no momento.");
         return;
     }
 
-    const quantidade =
-        Number(
-            document.getElementById("quantidade").value
-        );
+    const quantidade = Number(document.getElementById("quantidade").value);
+    const nome = document.getElementById("nome").value.trim();
+    const cpf = document.getElementById("cpf").value.trim();
+    const whatsapp = document.getElementById("whatsapp").value.trim();
 
-    const nome =
-        document
-            .getElementById("nome")
-            .value
-            .trim();
-
-    const cpf =
-        document
-            .getElementById("cpf")
-            .value
-            .trim();
-
-    const whatsapp =
-        document
-            .getElementById("whatsapp")
-            .value
-            .trim();
-
-    if (!quantidade || quantidade < 10) {
-
-        alert(
-            "A quantidade mínima é de 10 bilhetes."
-        );
-
+    if (!Number.isInteger(quantidade) || quantidade < 10) {
+        alert("A quantidade mínima é de 10 bilhetes. Digite um número inteiro.");
         return;
     }
 
-    if (
-        quantidade >
-        Number(acaoAtual.total_numeros || 0)
-    ) {
-
-        alert(
-            "A quantidade informada é maior que o total da ação."
-        );
-
+    if (quantidade > Number(acaoAtual.total_numeros || 0)) {
+        alert("A quantidade informada é maior que o total da ação.");
         return;
     }
 
     if (!nome) {
-
-        alert(
-            "Digite seu nome."
-        );
-
+        alert("Digite seu nome.");
         return;
     }
 
-    if (!cpf) {
-
-        alert(
-            "Digite seu CPF."
-        );
-
-        return;
-    }
-
-    const cpfSomenteNumeros =
-        cpf.replace(/\D/g, "");
+    const cpfSomenteNumeros = cpf.replace(/\D/g, "");
 
     if (cpfSomenteNumeros.length !== 11) {
-
-        alert(
-            "Digite um CPF válido."
-        );
-
+        alert("Digite um CPF válido.");
         return;
     }
 
     if (!whatsapp) {
-
-        alert(
-            "Digite seu WhatsApp."
-        );
-
+        alert("Digite seu WhatsApp.");
         return;
     }
 
-    const botao =
-        document.getElementById(
-            "botaoContinuar"
-        );
-
+    const botao = document.getElementById("botaoContinuar");
     botao.disabled = true;
-
-    botao.textContent =
-        "RESERVANDO...";
-
-    document.getElementById(
-        "resultadoReserva"
-    ).style.display = "none";
+    botao.textContent = "RESERVANDO...";
+    document.getElementById("resultadoReserva").style.display = "none";
 
     try {
-
-        const { data, error } =
-            await clienteSupabase.rpc(
-                "criar_pedido_e_reservar",
-                {
-                    p_acao_id:
-                        acaoAtual.id,
-
-                    p_quantidade:
-                        quantidade,
-
-                    p_cpf:
-                        cpfSomenteNumeros,
-
-                    p_telefone:
-                        whatsapp,
-
-                    p_nome_cliente:
-                        nome
-                }
-            );
+        const { data, error } = await clienteSupabase.rpc("criar_pedido_e_reservar", {
+            p_acao_id: acaoAtual.id,
+            p_quantidade: quantidade,
+            p_cpf: cpfSomenteNumeros,
+            p_telefone: whatsapp,
+            p_nome_cliente: nome
+        });
 
         if (error) {
-
-            console.error(
-                "Erro ao criar pedido:",
-                error
-            );
-
-            throw new Error(
-                error.message ||
-                "Não foi possível criar sua participação."
-            );
+            console.error("Erro ao criar pedido:", error);
+            throw new Error(error.message || "Não foi possível criar sua participação.");
         }
 
-        console.log(
-            "PEDIDO CRIADO:",
-            data
-        );
-
+        console.log("PEDIDO CRIADO:", data);
         mostrarResultadoReserva(data);
-
     } catch (erro) {
-
         console.error(erro);
-
-        alert(
-            "Não foi possível reservar seus bilhetes.\n\n" +
-            erro.message
-        );
-
+        alert("Não foi possível reservar seus bilhetes.\n\n" + erro.message);
     } finally {
-
         botao.disabled = false;
-
-        botao.textContent =
-            "CONTINUAR";
+        botao.textContent = "CONTINUAR";
     }
 }
 
-
-/* ============================
-   MOSTRAR RESERVA
-============================ */
-
+/* MOSTRAR RESERVA */
 function mostrarResultadoReserva(data) {
-
-    const resultado =
-        document.getElementById(
-            "resultadoReserva"
-        );
-
-    const numeros =
-        Array.isArray(data.numeros)
-            ? data.numeros
-            : [];
-
-    const valorTotal =
-        Number(data.valor_total || 0);
+    const resultado = document.getElementById("resultadoReserva");
+    const numeros = Array.isArray(data.numeros) ? data.numeros : [];
+    const valorTotal = Number(data.valor_total || 0);
 
     let numerosHTML = "";
 
     numeros.forEach(numero => {
-
         numerosHTML += `
             <span class="numero-reservado">
-                ${numero}
+                ${formatarNumeroBilhete(numero)}
             </span>
         `;
     });
 
     resultado.innerHTML = `
-
         <div class="resultado-reserva">
+            <h3>✅ Reserva realizada!</h3>
 
-            <h3>
-                ✅ Reserva realizada!
-            </h3>
-
-            <p>
-                <strong>Pedido:</strong>
-                #${data.pedido_id}
-            </p>
+            <p><strong>Pedido:</strong> #${escapeHtml(data.pedido_id)}</p>
+            <p><strong>Quantidade:</strong> ${escapeHtml(data.quantidade)} bilhetes</p>
+            <p><strong>Total:</strong> ${formatarMoeda(valorTotal)}</p>
 
             <p>
-                <strong>Quantidade:</strong>
-                ${data.quantidade} bilhetes
-            </p>
-
-            <p>
-                <strong>Total:</strong>
-                ${formatarMoeda(valorTotal)}
-            </p>
-
-            <p>
-                Seus números foram reservados
-                automaticamente por
+                Seus números foram reservados automaticamente por
                 <strong>10 minutos</strong>.
             </p>
 
-            <p>
-                <strong>Seus números:</strong>
-            </p>
+            <p><strong>Seus números:</strong></p>
 
             <div class="numeros-reservados">
                 ${numerosHTML}
             </div>
-
         </div>
     `;
 
-    resultado.style.display =
-        "block";
-
-    resultado.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
-
+    resultado.style.display = "block";
+    resultado.scrollIntoView({ behavior: "smooth", block: "center" });
     salvarPedidoLocal(data);
 }
 
+/* FORMATAÇÃO DOS NÚMEROS DOS BILHETES */
+function formatarNumeroBilhete(numero) {
+    const totalNumeros = Number(acaoAtual?.total_numeros || 0);
+    const maiorNumero = Math.max(totalNumeros - 1, 0);
+    const quantidadeDigitos = String(maiorNumero).length;
 
-/* ============================
-   SALVAR PEDIDO NO NAVEGADOR
-============================ */
+    return String(numero).padStart(quantidadeDigitos, "0");
+}
 
+/* SALVAR PEDIDO NO NAVEGADOR */
 function salvarPedidoLocal(data) {
-
     try {
-
-        const pedidos =
-            JSON.parse(
-                localStorage.getItem(
-                    "club_da_sorte_pedidos"
-                ) || "[]"
-            );
+        const pedidos = JSON.parse(
+            localStorage.getItem("club_da_sorte_pedidos") || "[]"
+        );
 
         pedidos.push({
             pedido_id: data.pedido_id,
@@ -1345,80 +588,32 @@ function salvarPedidoLocal(data) {
             criado_em: new Date().toISOString()
         });
 
-        localStorage.setItem(
-            "club_da_sorte_pedidos",
-            JSON.stringify(pedidos)
-        );
-
+        localStorage.setItem("club_da_sorte_pedidos", JSON.stringify(pedidos));
     } catch (erro) {
-
-        console.error(
-            "Não foi possível salvar o pedido localmente:",
-            erro
-        );
+        console.error("Não foi possível salvar o pedido localmente:", erro);
     }
 }
 
-
-/* ============================
-   MOEDA
-============================ */
-
+/* MOEDA */
 function formatarMoeda(valor) {
-
-    return Number(valor || 0)
-        .toLocaleString(
-            "pt-BR",
-            {
-                style: "currency",
-                currency: "BRL"
-            }
-        );
+    return Number(valor || 0).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
 }
 
-
-/* ============================
-   SEGURANÇA HTML
-============================ */
-
+/* SEGURANÇA HTML */
 function escapeHtml(valor) {
-
-    return String(valor || "")
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+    return String(valor ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
-
-/* ============================
-   INICIAR
-============================ */
-
+/* INICIAR */
 carregarAcao();
-
 </script>
-
 </body>
 </html>
