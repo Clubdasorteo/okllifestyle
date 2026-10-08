@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Painel Administrativo - Club da Sorte</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -106,18 +107,37 @@
     <h1>Acesso administrativo</h1>
 
     <div class="form-group">
+
         <label>E-mail</label>
-        <input type="email" id="email">
+
+        <input
+            type="email"
+            id="email"
+        >
+
     </div>
+
 
     <div class="form-group">
+
         <label>Senha</label>
-        <input type="password" id="senha">
+
+        <input
+            type="password"
+            id="senha"
+        >
+
     </div>
 
-    <button type="button" class="btn" id="btnLogin">
+
+    <button
+        type="button"
+        class="btn"
+        id="btnLogin"
+    >
         Entrar
     </button>
+
 
     <div id="loginMensagem"></div>
 
@@ -126,76 +146,200 @@
 
 <div class="container" id="painel">
 
-    <h1>Painel Administrativo</h1>
+    <h1>
+        Painel Administrativo
+    </h1>
 
-    <button type="button" class="btn-sair" id="btnSair">
+
+    <button
+        type="button"
+        class="btn-sair"
+        id="btnSair"
+    >
         Sair
     </button>
 
-    <p><strong>Criar nova ação</strong></p>
+
+    <p>
+        <strong>
+            Criar nova ação
+        </strong>
+    </p>
+
 
     <form id="formAcao">
 
-        <div class="form-group">
-            <label>Nome da ação</label>
-            <input type="text" id="nome" required>
-        </div>
 
         <div class="form-group">
-            <label>Prêmio</label>
-            <input type="text" id="premio" required>
+
+            <label>
+                Nome da ação
+            </label>
+
+            <input
+                type="text"
+                id="nome"
+                required
+            >
+
         </div>
+
 
         <div class="form-group">
-            <label>Descrição do prêmio</label>
-            <textarea id="premio_descricao"></textarea>
+
+            <label>
+                Prêmio
+            </label>
+
+            <input
+                type="text"
+                id="premio"
+                required
+            >
+
         </div>
+
 
         <div class="form-group">
-            <label>Descrição da ação</label>
-            <textarea id="descricao"></textarea>
+
+            <label>
+                Descrição do prêmio
+            </label>
+
+            <textarea
+                id="premio_descricao"
+            ></textarea>
+
         </div>
+
 
         <div class="form-group">
-            <label>URL da foto do prêmio</label>
-            <input type="text" id="foto_url">
+
+            <label>
+                Descrição da ação
+            </label>
+
+            <textarea
+                id="descricao"
+            ></textarea>
+
         </div>
+
 
         <div class="form-group">
-            <label>Valor de cada número</label>
-            <input type="number" id="valor_numero" step="0.01" min="0" required>
+
+            <label>
+                URL da foto do prêmio
+            </label>
+
+            <input
+                type="text"
+                id="foto_url"
+            >
+
         </div>
+
 
         <div class="form-group">
-            <label>Total de números</label>
-            <input type="number" id="total_numeros" min="1" required>
+
+            <label>
+                Valor de cada número
+            </label>
+
+            <input
+                type="number"
+                id="valor_numero"
+                step="0.01"
+                min="0"
+                required
+            >
+
         </div>
+
 
         <div class="form-group">
-            <label>Quantidade</label>
-            <input type="number" id="quantidade" min="1" required>
+
+            <label>
+                Total de números
+            </label>
+
+            <input
+                type="number"
+                id="total_numeros"
+                min="1"
+                required
+            >
+
         </div>
+
 
         <div class="form-group">
-            <label>Data e hora do sorteio</label>
-            <input type="datetime-local" id="data_sorteio">
+
+            <label>
+                Quantidade
+            </label>
+
+            <input
+                type="number"
+                id="quantidade"
+                min="1"
+                required
+            >
+
         </div>
+
 
         <div class="form-group">
-            <label>Link de pagamento</label>
-            <input type="text" id="link_pagamento">
+
+            <label>
+                Data e hora do sorteio
+            </label>
+
+            <input
+                type="datetime-local"
+                id="data_sorteio"
+            >
+
         </div>
+
 
         <div class="form-group">
-            <label>Observações</label>
-            <textarea id="observacoes"></textarea>
+
+            <label>
+                Link de pagamento
+            </label>
+
+            <input
+                type="text"
+                id="link_pagamento"
+            >
+
         </div>
 
-        <button type="submit" class="btn">
+
+        <div class="form-group">
+
+            <label>
+                Observações
+            </label>
+
+            <textarea
+                id="observacoes"
+            ></textarea>
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="btn"
+        >
             Criar ação
         </button>
 
+
     </form>
+
 
     <div id="mensagem"></div>
 
@@ -207,8 +351,10 @@
 const URL_SUPABASE =
     "https://vlirpvuramslfiftshio.supabase.co";
 
+
 const CHAVE_SUPABASE =
     "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
+
 
 const clienteSupabase =
     window.supabase.createClient(
@@ -217,150 +363,264 @@ const clienteSupabase =
     );
 
 
+/* =========================
+   VERIFICAR SESSÃO
+========================= */
+
 async function verificarSessao() {
 
     const resultado =
         await clienteSupabase.auth.getSession();
 
-    const sessao = resultado.data.session;
+
+    const sessao =
+        resultado.data.session;
+
 
     if (sessao) {
 
-        document.getElementById("login").style.display = "none";
-        document.getElementById("painel").style.display = "block";
+        document.getElementById(
+            "login"
+        ).style.display = "none";
 
-    } else {
 
-        document.getElementById("login").style.display = "block";
-        document.getElementById("painel").style.display = "none";
+        document.getElementById(
+            "painel"
+        ).style.display = "block";
 
     }
+
+    else {
+
+        document.getElementById(
+            "login"
+        ).style.display = "block";
+
+
+        document.getElementById(
+            "painel"
+        ).style.display = "none";
+
+    }
+
 }
 
 
+/* =========================
+   LOGIN
+========================= */
+
 document
     .getElementById("btnLogin")
-    .addEventListener("click", async function () {
+    .addEventListener(
+        "click",
+        async function () {
 
-        const email =
-            document.getElementById("email").value.trim();
+            const email =
+                document
+                    .getElementById("email")
+                    .value
+                    .trim();
 
-        const senha =
-            document.getElementById("senha").value;
 
-        const mensagem =
-            document.getElementById("loginMensagem");
+            const senha =
+                document
+                    .getElementById("senha")
+                    .value;
 
-        mensagem.textContent = "Entrando...";
 
-        const resultado =
-            await clienteSupabase.auth.signInWithPassword({
-                email: email,
-                password: senha
-            });
+            const mensagem =
+                document.getElementById(
+                    "loginMensagem"
+                );
 
-        if (resultado.error) {
-
-            console.error(resultado.error);
 
             mensagem.textContent =
-                "Erro: " + resultado.error.message;
+                "Entrando...";
 
-            return;
+
+            const resultado =
+                await clienteSupabase.auth
+                    .signInWithPassword({
+
+                        email: email,
+
+                        password: senha
+
+                    });
+
+
+            if (resultado.error) {
+
+                console.error(
+                    resultado.error
+                );
+
+
+                mensagem.textContent =
+                    "Erro: " +
+                    resultado.error.message;
+
+
+                return;
+
+            }
+
+
+            mensagem.textContent = "";
+
+
+            await verificarSessao();
+
         }
+    );
 
-        mensagem.textContent = "";
 
-        await verificarSessao();
-    });
-
+/* =========================
+   SAIR
+========================= */
 
 document
     .getElementById("btnSair")
-    .addEventListener("click", async function () {
+    .addEventListener(
+        "click",
+        async function () {
 
-        await clienteSupabase.auth.signOut();
+            await clienteSupabase
+                .auth
+                .signOut();
 
-        await verificarSessao();
-    });
 
+            await verificarSessao();
+
+        }
+    );
+
+
+/* =========================
+   CRIAR AÇÃO
+========================= */
 
 document
     .getElementById("formAcao")
-    .addEventListener("submit", async function (event) {
+    .addEventListener(
+        "submit",
+        async function (event) {
 
-        event.preventDefault();
-
-        const mensagem =
-            document.getElementById("mensagem");
-
-        mensagem.textContent = "Criando ação...";
-
-        const resultado =
-            await clienteSupabase
-                .from("acoes")
-                .insert([{
-
-                    nome:
-                        document.getElementById("nome").value,
-
-                    premio:
-                        document.getElementById("premio").value,
-
-                    premio_descricao:
-                        document.getElementById("premio_descricao").value,
-
-                    descricao:
-                        document.getElementById("descricao").value,
-
-                    foto_url:
-                        document.getElementById("foto_url").value,
-
-                    valor_numero:
-                        Number(
-                            document.getElementById("valor_numero").value
-                        ),
-
-                    total_numeros:
-                        Number(
-                            document.getElementById("total_numeros").value
-                        ),
-
-                    quantidade:
-                        Number(
-                            document.getElementById("quantidade").value
-                        ),
-
-                    data_sorteio:
-                        document.getElementById("data_sorteio").value || null,
-
-                    link_pagamento:
-                        document.getElementById("link_pagamento").value,
-
-                    observacoes:
-                        document.getElementById("observacoes").value
-
-                }]);
+            event.preventDefault();
 
 
-        if (resultado.error) {
+            const mensagem =
+                document.getElementById(
+                    "mensagem"
+                );
 
-            console.error(resultado.error);
 
             mensagem.textContent =
-                "Erro ao criar ação: " +
-                resultado.error.message;
+                "Criando ação...";
 
-            return;
+
+            /*
+               AQUI ESTÁ A CORREÇÃO:
+
+               Estamos usando exatamente
+               a tabela AÇÕES.
+            */
+
+            const resultado =
+                await clienteSupabase
+
+                    .from("AÇÕES")
+
+                    .insert([{
+
+                        nome:
+                            document
+                                .getElementById(
+                                    "nome"
+                                )
+                                .value
+                                .trim(),
+
+
+                        descricao:
+                            document
+                                .getElementById(
+                                    "descricao"
+                                )
+                                .value
+                                .trim(),
+
+
+                        foto_url:
+                            document
+                                .getElementById(
+                                    "foto_url"
+                                )
+                                .value
+                                .trim(),
+
+
+                        valor_numero:
+                            Number(
+                                document
+                                    .getElementById(
+                                        "valor_numero"
+                                    )
+                                    .value
+                            ),
+
+
+                        total_numeros:
+                            Number(
+                                document
+                                    .getElementById(
+                                        "total_numeros"
+                                    )
+                                    .value
+                            ),
+
+
+                        status:
+                            "ativa"
+
+                    }]);
+
+
+            if (resultado.error) {
+
+                console.error(
+                    resultado.error
+                );
+
+
+                mensagem.textContent =
+                    "Erro ao criar ação: " +
+                    resultado.error.message;
+
+
+                return;
+
+            }
+
+
+            mensagem.textContent =
+                "Ação criada com sucesso!";
+
+
+            document
+                .getElementById(
+                    "formAcao"
+                )
+                .reset();
+
         }
+    );
 
-        mensagem.textContent =
-            "Ação criada com sucesso!";
 
-        document.getElementById("formAcao").reset();
-
-    });
-
+/* =========================
+   INICIAR
+========================= */
 
 verificarSessao();
 
