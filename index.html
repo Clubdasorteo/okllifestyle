@@ -1,752 +1,1117 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OKL Lifestyle</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            background: #050505;
-            color: #f2f0e8;
-            line-height: 1.5;
-        }
-        header {
-            padding: 22px;
-            text-align: center;
-            border-bottom: 1px solid #242424;
-        }
-        .logo {
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: 3px;
-            color: #f2f0e8;
-            text-align: center;
-        }
-        .hero {
-            padding: 55px 20px;
-            text-align: center;
-        }
-        .hero h1 {
-            font-size: 38px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            color: #d4af37;
-        }
-        .hero p {
-            color: #f2f0e8;
-            font-size: 17px;
-            font-weight: 600;
-        }
-        .container {
-            width: 92%;
-            max-width: 1000px;
-            margin: auto;
-        }
-        .section-title {
-            margin: 30px 0 15px;
-            font-size: 24px;
-            font-weight: 800;
-            color: #d4af37;
-        }
-        .card {
-            background: #111111;
-            border: 1px solid #292929;
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 25px;
-        }
-        .prize {
-            background: linear-gradient(135deg, #222, #111);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-        }
-        .prize img {
-            width: 100%;
-            height: auto;
-            max-height: 400px;
-            object-fit: contain;
-            display: block;
-        }
-        .card-content {
-            padding: 22px;
-        }
-        .card h2 {
-            margin-bottom: 10px;
-            font-size: 25px;
-            font-weight: 800;
-            color: #f2f0e8;
-        }
-        .card-content p {
-            color: #f2f0e8;
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-        .card-content p strong {
-            color: #d4af37;
-            font-size: 19px;
-            font-weight: 800;
-        }
-        .progress {
-            height: 10px;
-            background: #292929;
-            border-radius: 20px;
-            overflow: hidden;
-            margin: 18px 0;
-        }
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background: #d4af37;
-            transition: width 0.3s ease;
-        }
-        .info {
-            display: flex;
-            justify-content: space-between;
-            color: #f2f0e8;
-            font-size: 14px;
-            font-weight: 600;
-            gap: 15px;
-        }
-        .button {
-            display: block;
-            width: 100%;
-            margin-top: 20px;
-            padding: 16px;
-            border: none;
-            border-radius: 10px;
-            background: #d4af37;
-            color: #050505;
-            font-size: 17px;
-            font-weight: 800;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-        }
-        .button:hover {
-            opacity: 0.9;
-        }
-        .how {
-            background: #111111;
-            padding: 25px;
-            border-radius: 16px;
-            margin-bottom: 40px;
-            border: 1px solid #292929;
-        }
-        .how h2 {
-            font-size: 23px;
-            font-weight: 800;
-            color: #d4af37;
-            margin-bottom: 15px;
-        }
-        .how p {
-            color: #f2f0e8;
-            margin: 15px 0;
-            font-size: 16px;
-            font-weight: 500;
-        }
-        .how p strong {
-            color: #d4af37;
-            font-weight: 800;
-        }
-        .options {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 20px;
-        }
-        .option {
-            padding: 18px;
-            background: #111111;
-            color: #f2f0e8;
-            border: 1px solid #3a3a3a;
-            border-radius: 12px;
-            font-size: 16px;
-            cursor: pointer;
-            text-align: center;
-            transition: 0.2s;
-        }
-        .option:hover {
-            border-color: #d4af37;
-        }
-        .option.selected {
-            border: 2px solid #d4af37;
-            background: #181818;
-        }
-        .option strong {
-            display: block;
-            font-size: 18px;
-            font-weight: 800;
-            margin-bottom: 6px;
-            color: #f2f0e8;
-        }
-        .option span {
-            color: #d4af37;
-            font-size: 16px;
-            font-weight: 700;
-        }
-        .selected-info {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 10px;
-            background: #080808;
-            border: 1px solid #292929;
-            text-align: center;
-            display: none;
-        }
-        .selected-info strong {
-            color: #d4af37;
-        }
-        .form-section {
-            display: none;
-            margin-top: 25px;
-        }
-        .form-section h3 {
-            color: #d4af37;
-            margin-bottom: 15px;
-            font-size: 22px;
-        }
-        .form-section input {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 12px;
-            background: #050505;
-            border: 1px solid #3a3a3a;
-            border-radius: 10px;
-            color: #f2f0e8;
-            font-size: 16px;
-            outline: none;
-        }
-        .form-section input:focus {
-            border-color: #d4af37;
-        }
-        .highlights {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-bottom: 40px;
-        }
-        .highlight {
-            background: #111111;
-            border: 1px solid #292929;
-            padding: 25px 15px;
-            border-radius: 14px;
-            text-align: center;
-        }
-        .highlight strong {
-            display: block;
-            margin-top: 10px;
-            color: #d4af37;
-            font-size: 16px;
-            font-weight: 800;
-        }
-        .highlight small {
-            display: block;
-            margin-top: 5px;
-            color: #f2f0e8;
-            font-size: 13px;
-            font-weight: 600;
-        }
-        .winning-tickets {
-            display: none;
-        }
-        .winning-ticket {
-            background: #111111;
-            border: 1px solid #292929;
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-        }
-        .winning-ticket .number {
-            color: #d4af37;
-            font-size: 22px;
-            font-weight: 800;
-        }
-        .winning-ticket .prize-value {
-            color: #f2f0e8;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-        .loading {
-            text-align: center;
-            padding: 30px;
-            color: #d4af37;
-            font-weight: 700;
-        }
-        .error {
-            text-align: center;
-            padding: 25px;
-            color: #ff6b6b;
-            font-weight: 700;
-        }
-        footer {
-            text-align: center;
-            padding: 30px;
-            color: #777;
-            border-top: 1px solid #222;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        @media (max-width: 700px) {
-            .logo {
-                font-size: 24px;
-            }
-            .hero {
-                padding: 45px 18px;
-            }
-            .hero h1 {
-                font-size: 30px;
-                line-height: 1.2;
-            }
-            .hero p {
-                font-size: 16px;
-            }
-            .section-title {
-                font-size: 22px;
-            }
-            .highlights {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .info {
-                font-size: 13px;
-            }
-        }
-        @media (max-width: 500px) {
-            .options {
-                grid-template-columns: 1fr;
-            }
-            .card-content {
-                padding: 20px;
-            }
-            .card h2 {
-                font-size: 23px;
-            }
-            .option {
-                padding: 17px;
-            }
-            .highlight {
-                padding: 22px 10px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OKL Lifestyle</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#050505;
+    color:#f2f0e8;
+    line-height:1.5;
+}
+
+header{
+    padding:22px;
+    text-align:center;
+    border-bottom:1px solid #242424;
+}
+
+.logo-img{
+    width:150px;
+    max-width:70%;
+    height:auto;
+    display:block;
+    margin:0 auto;
+    object-fit:contain;
+}
+
+.hero{
+    padding:45px 20px;
+    text-align:center;
+}
+
+.hero h1{
+    font-size:38px;
+    font-weight:800;
+    letter-spacing:1px;
+    margin-bottom:15px;
+    color:#d4af37;
+}
+
+.hero p{
+    color:#f2f0e8;
+    font-size:17px;
+    font-weight:600;
+}
+
+.container{
+    width:92%;
+    max-width:1000px;
+    margin:auto;
+}
+
+.section-title{
+    margin:30px 0 15px;
+    font-size:24px;
+    font-weight:800;
+    color:#d4af37;
+}
+
+.card{
+    background:#111;
+    border:1px solid #292929;
+    border-radius:16px;
+    overflow:hidden;
+    margin-bottom:25px;
+}
+
+.prize{
+    background:linear-gradient(135deg,#222,#111);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+    min-height:180px;
+}
+
+.prize img{
+    width:100%;
+    height:auto;
+    max-height:400px;
+    object-fit:contain;
+    display:block;
+}
+
+.card-content{
+    padding:22px;
+}
+
+.card h2{
+    margin-bottom:10px;
+    font-size:25px;
+    font-weight:800;
+}
+
+.card-content p{
+    font-size:16px;
+    font-weight:500;
+    margin-bottom:8px;
+}
+
+.card-content p strong{
+    color:#d4af37;
+    font-size:19px;
+    font-weight:800;
+}
+
+.progress{
+    height:10px;
+    background:#292929;
+    border-radius:20px;
+    overflow:hidden;
+    margin:18px 0;
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+    background:#d4af37;
+    transition:width .3s ease;
+}
+
+.info{
+    display:flex;
+    justify-content:space-between;
+    color:#f2f0e8;
+    font-size:14px;
+    font-weight:600;
+    gap:15px;
+}
+
+.button{
+    display:block;
+    width:100%;
+    margin-top:20px;
+    padding:16px;
+    border:none;
+    border-radius:10px;
+    background:#d4af37;
+    color:#050505;
+    font-size:17px;
+    font-weight:800;
+    cursor:pointer;
+    text-align:center;
+    text-decoration:none;
+}
+
+.button:hover{
+    opacity:.9;
+}
+
+.how{
+    background:#111;
+    padding:25px;
+    border-radius:16px;
+    margin-bottom:40px;
+    border:1px solid #292929;
+}
+
+.how h2{
+    font-size:23px;
+    font-weight:800;
+    color:#d4af37;
+    margin-bottom:15px;
+}
+
+.how p{
+    margin:15px 0;
+    font-size:16px;
+    font-weight:500;
+}
+
+.how p strong{
+    color:#d4af37;
+}
+
+.options{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-top:20px;
+}
+
+.option{
+    padding:18px;
+    background:#111;
+    color:#f2f0e8;
+    border:1px solid #3a3a3a;
+    border-radius:12px;
+    font-size:16px;
+    cursor:pointer;
+    text-align:center;
+    transition:.2s;
+}
+
+.option:hover{
+    border-color:#d4af37;
+}
+
+.option.selected{
+    border:2px solid #d4af37;
+    background:#181818;
+}
+
+.option strong{
+    display:block;
+    font-size:18px;
+    margin-bottom:6px;
+}
+
+.option span{
+    color:#d4af37;
+    font-size:16px;
+    font-weight:700;
+}
+
+.selected-info{
+    margin-top:20px;
+    padding:15px;
+    border-radius:10px;
+    background:#080808;
+    border:1px solid #292929;
+    text-align:center;
+    display:none;
+}
+
+.selected-info strong{
+    color:#d4af37;
+}
+
+.form-section{
+    display:none;
+    margin-top:25px;
+}
+
+.form-section h3{
+    color:#d4af37;
+    margin-bottom:15px;
+    font-size:22px;
+}
+
+.form-section input{
+    width:100%;
+    padding:15px;
+    margin-bottom:12px;
+    background:#050505;
+    border:1px solid #3a3a3a;
+    border-radius:10px;
+    color:#f2f0e8;
+    font-size:16px;
+    outline:none;
+}
+
+.form-section input:focus{
+    border-color:#d4af37;
+}
+
+.highlights{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:40px;
+}
+
+.highlight{
+    background:#111;
+    border:1px solid #292929;
+    padding:25px 15px;
+    border-radius:14px;
+    text-align:center;
+}
+
+.highlight strong{
+    display:block;
+    margin-top:10px;
+    color:#d4af37;
+    font-size:16px;
+}
+
+.highlight small{
+    display:block;
+    margin-top:5px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.loading,
+.error{
+    text-align:center;
+    padding:30px;
+    font-weight:700;
+}
+
+.loading{
+    color:#d4af37;
+}
+
+.error{
+    color:#ff6b6b;
+}
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:#777;
+    border-top:1px solid #222;
+    font-size:14px;
+}
+
+@media(max-width:700px){
+
+    .logo-img{
+        width:135px;
+    }
+
+    .hero h1{
+        font-size:30px;
+        line-height:1.2;
+    }
+
+    .highlights{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .info{
+        font-size:13px;
+    }
+}
+
+@media(max-width:500px){
+
+    .options{
+        grid-template-columns:1fr;
+    }
+
+    .card-content{
+        padding:20px;
+    }
+
+    .card h2{
+        font-size:23px;
+    }
+}
+</style>
 </head>
+
 <body>
+
 <header>
-    <div class="logo">OKL LIFESTYLE</div>
+    <img
+        src="Design%20sem%20nome%20(1).jpg"
+        alt="OKL Lifestyle"
+        class="logo-img"
+    >
 </header>
+
 <section class="hero">
-    <h1>BEM VINDO AO CLUB</h1>
+    <h1>BEM-VINDO AO CLUB</h1>
     <p>Uma experiência exclusiva OKL LIFESTYLE.</p>
 </section>
+
 <main class="container">
+
     <h2 class="section-title">🔥 Ação em destaque</h2>
+
     <div id="acaoContainer">
         <div class="loading">
             Carregando ação...
         </div>
     </div>
+
 </main>
+
 <section id="participar" class="how container">
-    <h2 id="participarTitulo">Participar</h2>
+
+    <h2>Participar</h2>
+
     <p>Escolha quantas participações deseja.</p>
-    <div class="options">
-        <button class="option" onclick="selecionar(10, 17.90, this)">
-            <strong>10 números</strong>
-            <span>R$ 17,90</span>
-        </button>
-        <button class="option" onclick="selecionar(15, 26.85, this)">
-            <strong>15 números</strong>
-            <span>R$ 26,85</span>
-        </button>
-        <button class="option" onclick="selecionar(50, 89.50, this)">
-            <strong>50 números</strong>
-            <span>R$ 89,50</span>
-        </button>
-        <button class="option" onclick="selecionar(100, 179.00, this)">
-            <strong>100 números</strong>
-            <span>R$ 179,00</span>
-        </button>
-        <button class="option" onclick="selecionar(200, 358.00, this)">
-            <strong>200 números</strong>
-            <span>R$ 358,00</span>
-        </button>
-        <button class="option" onclick="selecionar(500, 895.00, this)">
-            <strong>500 números</strong>
-            <span>R$ 895,00</span>
-        </button>
-    </div>
+
+    <div class="options" id="optionsContainer"></div>
+
     <div class="selected-info" id="selectedInfo">
+
         Você selecionou
         <strong id="selectedNumbers"></strong>
         por
         <strong id="selectedPrice"></strong>.
+
     </div>
+
     <div class="form-section" id="formSection">
+
         <h3>Seus dados</h3>
+
         <input
             type="text"
             id="nome"
             placeholder="Nome completo"
         >
+
         <input
             type="tel"
             id="telefone"
             placeholder="WhatsApp"
         >
-        <button class="button" onclick="continuar()">
+
+        <button
+            class="button"
+            onclick="continuar()"
+        >
             CONTINUAR
         </button>
+
     </div>
+
 </section>
+
 <h2 class="section-title container">
     🏆 Destaques
 </h2>
+
 <div class="highlights container">
+
     <div class="highlight">
         🥇
         <strong>Top Comprador</strong>
         <small>Mais bilhetes</small>
     </div>
+
     <div class="highlight">
         ⬇️
         <strong>Menor Cota</strong>
         <small>Menor número</small>
     </div>
+
     <div class="highlight">
         ⬆️
         <strong>Maior Cota</strong>
         <small>Maior número</small>
     </div>
+
     <div class="highlight">
         🎫
         <strong>Bilhetes Premiados</strong>
         <small>6 a 8 prêmios extras</small>
     </div>
+
 </div>
-<section class="container winning-tickets" id="winningTickets">
-    <h2 class="section-title">
-        🎫 Bilhetes Premiados
-    </h2>
-    <div id="winningTicketsList">
-    </div>
-</section>
+
 <section class="how container">
+
     <h2>📋 Como funciona</h2>
+
     <p>
-        <strong>01.</strong> Escolha sua participação.
+        <strong>01.</strong>
+        Escolha sua participação.
     </p>
+
     <p>
-        <strong>02.</strong> Realize o pagamento.
+        <strong>02.</strong>
+        Realize o pagamento.
     </p>
+
     <p>
-        <strong>03.</strong> Receba seus números.
+        <strong>03.</strong>
+        Receba seus números.
     </p>
+
     <p>
-        <strong>04.</strong> Acompanhe o resultado.
+        <strong>04.</strong>
+        Acompanhe o resultado.
     </p>
+
 </section>
+
 <footer>
     ©️ 2026 OKL Lifestyle
 </footer>
+
+
 <!-- SUPABASE -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-/*
-====================================================
-CONFIGURAÇÃO DO SUPABASE
-====================================================
-*/
+
 const SUPABASE_URL =
     "https://vlirpvuramslfiftshio.supabase.co";
-/*
-ATENÇÃO:
-Coloque aqui a NOVA Publishable key depois de
-gerá-la no Supabase.
-Não coloque Secret key.
-*/
+
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
-const supabase = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-);
-/*
-====================================================
-VARIÁVEIS
-====================================================
-*/
+
+const supabase =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
 let quantidadeSelecionada = 0;
 let valorSelecionado = 0;
 let acaoAtual = null;
-/*
-====================================================
-CARREGAR AÇÃO DO SUPABASE
-====================================================
-*/
-async function carregarAcao() {
-    const container = document.getElementById("acaoContainer");
-    try {
-        const { data, error } = await supabase
-            .from("AÇÕES")
-            .select(`
-                id,
-                nome,
-                descricao,
-                foto_url,
-                valor_numero,
-                total_numeros,
-                status
-            `)
-            .eq("status", "ativa")
-            .order("created_at", { ascending: false })
-            .limit(1)
-            .maybeSingle();
-        if (error) {
+
+
+/* =========================
+   CARREGAR AÇÃO
+========================= */
+
+async function carregarAcao(){
+
+    const container =
+        document.getElementById("acaoContainer");
+
+    try{
+
+        const { data, error } =
+            await supabase
+                .from("AÇÕES")
+                .select(`
+                    id,
+                    nome,
+                    descricao,
+                    foto_url,
+                    valor_numero,
+                    total_numeros,
+                    status,
+                    created_at
+                `)
+                .eq("status","ativa")
+                .order("created_at",{ascending:false})
+                .limit(1)
+                .maybeSingle();
+
+
+        if(error){
+
             throw error;
+
         }
-        if (!data) {
+
+
+        if(!data){
+
             container.innerHTML = `
                 <div class="error">
                     Nenhuma ação disponível no momento.
                 </div>
             `;
+
             return;
+
         }
+
+
         acaoAtual = data;
+
+
         renderizarAcao(data);
+
+
+        criarOpcoes(data.valor_numero);
+
+
         atualizarResumoAcao(data.id);
-    } catch (error) {
-        console.error("Erro ao carregar ação:", error);
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Erro ao carregar ação:",
+            error
+        );
+
         container.innerHTML = `
             <div class="error">
                 Não foi possível carregar a ação.
             </div>
         `;
+
     }
+
 }
-/*
-====================================================
-MOSTRAR AÇÃO NA TELA
-====================================================
-*/
-function renderizarAcao(acao) {
-    const container = document.getElementById("acaoContainer");
+
+
+/* =========================
+   MOSTRAR AÇÃO
+========================= */
+
+function renderizarAcao(acao){
+
+    const container =
+        document.getElementById("acaoContainer");
+
+
     const valor =
-        Number(acao.valor_numero || 0)
+        Number(
+            acao.valor_numero || 0
+        )
         .toFixed(2)
-        .replace(".", ",");
-    const imagem = acao.foto_url
-        ? acao.foto_url
-        : "Design%20sem%20nome.jpg";
+        .replace(".",",");
+
+
+    const imagem =
+        acao.foto_url || "";
+
+
     container.innerHTML = `
+
         <div class="card">
+
             <div class="prize">
-                <img
-                    src="${imagem}"
-                    alt="Prêmio"
-                >
+
+                ${
+                    imagem
+
+                    ?
+
+                    `
+                    <img
+                        src="${imagem}"
+                        alt="Prêmio"
+                    >
+                    `
+
+                    :
+
+                    `
+                    <div class="loading">
+                        Foto do prêmio não cadastrada.
+                    </div>
+                    `
+                }
+
             </div>
+
+
             <div class="card-content">
+
                 <h2>
                     ${escapeHtml(acao.nome)}
                 </h2>
+
+
                 <p>
-                    ${escapeHtml(acao.descricao || "")}
+                    ${escapeHtml(
+                        acao.descricao || ""
+                    )}
                 </p>
+
+
                 <p>
                     <strong>
-                        A partir de R$ ${valor}
+                        R$ ${valor} por número
                     </strong>
                 </p>
+
+
                 <div class="progress">
+
                     <div
                         class="progress-bar"
                         id="progressBar"
                     ></div>
+
                 </div>
+
+
                 <div class="info">
+
                     <span id="vendidosInfo">
                         0 vendidos
                     </span>
+
                     <span>
-                        ${Number(acao.total_numeros).toLocaleString("pt-BR")}
+                        ${
+                            Number(
+                                acao.total_numeros || 0
+                            ).toLocaleString("pt-BR")
+                        }
                         números
                     </span>
+
                 </div>
+
+
                 <a
                     href="#participar"
                     class="button"
                 >
                     PARTICIPAR
                 </a>
+
             </div>
+
         </div>
+
     `;
+
 }
-/*
-====================================================
-RESUMO DA AÇÃO
-====================================================
-*/
-async function atualizarResumoAcao(acaoId) {
-    const { data, error } = await supabase
-        .from("acoes_resumo")
-        .select(`
-            total_numeros,
-            numeros_vendidos,
-            numeros_disponiveis
-        `)
-        .eq("id", acaoId)
-        .maybeSingle();
-    if (error) {
+
+
+/* =========================
+   VALORES DAS PARTICIPAÇÕES
+========================= */
+
+function criarOpcoes(valorNumero){
+
+    const container =
+        document.getElementById(
+            "optionsContainer"
+        );
+
+
+    const valor =
+        Number(valorNumero || 0);
+
+
+    if(!valor){
+
+        container.innerHTML = `
+            <div class="error">
+                Valor do número não cadastrado.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    /*
+       QUANTIDADES DISPONÍVEIS
+       O VALOR É CALCULADO
+       AUTOMATICAMENTE.
+    */
+
+    const quantidades = [
+        10,
+        15,
+        50,
+        100,
+        200,
+        500
+    ];
+
+
+    container.innerHTML = "";
+
+
+    quantidades.forEach(
+        function(quantidade){
+
+            const total =
+                quantidade * valor;
+
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.className =
+                "option";
+
+
+            button.innerHTML = `
+
+                <strong>
+                    ${quantidade} números
+                </strong>
+
+                <span>
+                    R$ ${formatarMoeda(total)}
+                </span>
+
+            `;
+
+
+            button.onclick =
+                function(){
+
+                    selecionar(
+                        quantidade,
+                        total,
+                        button
+                    );
+
+                };
+
+
+            container.appendChild(
+                button
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================
+   RESUMO DA AÇÃO
+========================= */
+
+async function atualizarResumoAcao(acaoId){
+
+    const { data, error } =
+        await supabase
+            .from("acoes_resumo")
+            .select(`
+                total_numeros,
+                numeros_vendidos,
+                numeros_disponiveis
+            `)
+            .eq("id",acaoId)
+            .maybeSingle();
+
+
+    if(error){
+
         console.error(
             "Erro ao carregar resumo:",
             error
         );
+
         return;
+
     }
-    if (!data) {
+
+
+    if(!data){
+
         return;
+
     }
-    const total = Number(data.total_numeros || 0);
-    const vendidos = Number(data.numeros_vendidos || 0);
+
+
+    const total =
+        Number(
+            data.total_numeros || 0
+        );
+
+
+    const vendidos =
+        Number(
+            data.numeros_vendidos || 0
+        );
+
+
     const porcentagem =
         total > 0
-            ? (vendidos / total) * 100
-            : 0;
+        ?
+        (vendidos / total) * 100
+        :
+        0;
+
+
     const vendidosInfo =
-        document.getElementById("vendidosInfo");
+        document.getElementById(
+            "vendidosInfo"
+        );
+
+
     const progressBar =
-        document.getElementById("progressBar");
-    if (vendidosInfo) {
+        document.getElementById(
+            "progressBar"
+        );
+
+
+    if(vendidosInfo){
+
         vendidosInfo.textContent =
-            vendidos.toLocaleString("pt-BR") +
+            vendidos.toLocaleString("pt-BR")
+            +
             " vendidos";
+
     }
-    if (progressBar) {
+
+
+    if(progressBar){
+
         progressBar.style.width =
-            porcentagem + "%";
+            Math.min(
+                porcentagem,
+                100
+            )
+            +
+            "%";
+
     }
+
 }
-/*
-====================================================
-SELEÇÃO DE PARTICIPAÇÃO
-====================================================
-*/
+
+
+/* =========================
+   SELECIONAR PARTICIPAÇÃO
+========================= */
+
 function selecionar(
     quantidade,
     valor,
     elemento
-) {
-    quantidadeSelecionada = quantidade;
-    valorSelecionado = valor;
+){
+
+    quantidadeSelecionada =
+        quantidade;
+
+
+    valorSelecionado =
+        valor;
+
+
     document
         .querySelectorAll(".option")
-        .forEach(function(opcao) {
-            opcao.classList.remove("selected");
-        });
-    elemento.classList.add("selected");
+        .forEach(
+            function(opcao){
+
+                opcao.classList.remove(
+                    "selected"
+                );
+
+            }
+        );
+
+
+    elemento.classList.add(
+        "selected"
+    );
+
+
     document.getElementById(
         "selectedNumbers"
     ).textContent =
-        quantidade + " números";
+        quantidade +
+        " números";
+
+
     document.getElementById(
         "selectedPrice"
     ).textContent =
         "R$ " +
-        valor.toFixed(2).replace(".", ",");
+        formatarMoeda(valor);
+
+
     document.getElementById(
         "selectedInfo"
-    ).style.display = "block";
+    ).style.display =
+        "block";
+
+
     document.getElementById(
         "formSection"
-    ).style.display = "block";
+    ).style.display =
+        "block";
+
+
     document.getElementById(
         "formSection"
     ).scrollIntoView({
-        behavior: "smooth",
-        block: "center"
+
+        behavior:"smooth",
+
+        block:"center"
+
     });
+
 }
-/*
-====================================================
-CONTINUAR
-====================================================
-*/
-function continuar() {
+
+
+/* =========================
+   CONTINUAR
+========================= */
+
+function continuar(){
+
     const nome =
         document
             .getElementById("nome")
             .value
             .trim();
+
+
     const telefone =
         document
             .getElementById("telefone")
             .value
             .trim();
-    if (quantidadeSelecionada === 0) {
+
+
+    if(
+        quantidadeSelecionada === 0
+    ){
+
         alert(
             "Escolha uma participação primeiro."
         );
+
         return;
+
     }
-    if (nome === "") {
+
+
+    if(!nome){
+
         alert(
             "Digite seu nome completo."
         );
+
         document
             .getElementById("nome")
             .focus();
+
         return;
+
     }
-    if (telefone === "") {
+
+
+    if(!telefone){
+
         alert(
             "Digite seu WhatsApp."
         );
+
         document
             .getElementById("telefone")
             .focus();
+
         return;
+
     }
+
+
     alert(
-        "Participação selecionada!\n\n" +
-        "Quantidade: " +
-        quantidadeSelecionada +
-        " números\n" +
-        "Valor: R$ " +
-        valorSelecionado
-            .toFixed(2)
-            .replace(".", ",") +
+
+        "Participação selecionada!\n\n"
+
+        +
+
+        "Quantidade: "
+
+        +
+
+        quantidadeSelecionada
+
+        +
+
+        " números\n"
+
+        +
+
+        "Valor: R$ "
+
+        +
+
+        formatarMoeda(
+            valorSelecionado
+        )
+
+        +
+
         "\n\nPróxima etapa: pagamento."
+
     );
+
 }
-/*
-====================================================
-PROTEÇÃO BÁSICA DE TEXTO
-====================================================
-*/
-function escapeHtml(text) {
+
+
+/* =========================
+   FORMATAÇÃO
+========================= */
+
+function formatarMoeda(valor){
+
+    return Number(valor)
+        .toFixed(2)
+        .replace(".",",");
+
+}
+
+
+/* =========================
+   SEGURANÇA DO TEXTO
+========================= */
+
+function escapeHtml(text){
+
     const div =
         document.createElement("div");
+
     div.textContent =
         text ?? "";
+
     return div.innerHTML;
+
 }
-/*
-====================================================
-INICIAR
-====================================================
-*/
+
+
+/* =========================
+   INICIAR
+========================= */
+
 carregarAcao();
+
 </script>
+
 </body>
 </html>
