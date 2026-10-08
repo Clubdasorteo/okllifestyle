@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -127,10 +128,12 @@
 
         #mensagem,
         #loginMensagem,
-        #listaMensagem {
+        #listaMensagem,
+        #mensagemEdicao {
             margin-top: 15px;
             text-align: center;
             font-weight: bold;
+            line-height: 1.5;
         }
 
         .foto-preview {
@@ -148,6 +151,7 @@
             color: #999;
             font-size: 13px;
             margin-top: 7px;
+            line-height: 1.4;
         }
 
         .separador {
@@ -236,6 +240,7 @@
             border-radius: 10px;
             background: #000;
             margin-bottom: 15px;
+            display: block;
         }
     </style>
 </head>
@@ -292,9 +297,7 @@
     </button>
 
 
-    <!-- =========================
-         AÇÕES CADASTRADAS
-    ========================= -->
+    <!-- AÇÕES CADASTRADAS -->
 
     <h2>🎯 Ações cadastradas</h2>
 
@@ -311,9 +314,7 @@
     <div id="listaMensagem"></div>
 
 
-    <!-- =========================
-         EDITOR
-    ========================= -->
+    <!-- EDITOR -->
 
     <div id="editor">
 
@@ -429,13 +430,13 @@
                 >
 
                 <div class="foto-info">
-                    Se não selecionar uma nova foto, a foto atual será mantida.
+                    Selecione uma nova foto pelo celular ou computador.
                 </div>
 
                 <img
                     id="editarFotoPreview"
                     class="foto-preview"
-                    alt="Nova foto"
+                    alt="Prévia da nova foto"
                 >
 
             </div>
@@ -468,9 +469,7 @@
     <div class="separador"></div>
 
 
-    <!-- =========================
-         NOVA AÇÃO
-    ========================= -->
+    <!-- NOVA AÇÃO -->
 
     <p>
         <strong>➕ Criar nova ação</strong>
@@ -685,25 +684,18 @@ async function verificarSessao() {
 
     if (sessao) {
 
-        document.getElementById(
-            "login"
-        ).style.display = "none";
+        document.getElementById("login").style.display = "none";
 
-        document.getElementById(
-            "painel"
-        ).style.display = "block";
+        document.getElementById("painel").style.display = "block";
 
         carregarAcoes();
 
     } else {
 
-        document.getElementById(
-            "login"
-        ).style.display = "block";
+        document.getElementById("login").style.display = "block";
 
-        document.getElementById(
-            "painel"
-        ).style.display = "none";
+        document.getElementById("painel").style.display = "none";
+
     }
 }
 
@@ -714,53 +706,45 @@ async function verificarSessao() {
 
 document
     .getElementById("btnLogin")
-    .addEventListener(
-        "click",
-        async function () {
+    .addEventListener("click", async function () {
 
-            const email =
-                document
-                    .getElementById("email")
-                    .value
-                    .trim();
+        const email =
+            document.getElementById("email").value.trim();
 
-            const senha =
-                document
-                    .getElementById("senha")
-                    .value;
+        const senha =
+            document.getElementById("senha").value;
 
-            const mensagem =
-                document.getElementById(
-                    "loginMensagem"
-                );
+        const mensagem =
+            document.getElementById("loginMensagem");
+
+        mensagem.textContent = "Entrando...";
+
+
+        const resultado =
+            await clienteSupabase.auth.signInWithPassword({
+
+                email: email,
+
+                password: senha
+
+            });
+
+
+        if (resultado.error) {
 
             mensagem.textContent =
-                "Entrando...";
+                "Erro: " +
+                resultado.error.message;
 
-            const resultado =
-                await clienteSupabase.auth
-                    .signInWithPassword({
-
-                        email: email,
-
-                        password: senha
-
-                    });
-
-            if (resultado.error) {
-
-                mensagem.textContent =
-                    "Erro: " +
-                    resultado.error.message;
-
-                return;
-            }
-
-            mensagem.textContent = "";
-
-            await verificarSessao();
+            return;
         }
-    );
+
+
+        mensagem.textContent = "";
+
+        await verificarSessao();
+
+    });
 
 
 /* =========================
@@ -769,17 +753,13 @@ document
 
 document
     .getElementById("btnSair")
-    .addEventListener(
-        "click",
-        async function () {
+    .addEventListener("click", async function () {
 
-            await clienteSupabase
-                .auth
-                .signOut();
+        await clienteSupabase.auth.signOut();
 
-            await verificarSessao();
-        }
-    );
+        await verificarSessao();
+
+    });
 
 
 /* =========================
@@ -789,14 +769,10 @@ document
 async function carregarAcoes() {
 
     const lista =
-        document.getElementById(
-            "listaAcoes"
-        );
+        document.getElementById("listaAcoes");
 
     const mensagem =
-        document.getElementById(
-            "listaMensagem"
-        );
+        document.getElementById("listaMensagem");
 
     lista.innerHTML = "";
 
@@ -817,19 +793,14 @@ async function carregarAcoes() {
                 status,
                 created_at
             `)
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
-            );
+            .order("created_at", {
+                ascending: false
+            });
 
 
     if (resultado.error) {
 
-        console.error(
-            resultado.error
-        );
+        console.error(resultado.error);
 
         mensagem.textContent =
             "❌ Erro ao carregar ações: " +
@@ -859,111 +830,96 @@ async function carregarAcoes() {
     mensagem.textContent = "";
 
 
-    acoes.forEach(
-        function (acao) {
+    acoes.forEach(function (acao) {
 
-            const card =
-                document.createElement(
-                    "div"
-                );
+        const card =
+            document.createElement("div");
 
-            card.className =
-                "acao-card";
+        card.className = "acao-card";
 
 
-            let fotoHTML = "";
+        let fotoHTML = "";
 
-            if (acao.foto_url) {
+        if (acao.foto_url) {
 
-                fotoHTML =
-                    `
-                    <img
-                        src="${acao.foto_url}"
-                        alt="Foto da ação"
-                    >
-                    `;
-            }
-
-
-            const valor =
-                Number(
-                    acao.valor_numero || 0
-                ).toLocaleString(
-                    "pt-BR",
-                    {
-                        style: "currency",
-                        currency: "BRL"
-                    }
-                );
-
-
-            const classeStatus =
-                acao.status === "ativa"
-                    ? "status-ativa"
-                    : "status-inativa";
-
-
-            card.innerHTML =
-
-                fotoHTML +
-
-                `
-                <div class="acao-nome">
-                    ${acao.nome || "Sem nome"}
-                </div>
-
-                <div class="acao-info">
-
-                    <strong>💰 Valor por número:</strong>
-                    ${valor}
-                    <br>
-
-                    <strong>🎟️ Total de números:</strong>
-                    ${acao.total_numeros || 0}
-                    <br>
-
-                    <strong>📝 Descrição:</strong>
-                    ${acao.descricao || "Sem descrição"}
-                    <br>
-
-                    <span class="status ${classeStatus}">
-                        ${acao.status || "sem status"}
-                    </span>
-
-                </div>
-
-                <button
-                    type="button"
-                    class="btn btn-editar"
-                    data-id="${acao.id}"
+            fotoHTML = `
+                <img
+                    src="${escapeHtml(acao.foto_url)}"
+                    alt="Foto da ação"
                 >
-                    ✏️ Editar ação
-                </button>
-                `;
-
-
-            const botaoEditar =
-                card.querySelector(
-                    ".btn-editar"
-                );
-
-
-            botaoEditar.addEventListener(
-                "click",
-                function () {
-
-                    abrirEditor(acao);
-
-                }
-            );
-
-
-            lista.appendChild(
-                card
-            );
+            `;
 
         }
-    );
+
+
+        const valor =
+            Number(acao.valor_numero || 0)
+                .toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL"
+                });
+
+
+        const classeStatus =
+            acao.status === "ativa"
+                ? "status-ativa"
+                : "status-inativa";
+
+
+        card.innerHTML =
+
+            fotoHTML +
+
+            `
+            <div class="acao-nome">
+                ${escapeHtml(acao.nome || "Sem nome")}
+            </div>
+
+            <div class="acao-info">
+
+                <strong>💰 Valor por número:</strong>
+                ${valor}
+                <br>
+
+                <strong>🎟️ Total de números:</strong>
+                ${acao.total_numeros || 0}
+                <br>
+
+                <strong>📝 Descrição:</strong>
+                ${escapeHtml(acao.descricao || "Sem descrição")}
+                <br>
+
+                <span class="status ${classeStatus}">
+                    ${escapeHtml(acao.status || "sem status")}
+                </span>
+
+            </div>
+
+            <button
+                type="button"
+                class="btn btn-editar"
+            >
+                ✏️ Editar ação
+            </button>
+            `;
+
+
+        const botaoEditar =
+            card.querySelector(".btn-editar");
+
+
+        botaoEditar.addEventListener(
+            "click",
+            function () {
+                abrirEditor(acao);
+            }
+        );
+
+
+        lista.appendChild(card);
+
+    });
+
 }
 
 
@@ -973,155 +929,140 @@ async function carregarAcoes() {
 
 function abrirEditor(acao) {
 
-    document.getElementById(
-        "editor"
-    ).style.display = "block";
+    document.getElementById("editor").style.display = "block";
 
 
-    document.getElementById(
-        "editar_id"
-    ).value =
+    document.getElementById("editar_id").value =
         acao.id;
 
 
-    document.getElementById(
-        "editar_nome"
-    ).value =
+    document.getElementById("editar_nome").value =
         acao.nome || "";
 
 
-    document.getElementById(
-        "editar_descricao"
-    ).value =
+    document.getElementById("editar_descricao").value =
         acao.descricao || "";
 
 
-    document.getElementById(
-        "editar_valor"
-    ).value =
+    document.getElementById("editar_valor").value =
         acao.valor_numero || "";
 
 
-    document.getElementById(
-        "editar_total"
-    ).value =
+    document.getElementById("editar_total").value =
         acao.total_numeros || "";
 
 
-    document.getElementById(
-        "editar_status"
-    ).value =
+    document.getElementById("editar_status").value =
         acao.status || "ativa";
 
 
     const fotoAtual =
-        document.getElementById(
-            "editarFotoAtual"
-        );
+        document.getElementById("editarFotoAtual");
 
 
     if (acao.foto_url) {
 
-        fotoAtual.src =
-            acao.foto_url;
+        fotoAtual.src = acao.foto_url;
 
-        fotoAtual.style.display =
-            "block";
+        fotoAtual.style.display = "block";
 
     } else {
 
-        fotoAtual.src = "";
+        fotoAtual.removeAttribute("src");
 
-        fotoAtual.style.display =
-            "none";
+        fotoAtual.style.display = "none";
+
     }
 
 
-    document.getElementById(
-        "editar_foto"
-    ).value = "";
+    const campoFoto =
+        document.getElementById("editar_foto");
 
 
-    document.getElementById(
-        "editarFotoPreview"
-    ).style.display =
-        "none";
+    campoFoto.value = "";
 
 
-    document.getElementById(
-        "mensagemEdicao"
-    ).textContent =
-        "";
+    const preview =
+        document.getElementById("editarFotoPreview");
 
 
-    document.getElementById(
-        "editor"
-    ).scrollIntoView({
+    preview.removeAttribute("src");
+
+    preview.style.display = "none";
+
+
+    document.getElementById("mensagemEdicao").textContent = "";
+
+
+    document.getElementById("editor").scrollIntoView({
         behavior: "smooth"
     });
+
 }
 
 
 /* =========================
-   PRÉVIA DA NOVA FOTO
+   PRÉVIA - EDITAR FOTO
 ========================= */
 
 document
     .getElementById("editar_foto")
-    .addEventListener(
-        "change",
-        function () {
+    .addEventListener("change", function (event) {
 
-            const arquivo =
-                this.files[0];
+        const arquivo =
+            event.target.files[0];
 
-            const preview =
-                document.getElementById(
-                    "editarFotoPreview"
-                );
-
-            if (!arquivo) {
-
-                preview.src = "";
-
-                preview.style.display =
-                    "none";
-
-                return;
-            }
+        const preview =
+            document.getElementById("editarFotoPreview");
 
 
-            if (!arquivo.type.startsWith("image/")) {
+        if (!arquivo) {
 
-                alert(
-                    "Selecione uma imagem válida."
-                );
+            preview.removeAttribute("src");
 
-                this.value = "";
+            preview.style.display = "none";
 
-                preview.src = "";
-
-                preview.style.display =
-                    "none";
-
-                return;
-            }
-
-
-            const url =
-                URL.createObjectURL(
-                    arquivo
-                );
-
-
-            preview.src =
-                url;
-
-
-            preview.style.display =
-                "block";
+            return;
         }
-    );
+
+
+        if (!arquivo.type || !arquivo.type.startsWith("image/")) {
+
+            alert("Selecione uma imagem válida.");
+
+            event.target.value = "";
+
+            preview.removeAttribute("src");
+
+            preview.style.display = "none";
+
+            return;
+        }
+
+
+        const url =
+            URL.createObjectURL(arquivo);
+
+
+        preview.onload = function () {
+
+            preview.style.display = "block";
+
+        };
+
+
+        preview.onerror = function () {
+
+            preview.style.display = "none";
+
+            alert("Não foi possível visualizar esta imagem.");
+
+        };
+
+
+        preview.src = url;
+
+    });
 
 
 /* =========================
@@ -1130,184 +1071,135 @@ document
 
 document
     .getElementById("formEditar")
-    .addEventListener(
-        "submit",
-        async function (event) {
+    .addEventListener("submit", async function (event) {
 
-            event.preventDefault();
+        event.preventDefault();
 
 
-            const id =
-                document.getElementById(
-                    "editar_id"
-                ).value;
+        const id =
+            document.getElementById("editar_id").value;
 
 
-            const mensagem =
-                document.getElementById(
-                    "mensagemEdicao"
+        const mensagem =
+            document.getElementById("mensagemEdicao");
+
+
+        const botao =
+            document.getElementById("btnSalvarEdicao");
+
+
+        botao.disabled = true;
+
+
+        try {
+
+            const nome =
+                document.getElementById("editar_nome").value.trim();
+
+
+            const descricao =
+                document.getElementById("editar_descricao").value.trim();
+
+
+            const valor =
+                Number(
+                    document.getElementById("editar_valor").value
                 );
 
 
-            const botao =
-                document.getElementById(
-                    "btnSalvarEdicao"
+            const total =
+                Number(
+                    document.getElementById("editar_total").value
                 );
 
 
-            botao.disabled = true;
+            const status =
+                document.getElementById("editar_status").value;
 
 
-            try {
-
-                const nome =
-                    document.getElementById(
-                        "editar_nome"
-                    ).value.trim();
+            const novaFoto =
+                document.getElementById("editar_foto").files[0];
 
 
-                const descricao =
-                    document.getElementById(
-                        "editar_descricao"
-                    ).value.trim();
+            const dadosAtualizacao = {
+
+                nome: nome,
+
+                descricao: descricao,
+
+                valor_numero: valor,
+
+                total_numeros: total,
+
+                status: status
+
+            };
 
 
-                const valor =
-                    Number(
-                        document.getElementById(
-                            "editar_valor"
-                        ).value
-                    );
-
-
-                const total =
-                    Number(
-                        document.getElementById(
-                            "editar_total"
-                        ).value
-                    );
-
-
-                const status =
-                    document.getElementById(
-                        "editar_status"
-                    ).value;
-
-
-                const novaFoto =
-                    document.getElementById(
-                        "editar_foto"
-                    ).files[0];
-
-
-                let dadosAtualizacao = {
-
-                    nome:
-                        nome,
-
-                    descricao:
-                        descricao,
-
-                    valor_numero:
-                        valor,
-
-                    total_numeros:
-                        total,
-
-                    status:
-                        status
-
-                };
-
-
-                /* =========================
-                   SE TIVER NOVA FOTO
-                ========================= */
-
-                if (novaFoto) {
-
-                    mensagem.textContent =
-                        "Enviando nova foto...";
-
-
-                    const novaFotoUrl =
-                        await enviarFoto(
-                            novaFoto
-                        );
-
-
-                    dadosAtualizacao.foto_url =
-                        novaFotoUrl;
-                }
-
+            if (novaFoto) {
 
                 mensagem.textContent =
-                    "Salvando alterações...";
+                    "📸 Enviando nova foto...";
 
 
-                const resultado =
-                    await clienteSupabase
-
-                        .from("AÇÕES")
-
-                        .update(
-                            dadosAtualizacao
-                        )
-
-                        .eq(
-                            "id",
-                            id
-                        );
+                const novaFotoUrl =
+                    await enviarFoto(novaFoto);
 
 
-                if (resultado.error) {
+                dadosAtualizacao.foto_url =
+                    novaFotoUrl;
 
-                    throw new Error(
-                        resultado.error.message
-                    );
-                }
+            }
 
 
-                mensagem.innerHTML =
-                    "✅ Alterações salvas com sucesso!";
+            mensagem.textContent =
+                "💾 Salvando alterações...";
 
 
-                await carregarAcoes();
+            const resultado =
+                await clienteSupabase
+                    .from("AÇÕES")
+                    .update(dadosAtualizacao)
+                    .eq("id", id);
 
 
-                setTimeout(
-                    function () {
+            if (resultado.error) {
 
-                        document.getElementById(
-                            "editor"
-                        ).style.display =
-                            "none";
-
-                    },
-                    1200
+                throw new Error(
+                    resultado.error.message
                 );
 
             }
 
-            catch (erro) {
 
-                console.error(
-                    erro
-                );
+            mensagem.innerHTML =
+                "✅ Alterações salvas com sucesso!";
 
-                mensagem.textContent =
-                    "❌ " +
-                    erro.message;
 
-            }
+            await carregarAcoes();
 
-            finally {
 
-                botao.disabled =
-                    false;
-            }
+            setTimeout(function () {
+
+                document.getElementById("editor").style.display = "none";
+
+            }, 1200);
+
+
+        } catch (erro) {
+
+            console.error(erro);
+
+            mensagem.textContent =
+                "❌ " + erro.message;
+
+        } finally {
+
+            botao.disabled = false;
+
         }
-    );
+
+    });
 
 
 /* =========================
@@ -1316,21 +1208,15 @@ document
 
 document
     .getElementById("btnCancelarEdicao")
-    .addEventListener(
-        "click",
-        function () {
+    .addEventListener("click", function () {
 
-            document.getElementById(
-                "editor"
-            ).style.display =
-                "none";
+        document.getElementById("editor").style.display = "none";
 
-        }
-    );
+    });
 
 
 /* =========================
-   BOTÃO ATUALIZAR
+   ATUALIZAR LISTA
 ========================= */
 
 document
@@ -1342,66 +1228,67 @@ document
 
 
 /* =========================
-   PRÉVIA DA FOTO — NOVA AÇÃO
+   PRÉVIA - NOVA AÇÃO
 ========================= */
 
 document
     .getElementById("foto")
-    .addEventListener(
-        "change",
-        function () {
+    .addEventListener("change", function (event) {
 
-            const arquivo =
-                this.files[0];
+        const arquivo =
+            event.target.files[0];
 
-            const preview =
-                document.getElementById(
-                    "fotoPreview"
-                );
+        const preview =
+            document.getElementById("fotoPreview");
 
 
-            if (!arquivo) {
+        if (!arquivo) {
 
-                preview.src = "";
+            preview.removeAttribute("src");
 
-                preview.style.display =
-                    "none";
+            preview.style.display = "none";
 
-                return;
-            }
-
-
-            if (!arquivo.type.startsWith("image/")) {
-
-                alert(
-                    "Selecione uma imagem válida."
-                );
-
-                this.value = "";
-
-                preview.src = "";
-
-                preview.style.display =
-                    "none";
-
-                return;
-            }
-
-
-            const url =
-                URL.createObjectURL(
-                    arquivo
-                );
-
-
-            preview.src =
-                url;
-
-
-            preview.style.display =
-                "block";
+            return;
         }
-    );
+
+
+        if (!arquivo.type || !arquivo.type.startsWith("image/")) {
+
+            alert("Selecione uma imagem válida.");
+
+            event.target.value = "";
+
+            preview.removeAttribute("src");
+
+            preview.style.display = "none";
+
+            return;
+        }
+
+
+        const url =
+            URL.createObjectURL(arquivo);
+
+
+        preview.onload = function () {
+
+            preview.style.display = "block";
+
+        };
+
+
+        preview.onerror = function () {
+
+            preview.style.display = "none";
+
+            alert("Não foi possível visualizar esta imagem.");
+
+        };
+
+
+        preview.src = url;
+
+    });
 
 
 /* =========================
@@ -1413,6 +1300,7 @@ async function enviarFoto(arquivo) {
     if (!arquivo) {
 
         return "";
+
     }
 
 
@@ -1433,19 +1321,15 @@ async function enviarFoto(arquivo) {
 
     const resultadoUpload =
         await clienteSupabase
-
             .storage
-
             .from(NOME_BUCKET)
-
             .upload(
                 nomeArquivo,
                 arquivo,
                 {
                     cacheControl: "3600",
                     upsert: false,
-                    contentType:
-                        arquivo.type
+                    contentType: arquivo.type
                 }
             );
 
@@ -1453,24 +1337,19 @@ async function enviarFoto(arquivo) {
     if (resultadoUpload.error) {
 
         throw resultadoUpload.error;
+
     }
 
 
     const resultadoUrl =
         clienteSupabase
-
             .storage
-
             .from(NOME_BUCKET)
-
-            .getPublicUrl(
-                nomeArquivo
-            );
+            .getPublicUrl(nomeArquivo);
 
 
-    return resultadoUrl
-        .data
-        .publicUrl;
+    return resultadoUrl.data.publicUrl;
+
 }
 
 
@@ -1480,216 +1359,189 @@ async function enviarFoto(arquivo) {
 
 document
     .getElementById("formAcao")
-    .addEventListener(
-        "submit",
-        async function (event) {
+    .addEventListener("submit", async function (event) {
 
-            event.preventDefault();
+        event.preventDefault();
 
 
-            const mensagem =
-                document.getElementById(
-                    "mensagem"
+        const mensagem =
+            document.getElementById("mensagem");
+
+
+        const btnCriar =
+            document.getElementById("btnCriar");
+
+
+        btnCriar.disabled = true;
+
+
+        try {
+
+            const nome =
+                document.getElementById("nome").value.trim();
+
+
+            const descricao =
+                document.getElementById("descricao").value.trim();
+
+
+            const valor_numero =
+                Number(
+                    document.getElementById("valor_numero").value
                 );
 
 
-            const btnCriar =
-                document.getElementById(
-                    "btnCriar"
+            const total_numeros =
+                Number(
+                    document.getElementById("total_numeros").value
                 );
 
 
-            btnCriar.disabled =
-                true;
+            const arquivoFoto =
+                document.getElementById("foto").files[0];
 
 
-            try {
+            if (!arquivoFoto) {
 
-                const nome =
-                    document.getElementById(
-                        "nome"
-                    ).value.trim();
-
-
-                const descricao =
-                    document.getElementById(
-                        "descricao"
-                    ).value.trim();
-
-
-                const valor_numero =
-                    Number(
-                        document.getElementById(
-                            "valor_numero"
-                        ).value
-                    );
-
-
-                const total_numeros =
-                    Number(
-                        document.getElementById(
-                            "total_numeros"
-                        ).value
-                    );
-
-
-                const arquivoFoto =
-                    document.getElementById(
-                        "foto"
-                    ).files[0];
-
-
-                if (!arquivoFoto) {
-
-                    alert(
-                        "Selecione a foto do prêmio."
-                    );
-
-                    btnCriar.disabled =
-                        false;
-
-                    return;
-                }
-
-
-                mensagem.textContent =
-                    "Enviando foto do prêmio...";
-
-
-                const foto_url =
-                    await enviarFoto(
-                        arquivoFoto
-                    );
-
-
-                mensagem.textContent =
-                    "Foto enviada. Criando ação...";
-
-
-                const resultado =
-                    await clienteSupabase
-
-                        .from("AÇÕES")
-
-                        .insert([{
-
-                            nome:
-                                nome,
-
-                            descricao:
-                                descricao,
-
-                            foto_url:
-                                foto_url,
-
-                            valor_numero:
-                                valor_numero,
-
-                            total_numeros:
-                                total_numeros,
-
-                            status:
-                                "ativa"
-
-                        }])
-
-                        .select("id")
-
-                        .single();
-
-
-                if (resultado.error) {
-
-                    throw new Error(
-                        "Erro ao criar ação: " +
-                        resultado.error.message
-                    );
-                }
-
-
-                const acaoId =
-                    resultado.data.id;
-
-
-                mensagem.textContent =
-                    "Ação criada. Gerando números...";
-
-
-                const resultadoNumeros =
-                    await clienteSupabase
-
-                        .rpc(
-                            "gerar_numeros_acao",
-                            {
-                                p_acao_id:
-                                    acaoId
-                            }
-                        );
-
-
-                if (resultadoNumeros.error) {
-
-                    throw new Error(
-                        "Ação criada, mas houve erro ao gerar os números: " +
-                        resultadoNumeros.error.message
-                    );
-                }
-
-
-                mensagem.innerHTML =
-                    "✅ Ação criada com sucesso!<br>" +
-                    "🎟️ " +
-                    total_numeros +
-                    " números gerados.<br>" +
-                    "📸 Foto enviada para o sistema.";
-
-
-                document
-                    .getElementById(
-                        "formAcao"
-                    )
-                    .reset();
-
-
-                document
-                    .getElementById(
-                        "fotoPreview"
-                    )
-                    .style.display =
-                    "none";
-
-
-                document
-                    .getElementById(
-                        "fotoPreview"
-                    ).src = "";
-
-
-                await carregarAcoes();
-
-            }
-
-            catch (erro) {
-
-                console.error(
-                    erro
+                alert(
+                    "Selecione a foto do prêmio."
                 );
 
-                mensagem.textContent =
-                    "❌ " +
-                    erro.message;
+                btnCriar.disabled = false;
+
+                return;
 
             }
 
-            finally {
 
-                btnCriar.disabled =
-                    false;
+            mensagem.textContent =
+                "📸 Enviando foto do prêmio...";
+
+
+            const foto_url =
+                await enviarFoto(arquivoFoto);
+
+
+            mensagem.textContent =
+                "Foto enviada. Criando ação...";
+
+
+            const resultado =
+                await clienteSupabase
+                    .from("AÇÕES")
+                    .insert([{
+
+                        nome: nome,
+
+                        descricao: descricao,
+
+                        foto_url: foto_url,
+
+                        valor_numero: valor_numero,
+
+                        total_numeros: total_numeros,
+
+                        status: "ativa"
+
+                    }])
+                    .select("id")
+                    .single();
+
+
+            if (resultado.error) {
+
+                throw new Error(
+                    "Erro ao criar ação: " +
+                    resultado.error.message
+                );
 
             }
+
+
+            const acaoId =
+                resultado.data.id;
+
+
+            mensagem.textContent =
+                "Ação criada. Gerando números...";
+
+
+            const resultadoNumeros =
+                await clienteSupabase
+                    .rpc(
+                        "gerar_numeros_acao",
+                        {
+                            p_acao_id: acaoId
+                        }
+                    );
+
+
+            if (resultadoNumeros.error) {
+
+                throw new Error(
+                    "Ação criada, mas houve erro ao gerar os números: " +
+                    resultadoNumeros.error.message
+                );
+
+            }
+
+
+            mensagem.innerHTML =
+                "✅ Ação criada com sucesso!<br>" +
+                "🎟️ " +
+                total_numeros +
+                " números gerados.<br>" +
+                "📸 Foto enviada para o sistema.";
+
+
+            document
+                .getElementById("formAcao")
+                .reset();
+
+
+            document
+                .getElementById("fotoPreview")
+                .removeAttribute("src");
+
+
+            document
+                .getElementById("fotoPreview")
+                .style.display = "none";
+
+
+            await carregarAcoes();
+
+
+        } catch (erro) {
+
+            console.error(erro);
+
+            mensagem.textContent =
+                "❌ " + erro.message;
+
+        } finally {
+
+            btnCriar.disabled = false;
 
         }
-    );
+
+    });
+
+
+/* =========================
+   ESCAPAR HTML
+========================= */
+
+function escapeHtml(valor) {
+
+    return String(valor || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
 
 
 /* =========================
@@ -1702,3 +1554,4 @@ verificarSessao();
 
 </body>
 </html>
+```
