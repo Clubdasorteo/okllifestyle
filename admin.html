@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -61,6 +62,11 @@
             resize: vertical;
         }
 
+        input[type="file"] {
+            padding: 10px;
+            cursor: pointer;
+        }
+
         button {
             cursor: pointer;
         }
@@ -75,6 +81,11 @@
             font-size: 16px;
             font-weight: bold;
             margin-top: 10px;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         .btn-sair {
@@ -97,6 +108,29 @@
             text-align: center;
             font-weight: bold;
         }
+
+        .foto-preview {
+            display: none;
+            width: 100%;
+            max-height: 350px;
+            object-fit: contain;
+            margin-top: 12px;
+            border-radius: 10px;
+            border: 1px solid #444;
+            background: #000;
+        }
+
+        .foto-info {
+            color: #999;
+            font-size: 13px;
+            margin-top: 7px;
+        }
+
+        .separador {
+            height: 1px;
+            background: #333;
+            margin: 25px 0;
+        }
     </style>
 </head>
 
@@ -107,21 +141,27 @@
     <h1>Acesso administrativo</h1>
 
     <div class="form-group">
+
         <label>E-mail</label>
 
         <input
             type="email"
             id="email"
+            autocomplete="email"
         >
+
     </div>
 
     <div class="form-group">
+
         <label>Senha</label>
 
         <input
             type="password"
             id="senha"
+            autocomplete="current-password"
         >
+
     </div>
 
     <button
@@ -153,59 +193,91 @@
         <strong>Criar nova ação</strong>
     </p>
 
+    <div class="separador"></div>
+
     <form id="formAcao">
 
         <div class="form-group">
+
             <label>Nome da ação</label>
 
             <input
                 type="text"
                 id="nome"
+                placeholder="Ex.: ROKR"
                 required
             >
+
         </div>
 
 
         <div class="form-group">
+
             <label>Prêmio</label>
 
             <input
                 type="text"
                 id="premio"
+                placeholder="Ex.: Relógio ROKR"
                 required
             >
+
         </div>
 
 
         <div class="form-group">
+
             <label>Descrição do prêmio</label>
 
             <textarea
                 id="premio_descricao"
+                placeholder="Descreva o prêmio..."
             ></textarea>
+
         </div>
 
 
         <div class="form-group">
+
             <label>Descrição da ação</label>
 
             <textarea
                 id="descricao"
+                placeholder="Informações da ação..."
             ></textarea>
+
         </div>
 
 
+        <!-- =========================
+             FOTO DO PRÊMIO
+        ========================= -->
+
         <div class="form-group">
-            <label>URL da foto do prêmio</label>
+
+            <label>📸 Foto do prêmio</label>
 
             <input
-                type="text"
-                id="foto_url"
+                type="file"
+                id="foto"
+                accept="image/jpeg,image/png,image/webp"
             >
+
+            <div class="foto-info">
+                Selecione uma foto do celular ou computador.
+            </div>
+
+            <img
+                id="fotoPreview"
+                class="foto-preview"
+                alt="Prévia da foto do prêmio"
+            >
+
         </div>
 
 
         <div class="form-group">
+
             <label>Valor de cada número</label>
 
             <input
@@ -213,12 +285,15 @@
                 id="valor_numero"
                 step="0.01"
                 min="0"
+                placeholder="Ex.: 10.00"
                 required
             >
+
         </div>
 
 
         <div class="form-group">
+
             <label>Total de números</label>
 
             <input
@@ -226,48 +301,61 @@
                 id="total_numeros"
                 min="1"
                 max="100000"
+                placeholder="Ex.: 1000"
                 required
             >
+
         </div>
 
 
         <div class="form-group">
+
             <label>Quantidade</label>
 
             <input
                 type="number"
                 id="quantidade"
                 min="1"
+                placeholder="Opcional"
             >
+
         </div>
 
 
         <div class="form-group">
+
             <label>Data e hora do sorteio</label>
 
             <input
                 type="datetime-local"
                 id="data_sorteio"
             >
+
         </div>
 
 
         <div class="form-group">
+
             <label>Link de pagamento</label>
 
             <input
                 type="text"
                 id="link_pagamento"
+                placeholder="Será configurado posteriormente"
             >
+
         </div>
 
 
         <div class="form-group">
+
             <label>Observações</label>
 
             <textarea
                 id="observacoes"
+                placeholder="Observações internas..."
             ></textarea>
+
         </div>
 
 
@@ -301,6 +389,10 @@ const clienteSupabase =
         URL_SUPABASE,
         CHAVE_SUPABASE
     );
+
+
+const NOME_BUCKET =
+    "fotos-premios";
 
 
 /* =========================
@@ -417,6 +509,128 @@ document
 
 
 /* =========================
+   PRÉVIA DA FOTO
+========================= */
+
+document
+    .getElementById("foto")
+    .addEventListener(
+        "change",
+        function () {
+
+            const arquivo =
+                this.files[0];
+
+            const preview =
+                document.getElementById(
+                    "fotoPreview"
+                );
+
+            if (!arquivo) {
+
+                preview.src = "";
+
+                preview.style.display =
+                    "none";
+
+                return;
+            }
+
+            if (!arquivo.type.startsWith("image/")) {
+
+                alert(
+                    "Selecione uma imagem válida."
+                );
+
+                this.value = "";
+
+                preview.src = "";
+
+                preview.style.display =
+                    "none";
+
+                return;
+            }
+
+            const url =
+                URL.createObjectURL(
+                    arquivo
+                );
+
+            preview.src = url;
+
+            preview.style.display =
+                "block";
+        }
+    );
+
+
+/* =========================
+   ENVIAR FOTO
+========================= */
+
+async function enviarFoto(arquivo) {
+
+    if (!arquivo) {
+
+        return "";
+    }
+
+    const extensao =
+        arquivo.name
+            .split(".")
+            .pop()
+            .toLowerCase();
+
+    const nomeArquivo =
+        Date.now() +
+        "-" +
+        crypto.randomUUID() +
+        "." +
+        extensao;
+
+
+    const caminho =
+        nomeArquivo;
+
+
+    const resultadoUpload =
+        await clienteSupabase
+            .storage
+            .from(NOME_BUCKET)
+            .upload(
+                caminho,
+                arquivo,
+                {
+                    cacheControl: "3600",
+                    upsert: false,
+                    contentType: arquivo.type
+                }
+            );
+
+
+    if (resultadoUpload.error) {
+
+        throw resultadoUpload.error;
+    }
+
+
+    const resultadoUrl =
+        clienteSupabase
+            .storage
+            .from(NOME_BUCKET)
+            .getPublicUrl(
+                caminho
+            );
+
+
+    return resultadoUrl
+        .data
+        .publicUrl;
+}
+
+
+/* =========================
    CRIAR AÇÃO
 ========================= */
 
@@ -438,15 +652,12 @@ document
                     "btnCriar"
                 );
 
-            mensagem.textContent =
-                "Criando ação...";
-
             btnCriar.disabled = true;
 
             try {
 
                 /* =========================
-                   DADOS DA AÇÃO
+                   PEGAR DADOS
                 ========================= */
 
                 const nome =
@@ -455,17 +666,13 @@ document
                         .value
                         .trim();
 
+
                 const descricao =
                     document
                         .getElementById("descricao")
                         .value
                         .trim();
 
-                const foto_url =
-                    document
-                        .getElementById("foto_url")
-                        .value
-                        .trim();
 
                 const valor_numero =
                     Number(
@@ -475,6 +682,7 @@ document
                             )
                             .value
                     );
+
 
                 const total_numeros =
                     Number(
@@ -486,9 +694,55 @@ document
                     );
 
 
+                const arquivoFoto =
+                    document
+                        .getElementById("foto")
+                        .files[0];
+
+
+                /* =========================
+                   VALIDAR FOTO
+                ========================= */
+
+                if (!arquivoFoto) {
+
+                    alert(
+                        "Selecione a foto do prêmio."
+                    );
+
+                    btnCriar.disabled = false;
+
+                    return;
+                }
+
+
+                /* =========================
+                   ENVIAR FOTO
+                ========================= */
+
+                mensagem.textContent =
+                    "Enviando foto do prêmio...";
+
+
+                const foto_url =
+                    await enviarFoto(
+                        arquivoFoto
+                    );
+
+
+                console.log(
+                    "Foto enviada:",
+                    foto_url
+                );
+
+
                 /* =========================
                    CRIAR AÇÃO
                 ========================= */
+
+                mensagem.textContent =
+                    "Foto enviada. Criando ação...";
+
 
                 const resultado =
                     await clienteSupabase
@@ -528,11 +782,10 @@ document
                         resultado.error
                     );
 
-                    mensagem.textContent =
+                    throw new Error(
                         "Erro ao criar ação: " +
-                        resultado.error.message;
-
-                    return;
+                        resultado.error.message
+                    );
                 }
 
 
@@ -565,11 +818,10 @@ document
                         resultadoNumeros.error
                     );
 
-                    mensagem.textContent =
+                    throw new Error(
                         "Ação criada, mas houve erro ao gerar os números: " +
-                        resultadoNumeros.error.message;
-
-                    return;
+                        resultadoNumeros.error.message
+                    );
                 }
 
 
@@ -577,10 +829,12 @@ document
                    SUCESSO
                 ========================= */
 
-                mensagem.textContent =
-                    "Ação criada e " +
+                mensagem.innerHTML =
+                    "✅ Ação criada com sucesso!<br>" +
+                    "🎟️ " +
                     total_numeros +
-                    " números gerados com sucesso!";
+                    " números gerados.<br>" +
+                    "📸 Foto enviada para o sistema.";
 
 
                 document
@@ -589,14 +843,31 @@ document
                     )
                     .reset();
 
+
+                document
+                    .getElementById(
+                        "fotoPreview"
+                    )
+                    .style.display =
+                    "none";
+
+
+                document
+                    .getElementById(
+                        "fotoPreview"
+                    )
+                    .src = "";
+
             }
 
             catch (erro) {
 
-                console.error(erro);
+                console.error(
+                    erro
+                );
 
                 mensagem.textContent =
-                    "Erro inesperado: " +
+                    "❌ " +
                     erro.message;
 
             }
@@ -621,3 +892,4 @@ verificarSessao();
 
 </body>
 </html>
+```
