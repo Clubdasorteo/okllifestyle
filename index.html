@@ -182,9 +182,13 @@ header{
     color:#d4af37;
 }
 
+/* =========================
+   PACOTES
+========================= */
+
 .options{
     display:grid;
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns:repeat(3,1fr);
     gap:12px;
     margin-top:20px;
 }
@@ -203,6 +207,7 @@ header{
 
 .option:hover{
     border-color:#d4af37;
+    transform:translateY(-2px);
 }
 
 .option.selected{
@@ -220,6 +225,80 @@ header{
     color:#d4af37;
     font-size:16px;
     font-weight:700;
+}
+
+/* =========================
+   QUANTIDADE PERSONALIZADA
+========================= */
+
+.custom-quantity{
+    margin-top:20px;
+    padding:20px;
+    background:#080808;
+    border:1px solid #292929;
+    border-radius:12px;
+    text-align:center;
+}
+
+.custom-quantity-title{
+    font-size:17px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.custom-quantity-subtitle{
+    color:#999;
+    font-size:14px;
+    margin-bottom:15px;
+}
+
+.quantity-control{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+
+.quantity-control button{
+    width:48px;
+    height:48px;
+    border:1px solid #3a3a3a;
+    border-radius:10px;
+    background:#111;
+    color:#d4af37;
+    font-size:28px;
+    cursor:pointer;
+}
+
+.quantity-control button:hover{
+    border-color:#d4af37;
+}
+
+.quantity-control input{
+    width:120px;
+    height:48px;
+    text-align:center;
+    background:#050505;
+    border:1px solid #3a3a3a;
+    border-radius:10px;
+    color:#f2f0e8;
+    font-size:20px;
+    font-weight:800;
+    outline:none;
+}
+
+.quantity-control input:focus{
+    border-color:#d4af37;
+}
+
+.custom-price{
+    margin-top:15px;
+    font-size:17px;
+}
+
+.custom-price strong{
+    color:#d4af37;
+    font-size:21px;
 }
 
 .selected-info{
@@ -333,12 +412,16 @@ footer{
     .info{
         font-size:13px;
     }
+
+    .options{
+        grid-template-columns:repeat(2,1fr);
+    }
 }
 
 @media(max-width:500px){
 
     .options{
-        grid-template-columns:1fr;
+        grid-template-columns:repeat(2,1fr);
     }
 
     .card-content{
@@ -348,6 +431,18 @@ footer{
     .card h2{
         font-size:23px;
     }
+
+    .option{
+        padding:15px 8px;
+    }
+
+    .option strong{
+        font-size:16px;
+    }
+
+    .option span{
+        font-size:14px;
+    }
 }
 </style>
 </head>
@@ -355,50 +450,163 @@ footer{
 <body>
 
 <header>
+
     <img
         src="Design%20sem%20nome%20(1).jpg"
         alt="OKL Lifestyle"
         class="logo-img"
     >
+
 </header>
 
+
 <section class="hero">
+
     <h1>BEM-VINDO AO CLUB</h1>
-    <p>Uma experiência exclusiva OKL LIFESTYLE.</p>
+
+    <p>
+        Uma experiência exclusiva OKL LIFESTYLE.
+    </p>
+
 </section>
+
 
 <main class="container">
 
-    <h2 class="section-title">🔥 Ação em destaque</h2>
+    <h2 class="section-title">
+        🔥 Ação em destaque
+    </h2>
+
 
     <div id="acaoContainer">
+
         <div class="loading">
             Carregando ação...
         </div>
+
     </div>
 
 </main>
 
-<section id="participar" class="how container">
 
-    <h2>Participar</h2>
+<section
+    id="participar"
+    class="how container"
+>
 
-    <p>Escolha quantas participações deseja.</p>
+    <h2>
+        Participar
+    </h2>
 
-    <div class="options" id="optionsContainer"></div>
 
-    <div class="selected-info" id="selectedInfo">
+    <p>
+        Escolha uma das opções abaixo ou informe a quantidade que deseja.
+    </p>
 
-        Você selecionou
-        <strong id="selectedNumbers"></strong>
-        por
-        <strong id="selectedPrice"></strong>.
+
+    <!-- PACOTES ATRATIVOS -->
+
+    <div
+        class="options"
+        id="optionsContainer"
+    ></div>
+
+
+    <!-- QUANTIDADE PERSONALIZADA -->
+
+    <div class="custom-quantity">
+
+        <div class="custom-quantity-title">
+            Ou escolha outra quantidade
+        </div>
+
+        <div class="custom-quantity-subtitle">
+            Mínimo de 10 números
+        </div>
+
+
+        <div class="quantity-control">
+
+            <button
+                type="button"
+                onclick="alterarQuantidade(-1)"
+            >
+                −
+            </button>
+
+
+            <input
+                type="number"
+                id="quantidadePersonalizada"
+                min="10"
+                value="10"
+                oninput="quantidadeDigitada()"
+            >
+
+
+            <button
+                type="button"
+                onclick="alterarQuantidade(1)"
+            >
+                +
+            </button>
+
+        </div>
+
+
+        <div class="custom-price">
+
+            Total:
+
+            <strong id="customPrice">
+                R$ 0,00
+            </strong>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="button"
+            onclick="selecionarPersonalizado()"
+        >
+            ESCOLHER ESSA QUANTIDADE
+        </button>
 
     </div>
 
-    <div class="form-section" id="formSection">
 
-        <h3>Seus dados</h3>
+    <!-- RESUMO -->
+
+    <div
+        class="selected-info"
+        id="selectedInfo"
+    >
+
+        Você selecionou
+
+        <strong id="selectedNumbers">
+        </strong>
+
+        por
+
+        <strong id="selectedPrice">
+        </strong>.
+
+    </div>
+
+
+    <!-- DADOS DO CLIENTE -->
+
+    <div
+        class="form-section"
+        id="formSection"
+    >
+
+        <h3>
+            Seus dados
+        </h3>
+
 
         <input
             type="text"
@@ -406,11 +614,13 @@ footer{
             placeholder="Nome completo"
         >
 
+
         <input
             type="tel"
             id="telefone"
             placeholder="WhatsApp"
         >
+
 
         <button
             class="button"
@@ -423,66 +633,136 @@ footer{
 
 </section>
 
+
 <h2 class="section-title container">
+
     🏆 Destaques
+
 </h2>
+
 
 <div class="highlights container">
 
+
     <div class="highlight">
+
         🥇
-        <strong>Top Comprador</strong>
-        <small>Mais bilhetes</small>
+
+        <strong>
+            Top Comprador
+        </strong>
+
+        <small>
+            Mais bilhetes
+        </small>
+
     </div>
 
+
     <div class="highlight">
+
         ⬇️
-        <strong>Menor Cota</strong>
-        <small>Menor número</small>
+
+        <strong>
+            Menor Cota
+        </strong>
+
+        <small>
+            Menor número
+        </small>
+
     </div>
 
+
     <div class="highlight">
+
         ⬆️
-        <strong>Maior Cota</strong>
-        <small>Maior número</small>
+
+        <strong>
+            Maior Cota
+        </strong>
+
+        <small>
+            Maior número
+        </small>
+
     </div>
 
+
     <div class="highlight">
+
         🎫
-        <strong>Bilhetes Premiados</strong>
-        <small>6 a 8 prêmios extras</small>
+
+        <strong>
+            Bilhetes Premiados
+        </strong>
+
+        <small>
+            6 a 8 prêmios extras
+        </small>
+
     </div>
 
 </div>
 
+
 <section class="how container">
 
-    <h2>📋 Como funciona</h2>
+    <h2>
+        📋 Como funciona
+    </h2>
+
 
     <p>
-        <strong>01.</strong>
+
+        <strong>
+            01.
+        </strong>
+
         Escolha sua participação.
+
     </p>
 
+
     <p>
-        <strong>02.</strong>
+
+        <strong>
+            02.
+        </strong>
+
         Realize o pagamento.
+
     </p>
 
+
     <p>
-        <strong>03.</strong>
+
+        <strong>
+            03.
+        </strong>
+
         Receba seus números.
+
     </p>
 
+
     <p>
-        <strong>04.</strong>
+
+        <strong>
+            04.
+        </strong>
+
         Acompanhe o resultado.
+
     </p>
 
 </section>
 
+
 <footer>
+
     ©️ 2026 OKL Lifestyle
+
 </footer>
 
 
@@ -490,13 +770,16 @@ footer{
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <script>
 
 const SUPABASE_URL =
     "https://vlirpvuramslfiftshio.supabase.co";
 
+
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
+
 
 const supabase =
     window.supabase.createClient(
@@ -506,7 +789,9 @@ const supabase =
 
 
 let quantidadeSelecionada = 0;
+
 let valorSelecionado = 0;
+
 let acaoAtual = null;
 
 
@@ -517,13 +802,18 @@ let acaoAtual = null;
 async function carregarAcao(){
 
     const container =
-        document.getElementById("acaoContainer");
+        document.getElementById(
+            "acaoContainer"
+        );
+
 
     try{
 
         const { data, error } =
             await supabase
+
                 .from("AÇÕES")
+
                 .select(`
                     id,
                     nome,
@@ -535,9 +825,21 @@ async function carregarAcao(){
                     numeros_vendidos,
                     created_at
                 `)
-                .eq("status","ativa")
-                .order("created_at",{ascending:false})
+
+                .eq(
+                    "status",
+                    "ativa"
+                )
+
+                .order(
+                    "created_at",
+                    {
+                        ascending:false
+                    }
+                )
+
                 .limit(1)
+
                 .maybeSingle();
 
 
@@ -551,9 +853,14 @@ async function carregarAcao(){
         if(!data){
 
             container.innerHTML = `
+
                 <div class="error">
-                    Nenhuma ação disponível no momento.
+
+                    Nenhuma ação disponível
+                    no momento.
+
                 </div>
+
             `;
 
             return;
@@ -567,10 +874,17 @@ async function carregarAcao(){
         renderizarAcao(data);
 
 
-        criarOpcoes(data.valor_numero);
+        criarOpcoes(
+            data.valor_numero
+        );
 
 
-        atualizarResumoAcao(data);
+        atualizarResumoAcao(
+            data
+        );
+
+
+        atualizarPrecoPersonalizado();
 
     }
 
@@ -581,10 +895,16 @@ async function carregarAcao(){
             error
         );
 
+
         container.innerHTML = `
+
             <div class="error">
-                Não foi possível carregar a ação.
+
+                Não foi possível carregar
+                a ação.
+
             </div>
+
         `;
 
     }
@@ -599,15 +919,22 @@ async function carregarAcao(){
 function renderizarAcao(acao){
 
     const container =
-        document.getElementById("acaoContainer");
+        document.getElementById(
+            "acaoContainer"
+        );
 
 
     const valor =
         Number(
             acao.valor_numero || 0
         )
+
         .toFixed(2)
-        .replace(".",",");
+
+        .replace(
+            ".",
+            ","
+        );
 
 
     const imagem =
@@ -618,6 +945,7 @@ function renderizarAcao(acao){
 
         <div class="card">
 
+
             <div class="prize">
 
                 ${
@@ -626,18 +954,25 @@ function renderizarAcao(acao){
                     ?
 
                     `
+
                     <img
                         src="${imagem}"
                         alt="Prêmio"
                     >
+
                     `
 
                     :
 
                     `
+
                     <div class="loading">
-                        Foto do prêmio não cadastrada.
+
+                        Foto do prêmio
+                        não cadastrada.
+
                     </div>
+
                     `
                 }
 
@@ -646,22 +981,34 @@ function renderizarAcao(acao){
 
             <div class="card-content">
 
+
                 <h2>
-                    ${escapeHtml(acao.nome)}
+
+                    ${escapeHtml(
+                        acao.nome
+                    )}
+
                 </h2>
 
 
                 <p>
+
                     ${escapeHtml(
                         acao.descricao || ""
                     )}
+
                 </p>
 
 
                 <p>
+
                     <strong>
-                        R$ ${valor} por número
+
+                        R$ ${valor}
+                        por número
+
                     </strong>
+
                 </p>
 
 
@@ -677,17 +1024,26 @@ function renderizarAcao(acao){
 
                 <div class="info">
 
+
                     <span id="vendidosInfo">
+
                         0 vendidos
+
                     </span>
 
+
                     <span>
+
                         ${
                             Number(
                                 acao.total_numeros || 0
-                            ).toLocaleString("pt-BR")
+                            ).toLocaleString(
+                                "pt-BR"
+                            )
                         }
+
                         números
+
                     </span>
 
                 </div>
@@ -697,8 +1053,11 @@ function renderizarAcao(acao){
                     href="#participar"
                     class="button"
                 >
+
                     PARTICIPAR
+
                 </a>
+
 
             </div>
 
@@ -710,7 +1069,7 @@ function renderizarAcao(acao){
 
 
 /* =========================
-   VALORES DAS PARTICIPAÇÕES
+   PACOTES ATRATIVOS
 ========================= */
 
 function criarOpcoes(valorNumero){
@@ -722,15 +1081,22 @@ function criarOpcoes(valorNumero){
 
 
     const valor =
-        Number(valorNumero || 0);
+        Number(
+            valorNumero || 0
+        );
 
 
     if(!valor){
 
         container.innerHTML = `
+
             <div class="error">
-                Valor do número não cadastrado.
+
+                Valor do número
+                não cadastrado.
+
             </div>
+
         `;
 
         return;
@@ -739,18 +1105,28 @@ function criarOpcoes(valorNumero){
 
 
     /*
-       QUANTIDADES DISPONÍVEIS
-       O VALOR É CALCULADO
-       AUTOMATICAMENTE.
+       ESTES SÃO APENAS
+       ATALHOS VISUAIS.
+
+       O CLIENTE PODE DIGITAR
+       QUALQUER QUANTIDADE
+       A PARTIR DE 10.
     */
 
     const quantidades = [
+
         10,
+
         20,
-        30,
+
+        50,
+
         100,
+
         200,
+
         500
+
     ];
 
 
@@ -770,6 +1146,10 @@ function criarOpcoes(valorNumero){
                 );
 
 
+            button.type =
+                "button";
+
+
             button.className =
                 "option";
 
@@ -777,11 +1157,20 @@ function criarOpcoes(valorNumero){
             button.innerHTML = `
 
                 <strong>
-                    ${quantidade} números
+
+                    ${quantidade}
+                    números
+
                 </strong>
 
+
                 <span>
-                    R$ ${formatarMoeda(total)}
+
+                    R$
+                    ${formatarMoeda(
+                        total
+                    )}
+
                 </span>
 
             `;
@@ -815,29 +1204,77 @@ function criarOpcoes(valorNumero){
 
 function atualizarResumoAcao(acao){
 
-    const total = Number(acao.total_numeros || 0);
-    const vendidos = Number(acao.numeros_vendidos || 0);
+    const total =
+        Number(
+            acao.total_numeros || 0
+        );
 
-    const porcentagem = total > 0
-        ? (vendidos / total) * 100
-        : 0;
 
-    const vendidosInfo = document.getElementById("vendidosInfo");
-    const progressBar = document.getElementById("progressBar");
+    const vendidos =
+        Number(
+            acao.numeros_vendidos || 0
+        );
+
+
+    const porcentagem =
+        total > 0
+
+        ?
+
+        (vendidos / total) * 100
+
+        :
+
+        0;
+
+
+    const vendidosInfo =
+        document.getElementById(
+            "vendidosInfo"
+        );
+
+
+    const progressBar =
+        document.getElementById(
+            "progressBar"
+        );
+
 
     if(vendidosInfo){
+
         vendidosInfo.textContent =
-            vendidos.toLocaleString("pt-BR") + " vendidos";
+
+            vendidos.toLocaleString(
+                "pt-BR"
+            )
+
+            +
+
+            " vendidos";
+
     }
+
 
     if(progressBar){
+
         progressBar.style.width =
-            Math.min(porcentagem, 100) + "%";
+
+            Math.min(
+                porcentagem,
+                100
+            )
+
+            +
+
+            "%";
+
     }
+
 }
 
+
 /* =========================
-   SELECIONAR PARTICIPAÇÃO
+   SELECIONAR PACOTE
 ========================= */
 
 function selecionar(
@@ -855,7 +1292,10 @@ function selecionar(
 
 
     document
-        .querySelectorAll(".option")
+        .querySelectorAll(
+            ".option"
+        )
+
         .forEach(
             function(opcao){
 
@@ -872,9 +1312,32 @@ function selecionar(
     );
 
 
+    /*
+       SINCRONIZA O CAMPO
+       PERSONALIZADO
+    */
+
+    const input =
+        document.getElementById(
+            "quantidadePersonalizada"
+        );
+
+
+    if(input){
+
+        input.value =
+            quantidade;
+
+    }
+
+
+    atualizarPrecoPersonalizado();
+
+
     document.getElementById(
         "selectedNumbers"
     ).textContent =
+
         quantidade +
         " números";
 
@@ -882,8 +1345,333 @@ function selecionar(
     document.getElementById(
         "selectedPrice"
     ).textContent =
+
         "R$ " +
-        formatarMoeda(valor);
+        formatarMoeda(
+            valor
+        );
+
+
+    document.getElementById(
+        "selectedInfo"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "formSection"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "formSection"
+    ).scrollIntoView({
+
+        behavior:"smooth",
+
+        block:"center"
+
+    });
+
+}
+
+
+/* =========================
+   ALTERAR QUANTIDADE
+========================= */
+
+function alterarQuantidade(
+    valorAlteracao
+){
+
+    const input =
+        document.getElementById(
+            "quantidadePersonalizada"
+        );
+
+
+    let quantidade =
+        parseInt(
+            input.value,
+            10
+        );
+
+
+    if(
+        isNaN(quantidade)
+    ){
+
+        quantidade =
+            10;
+
+    }
+
+
+    quantidade +=
+        valorAlteracao;
+
+
+    /*
+       MÍNIMO DE 10
+    */
+
+    if(
+        quantidade < 10
+    ){
+
+        quantidade =
+            10;
+
+    }
+
+
+    input.value =
+        quantidade;
+
+
+    atualizarPrecoPersonalizado();
+
+}
+
+
+/* =========================
+   DIGITAR QUANTIDADE
+========================= */
+
+function quantidadeDigitada(){
+
+    const input =
+        document.getElementById(
+            "quantidadePersonalizada"
+        );
+
+
+    let quantidade =
+        parseInt(
+            input.value,
+            10
+        );
+
+
+    /*
+       SE APAGAR O CAMPO,
+       NÃO FORÇAMOS IMEDIATAMENTE
+       PARA 10.
+    */
+
+    if(
+        isNaN(quantidade)
+    ){
+
+        document.getElementById(
+            "customPrice"
+        ).textContent =
+            "R$ 0,00";
+
+        return;
+
+    }
+
+
+    if(
+        quantidade < 10
+    ){
+
+        quantidade =
+            10;
+
+        input.value =
+            quantidade;
+
+    }
+
+
+    atualizarPrecoPersonalizado();
+
+}
+
+
+/* =========================
+   ATUALIZAR PREÇO
+========================= */
+
+function atualizarPrecoPersonalizado(){
+
+    if(!acaoAtual){
+
+        return;
+
+    }
+
+
+    const input =
+        document.getElementById(
+            "quantidadePersonalizada"
+        );
+
+
+    if(!input){
+
+        return;
+
+    }
+
+
+    let quantidade =
+        parseInt(
+            input.value,
+            10
+        );
+
+
+    if(
+        isNaN(quantidade)
+        ||
+        quantidade < 10
+    ){
+
+        quantidade =
+            10;
+
+    }
+
+
+    const valor =
+        Number(
+            acaoAtual.valor_numero || 0
+        );
+
+
+    const total =
+        quantidade * valor;
+
+
+    const preco =
+        document.getElementById(
+            "customPrice"
+        );
+
+
+    if(preco){
+
+        preco.textContent =
+
+            "R$ " +
+            formatarMoeda(
+                total
+            );
+
+    }
+
+}
+
+
+/* =========================
+   ESCOLHER QUANTIDADE
+========================= */
+
+function selecionarPersonalizado(){
+
+    if(!acaoAtual){
+
+        alert(
+            "Ação ainda não carregada."
+        );
+
+        return;
+
+    }
+
+
+    const input =
+        document.getElementById(
+            "quantidadePersonalizada"
+        );
+
+
+    let quantidade =
+        parseInt(
+            input.value,
+            10
+        );
+
+
+    if(
+        isNaN(quantidade)
+        ||
+        quantidade < 10
+    ){
+
+        quantidade =
+            10;
+
+        input.value =
+            quantidade;
+
+    }
+
+
+    const valorNumero =
+        Number(
+            acaoAtual.valor_numero || 0
+        );
+
+
+    const valor =
+        quantidade *
+        valorNumero;
+
+
+    quantidadeSelecionada =
+        quantidade;
+
+
+    valorSelecionado =
+        valor;
+
+
+    /*
+       REMOVE A SELEÇÃO
+       DOS PACOTES
+    */
+
+    document
+        .querySelectorAll(
+            ".option"
+        )
+
+        .forEach(
+            function(opcao){
+
+                opcao.classList.remove(
+                    "selected"
+                );
+
+            }
+        );
+
+
+    /*
+       MOSTRA O RESUMO
+    */
+
+    document.getElementById(
+        "selectedNumbers"
+    ).textContent =
+
+        quantidade +
+        " números";
+
+
+    document.getElementById(
+        "selectedPrice"
+    ).textContent =
+
+        "R$ " +
+        formatarMoeda(
+            valor
+        );
 
 
     document.getElementById(
@@ -919,14 +1707,18 @@ function continuar(){
 
     const nome =
         document
-            .getElementById("nome")
+            .getElementById(
+                "nome"
+            )
             .value
             .trim();
 
 
     const telefone =
         document
-            .getElementById("telefone")
+            .getElementById(
+                "telefone"
+            )
             .value
             .trim();
 
@@ -944,15 +1736,32 @@ function continuar(){
     }
 
 
+    if(
+        quantidadeSelecionada < 10
+    ){
+
+        alert(
+            "A participação mínima é de 10 números."
+        );
+
+        return;
+
+    }
+
+
     if(!nome){
 
         alert(
             "Digite seu nome completo."
         );
 
+
         document
-            .getElementById("nome")
+            .getElementById(
+                "nome"
+            )
             .focus();
+
 
         return;
 
@@ -965,14 +1774,24 @@ function continuar(){
             "Digite seu WhatsApp."
         );
 
+
         document
-            .getElementById("telefone")
+            .getElementById(
+                "telefone"
+            )
             .focus();
+
 
         return;
 
     }
 
+
+    /*
+       POR ENQUANTO É APENAS UM TESTE.
+       A PRÓXIMA ETAPA SERÁ
+       CONECTAR AO PAGAMENTO.
+    */
 
     alert(
 
@@ -1013,11 +1832,20 @@ function continuar(){
    FORMATAÇÃO
 ========================= */
 
-function formatarMoeda(valor){
+function formatarMoeda(
+    valor
+){
 
-    return Number(valor)
-        .toFixed(2)
-        .replace(".",",");
+    return Number(
+        valor
+    )
+
+    .toFixed(2)
+
+    .replace(
+        ".",
+        ","
+    );
 
 }
 
@@ -1026,13 +1854,19 @@ function formatarMoeda(valor){
    SEGURANÇA DO TEXTO
 ========================= */
 
-function escapeHtml(text){
+function escapeHtml(
+    text
+){
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     div.textContent =
         text ?? "";
+
 
     return div.innerHTML;
 
