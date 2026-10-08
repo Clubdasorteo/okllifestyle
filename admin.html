@@ -51,7 +51,8 @@
         }
 
         input,
-        textarea {
+        textarea,
+        select {
             width: 100%;
             padding: 12px;
             border: 1px solid #444;
@@ -109,6 +110,17 @@
             margin-bottom: 20px;
         }
 
+        .btn-editar {
+            background: #d4af37;
+            color: #000;
+            margin-top: 15px;
+        }
+
+        .btn-cancelar {
+            background: #444;
+            color: #fff;
+        }
+
         #painel {
             display: none;
         }
@@ -144,10 +156,6 @@
             margin: 25px 0;
         }
 
-        /* =========================
-           AÇÕES CADASTRADAS
-        ========================= */
-
         .acao-card {
             background: #0d0d0d;
             border: 1px solid #333;
@@ -178,11 +186,8 @@
             line-height: 1.7;
         }
 
-        .status-ativa {
+        .status {
             display: inline-block;
-            background: #173b20;
-            color: #65d47a;
-            border: 1px solid #2d743d;
             padding: 4px 9px;
             border-radius: 20px;
             font-size: 12px;
@@ -190,10 +195,47 @@
             margin-top: 8px;
         }
 
+        .status-ativa {
+            background: #173b20;
+            color: #65d47a;
+            border: 1px solid #2d743d;
+        }
+
+        .status-inativa {
+            background: #3b1717;
+            color: #ff7777;
+            border: 1px solid #743333;
+        }
+
         .sem-acoes {
             text-align: center;
             color: #999;
             padding: 20px 0;
+        }
+
+        #editor {
+            display: none;
+            background: #0d0d0d;
+            border: 1px solid #d4af37;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .editor-titulo {
+            color: #d4af37;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .foto-atual {
+            width: 100%;
+            max-height: 280px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: #000;
+            margin-bottom: 15px;
         }
     </style>
 </head>
@@ -205,7 +247,6 @@
     <h1>Acesso administrativo</h1>
 
     <div class="form-group">
-
         <label>E-mail</label>
 
         <input
@@ -213,11 +254,9 @@
             id="email"
             autocomplete="email"
         >
-
     </div>
 
     <div class="form-group">
-
         <label>Senha</label>
 
         <input
@@ -225,7 +264,6 @@
             id="senha"
             autocomplete="current-password"
         >
-
     </div>
 
     <button
@@ -271,6 +309,160 @@
     <div id="listaAcoes"></div>
 
     <div id="listaMensagem"></div>
+
+
+    <!-- =========================
+         EDITOR
+    ========================= -->
+
+    <div id="editor">
+
+        <div class="editor-titulo">
+            ✏️ Editar ação
+        </div>
+
+        <form id="formEditar">
+
+            <input
+                type="hidden"
+                id="editar_id"
+            >
+
+            <div class="form-group">
+
+                <label>Nome da ação</label>
+
+                <input
+                    type="text"
+                    id="editar_nome"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Descrição da ação</label>
+
+                <textarea
+                    id="editar_descricao"
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>💰 Valor de cada número</label>
+
+                <input
+                    type="number"
+                    id="editar_valor"
+                    step="0.01"
+                    min="0"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>🎟️ Total de números</label>
+
+                <input
+                    type="number"
+                    id="editar_total"
+                    min="1"
+                    max="100000"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>📌 Status</label>
+
+                <select id="editar_status">
+
+                    <option value="ativa">
+                        Ativa
+                    </option>
+
+                    <option value="inativa">
+                        Inativa
+                    </option>
+
+                    <option value="encerrada">
+                        Encerrada
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>📸 Foto atual</label>
+
+                <img
+                    id="editarFotoAtual"
+                    class="foto-atual"
+                    alt="Foto atual"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>📸 Trocar foto</label>
+
+                <input
+                    type="file"
+                    id="editar_foto"
+                    accept="image/jpeg,image/png,image/webp"
+                >
+
+                <div class="foto-info">
+                    Se não selecionar uma nova foto, a foto atual será mantida.
+                </div>
+
+                <img
+                    id="editarFotoPreview"
+                    class="foto-preview"
+                    alt="Nova foto"
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn"
+                id="btnSalvarEdicao"
+            >
+                💾 Salvar alterações
+            </button>
+
+
+            <button
+                type="button"
+                class="btn btn-cancelar"
+                id="btnCancelarEdicao"
+            >
+                Cancelar
+            </button>
+
+        </form>
+
+        <div id="mensagemEdicao"></div>
+
+    </div>
 
 
     <div class="separador"></div>
@@ -557,10 +749,6 @@ document
 
             if (resultado.error) {
 
-                console.error(
-                    resultado.error
-                );
-
                 mensagem.textContent =
                     "Erro: " +
                     resultado.error.message;
@@ -610,8 +798,7 @@ async function carregarAcoes() {
             "listaMensagem"
         );
 
-    lista.innerHTML =
-        "";
+    lista.innerHTML = "";
 
     mensagem.textContent =
         "Carregando ações...";
@@ -619,9 +806,7 @@ async function carregarAcoes() {
 
     const resultado =
         await clienteSupabase
-
             .from("AÇÕES")
-
             .select(`
                 id,
                 nome,
@@ -632,7 +817,6 @@ async function carregarAcoes() {
                 status,
                 created_at
             `)
-
             .order(
                 "created_at",
                 {
@@ -661,8 +845,7 @@ async function carregarAcoes() {
 
     if (acoes.length === 0) {
 
-        mensagem.textContent =
-            "";
+        mensagem.textContent = "";
 
         lista.innerHTML =
             `<div class="sem-acoes">
@@ -673,8 +856,7 @@ async function carregarAcoes() {
     }
 
 
-    mensagem.textContent =
-        "";
+    mensagem.textContent = "";
 
 
     acoes.forEach(
@@ -715,8 +897,10 @@ async function carregarAcoes() {
                 );
 
 
-            const status =
-                acao.status || "sem status";
+            const classeStatus =
+                acao.status === "ativa"
+                    ? "status-ativa"
+                    : "status-inativa";
 
 
             card.innerHTML =
@@ -742,12 +926,36 @@ async function carregarAcoes() {
                     ${acao.descricao || "Sem descrição"}
                     <br>
 
-                    <span class="status-ativa">
-                        ${status}
+                    <span class="status ${classeStatus}">
+                        ${acao.status || "sem status"}
                     </span>
 
                 </div>
+
+                <button
+                    type="button"
+                    class="btn btn-editar"
+                    data-id="${acao.id}"
+                >
+                    ✏️ Editar ação
+                </button>
                 `;
+
+
+            const botaoEditar =
+                card.querySelector(
+                    ".btn-editar"
+                );
+
+
+            botaoEditar.addEventListener(
+                "click",
+                function () {
+
+                    abrirEditor(acao);
+
+                }
+            );
 
 
             lista.appendChild(
@@ -760,23 +968,106 @@ async function carregarAcoes() {
 
 
 /* =========================
-   BOTÃO ATUALIZAR
+   ABRIR EDITOR
 ========================= */
 
-document
-    .getElementById("btnAtualizar")
-    .addEventListener(
-        "click",
-        carregarAcoes
-    );
+function abrirEditor(acao) {
+
+    document.getElementById(
+        "editor"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "editar_id"
+    ).value =
+        acao.id;
+
+
+    document.getElementById(
+        "editar_nome"
+    ).value =
+        acao.nome || "";
+
+
+    document.getElementById(
+        "editar_descricao"
+    ).value =
+        acao.descricao || "";
+
+
+    document.getElementById(
+        "editar_valor"
+    ).value =
+        acao.valor_numero || "";
+
+
+    document.getElementById(
+        "editar_total"
+    ).value =
+        acao.total_numeros || "";
+
+
+    document.getElementById(
+        "editar_status"
+    ).value =
+        acao.status || "ativa";
+
+
+    const fotoAtual =
+        document.getElementById(
+            "editarFotoAtual"
+        );
+
+
+    if (acao.foto_url) {
+
+        fotoAtual.src =
+            acao.foto_url;
+
+        fotoAtual.style.display =
+            "block";
+
+    } else {
+
+        fotoAtual.src = "";
+
+        fotoAtual.style.display =
+            "none";
+    }
+
+
+    document.getElementById(
+        "editar_foto"
+    ).value = "";
+
+
+    document.getElementById(
+        "editarFotoPreview"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "mensagemEdicao"
+    ).textContent =
+        "";
+
+
+    document.getElementById(
+        "editor"
+    ).scrollIntoView({
+        behavior: "smooth"
+    });
+}
 
 
 /* =========================
-   PRÉVIA DA FOTO
+   PRÉVIA DA NOVA FOTO
 ========================= */
 
 document
-    .getElementById("foto")
+    .getElementById("editar_foto")
     .addEventListener(
         "change",
         function () {
@@ -786,7 +1077,7 @@ document
 
             const preview =
                 document.getElementById(
-                    "fotoPreview"
+                    "editarFotoPreview"
                 );
 
             if (!arquivo) {
@@ -798,6 +1089,7 @@ document
 
                 return;
             }
+
 
             if (!arquivo.type.startsWith("image/")) {
 
@@ -815,12 +1107,296 @@ document
                 return;
             }
 
+
             const url =
                 URL.createObjectURL(
                     arquivo
                 );
 
-            preview.src = url;
+
+            preview.src =
+                url;
+
+
+            preview.style.display =
+                "block";
+        }
+    );
+
+
+/* =========================
+   SALVAR EDIÇÃO
+========================= */
+
+document
+    .getElementById("formEditar")
+    .addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            const id =
+                document.getElementById(
+                    "editar_id"
+                ).value;
+
+
+            const mensagem =
+                document.getElementById(
+                    "mensagemEdicao"
+                );
+
+
+            const botao =
+                document.getElementById(
+                    "btnSalvarEdicao"
+                );
+
+
+            botao.disabled = true;
+
+
+            try {
+
+                const nome =
+                    document.getElementById(
+                        "editar_nome"
+                    ).value.trim();
+
+
+                const descricao =
+                    document.getElementById(
+                        "editar_descricao"
+                    ).value.trim();
+
+
+                const valor =
+                    Number(
+                        document.getElementById(
+                            "editar_valor"
+                        ).value
+                    );
+
+
+                const total =
+                    Number(
+                        document.getElementById(
+                            "editar_total"
+                        ).value
+                    );
+
+
+                const status =
+                    document.getElementById(
+                        "editar_status"
+                    ).value;
+
+
+                const novaFoto =
+                    document.getElementById(
+                        "editar_foto"
+                    ).files[0];
+
+
+                let dadosAtualizacao = {
+
+                    nome:
+                        nome,
+
+                    descricao:
+                        descricao,
+
+                    valor_numero:
+                        valor,
+
+                    total_numeros:
+                        total,
+
+                    status:
+                        status
+
+                };
+
+
+                /* =========================
+                   SE TIVER NOVA FOTO
+                ========================= */
+
+                if (novaFoto) {
+
+                    mensagem.textContent =
+                        "Enviando nova foto...";
+
+
+                    const novaFotoUrl =
+                        await enviarFoto(
+                            novaFoto
+                        );
+
+
+                    dadosAtualizacao.foto_url =
+                        novaFotoUrl;
+                }
+
+
+                mensagem.textContent =
+                    "Salvando alterações...";
+
+
+                const resultado =
+                    await clienteSupabase
+
+                        .from("AÇÕES")
+
+                        .update(
+                            dadosAtualizacao
+                        )
+
+                        .eq(
+                            "id",
+                            id
+                        );
+
+
+                if (resultado.error) {
+
+                    throw new Error(
+                        resultado.error.message
+                    );
+                }
+
+
+                mensagem.innerHTML =
+                    "✅ Alterações salvas com sucesso!";
+
+
+                await carregarAcoes();
+
+
+                setTimeout(
+                    function () {
+
+                        document.getElementById(
+                            "editor"
+                        ).style.display =
+                            "none";
+
+                    },
+                    1200
+                );
+
+            }
+
+            catch (erro) {
+
+                console.error(
+                    erro
+                );
+
+                mensagem.textContent =
+                    "❌ " +
+                    erro.message;
+
+            }
+
+            finally {
+
+                botao.disabled =
+                    false;
+            }
+        }
+    );
+
+
+/* =========================
+   CANCELAR EDIÇÃO
+========================= */
+
+document
+    .getElementById("btnCancelarEdicao")
+    .addEventListener(
+        "click",
+        function () {
+
+            document.getElementById(
+                "editor"
+            ).style.display =
+                "none";
+
+        }
+    );
+
+
+/* =========================
+   BOTÃO ATUALIZAR
+========================= */
+
+document
+    .getElementById("btnAtualizar")
+    .addEventListener(
+        "click",
+        carregarAcoes
+    );
+
+
+/* =========================
+   PRÉVIA DA FOTO — NOVA AÇÃO
+========================= */
+
+document
+    .getElementById("foto")
+    .addEventListener(
+        "change",
+        function () {
+
+            const arquivo =
+                this.files[0];
+
+            const preview =
+                document.getElementById(
+                    "fotoPreview"
+                );
+
+
+            if (!arquivo) {
+
+                preview.src = "";
+
+                preview.style.display =
+                    "none";
+
+                return;
+            }
+
+
+            if (!arquivo.type.startsWith("image/")) {
+
+                alert(
+                    "Selecione uma imagem válida."
+                );
+
+                this.value = "";
+
+                preview.src = "";
+
+                preview.style.display =
+                    "none";
+
+                return;
+            }
+
+
+            const url =
+                URL.createObjectURL(
+                    arquivo
+                );
+
+
+            preview.src =
+                url;
+
 
             preview.style.display =
                 "block";
@@ -839,11 +1415,13 @@ async function enviarFoto(arquivo) {
         return "";
     }
 
+
     const extensao =
         arquivo.name
             .split(".")
             .pop()
             .toLowerCase();
+
 
     const nomeArquivo =
         Date.now() +
@@ -852,21 +1430,22 @@ async function enviarFoto(arquivo) {
         "." +
         extensao;
 
-    const caminho =
-        nomeArquivo;
-
 
     const resultadoUpload =
         await clienteSupabase
+
             .storage
+
             .from(NOME_BUCKET)
+
             .upload(
-                caminho,
+                nomeArquivo,
                 arquivo,
                 {
                     cacheControl: "3600",
                     upsert: false,
-                    contentType: arquivo.type
+                    contentType:
+                        arquivo.type
                 }
             );
 
@@ -879,10 +1458,13 @@ async function enviarFoto(arquivo) {
 
     const resultadoUrl =
         clienteSupabase
+
             .storage
+
             .from(NOME_BUCKET)
+
             .getPublicUrl(
-                caminho
+                nomeArquivo
             );
 
 
@@ -893,7 +1475,7 @@ async function enviarFoto(arquivo) {
 
 
 /* =========================
-   CRIAR AÇÃO
+   CRIAR NOVA AÇÃO
 ========================= */
 
 document
@@ -904,54 +1486,57 @@ document
 
             event.preventDefault();
 
+
             const mensagem =
                 document.getElementById(
                     "mensagem"
                 );
+
 
             const btnCriar =
                 document.getElementById(
                     "btnCriar"
                 );
 
-            btnCriar.disabled = true;
+
+            btnCriar.disabled =
+                true;
+
 
             try {
 
                 const nome =
-                    document
-                        .getElementById("nome")
-                        .value
-                        .trim();
+                    document.getElementById(
+                        "nome"
+                    ).value.trim();
+
 
                 const descricao =
-                    document
-                        .getElementById("descricao")
-                        .value
-                        .trim();
+                    document.getElementById(
+                        "descricao"
+                    ).value.trim();
+
 
                 const valor_numero =
                     Number(
-                        document
-                            .getElementById(
-                                "valor_numero"
-                            )
-                            .value
+                        document.getElementById(
+                            "valor_numero"
+                        ).value
                     );
+
 
                 const total_numeros =
                     Number(
-                        document
-                            .getElementById(
-                                "total_numeros"
-                            )
-                            .value
+                        document.getElementById(
+                            "total_numeros"
+                        ).value
                     );
 
+
                 const arquivoFoto =
-                    document
-                        .getElementById("foto")
-                        .files[0];
+                    document.getElementById(
+                        "foto"
+                    ).files[0];
 
 
                 if (!arquivoFoto) {
@@ -960,7 +1545,8 @@ document
                         "Selecione a foto do prêmio."
                     );
 
-                    btnCriar.disabled = false;
+                    btnCriar.disabled =
+                        false;
 
                     return;
                 }
@@ -1014,10 +1600,6 @@ document
 
                 if (resultado.error) {
 
-                    console.error(
-                        resultado.error
-                    );
-
                     throw new Error(
                         "Erro ao criar ação: " +
                         resultado.error.message
@@ -1035,6 +1617,7 @@ document
 
                 const resultadoNumeros =
                     await clienteSupabase
+
                         .rpc(
                             "gerar_numeros_acao",
                             {
@@ -1045,10 +1628,6 @@ document
 
 
                 if (resultadoNumeros.error) {
-
-                    console.error(
-                        resultadoNumeros.error
-                    );
 
                     throw new Error(
                         "Ação criada, mas houve erro ao gerar os números: " +
@@ -1083,11 +1662,8 @@ document
                 document
                     .getElementById(
                         "fotoPreview"
-                    )
-                    .src = "";
+                    ).src = "";
 
-
-                /* ATUALIZAR LISTA */
 
                 await carregarAcoes();
 
@@ -1107,7 +1683,8 @@ document
 
             finally {
 
-                btnCriar.disabled = false;
+                btnCriar.disabled =
+                    false;
 
             }
 
