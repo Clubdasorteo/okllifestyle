@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Club da Sorte | OKL Lifestyle</title>
-
-    <meta name="description" content="Club da Sorte - Ações e experiências exclusivas OKL Lifestyle.">
 
     <style>
         * {
@@ -19,383 +16,352 @@
         body {
             font-family: Arial, Helvetica, sans-serif;
             background: #050505;
-            color: #ffffff;
+            color: #fff;
             min-height: 100vh;
         }
 
         header {
             width: 100%;
             padding: 18px 20px;
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             border-bottom: 1px solid #222;
             background: #050505;
         }
 
         header img {
-            width: 150px;
-            max-width: 70%;
-            height: auto;
-            display: block;
-            margin: auto;
+            max-width: 150px;
+            max-height: 70px;
+            object-fit: contain;
         }
 
         .hero {
             text-align: center;
-            padding: 45px 20px 35px;
-            background:
-                radial-gradient(circle at top, rgba(212,175,55,0.14), transparent 45%),
-                #050505;
+            padding: 45px 20px 30px;
         }
 
         .hero h1 {
-            font-size: 34px;
-            margin-bottom: 12px;
-            color: #d4af37;
+            font-size: 32px;
             font-weight: 800;
+            margin-bottom: 12px;
         }
 
         .hero p {
-            color: #cfcfcf;
+            color: #aaa;
             font-size: 16px;
+            line-height: 1.5;
         }
 
         .container {
             width: 100%;
-            max-width: 900px;
-            margin: auto;
-            padding: 20px;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 0 16px 50px;
         }
 
-        .section-title {
-            text-align: center;
-            margin: 20px 0;
-            font-size: 25px;
+        .titulo-secao {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 30px 0 18px;
         }
+
+        /* AÇÃO */
 
         .acao-card {
-            background: linear-gradient(145deg, #111111, #080808);
+            background: #0d0d0d;
             border: 1px solid #292929;
             border-radius: 18px;
             overflow: hidden;
-            box-shadow: 0 10px 35px rgba(0,0,0,0.45);
+            box-shadow: 0 8px 30px rgba(0,0,0,.35);
+        }
+
+        .acao-foto-area {
+            width: 100%;
+            background: #111;
+            min-height: 280px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .acao-foto {
             width: 100%;
-            height: 360px;
+            max-height: 520px;
             object-fit: contain;
-            background: #090909;
             display: block;
+            background: #111;
+        }
+
+        .foto-erro {
+            padding: 35px 20px;
+            text-align: center;
+            color: #aaa;
+            line-height: 1.5;
         }
 
         .acao-conteudo {
-            padding: 25px;
+            padding: 22px;
         }
 
-        .acao-conteudo h2 {
-            color: #d4af37;
-            font-size: 28px;
-            margin-bottom: 12px;
+        .acao-conteudo h3 {
+            font-size: 27px;
+            margin-bottom: 10px;
         }
 
-        .descricao {
-            color: #cfcfcf;
+        .acao-descricao {
+            color: #bbb;
             line-height: 1.6;
+            white-space: pre-line;
             margin-bottom: 20px;
         }
 
-        .info-grid {
+        .acao-info {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: 12px;
-            margin-bottom: 20px;
+            margin-top: 18px;
         }
 
         .info-box {
-            background: #111;
-            border: 1px solid #262626;
+            background: #151515;
+            border: 1px solid #252525;
             border-radius: 12px;
-            padding: 16px;
+            padding: 15px;
         }
 
-        .info-box small {
+        .info-box span {
             display: block;
             color: #888;
+            font-size: 12px;
             margin-bottom: 6px;
+            text-transform: uppercase;
         }
 
         .info-box strong {
-            color: #fff;
-            font-size: 18px;
+            font-size: 20px;
         }
 
-        .preco {
-            color: #d4af37 !important;
-        }
+        /* PARTICIPAÇÃO */
 
         .participacao {
-            margin-top: 25px;
-            padding: 25px;
-            border-radius: 18px;
+            margin-top: 30px;
+            background: #0d0d0d;
             border: 1px solid #292929;
-            background: #0b0b0b;
+            border-radius: 18px;
+            padding: 22px;
         }
 
         .participacao h2 {
-            text-align: center;
+            font-size: 24px;
             margin-bottom: 8px;
         }
 
         .participacao-subtitulo {
-            text-align: center;
             color: #999;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
+            line-height: 1.5;
         }
 
         .pacotes {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 20px;
         }
 
         .pacote {
-            border: 1px solid #333;
-            background: #111;
-            color: white;
-            padding: 16px 10px;
+            border: 1px solid #303030;
+            background: #151515;
+            color: #fff;
+            padding: 16px 8px;
             border-radius: 12px;
             cursor: pointer;
-            transition: 0.2s;
             text-align: center;
+            transition: .2s;
         }
 
-        .pacote:hover,
-        .pacote.ativo {
-            border-color: #d4af37;
+        .pacote:hover {
+            border-color: #fff;
             transform: translateY(-2px);
-            background: #161616;
         }
 
         .pacote strong {
             display: block;
-            font-size: 21px;
-            color: #d4af37;
+            font-size: 20px;
+            margin-bottom: 5px;
         }
 
-        .pacote span {
-            font-size: 12px;
+        .pacote small {
             color: #999;
         }
 
-        .custom-label {
+        .campo {
+            margin-top: 15px;
+        }
+
+        .campo label {
             display: block;
-            color: #ccc;
-            margin-bottom: 8px;
-        }
-
-        .custom-input {
-            width: 100%;
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #333;
-            background: #111;
-            color: white;
-            font-size: 17px;
-            outline: none;
-        }
-
-        .custom-input:focus {
-            border-color: #d4af37;
-        }
-
-        .resumo {
-            margin-top: 18px;
-            padding: 18px;
-            border-radius: 12px;
-            background: #151515;
-            border: 1px solid #292929;
-            text-align: center;
-        }
-
-        .resumo p {
-            color: #aaa;
             margin-bottom: 7px;
+            font-size: 14px;
+            color: #ccc;
         }
 
-        .resumo strong {
-            color: #d4af37;
-            font-size: 30px;
-        }
-
-        .formulario {
-            margin-top: 20px;
-            display: grid;
-            gap: 12px;
-        }
-
-        .formulario input {
+        .campo input {
             width: 100%;
-            padding: 15px;
+            padding: 14px;
             border-radius: 10px;
             border: 1px solid #333;
             background: #111;
             color: #fff;
-            font-size: 16px;
             outline: none;
+            font-size: 16px;
         }
 
-        .formulario input:focus {
-            border-color: #d4af37;
+        .campo input:focus {
+            border-color: #888;
+        }
+
+        .total-box {
+            margin-top: 20px;
+            padding: 18px;
+            background: #151515;
+            border-radius: 12px;
+            border: 1px solid #292929;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .total-box span {
+            color: #aaa;
+        }
+
+        .total-box strong {
+            font-size: 25px;
         }
 
         .botao {
             width: 100%;
+            margin-top: 18px;
+            padding: 16px;
             border: none;
-            padding: 17px;
             border-radius: 12px;
-            background: linear-gradient(90deg, #b8941f, #e3c65b);
-            color: #050505;
-            font-size: 17px;
+            background: #fff;
+            color: #000;
+            font-size: 16px;
             font-weight: 800;
             cursor: pointer;
-            margin-top: 5px;
         }
 
         .botao:hover {
-            filter: brightness(1.08);
+            opacity: .9;
         }
+
+        /* DESTAQUES */
 
         .destaques {
-            margin-top: 35px;
-        }
-
-        .destaques-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             margin-top: 18px;
         }
 
         .destaque {
             background: #0d0d0d;
-            border: 1px solid #262626;
-            border-radius: 14px;
-            padding: 20px 12px;
-            text-align: center;
-        }
-
-        .destaque .icone {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        .destaque strong {
-            display: block;
-            color: #d4af37;
-            margin-bottom: 5px;
-        }
-
-        .destaque span {
-            color: #999;
-            font-size: 13px;
-        }
-
-        .como-funciona {
-            margin-top: 35px;
-            padding: 25px;
-            background: #0b0b0b;
             border: 1px solid #292929;
-            border-radius: 18px;
+            border-radius: 14px;
+            padding: 20px;
         }
+
+        .destaque h3 {
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+
+        .destaque p {
+            color: #888;
+            font-size: 14px;
+        }
+
+        /* COMO FUNCIONA */
 
         .passos {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 20px;
+            gap: 12px;
+            margin-top: 18px;
         }
 
         .passo {
-            text-align: center;
-            padding: 15px;
+            background: #0d0d0d;
+            border: 1px solid #292929;
+            border-radius: 14px;
+            padding: 20px;
         }
 
         .passo-numero {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: #d4af37;
-            color: #050505;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 12px;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 10px;
         }
 
-        .passo strong {
-            display: block;
-            margin-bottom: 7px;
+        .passo h3 {
+            margin-bottom: 8px;
         }
 
         .passo p {
-            color: #999;
+            color: #888;
             font-size: 14px;
             line-height: 1.5;
         }
 
         footer {
-            text-align: center;
-            padding: 35px 20px;
-            margin-top: 35px;
             border-top: 1px solid #222;
+            text-align: center;
+            padding: 25px 15px;
             color: #666;
             font-size: 13px;
         }
 
-        .carregando {
-            text-align: center;
-            padding: 60px 20px;
-            color: #aaa;
-        }
-
-        .erro {
-            text-align: center;
-            padding: 50px 20px;
-            color: #ff7777;
-        }
-
         .sem-acao {
+            background: #0d0d0d;
+            border: 1px solid #292929;
+            border-radius: 18px;
+            padding: 35px 20px;
             text-align: center;
-            padding: 50px 20px;
-            color: #aaa;
+            color: #999;
         }
 
-        @media (max-width: 700px) {
+        @media (max-width: 650px) {
+
+            .hero {
+                padding-top: 35px;
+            }
 
             .hero h1 {
                 font-size: 27px;
-            }
-
-            .acao-foto {
-                height: 280px;
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
             }
 
             .pacotes {
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .destaques-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .acao-info {
+                grid-template-columns: 1fr;
+            }
+
+            .destaques {
+                grid-template-columns: 1fr;
             }
 
             .passos {
                 grid-template-columns: 1fr;
+            }
+
+            .acao-conteudo {
+                padding: 18px;
             }
         }
     </style>
@@ -413,178 +379,188 @@
 
 <section class="hero">
     <h1>BEM-VINDO AO CLUB</h1>
-    <p>Uma experiência exclusiva OKL LIFESTYLE.</p>
+
+    <p>
+        Uma experiência exclusiva
+        <strong>OKL LIFESTYLE.</strong>
+    </p>
 </section>
 
 <main class="container">
 
-    <h2 class="section-title">🔥 Ação em destaque</h2>
+    <h2 class="titulo-secao">🔥 Ação em destaque</h2>
 
     <div id="acaoContainer">
-        <div class="carregando">
+        <div class="sem-acao">
             Carregando ação...
         </div>
     </div>
 
     <section class="participacao">
 
-        <h2>🎟️ PARTICIPE AGORA</h2>
+        <h2>🎟️ Escolha sua quantidade</h2>
 
         <p class="participacao-subtitulo">
-            Escolha a quantidade de bilhetes que deseja adquirir.
+            Escolha uma quantidade de bilhetes ou digite qualquer quantidade
+            a partir de 10. Os números são atribuídos automaticamente após
+            a confirmação do pagamento.
         </p>
 
         <div class="pacotes">
 
-            <button class="pacote" onclick="selecionarPacote(10)">
+            <button class="pacote" onclick="selecionarQuantidade(10)">
                 <strong>10</strong>
-                <span>bilhetes</span>
+                <small>bilhetes</small>
             </button>
 
-            <button class="pacote" onclick="selecionarPacote(20)">
+            <button class="pacote" onclick="selecionarQuantidade(20)">
                 <strong>20</strong>
-                <span>bilhetes</span>
+                <small>bilhetes</small>
             </button>
 
-            <button class="pacote" onclick="selecionarPacote(50)">
+            <button class="pacote" onclick="selecionarQuantidade(50)">
                 <strong>50</strong>
-                <span>bilhetes</span>
+                <small>bilhetes</small>
             </button>
 
-            <button class="pacote" onclick="selecionarPacote(100)">
+            <button class="pacote" onclick="selecionarQuantidade(100)">
                 <strong>100</strong>
-                <span>bilhetes</span>
+                <small>bilhetes</small>
             </button>
 
-            <button class="pacote" onclick="selecionarPacote(200)">
+            <button class="pacote" onclick="selecionarQuantidade(200)">
                 <strong>200</strong>
-                <span>bilhetes</span>
+                <small>bilhetes</small>
             </button>
 
-            <button class="pacote" onclick="selecionarPacote(500)">
+            <button class="pacote" onclick="selecionarQuantidade(500)">
                 <strong>500</strong>
-                <span>bilhetes</span>
+                <small>bilhetes</small>
             </button>
 
         </div>
 
-        <label class="custom-label">
-            Ou informe outra quantidade:
-        </label>
+        <div class="campo">
 
-        <input
-            id="quantidade"
-            class="custom-input"
-            type="number"
-            min="10"
-            placeholder="Ex.: 17, 25, 37, 83..."
-            oninput="atualizarResumo()"
-        >
+            <label for="quantidade">
+                Ou digite a quantidade desejada
+            </label>
 
-        <div class="resumo">
+            <input
+                type="number"
+                id="quantidade"
+                min="10"
+                placeholder="Ex.: 17, 25, 37, 83..."
+                oninput="calcularTotal()"
+            >
 
-            <p>Quantidade selecionada</p>
+        </div>
 
-            <strong id="quantidadeResumo">
-                0
-            </strong>
+        <div class="campo">
 
-            <p style="margin-top:12px;">
-                Valor total
-            </p>
+            <label for="nome">
+                Nome
+            </label>
 
-            <strong id="valorResumo">
+            <input
+                type="text"
+                id="nome"
+                placeholder="Digite seu nome"
+            >
+
+        </div>
+
+        <div class="campo">
+
+            <label for="whatsapp">
+                WhatsApp
+            </label>
+
+            <input
+                type="tel"
+                id="whatsapp"
+                placeholder="(00) 00000-0000"
+            >
+
+        </div>
+
+        <div class="total-box">
+
+            <span>Total</span>
+
+            <strong id="valorTotal">
                 R$ 0,00
             </strong>
 
         </div>
 
-        <div class="formulario">
-
-            <input
-                id="nome"
-                type="text"
-                placeholder="Seu nome completo"
-            >
-
-            <input
-                id="telefone"
-                type="tel"
-                placeholder="Seu WhatsApp"
-            >
-
-            <button class="botao" onclick="continuar()">
-                CONTINUAR
-            </button>
-
-        </div>
+        <button
+            class="botao"
+            onclick="continuarCompra()"
+        >
+            CONTINUAR
+        </button>
 
     </section>
+
+    <h2 class="titulo-secao">
+        🏆 Destaques
+    </h2>
 
     <section class="destaques">
 
-        <h2 class="section-title">✨ Destaques</h2>
+        <div class="destaque">
+            <h3>👑 Top Comprador</h3>
+            <p>Quem mais participa das ações.</p>
+        </div>
 
-        <div class="destaques-grid">
+        <div class="destaque">
+            <h3>🎯 Menor Cota</h3>
+            <p>Acompanhe as oportunidades.</p>
+        </div>
 
-            <div class="destaque">
-                <div class="icone">🏆</div>
-                <strong>Top Comprador</strong>
-                <span>Quem mais participa.</span>
-            </div>
+        <div class="destaque">
+            <h3>🔥 Maior Cota</h3>
+            <p>Confira as maiores participações.</p>
+        </div>
 
-            <div class="destaque">
-                <div class="icone">🎯</div>
-                <strong>Menor Cota</strong>
-                <span>Bilhetes distribuídos automaticamente.</span>
-            </div>
-
-            <div class="destaque">
-                <div class="icone">🔥</div>
-                <strong>Maior Cota</strong>
-                <span>Mais chances na ação.</span>
-            </div>
-
-            <div class="destaque">
-                <div class="icone">🎁</div>
-                <strong>Bilhetes Premiados</strong>
-                <span>Confira os resultados.</span>
-            </div>
-
+        <div class="destaque">
+            <h3>🎟️ Bilhetes Premiados</h3>
+            <p>Acompanhe os resultados.</p>
         </div>
 
     </section>
 
-    <section class="como-funciona">
+    <h2 class="titulo-secao">
+        📋 Como funciona
+    </h2>
 
-        <h2 class="section-title">Como funciona?</h2>
+    <section class="passos">
 
-        <div class="passos">
+        <div class="passo">
+            <div class="passo-numero">01</div>
+            <h3>Escolha</h3>
+            <p>
+                Escolha quantos bilhetes deseja adquirir.
+            </p>
+        </div>
 
-            <div class="passo">
-                <div class="passo-numero">1</div>
-                <strong>Escolha</strong>
-                <p>
-                    Escolha quantos bilhetes deseja adquirir.
-                </p>
-            </div>
+        <div class="passo">
+            <div class="passo-numero">02</div>
+            <h3>Pagamento</h3>
+            <p>
+                Faça o pagamento da sua participação.
+            </p>
+        </div>
 
-            <div class="passo">
-                <div class="passo-numero">2</div>
-                <strong>Pagamento</strong>
-                <p>
-                    Faça o pagamento pelo método disponibilizado.
-                </p>
-            </div>
-
-            <div class="passo">
-                <div class="passo-numero">3</div>
-                <strong>Receba seus números</strong>
-                <p>
-                    Após a confirmação do pagamento, os números serão atribuídos automaticamente.
-                </p>
-            </div>
-
+        <div class="passo">
+            <div class="passo-numero">03</div>
+            <h3>Receba seus números</h3>
+            <p>
+                Após a confirmação do pagamento,
+                os números disponíveis são atribuídos
+                automaticamente.
+            </p>
         </div>
 
     </section>
@@ -592,8 +568,9 @@
 </main>
 
 <footer>
-    © 2026 OKL Lifestyle — Club da Sorte
+    © 2026 Club da Sorte | OKL Lifestyle
 </footer>
+
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -613,122 +590,122 @@ const clienteSupabase =
 
 let acaoAtual = null;
 
-let quantidadeSelecionada = 0;
 
-
-/* =========================
+/* ============================
    CARREGAR AÇÃO
-========================= */
+============================ */
 
 async function carregarAcao() {
 
     const container =
         document.getElementById("acaoContainer");
 
-    container.innerHTML =
-        '<div class="carregando">Carregando ação...</div>';
+    container.innerHTML = `
+        <div class="sem-acao">
+            Carregando ação...
+        </div>
+    `;
 
-    try {
+    const { data, error } =
+        await clienteSupabase
+            .from("AÇÕES")
+            .select(`
+                id,
+                nome,
+                descricao,
+                foto_url,
+                valor_numero,
+                total_numeros,
+                status,
+                created_at
+            `)
+            .eq("status", "ativa")
+            .order("created_at", {
+                ascending: false
+            })
+            .limit(1);
 
-        const { data, error } =
-            await clienteSupabase
-                .from("AÇÕES")
-                .select(`
-                    id,
-                    nome,
-                    descricao,
-                    foto_url,
-                    valor_numero,
-                    total_numeros,
-                    status,
-                    created_at
-                `)
-                .eq("status", "ativa")
-                .order("created_at", {
-                    ascending: false
-                })
-                .limit(1);
+    console.log("AÇÃO:", data);
+    console.log("ERRO:", error);
 
-        console.log("AÇÃO:", data);
-        console.log("ERRO:", error);
+    if (error) {
 
-        if (error) {
-            throw error;
-        }
-
-        if (!data || data.length === 0) {
-
-            container.innerHTML = `
-                <div class="sem-acao">
-                    <h3>Nenhuma ação disponível no momento.</h3>
-                    <p style="margin-top:10px;">
-                        Aguarde a próxima ação.
-                    </p>
-                </div>
-            `;
-
-            return;
-        }
-
-        acaoAtual = data[0];
-
-        renderizarAcao();
-
-        atualizarResumo();
-
-    } catch (erro) {
-
-        console.error(
-            "Erro ao carregar ação:",
-            erro
-        );
+        console.error(error);
 
         container.innerHTML = `
-            <div class="erro">
-
-                <h3>Não foi possível carregar a ação.</h3>
-
-                <p style="margin-top:12px;">
-                    Verifique a conexão com o sistema.
-                </p>
-
-                <p style="
-                    margin-top:10px;
-                    font-size:12px;
-                    color:#777;
-                ">
-                    ${erro.message || "Erro desconhecido"}
-                </p>
-
+            <div class="sem-acao">
+                Não foi possível carregar a ação.
             </div>
         `;
+
+        return;
     }
+
+    if (!data || data.length === 0) {
+
+        acaoAtual = null;
+
+        container.innerHTML = `
+            <div class="sem-acao">
+                Nenhuma ação disponível no momento.
+            </div>
+        `;
+
+        return;
+    }
+
+    acaoAtual = data[0];
+
+    renderizarAcao();
+
+    calcularTotal();
 }
 
 
-/* =========================
+/* ============================
    MOSTRAR AÇÃO
-========================= */
+============================ */
 
 function renderizarAcao() {
 
     const container =
         document.getElementById("acaoContainer");
 
-    let foto = "";
+    if (!acaoAtual) return;
+
+    let fotoHTML = "";
 
     if (
         acaoAtual.foto_url &&
-        acaoAtual.foto_url.trim() !== ""
+        String(acaoAtual.foto_url).trim() !== ""
     ) {
 
-        foto = `
-            <img
-                class="acao-foto"
-                src="${acaoAtual.foto_url}"
-                alt="${acaoAtual.nome}"
-                onerror="this.style.display='none'"
-            >
+        const urlFoto =
+            String(acaoAtual.foto_url).trim();
+
+        fotoHTML = `
+            <div class="acao-foto-area">
+
+                <img
+                    class="acao-foto"
+                    src="${urlFoto}"
+                    alt="${escapeHtml(acaoAtual.nome || "Prêmio")}"
+                    onerror="mostrarErroFoto(this)"
+                >
+
+            </div>
+        `;
+
+    } else {
+
+        fotoHTML = `
+            <div class="acao-foto-area">
+
+                <div class="foto-erro">
+                    📷 Foto do prêmio ainda não cadastrada.
+                </div>
+
+            </div>
         `;
     }
 
@@ -742,27 +719,33 @@ function renderizarAcao() {
 
         <div class="acao-card">
 
-            ${foto}
+            ${fotoHTML}
 
             <div class="acao-conteudo">
 
-                <h2>
-                    ${acaoAtual.nome || "Ação"}
-                </h2>
+                <h3>
+                    ${escapeHtml(acaoAtual.nome || "")}
+                </h3>
 
-                <div class="descricao">
-                    ${acaoAtual.descricao || ""}
-                </div>
+                ${
+                    acaoAtual.descricao
+                    ? `
+                        <p class="acao-descricao">
+                            ${escapeHtml(acaoAtual.descricao)}
+                        </p>
+                    `
+                    : ""
+                }
 
-                <div class="info-grid">
+                <div class="acao-info">
 
                     <div class="info-box">
 
-                        <small>
+                        <span>
                             Valor por bilhete
-                        </small>
+                        </span>
 
-                        <strong class="preco">
+                        <strong>
                             ${formatarMoeda(valor)}
                         </strong>
 
@@ -770,12 +753,12 @@ function renderizarAcao() {
 
                     <div class="info-box">
 
-                        <small>
+                        <span>
                             Total de bilhetes
-                        </small>
+                        </span>
 
                         <strong>
-                            ${formatarNumero(total)}
+                            ${total.toLocaleString("pt-BR")}
                         </strong>
 
                     </div>
@@ -789,133 +772,108 @@ function renderizarAcao() {
 }
 
 
-/* =========================
-   PACOTES
-========================= */
+/* ============================
+   ERRO DA FOTO
+============================ */
 
-function selecionarPacote(quantidade) {
+function mostrarErroFoto(imagem) {
 
-    quantidadeSelecionada =
-        Number(quantidade);
+    const area =
+        imagem.parentElement;
 
-    document.getElementById("quantidade").value =
-        quantidadeSelecionada;
+    area.innerHTML = `
+        <div class="foto-erro">
+            ⚠️ Não foi possível carregar a foto do prêmio.
+            <br><br>
+            O cadastro da ação foi encontrado,
+            mas o endereço da imagem não pôde ser aberto.
+        </div>
+    `;
 
-    document
-        .querySelectorAll(".pacote")
-        .forEach(botao => {
-
-            botao.classList.remove("ativo");
-
-            const numero =
-                Number(
-                    botao.querySelector("strong").textContent
-                );
-
-            if (
-                numero === quantidadeSelecionada
-            ) {
-                botao.classList.add("ativo");
-            }
-
-        });
-
-    atualizarResumo();
+    console.error(
+        "Erro ao carregar foto:",
+        imagem.src
+    );
 }
 
 
-/* =========================
-   RESUMO
-========================= */
+/* ============================
+   QUANTIDADE
+============================ */
 
-function atualizarResumo() {
+function selecionarQuantidade(quantidade) {
 
-    const input =
+    const campo =
         document.getElementById("quantidade");
 
-    const quantidade =
-        Number(input.value || 0);
+    campo.value = quantidade;
 
-    quantidadeSelecionada =
-        quantidade;
+    calcularTotal();
 
-    document.getElementById(
-        "quantidadeResumo"
-    ).textContent =
-        quantidade;
-
-    if (!acaoAtual) {
-
-        document.getElementById(
-            "valorResumo"
-        ).textContent =
-            "R$ 0,00";
-
-        return;
-    }
-
-    const valor =
-        Number(acaoAtual.valor_numero || 0);
-
-    const total =
-        quantidade * valor;
-
-    document.getElementById(
-        "valorResumo"
-    ).textContent =
-        formatarMoeda(total);
-
-    document
-        .querySelectorAll(".pacote")
-        .forEach(botao => {
-
-            botao.classList.remove("ativo");
-
-            const numero =
-                Number(
-                    botao.querySelector("strong").textContent
-                );
-
-            if (
-                numero === quantidade
-            ) {
-                botao.classList.add("ativo");
-            }
-
-        });
+    campo.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
 }
 
 
-/* =========================
-   CONTINUAR
-========================= */
+/* ============================
+   TOTAL
+============================ */
 
-function continuar() {
-
-    const nome =
-        document.getElementById("nome")
-            .value.trim();
-
-    const telefone =
-        document.getElementById("telefone")
-            .value.trim();
+function calcularTotal() {
 
     const quantidade =
         Number(
-            document.getElementById("quantidade")
-                .value || 0
+            document.getElementById("quantidade").value
         );
+
+    const valorPorNumero =
+        Number(
+            acaoAtual?.valor_numero || 0
+        );
+
+    const total =
+        quantidade * valorPorNumero;
+
+    document.getElementById("valorTotal").textContent =
+        formatarMoeda(total);
+}
+
+
+/* ============================
+   CONTINUAR
+============================ */
+
+function continuarCompra() {
 
     if (!acaoAtual) {
 
         alert(
-            "Nenhuma ação disponível."
+            "Nenhuma ação disponível no momento."
         );
 
         return;
     }
 
-    if (quantidade < 10) {
+    const quantidade =
+        Number(
+            document.getElementById("quantidade").value
+        );
+
+    const nome =
+        document
+            .getElementById("nome")
+            .value
+            .trim();
+
+    const whatsapp =
+        document
+            .getElementById("whatsapp")
+            .value
+            .trim();
+
+    if (!quantidade || quantidade < 10) {
 
         alert(
             "A quantidade mínima é de 10 bilhetes."
@@ -925,12 +883,12 @@ function continuar() {
     }
 
     if (
-        acaoAtual.total_numeros &&
-        quantidade > Number(acaoAtual.total_numeros)
+        quantidade >
+        Number(acaoAtual.total_numeros || 0)
     ) {
 
         alert(
-            "A quantidade informada é maior que o total disponível nesta ação."
+            "A quantidade informada é maior que o total disponível desta ação."
         );
 
         return;
@@ -939,13 +897,13 @@ function continuar() {
     if (!nome) {
 
         alert(
-            "Digite seu nome completo."
+            "Digite seu nome."
         );
 
         return;
     }
 
-    if (!telefone) {
+    if (!whatsapp) {
 
         alert(
             "Digite seu WhatsApp."
@@ -954,52 +912,64 @@ function continuar() {
         return;
     }
 
-    const valor =
+    const total =
         quantidade *
         Number(acaoAtual.valor_numero || 0);
 
     alert(
-        "Pedido selecionado!\n\n" +
-        "Ação: " + acaoAtual.nome +
-        "\nQuantidade: " + quantidade +
-        "\nValor: " + formatarMoeda(valor) +
-        "\n\nA etapa de pagamento será integrada em seguida."
+        "Participação preparada!\n\n" +
+        "Ação: " +
+        acaoAtual.nome +
+        "\n" +
+        "Quantidade: " +
+        quantidade +
+        "\n" +
+        "Total: " +
+        formatarMoeda(total) +
+        "\n\n" +
+        "A etapa de pagamento será integrada em seguida."
     );
 }
 
 
-/* =========================
-   FORMATAÇÕES
-========================= */
+/* ============================
+   MOEDA
+============================ */
 
 function formatarMoeda(valor) {
 
-    return Number(valor || 0)
-        .toLocaleString("pt-BR", {
+    return Number(valor || 0).toLocaleString(
+        "pt-BR",
+        {
             style: "currency",
             currency: "BRL"
-        });
+        }
+    );
 }
 
 
-function formatarNumero(valor) {
+/* ============================
+   SEGURANÇA HTML
+============================ */
 
-    return Number(valor || 0)
-        .toLocaleString("pt-BR");
+function escapeHtml(valor) {
+
+    return String(valor || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 
-/* =========================
+/* ============================
    INICIAR
-========================= */
+============================ */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    carregarAcao
-);
+carregarAcao();
 
 </script>
 
 </body>
 </html>
-```
