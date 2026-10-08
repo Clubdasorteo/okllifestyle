@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Painel Administrativo - Club da Sorte</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -17,20 +16,21 @@
             margin: 0;
             padding: 20px;
             font-family: Arial, sans-serif;
-            background: #111;
+            background: #000;
             color: #fff;
         }
 
         .container {
             max-width: 600px;
             margin: 40px auto;
-            background: #1c1c1c;
+            background: #151515;
             padding: 25px;
             border-radius: 12px;
         }
 
         h1 {
             text-align: center;
+            color: #d4af37;
             margin-bottom: 25px;
         }
 
@@ -50,7 +50,7 @@
             padding: 12px;
             border: 1px solid #444;
             border-radius: 6px;
-            background: #292929;
+            background: #222;
             color: #fff;
             font-size: 16px;
         }
@@ -58,6 +58,10 @@
         textarea {
             min-height: 100px;
             resize: vertical;
+        }
+
+        button {
+            cursor: pointer;
         }
 
         .btn {
@@ -69,12 +73,7 @@
             color: #000;
             font-size: 16px;
             font-weight: bold;
-            cursor: pointer;
             margin-top: 10px;
-        }
-
-        .btn:hover {
-            opacity: 0.9;
         }
 
         .btn-sair {
@@ -84,7 +83,6 @@
             border-radius: 6px;
             background: #444;
             color: #fff;
-            cursor: pointer;
             margin-bottom: 25px;
         }
 
@@ -103,342 +101,270 @@
 
 <body>
 
-    <!-- LOGIN -->
-    <div class="container" id="login">
+<div class="container" id="login">
 
-        <h1>Acesso administrativo</h1>
+    <h1>Acesso administrativo</h1>
+
+    <div class="form-group">
+        <label>E-mail</label>
+        <input type="email" id="email">
+    </div>
+
+    <div class="form-group">
+        <label>Senha</label>
+        <input type="password" id="senha">
+    </div>
+
+    <button type="button" class="btn" id="btnLogin">
+        Entrar
+    </button>
+
+    <div id="loginMensagem"></div>
+
+</div>
+
+
+<div class="container" id="painel">
+
+    <h1>Painel Administrativo</h1>
+
+    <button type="button" class="btn-sair" id="btnSair">
+        Sair
+    </button>
+
+    <p><strong>Criar nova ação</strong></p>
+
+    <form id="formAcao">
 
         <div class="form-group">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" required>
+            <label>Nome da ação</label>
+            <input type="text" id="nome" required>
         </div>
 
         <div class="form-group">
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" required>
+            <label>Prêmio</label>
+            <input type="text" id="premio" required>
         </div>
 
-        <button type="button" class="btn" id="btnLogin">
-            Entrar
+        <div class="form-group">
+            <label>Descrição do prêmio</label>
+            <textarea id="premio_descricao"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Descrição da ação</label>
+            <textarea id="descricao"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>URL da foto do prêmio</label>
+            <input type="text" id="foto_url">
+        </div>
+
+        <div class="form-group">
+            <label>Valor de cada número</label>
+            <input type="number" id="valor_numero" step="0.01" min="0" required>
+        </div>
+
+        <div class="form-group">
+            <label>Total de números</label>
+            <input type="number" id="total_numeros" min="1" required>
+        </div>
+
+        <div class="form-group">
+            <label>Quantidade</label>
+            <input type="number" id="quantidade" min="1" required>
+        </div>
+
+        <div class="form-group">
+            <label>Data e hora do sorteio</label>
+            <input type="datetime-local" id="data_sorteio">
+        </div>
+
+        <div class="form-group">
+            <label>Link de pagamento</label>
+            <input type="text" id="link_pagamento">
+        </div>
+
+        <div class="form-group">
+            <label>Observações</label>
+            <textarea id="observacoes"></textarea>
+        </div>
+
+        <button type="submit" class="btn">
+            Criar ação
         </button>
 
-        <div id="loginMensagem"></div>
+    </form>
 
-    </div>
+    <div id="mensagem"></div>
 
-
-    <!-- PAINEL -->
-    <div class="container" id="painel">
-
-        <h1>Painel Administrativo</h1>
-
-        <button type="button" class="btn-sair" id="btnSair">
-            Sair
-        </button>
-
-        <p><strong>Criar nova ação</strong></p>
-
-        <form id="formAcao">
-
-            <div class="form-group">
-                <label for="nome">Nome da ação</label>
-                <input type="text" id="nome" required>
-            </div>
-
-            <div class="form-group">
-                <label for="premio">Prêmio</label>
-                <input type="text" id="premio" required>
-            </div>
-
-            <div class="form-group">
-                <label for="premio_descricao">
-                    Descrição do prêmio
-                </label>
-                <textarea id="premio_descricao"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="descricao">
-                    Descrição da ação
-                </label>
-                <textarea id="descricao"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="foto_url">
-                    URL da foto do prêmio
-                </label>
-                <input type="text" id="foto_url">
-            </div>
-
-            <div class="form-group">
-                <label for="valor_numero">
-                    Valor de cada número
-                </label>
-                <input
-                    type="number"
-                    id="valor_numero"
-                    step="0.01"
-                    min="0"
-                    required
-                >
-            </div>
-
-            <div class="form-group">
-                <label for="total_numeros">
-                    Total de números
-                </label>
-                <input
-                    type="number"
-                    id="total_numeros"
-                    min="1"
-                    required
-                >
-            </div>
-
-            <div class="form-group">
-                <label for="quantidade">
-                    Quantidade
-                </label>
-                <input
-                    type="number"
-                    id="quantidade"
-                    min="1"
-                    required
-                >
-            </div>
-
-            <div class="form-group">
-                <label for="data_sorteio">
-                    Data e hora do sorteio
-                </label>
-                <input
-                    type="datetime-local"
-                    id="data_sorteio"
-                >
-            </div>
-
-            <div class="form-group">
-                <label for="link_pagamento">
-                    Link de pagamento
-                </label>
-                <input
-                    type="text"
-                    id="link_pagamento"
-                >
-            </div>
-
-            <div class="form-group">
-                <label for="observacoes">
-                    Observações
-                </label>
-                <textarea id="observacoes"></textarea>
-            </div>
-
-            <button type="submit" class="btn">
-                Criar ação
-            </button>
-
-        </form>
-
-        <div id="mensagem"></div>
-
-    </div>
+</div>
 
 
-    <script>
+<script>
 
-        // CONFIGURAÇÃO DO SUPABASE
-        const SUPABASE_URL =
-            "https://vlirpvuramslfiftshio.supabase.co";
+const URL_SUPABASE =
+    "https://vlirpvuramslfiftshio.supabase.co";
 
-        const SUPABASE_PUBLISHABLE_KEY =
-            "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
+const CHAVE_SUPABASE =
+    "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
 
-        const supabase =
-            window.supabase.createClient(
-                SUPABASE_URL,
-                SUPABASE_PUBLISHABLE_KEY
-            );
+const clienteSupabase =
+    window.supabase.createClient(
+        URL_SUPABASE,
+        CHAVE_SUPABASE
+    );
 
 
-        // VERIFICAR LOGIN
-        async function verificarSessao() {
+async function verificarSessao() {
 
-            const {
-                data: { session }
-            } = await supabase.auth.getSession();
+    const resultado =
+        await clienteSupabase.auth.getSession();
 
-            if (session) {
+    const sessao = resultado.data.session;
 
-                document.getElementById("login").style.display = "none";
-                document.getElementById("painel").style.display = "block";
+    if (sessao) {
 
-            } else {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("painel").style.display = "block";
 
-                document.getElementById("login").style.display = "block";
-                document.getElementById("painel").style.display = "none";
+    } else {
 
-            }
+        document.getElementById("login").style.display = "block";
+        document.getElementById("painel").style.display = "none";
+
+    }
+}
+
+
+document
+    .getElementById("btnLogin")
+    .addEventListener("click", async function () {
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const senha =
+            document.getElementById("senha").value;
+
+        const mensagem =
+            document.getElementById("loginMensagem");
+
+        mensagem.textContent = "Entrando...";
+
+        const resultado =
+            await clienteSupabase.auth.signInWithPassword({
+                email: email,
+                password: senha
+            });
+
+        if (resultado.error) {
+
+            console.error(resultado.error);
+
+            mensagem.textContent =
+                "Erro: " + resultado.error.message;
+
+            return;
         }
 
+        mensagem.textContent = "";
 
-        // LOGIN
-        document
-            .getElementById("btnLogin")
-            .addEventListener("click", async function () {
-
-                const email =
-                    document.getElementById("email").value;
-
-                const senha =
-                    document.getElementById("senha").value;
-
-                const mensagem =
-                    document.getElementById("loginMensagem");
-
-                mensagem.textContent = "Entrando...";
-
-                const { error } =
-                    await supabase.auth.signInWithPassword({
-                        email: email,
-                        password: senha
-                    });
-
-                if (error) {
-
-                    console.error(error);
-
-                    mensagem.textContent =
-                        "E-mail ou senha incorretos.";
-
-                    return;
-                }
-
-                mensagem.textContent = "";
-
-                verificarSessao();
-            });
+        await verificarSessao();
+    });
 
 
-        // SAIR
-        document
-            .getElementById("btnSair")
-            .addEventListener("click", async function () {
+document
+    .getElementById("btnSair")
+    .addEventListener("click", async function () {
 
-                await supabase.auth.signOut();
+        await clienteSupabase.auth.signOut();
 
-                verificarSessao();
-            });
-
-
-        // CRIAR AÇÃO
-        document
-            .getElementById("formAcao")
-            .addEventListener("submit", async function (event) {
-
-                event.preventDefault();
-
-                const mensagem =
-                    document.getElementById("mensagem");
-
-                mensagem.textContent = "Criando ação...";
+        await verificarSessao();
+    });
 
 
-                const { error } =
-                    await supabase
-                        .from("acoes")
-                        .insert([{
+document
+    .getElementById("formAcao")
+    .addEventListener("submit", async function (event) {
 
-                            nome:
-                                document
-                                    .getElementById("nome")
-                                    .value,
+        event.preventDefault();
 
-                            premio:
-                                document
-                                    .getElementById("premio")
-                                    .value,
+        const mensagem =
+            document.getElementById("mensagem");
 
-                            premio_descricao:
-                                document
-                                    .getElementById("premio_descricao")
-                                    .value,
+        mensagem.textContent = "Criando ação...";
 
-                            descricao:
-                                document
-                                    .getElementById("descricao")
-                                    .value,
+        const resultado =
+            await clienteSupabase
+                .from("acoes")
+                .insert([{
 
-                            foto_url:
-                                document
-                                    .getElementById("foto_url")
-                                    .value,
+                    nome:
+                        document.getElementById("nome").value,
 
-                            valor_numero:
-                                Number(
-                                    document
-                                        .getElementById("valor_numero")
-                                        .value
-                                ),
+                    premio:
+                        document.getElementById("premio").value,
 
-                            total_numeros:
-                                Number(
-                                    document
-                                        .getElementById("total_numeros")
-                                        .value
-                                ),
+                    premio_descricao:
+                        document.getElementById("premio_descricao").value,
 
-                            quantidade:
-                                Number(
-                                    document
-                                        .getElementById("quantidade")
-                                        .value
-                                ),
+                    descricao:
+                        document.getElementById("descricao").value,
 
-                            data_sorteio:
-                                document
-                                    .getElementById("data_sorteio")
-                                    .value || null,
+                    foto_url:
+                        document.getElementById("foto_url").value,
 
-                            link_pagamento:
-                                document
-                                    .getElementById("link_pagamento")
-                                    .value,
+                    valor_numero:
+                        Number(
+                            document.getElementById("valor_numero").value
+                        ),
 
-                            observacoes:
-                                document
-                                    .getElementById("observacoes")
-                                    .value
+                    total_numeros:
+                        Number(
+                            document.getElementById("total_numeros").value
+                        ),
 
-                        }]);
+                    quantidade:
+                        Number(
+                            document.getElementById("quantidade").value
+                        ),
+
+                    data_sorteio:
+                        document.getElementById("data_sorteio").value || null,
+
+                    link_pagamento:
+                        document.getElementById("link_pagamento").value,
+
+                    observacoes:
+                        document.getElementById("observacoes").value
+
+                }]);
 
 
-                if (error) {
+        if (resultado.error) {
 
-                    console.error(error);
+            console.error(resultado.error);
 
-                    mensagem.textContent =
-                        "Erro ao criar ação: " + error.message;
+            mensagem.textContent =
+                "Erro ao criar ação: " +
+                resultado.error.message;
 
-                    return;
-                }
+            return;
+        }
 
+        mensagem.textContent =
+            "Ação criada com sucesso!";
 
-                mensagem.textContent =
-                    "Ação criada com sucesso!";
+        document.getElementById("formAcao").reset();
 
-                document
-                    .getElementById("formAcao")
-                    .reset();
-
-            });
+    });
 
 
-        // INICIAR
-        verificarSessao();
+verificarSessao();
 
-    </script>
+</script>
 
 </body>
 </html>
