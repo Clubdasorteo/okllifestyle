@@ -107,28 +107,22 @@
     <h1>Acesso administrativo</h1>
 
     <div class="form-group">
-
         <label>E-mail</label>
 
         <input
             type="email"
             id="email"
         >
-
     </div>
 
-
     <div class="form-group">
-
         <label>Senha</label>
 
         <input
             type="password"
             id="senha"
         >
-
     </div>
-
 
     <button
         type="button"
@@ -138,7 +132,6 @@
         Entrar
     </button>
 
-
     <div id="loginMensagem"></div>
 
 </div>
@@ -146,10 +139,7 @@
 
 <div class="container" id="painel">
 
-    <h1>
-        Painel Administrativo
-    </h1>
-
+    <h1>Painel Administrativo</h1>
 
     <button
         type="button"
@@ -159,92 +149,64 @@
         Sair
     </button>
 
-
     <p>
-        <strong>
-            Criar nova ação
-        </strong>
+        <strong>Criar nova ação</strong>
     </p>
-
 
     <form id="formAcao">
 
-
         <div class="form-group">
-
-            <label>
-                Nome da ação
-            </label>
+            <label>Nome da ação</label>
 
             <input
                 type="text"
                 id="nome"
                 required
             >
-
         </div>
 
 
         <div class="form-group">
-
-            <label>
-                Prêmio
-            </label>
+            <label>Prêmio</label>
 
             <input
                 type="text"
                 id="premio"
                 required
             >
-
         </div>
 
 
         <div class="form-group">
-
-            <label>
-                Descrição do prêmio
-            </label>
+            <label>Descrição do prêmio</label>
 
             <textarea
                 id="premio_descricao"
             ></textarea>
-
         </div>
 
 
         <div class="form-group">
-
-            <label>
-                Descrição da ação
-            </label>
+            <label>Descrição da ação</label>
 
             <textarea
                 id="descricao"
             ></textarea>
-
         </div>
 
 
         <div class="form-group">
-
-            <label>
-                URL da foto do prêmio
-            </label>
+            <label>URL da foto do prêmio</label>
 
             <input
                 type="text"
                 id="foto_url"
             >
-
         </div>
 
 
         <div class="form-group">
-
-            <label>
-                Valor de cada número
-            </label>
+            <label>Valor de cada número</label>
 
             <input
                 type="number"
@@ -253,93 +215,71 @@
                 min="0"
                 required
             >
-
         </div>
 
 
         <div class="form-group">
-
-            <label>
-                Total de números
-            </label>
+            <label>Total de números</label>
 
             <input
                 type="number"
                 id="total_numeros"
                 min="1"
+                max="100000"
                 required
             >
-
         </div>
 
 
         <div class="form-group">
-
-            <label>
-                Quantidade
-            </label>
+            <label>Quantidade</label>
 
             <input
                 type="number"
                 id="quantidade"
                 min="1"
-                required
             >
-
         </div>
 
 
         <div class="form-group">
-
-            <label>
-                Data e hora do sorteio
-            </label>
+            <label>Data e hora do sorteio</label>
 
             <input
                 type="datetime-local"
                 id="data_sorteio"
             >
-
         </div>
 
 
         <div class="form-group">
-
-            <label>
-                Link de pagamento
-            </label>
+            <label>Link de pagamento</label>
 
             <input
                 type="text"
                 id="link_pagamento"
             >
-
         </div>
 
 
         <div class="form-group">
-
-            <label>
-                Observações
-            </label>
+            <label>Observações</label>
 
             <textarea
                 id="observacoes"
             ></textarea>
-
         </div>
 
 
         <button
             type="submit"
             class="btn"
+            id="btnCriar"
         >
             Criar ação
         </button>
 
-
     </form>
-
 
     <div id="mensagem"></div>
 
@@ -372,10 +312,8 @@ async function verificarSessao() {
     const resultado =
         await clienteSupabase.auth.getSession();
 
-
     const sessao =
         resultado.data.session;
-
 
     if (sessao) {
 
@@ -383,26 +321,20 @@ async function verificarSessao() {
             "login"
         ).style.display = "none";
 
-
         document.getElementById(
             "painel"
         ).style.display = "block";
 
-    }
-
-    else {
+    } else {
 
         document.getElementById(
             "login"
         ).style.display = "block";
 
-
         document.getElementById(
             "painel"
         ).style.display = "none";
-
     }
-
 }
 
 
@@ -422,22 +354,18 @@ document
                     .value
                     .trim();
 
-
             const senha =
                 document
                     .getElementById("senha")
                     .value;
-
 
             const mensagem =
                 document.getElementById(
                     "loginMensagem"
                 );
 
-
             mensagem.textContent =
                 "Entrando...";
-
 
             const resultado =
                 await clienteSupabase.auth
@@ -449,29 +377,22 @@ document
 
                     });
 
-
             if (resultado.error) {
 
                 console.error(
                     resultado.error
                 );
 
-
                 mensagem.textContent =
                     "Erro: " +
                     resultado.error.message;
 
-
                 return;
-
             }
-
 
             mensagem.textContent = "";
 
-
             await verificarSessao();
-
         }
     );
 
@@ -490,9 +411,7 @@ document
                 .auth
                 .signOut();
 
-
             await verificarSessao();
-
         }
     );
 
@@ -509,110 +428,184 @@ document
 
             event.preventDefault();
 
-
             const mensagem =
                 document.getElementById(
                     "mensagem"
                 );
 
+            const btnCriar =
+                document.getElementById(
+                    "btnCriar"
+                );
 
             mensagem.textContent =
                 "Criando ação...";
 
+            btnCriar.disabled = true;
 
-            /*
-               AQUI ESTÁ A CORREÇÃO:
+            try {
 
-               Estamos usando exatamente
-               a tabela AÇÕES.
-            */
+                /* =========================
+                   DADOS DA AÇÃO
+                ========================= */
 
-            const resultado =
-                await clienteSupabase
+                const nome =
+                    document
+                        .getElementById("nome")
+                        .value
+                        .trim();
 
-                    .from("AÇÕES")
+                const descricao =
+                    document
+                        .getElementById("descricao")
+                        .value
+                        .trim();
 
-                    .insert([{
+                const foto_url =
+                    document
+                        .getElementById("foto_url")
+                        .value
+                        .trim();
 
-                        nome:
-                            document
-                                .getElementById(
-                                    "nome"
-                                )
-                                .value
-                                .trim(),
+                const valor_numero =
+                    Number(
+                        document
+                            .getElementById(
+                                "valor_numero"
+                            )
+                            .value
+                    );
 
-
-                        descricao:
-                            document
-                                .getElementById(
-                                    "descricao"
-                                )
-                                .value
-                                .trim(),
-
-
-                        foto_url:
-                            document
-                                .getElementById(
-                                    "foto_url"
-                                )
-                                .value
-                                .trim(),
-
-
-                        valor_numero:
-                            Number(
-                                document
-                                    .getElementById(
-                                        "valor_numero"
-                                    )
-                                    .value
-                            ),
+                const total_numeros =
+                    Number(
+                        document
+                            .getElementById(
+                                "total_numeros"
+                            )
+                            .value
+                    );
 
 
-                        total_numeros:
-                            Number(
-                                document
-                                    .getElementById(
-                                        "total_numeros"
-                                    )
-                                    .value
-                            ),
+                /* =========================
+                   CRIAR AÇÃO
+                ========================= */
+
+                const resultado =
+                    await clienteSupabase
+
+                        .from("AÇÕES")
+
+                        .insert([{
+
+                            nome:
+                                nome,
+
+                            descricao:
+                                descricao,
+
+                            foto_url:
+                                foto_url,
+
+                            valor_numero:
+                                valor_numero,
+
+                            total_numeros:
+                                total_numeros,
+
+                            status:
+                                "ativa"
+
+                        }])
+
+                        .select("id")
+
+                        .single();
 
 
-                        status:
-                            "ativa"
+                if (resultado.error) {
 
-                    }]);
+                    console.error(
+                        resultado.error
+                    );
+
+                    mensagem.textContent =
+                        "Erro ao criar ação: " +
+                        resultado.error.message;
+
+                    return;
+                }
 
 
-            if (resultado.error) {
+                const acaoId =
+                    resultado.data.id;
 
-                console.error(
-                    resultado.error
-                );
 
+                /* =========================
+                   GERAR NÚMEROS
+                ========================= */
 
                 mensagem.textContent =
-                    "Erro ao criar ação: " +
-                    resultado.error.message;
+                    "Ação criada. Gerando números...";
 
 
-                return;
+                const resultadoNumeros =
+                    await clienteSupabase
+                        .rpc(
+                            "gerar_numeros_acao",
+                            {
+                                p_acao_id:
+                                    acaoId
+                            }
+                        );
+
+
+                if (resultadoNumeros.error) {
+
+                    console.error(
+                        resultadoNumeros.error
+                    );
+
+                    mensagem.textContent =
+                        "Ação criada, mas houve erro ao gerar os números: " +
+                        resultadoNumeros.error.message;
+
+                    return;
+                }
+
+
+                /* =========================
+                   SUCESSO
+                ========================= */
+
+                mensagem.textContent =
+                    "Ação criada e " +
+                    total_numeros +
+                    " números gerados com sucesso!";
+
+
+                document
+                    .getElementById(
+                        "formAcao"
+                    )
+                    .reset();
 
             }
 
+            catch (erro) {
 
-            mensagem.textContent =
-                "Ação criada com sucesso!";
+                console.error(erro);
 
+                mensagem.textContent =
+                    "Erro inesperado: " +
+                    erro.message;
 
-            document
-                .getElementById(
-                    "formAcao"
-                )
-                .reset();
+            }
+
+            finally {
+
+                btnCriar.disabled = false;
+
+            }
 
         }
     );
