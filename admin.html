@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Administrativo</title>
+    <title>Painel Administrativo - Club da Sorte</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -38,8 +38,7 @@
         }
 
         input,
-        textarea,
-        select {
+        textarea {
             width: 100%;
             padding: 10px;
             box-sizing: border-box;
@@ -60,13 +59,33 @@
             font-weight: bold;
         }
 
-        .btn-criar {
+        .btn {
             background: #111;
             color: white;
         }
 
-        #mensagem {
-            margin-top: 20px;
+        .btn-sair {
+            background: #ddd;
+            color: #111;
+            margin-bottom: 20px;
+        }
+
+        #login,
+        #painel {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        #painel {
+            display: none;
+        }
+
+        #mensagem,
+        #loginMensagem {
+            margin-top: 15px;
             font-weight: bold;
         }
     </style>
@@ -74,9 +93,40 @@
 
 <body>
 
-<div class="container">
+<!-- LOGIN -->
+
+<div id="login">
+
+    <h1>Acesso administrativo</h1>
+
+    <div class="form-group">
+        <label>E-mail</label>
+        <input type="email" id="email" required>
+    </div>
+
+    <div class="form-group">
+        <label>Senha</label>
+        <input type="password" id="senha" required>
+    </div>
+
+    <button class="btn" id="btnLogin">
+        Entrar
+    </button>
+
+    <div id="loginMensagem"></div>
+
+</div>
+
+
+<!-- PAINEL -->
+
+<div id="painel">
 
     <h1>Painel Administrativo</h1>
+
+    <button class="btn-sair" id="btnSair">
+        Sair
+    </button>
 
     <p>Criar nova ação</p>
 
@@ -137,7 +187,7 @@
             <textarea id="observacoes"></textarea>
         </div>
 
-        <button type="submit" class="btn-criar">
+        <button type="submit" class="btn">
             Criar ação
         </button>
 
@@ -146,6 +196,7 @@
     <div id="mensagem"></div>
 
 </div>
+
 
 <script>
 
@@ -162,15 +213,82 @@ const supabase =
     );
 
 
+// VERIFICAR SESSÃO
+
+async function verificarSessao() {
+
+    const { data: { session } } =
+        await supabase.auth.getSession();
+
+    if (session) {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("painel").style.display = "block";
+    } else {
+        document.getElementById("login").style.display = "block";
+        document.getElementById("painel").style.display = "none";
+    }
+}
+
+
+// LOGIN
+
+document.getElementById("btnLogin").addEventListener("click", async function() {
+
+    const email =
+        document.getElementById("email").value;
+
+    const senha =
+        document.getElementById("senha").value;
+
+    const mensagem =
+        document.getElementById("loginMensagem");
+
+    mensagem.textContent = "Entrando...";
+
+    const { error } =
+        await supabase.auth.signInWithPassword({
+            email: email,
+            password: senha
+        });
+
+    if (error) {
+        mensagem.textContent =
+            "E-mail ou senha incorretos.";
+
+        return;
+    }
+
+    mensagem.textContent = "";
+
+    verificarSessao();
+
+});
+
+
+// SAIR
+
+document.getElementById("btnSair").addEventListener("click", async function() {
+
+    await supabase.auth.signOut();
+
+    verificarSessao();
+
+});
+
+
+// CRIAR AÇÃO
+
 document.getElementById("formAcao").addEventListener("submit", async function(event) {
 
     event.preventDefault();
 
-    const mensagem = document.getElementById("mensagem");
+    const mensagem =
+        document.getElementById("mensagem");
 
     mensagem.textContent = "Criando ação...";
 
-    const { data, error } = await supabase
+    const { error } =
+        await supabase
         .from("acoes")
         .insert([
             {
@@ -186,20 +304,29 @@ document.getElementById("formAcao").addEventListener("submit", async function(ev
                 link_pagamento: document.getElementById("link_pagamento").value,
                 observacoes: document.getElementById("observacoes").value
             }
-        ])
-        .select();
+        ]);
 
     if (error) {
+
         console.error(error);
-        mensagem.textContent = "Erro ao criar ação: " + error.message;
+
+        mensagem.textContent =
+            "Erro ao criar ação: " + error.message;
+
         return;
     }
 
-    mensagem.textContent = "Ação criada com sucesso!";
+    mensagem.textContent =
+        "Ação criada com sucesso!";
 
     document.getElementById("formAcao").reset();
 
 });
+
+
+// INICIAR
+
+verificarSessao();
 
 </script>
 
