@@ -504,15 +504,11 @@ footer{
     </p>
 
 
-    <!-- PACOTES ATRATIVOS -->
-
     <div
         class="options"
         id="optionsContainer"
     ></div>
 
-
-    <!-- QUANTIDADE PERSONALIZADA -->
 
     <div class="custom-quantity">
 
@@ -576,8 +572,6 @@ footer{
     </div>
 
 
-    <!-- RESUMO -->
-
     <div
         class="selected-info"
         id="selectedInfo"
@@ -595,8 +589,6 @@ footer{
 
     </div>
 
-
-    <!-- DADOS DO CLIENTE -->
 
     <div
         class="form-section"
@@ -642,7 +634,6 @@ footer{
 
 
 <div class="highlights container">
-
 
     <div class="highlight">
 
@@ -714,46 +705,26 @@ footer{
 
 
     <p>
-
-        <strong>
-            01.
-        </strong>
-
+        <strong>01.</strong>
         Escolha sua participação.
-
     </p>
 
 
     <p>
-
-        <strong>
-            02.
-        </strong>
-
+        <strong>02.</strong>
         Realize o pagamento.
-
     </p>
 
 
     <p>
-
-        <strong>
-            03.
-        </strong>
-
+        <strong>03.</strong>
         Receba seus números.
-
     </p>
 
 
     <p>
-
-        <strong>
-            04.
-        </strong>
-
+        <strong>04.</strong>
         Acompanhe o resultado.
-
     </p>
 
 </section>
@@ -766,10 +737,7 @@ footer{
 </footer>
 
 
-<!-- SUPABASE -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 
 <script>
 
@@ -789,9 +757,7 @@ const supabase =
 
 
 let quantidadeSelecionada = 0;
-
 let valorSelecionado = 0;
-
 let acaoAtual = null;
 
 
@@ -805,7 +771,6 @@ async function carregarAcao(){
         document.getElementById(
             "acaoContainer"
         );
-
 
     try{
 
@@ -822,7 +787,6 @@ async function carregarAcao(){
                     valor_numero,
                     total_numeros,
                     status,
-                    numeros_vendidos,
                     created_at
                 `)
 
@@ -928,9 +892,7 @@ function renderizarAcao(acao){
         Number(
             acao.valor_numero || 0
         )
-
         .toFixed(2)
-
         .replace(
             ".",
             ","
@@ -945,7 +907,6 @@ function renderizarAcao(acao){
 
         <div class="card">
 
-
             <div class="prize">
 
                 ${
@@ -956,7 +917,7 @@ function renderizarAcao(acao){
                     `
 
                     <img
-                        src="${imagem}"
+                        src="${escapeHtml(imagem)}"
                         alt="Prêmio"
                     >
 
@@ -980,7 +941,6 @@ function renderizarAcao(acao){
 
 
             <div class="card-content">
-
 
                 <h2>
 
@@ -1024,7 +984,6 @@ function renderizarAcao(acao){
 
                 <div class="info">
 
-
                     <span id="vendidosInfo">
 
                         0 vendidos
@@ -1058,7 +1017,6 @@ function renderizarAcao(acao){
 
                 </a>
 
-
             </div>
 
         </div>
@@ -1069,7 +1027,7 @@ function renderizarAcao(acao){
 
 
 /* =========================
-   PACOTES ATRATIVOS
+   PACOTES
 ========================= */
 
 function criarOpcoes(valorNumero){
@@ -1104,29 +1062,13 @@ function criarOpcoes(valorNumero){
     }
 
 
-    /*
-       ESTES SÃO APENAS
-       ATALHOS VISUAIS.
-
-       O CLIENTE PODE DIGITAR
-       QUALQUER QUANTIDADE
-       A PARTIR DE 10.
-    */
-
     const quantidades = [
-
         10,
-
         20,
-
         50,
-
         100,
-
         200,
-
         500
-
     ];
 
 
@@ -1204,27 +1146,30 @@ function criarOpcoes(valorNumero){
 
 function atualizarResumoAcao(acao){
 
+    /*
+       Por enquanto os números vendidos
+       serão calculados posteriormente
+       pela tabela numeros.
+
+       Aqui deixamos inicialmente
+       como zero para não bloquear
+       o carregamento da ação.
+    */
+
+    const vendidos = 0;
+
+
     const total =
         Number(
             acao.total_numeros || 0
         );
 
 
-    const vendidos =
-        Number(
-            acao.numeros_vendidos || 0
-        );
-
-
     const porcentagem =
         total > 0
-
         ?
-
         (vendidos / total) * 100
-
         :
-
         0;
 
 
@@ -1243,13 +1188,9 @@ function atualizarResumoAcao(acao){
     if(vendidosInfo){
 
         vendidosInfo.textContent =
-
             vendidos.toLocaleString(
                 "pt-BR"
-            )
-
-            +
-
+            ) +
             " vendidos";
 
     }
@@ -1258,14 +1199,10 @@ function atualizarResumoAcao(acao){
     if(progressBar){
 
         progressBar.style.width =
-
             Math.min(
                 porcentagem,
                 100
-            )
-
-            +
-
+            ) +
             "%";
 
     }
@@ -1295,7 +1232,6 @@ function selecionar(
         .querySelectorAll(
             ".option"
         )
-
         .forEach(
             function(opcao){
 
@@ -1311,11 +1247,6 @@ function selecionar(
         "selected"
     );
 
-
-    /*
-       SINCRONIZA O CAMPO
-       PERSONALIZADO
-    */
 
     const input =
         document.getElementById(
@@ -1337,7 +1268,6 @@ function selecionar(
     document.getElementById(
         "selectedNumbers"
     ).textContent =
-
         quantidade +
         " números";
 
@@ -1345,7 +1275,6 @@ function selecionar(
     document.getElementById(
         "selectedPrice"
     ).textContent =
-
         "R$ " +
         formatarMoeda(
             valor
@@ -1398,12 +1327,9 @@ function alterarQuantidade(
         );
 
 
-    if(
-        isNaN(quantidade)
-    ){
+    if(isNaN(quantidade)){
 
-        quantidade =
-            10;
+        quantidade = 10;
 
     }
 
@@ -1412,16 +1338,9 @@ function alterarQuantidade(
         valorAlteracao;
 
 
-    /*
-       MÍNIMO DE 10
-    */
+    if(quantidade < 10){
 
-    if(
-        quantidade < 10
-    ){
-
-        quantidade =
-            10;
+        quantidade = 10;
 
     }
 
@@ -1454,15 +1373,7 @@ function quantidadeDigitada(){
         );
 
 
-    /*
-       SE APAGAR O CAMPO,
-       NÃO FORÇAMOS IMEDIATAMENTE
-       PARA 10.
-    */
-
-    if(
-        isNaN(quantidade)
-    ){
+    if(isNaN(quantidade)){
 
         document.getElementById(
             "customPrice"
@@ -1474,12 +1385,9 @@ function quantidadeDigitada(){
     }
 
 
-    if(
-        quantidade < 10
-    ){
+    if(quantidade < 10){
 
-        quantidade =
-            10;
+        quantidade = 10;
 
         input.value =
             quantidade;
@@ -1526,13 +1434,11 @@ function atualizarPrecoPersonalizado(){
 
 
     if(
-        isNaN(quantidade)
-        ||
+        isNaN(quantidade) ||
         quantidade < 10
     ){
 
-        quantidade =
-            10;
+        quantidade = 10;
 
     }
 
@@ -1556,7 +1462,6 @@ function atualizarPrecoPersonalizado(){
     if(preco){
 
         preco.textContent =
-
             "R$ " +
             formatarMoeda(
                 total
@@ -1598,13 +1503,11 @@ function selecionarPersonalizado(){
 
 
     if(
-        isNaN(quantidade)
-        ||
+        isNaN(quantidade) ||
         quantidade < 10
     ){
 
-        quantidade =
-            10;
+        quantidade = 10;
 
         input.value =
             quantidade;
@@ -1631,16 +1534,10 @@ function selecionarPersonalizado(){
         valor;
 
 
-    /*
-       REMOVE A SELEÇÃO
-       DOS PACOTES
-    */
-
     document
         .querySelectorAll(
             ".option"
         )
-
         .forEach(
             function(opcao){
 
@@ -1652,14 +1549,9 @@ function selecionarPersonalizado(){
         );
 
 
-    /*
-       MOSTRA O RESUMO
-    */
-
     document.getElementById(
         "selectedNumbers"
     ).textContent =
-
         quantidade +
         " números";
 
@@ -1667,7 +1559,6 @@ function selecionarPersonalizado(){
     document.getElementById(
         "selectedPrice"
     ).textContent =
-
         "R$ " +
         formatarMoeda(
             valor
@@ -1787,39 +1678,18 @@ function continuar(){
     }
 
 
-    /*
-       POR ENQUANTO É APENAS UM TESTE.
-       A PRÓXIMA ETAPA SERÁ
-       CONECTAR AO PAGAMENTO.
-    */
-
     alert(
 
-        "Participação selecionada!\n\n"
+        "Participação selecionada!\n\n" +
 
-        +
+        "Quantidade: " +
+        quantidadeSelecionada +
+        " números\n" +
 
-        "Quantidade: "
-
-        +
-
-        quantidadeSelecionada
-
-        +
-
-        " números\n"
-
-        +
-
-        "Valor: R$ "
-
-        +
-
+        "Valor: R$ " +
         formatarMoeda(
             valorSelecionado
-        )
-
-        +
+        ) +
 
         "\n\nPróxima etapa: pagamento."
 
@@ -1839,9 +1709,7 @@ function formatarMoeda(
     return Number(
         valor
     )
-
     .toFixed(2)
-
     .replace(
         ".",
         ","
