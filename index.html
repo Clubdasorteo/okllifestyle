@@ -532,6 +532,7 @@ async function carregarAcao(){
                     valor_numero,
                     total_numeros,
                     status,
+                    numeros_vendidos,
                     created_at
                 `)
                 .eq("status","ativa")
@@ -569,7 +570,7 @@ async function carregarAcao(){
         criarOpcoes(data.valor_numero);
 
 
-        atualizarResumoAcao(data.id);
+        atualizarResumoAcao(data);
 
     }
 
@@ -745,8 +746,8 @@ function criarOpcoes(valorNumero){
 
     const quantidades = [
         10,
-        15,
-        50,
+        20,
+        30,
         100,
         200,
         500
@@ -812,95 +813,28 @@ function criarOpcoes(valorNumero){
    RESUMO DA AÇÃO
 ========================= */
 
-async function atualizarResumoAcao(acaoId){
+function atualizarResumoAcao(acao){
 
-    const { data, error } =
-        await supabase
-            .from("acoes_resumo")
-            .select(`
-                total_numeros,
-                numeros_vendidos,
-                numeros_disponiveis
-            `)
-            .eq("id",acaoId)
-            .maybeSingle();
+    const total = Number(acao.total_numeros || 0);
+    const vendidos = Number(acao.numeros_vendidos || 0);
 
+    const porcentagem = total > 0
+        ? (vendidos / total) * 100
+        : 0;
 
-    if(error){
-
-        console.error(
-            "Erro ao carregar resumo:",
-            error
-        );
-
-        return;
-
-    }
-
-
-    if(!data){
-
-        return;
-
-    }
-
-
-    const total =
-        Number(
-            data.total_numeros || 0
-        );
-
-
-    const vendidos =
-        Number(
-            data.numeros_vendidos || 0
-        );
-
-
-    const porcentagem =
-        total > 0
-        ?
-        (vendidos / total) * 100
-        :
-        0;
-
-
-    const vendidosInfo =
-        document.getElementById(
-            "vendidosInfo"
-        );
-
-
-    const progressBar =
-        document.getElementById(
-            "progressBar"
-        );
-
+    const vendidosInfo = document.getElementById("vendidosInfo");
+    const progressBar = document.getElementById("progressBar");
 
     if(vendidosInfo){
-
         vendidosInfo.textContent =
-            vendidos.toLocaleString("pt-BR")
-            +
-            " vendidos";
-
+            vendidos.toLocaleString("pt-BR") + " vendidos";
     }
-
 
     if(progressBar){
-
         progressBar.style.width =
-            Math.min(
-                porcentagem,
-                100
-            )
-            +
-            "%";
-
+            Math.min(porcentagem, 100) + "%";
     }
-
 }
-
 
 /* =========================
    SELECIONAR PARTICIPAÇÃO
