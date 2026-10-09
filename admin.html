@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Administração | OKL Lifestyle</title>
+<title>Painel Administrativo | OKL Lifestyle</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--bg:#090909;--panel:#141414;--panel2:#1b1b1b;--gold:#d6b15e;--gold2:#f2d994;--text:#f6f3eb;--muted:#aaa49a;--border:#34302a;--green:#69d39a;--red:#ff7979}
@@ -92,6 +92,49 @@ tr:last-child td{border-bottom:0}
 .full{grid-column:auto}.page-head{flex-direction:column}.number-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
 .brand{font-size:17px}.topbar-right .btn{padding:9px;font-size:12px}
 }
+
+/* Refinamento visual OKL: acabamento premium, hierarquia e leitura responsiva */
+:root{--bg:#080808;--panel:#111111;--panel2:#1a1a1a;--gold:#d7b35f;--gold2:#f5dfa0;--text:#f8f5ee;--muted:#a7a196;--border:#302b21;--green:#79d9a1;--red:#ff8585}
+body{background:radial-gradient(ellipse at 50% -18%,rgba(215,179,95,.10),transparent 42%),var(--bg);letter-spacing:.08px}
+.topbar{background:rgba(13,13,13,.96);backdrop-filter:blur(12px);border-bottom-color:#3a3020;box-shadow:0 8px 30px #0005}
+.brand{display:flex;align-items:center;gap:10px;color:var(--gold2);letter-spacing:2.2px}
+.brand:before{content:"";display:inline-block;width:7px;height:25px;border-radius:4px;background:linear-gradient(180deg,#f7e5a9,#a77b2b);box-shadow:0 0 18px #d6b15e35}
+.sidebar{background:#0d0d0d}
+.nav-label{font-weight:800;color:#827b6c;letter-spacing:1.8px}
+.nav-btn{transition:background .18s,border-color .18s,color .18s;padding:12px 13px}
+.nav-btn:hover{transform:translateX(2px)}
+.nav-btn.active{background:linear-gradient(100deg,#2b2415,#17140f);box-shadow:inset 3px 0 var(--gold);color:var(--gold2)}
+main{padding:30px}
+.page{max-width:1380px}
+h1{font-size:clamp(24px,2vw,31px);letter-spacing:-.6px;margin-bottom:8px}
+h2{letter-spacing:-.25px}
+.page-head{padding-bottom:18px;border-bottom:1px solid #2c271e;align-items:center}
+.page-head p{font-size:14px}
+.panel,.stat{background:linear-gradient(145deg,#151515,#101010);border-color:#302b22;border-radius:15px;box-shadow:0 12px 32px #0002}
+.stat{position:relative;overflow:hidden;padding:20px}
+.stat:after{content:"";position:absolute;right:-24px;top:-32px;width:95px;height:95px;border:1px solid #d6b15e18;border-radius:50%;box-shadow:0 0 0 12px #d6b15e08,0 0 0 25px #d6b15e05}
+.stat-label{text-transform:uppercase;letter-spacing:.8px;font-size:11px;font-weight:700}
+.stat-value{font-size:clamp(27px,2.4vw,34px);letter-spacing:-.8px}
+.btn{transition:transform .15s,border-color .15s,filter .15s;border-radius:9px}
+.btn:hover{filter:brightness(1.08)}
+.btn-gold{background:linear-gradient(135deg,#f1d88e,#c7a14d);box-shadow:0 5px 16px #d6b15e18;font-weight:800}
+input,select,textarea{background:#0a0a0a;border-color:#383329}
+input:focus,select:focus,textarea:focus{box-shadow:0 0 0 3px #d6b15e18}
+.table-wrap{border-color:#373126}
+th{background:#211c12;color:#f5dfa0;text-transform:uppercase;font-size:11px;letter-spacing:.5px}
+td{line-height:1.5}
+.action-card{border-color:#383126;transition:transform .18s,border-color .18s,box-shadow .18s}
+.action-card:hover{transform:translateY(-2px);border-color:#8e7135;box-shadow:0 12px 28px #0005}
+.action-card img{background:radial-gradient(ellipse,#171717,#080808 72%)}
+.badge{border:1px solid #4b3b20}
+.notice{background:linear-gradient(110deg,#211b10,#15120c);border-color:#574525}
+.empty{background:#0d0d0d;border-color:#3a3326}
+.number{transition:border-color .12s,transform .12s}
+.number:hover{transform:translateY(-1px);border-color:var(--gold)}
+.feedback{line-height:1.55}
+@media(max-width:760px){main{padding:20px 12px 36px}.page-head{align-items:flex-start}.topbar{height:64px}.sidebar{top:64px}.brand{letter-spacing:1.4px}.stat{padding:16px}.section{margin-top:18px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
+
 </style>
 </head>
 <body>
@@ -129,6 +172,7 @@ tr:last-child td{border-bottom:0}
   <button class="nav-btn" data-page="gratis">🎁 Bilhetes grátis</button>
   <button class="nav-btn" data-page="premiados">🏆 Bilhetes premiados</button>
   <button class="nav-btn" data-page="indicadores">📊 Indicadores por ação</button>
+  <button class="nav-btn" data-page="rodadas">🎯 Promoções por rodada</button>
 </aside>
 <main><div class="page">
 
@@ -267,9 +311,20 @@ tr:last-child td{border-bottom:0}
     <div id="cotaDeadlineFeedback" class="feedback"></div>
   </div>
   <div class="panel section"><div class="section-head"><h2>Participações recentes confirmadas</h2></div><div id="publicParticipationsResult" class="table-wrap"><p class="muted">Selecione uma ação.</p></div></div>
-  <div class="panel section" id="roundsPanel">
+
+</section>
+
+
+<section id="page-rodadas" class="admin-page hidden">
+  <div class="page-head"><div><h1>🎯 Promoções por rodada</h1><p>Crie rodadas independentes por ação, edite prazos pendentes e consulte o histórico sem apagar resultados apurados.</p></div><button id="refreshCotaRoundsPage" class="btn" type="button">Atualizar rodadas</button></div>
+  <div class="panel">
+    <label for="roundAction">Ação</label>
+    <select id="roundAction"></select>
+    <p class="muted small">Cada rodada recebe seu próprio prazo de menor e/ou maior cota. Rodadas já apuradas não podem ser editadas ou excluídas.</p>
+  </div>
+  <div class="panel" id="roundsPanel">
     <div class="section-head"><h2>🎯 Promoções por rodada</h2><button id="refreshCotaRounds" class="btn btn-small" type="button">Atualizar rodadas</button></div>
-    <p class="muted small">Cadastre várias rodadas de menor e maior cota na mesma ação. Cada rodada fica em uma linha própria; resultados apurados são preservados. Antes de usar, execute o SQL de criação da tabela e da rotina no Supabase.</p>
+    <p class="muted small">Cadastre várias rodadas de menor e maior cota na mesma ação. Cada rodada fica em uma linha própria; resultados apurados são preservados. Para apurar automaticamente no horário definido, a rotina também precisa estar agendada no Supabase.</p>
     <input id="cotaRoundId" type="hidden">
     <div class="form-grid">
       <div><label for="roundSmallDeadline">Prazo da menor cota (opcional)</label><input id="roundSmallDeadline" type="datetime-local"></div>
@@ -283,7 +338,6 @@ tr:last-child td{border-bottom:0}
     <div id="cotaRoundsList" class="table-wrap" style="margin-top:14px"><p class="muted" style="padding:12px">Selecione uma ação para ver as rodadas.</p></div>
   </div>
 </section>
-
 </div></main></div></div>
 
 <script>
@@ -360,6 +414,7 @@ function showPage(name){
   if(name==="gratis")carregarAcoesNosSelects();
   if(name==="premiados")carregarAcoesNosSelects().then(()=>carregarBilhetesPremiados());
   if(name==="indicadores")carregarAcoesNosSelects().then(()=>{preencherSelectIndicadores(); carregarIndicadores();});
+  if(name==="rodadas")carregarAcoesNosSelects().then(()=>{preencherSelectRodadas(); carregarRodadasCotas();});
 }
 document.querySelectorAll(".nav-btn").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
 document.querySelectorAll("[data-goto]").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.goto)));
@@ -494,6 +549,7 @@ function preencherSelectAcoes(){
     atualizarLimiteNumeroPremiado();
   }
   preencherSelectIndicadores();
+  preencherSelectRodadas();
 }
 
 $("actionPhoto").addEventListener("change",()=>{
@@ -856,10 +912,7 @@ $("freeTicketsForm").addEventListener("submit",async e=>{
       p_acao_id:actionId,p_nome_cliente:name,p_telefone:phone,p_quantidade:quantity
     });
     if(error)throw new Error("A distribuição não foi confirmada pelo Supabase. Detalhe: "+error.message);
-    if(data && typeof data==="object" && data.sucesso===false){
-      throw new Error(data.mensagem||"O Supabase não confirmou a distribuição dos bilhetes.");
-    }
-    feedback("freeFeedback",data?.mensagem||"Distribuição confirmada pelo Supabase.","success");
+    feedback("freeFeedback","Resposta recebida do Supabase. Confira os números abaixo.","success");
     const resultBox=$("freeResult");
     resultBox.classList.remove("hidden");
     resultBox.textContent=typeof data==="string"?data:JSON.stringify(data,null,2);
@@ -1225,6 +1278,15 @@ async function carregarIndicadores(){
     feedback("indicatorFeedback",error.message||"Não foi possível carregar os indicadores.","error");
   }
 }
+function preencherSelectRodadas(){
+  const select=$("roundAction");
+  if(!select)return;
+  const previous=select.value;
+  select.innerHTML=state.actions.map(a=>`<option value="${escapeHtml(a.id)}">${escapeHtml(a.nome)}</option>`).join("")||'<option value="">Nenhuma ação cadastrada</option>';
+  if(state.actions.some(a=>String(a.id)===String(previous)))select.value=previous;
+  else if(state.actions.length)select.value=String(state.actions[0].id);
+}
+
 let cotaRoundsCache=[];
 function resetCotaRoundForm(){
   $("cotaRoundId").value="";
@@ -1234,7 +1296,7 @@ function resetCotaRoundForm(){
 }
 function roundFrozen(r){return !!(r.menor_cota_encerrada_em||r.maior_cota_encerrada_em);}
 async function carregarRodadasCotas(){
-  const actionId=$("indicatorAction")?.value;
+  const actionId=$("roundAction")?.value;
   const box=$("cotaRoundsList");
   if(!actionId){box.innerHTML='<p class="muted" style="padding:12px">Selecione uma ação.</p>';return;}
   feedback("cotaRoundsFeedback","Carregando rodadas…");
@@ -1269,7 +1331,7 @@ async function carregarRodadasCotas(){
   }catch(error){box.innerHTML='<p class="muted" style="padding:12px">Não foi possível carregar. Confira se a tabela rodadas_cotas já foi criada no Supabase.</p>';feedback("cotaRoundsFeedback",error.message||"Erro ao carregar rodadas.","error");}
 }
 $("saveCotaRound")?.addEventListener("click",async()=>{
-  const actionId=$("indicatorAction")?.value;
+  const actionId=$("roundAction")?.value;
   if(!actionId){feedback("cotaRoundsFeedback","Selecione uma ação.","error");return;}
   const button=$("saveCotaRound");button.disabled=true;
   try{
@@ -1297,7 +1359,8 @@ $("saveCotaRound")?.addEventListener("click",async()=>{
 $("cancelEditCotaRound")?.addEventListener("click",()=>{resetCotaRoundForm();feedback("cotaRoundsFeedback","Edição cancelada.");});
 $("refreshCotaRounds")?.addEventListener("click",carregarRodadasCotas);
 
-$("indicatorAction")?.addEventListener("change",carregarRodadasCotas);
+$("roundAction")?.addEventListener("change",()=>{resetCotaRoundForm();carregarRodadasCotas();});
+$("refreshCotaRoundsPage")?.addEventListener("click",carregarRodadasCotas);
 $("indicatorAction")?.addEventListener("change",carregarIndicadores);
 $("refreshIndicators")?.addEventListener("click",carregarIndicadores);
 $("saveCotaDeadlines")?.addEventListener("click",async()=>{
