@@ -1,158 +1,217 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090909">
 <title>Minhas Participações | OKL Lifestyle</title>
 <style>
-:root{--gold:#d4af37;--bg:#090909;--card:#151515;--text:#f5f5f5;--muted:#aaa}
+:root{--gold:#d4af37;--bg:#090909;--card:#151515;--text:#f5f5f5;--muted:#aaa;--line:#39301b;--green:#183522;--red:#351919}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
 header{text-align:center;padding:22px 16px;border-bottom:1px solid #332a12}
 .logo{color:var(--gold);font-size:23px;font-weight:900;letter-spacing:1px}
-nav{display:flex;justify-content:center;flex-wrap:wrap;gap:18px;padding:15px 10px;background:#111}
-a{color:var(--gold);text-decoration:none}
-nav a{font-size:14px}
-main{width:min(760px,100%);margin:auto;padding:25px 16px 80px}
-h1{font-size:27px;margin-bottom:8px}
-h2{font-size:18px;color:var(--gold)}
+header p{color:var(--muted);margin:8px 0 0;font-size:12px;letter-spacing:1px}
+nav{display:flex;justify-content:center;flex-wrap:wrap;gap:10px 18px;padding:15px 10px;background:#111;border-bottom:1px solid #242424}
+nav a{font-size:14px;color:var(--gold);text-decoration:none}
+nav a:hover,nav a:focus{text-decoration:underline}
+main{width:min(760px,100%);margin:auto;padding:25px 16px 70px}
+h1{font-size:clamp(24px,5vw,30px);margin:0 0 8px}
+h2{font-size:18px;color:var(--gold);margin:0 0 12px}
 .intro{color:var(--muted);line-height:1.6}
-.card{background:var(--card);border:1px solid #39301b;border-radius:14px;padding:18px;margin-top:18px}
-label{display:block;margin:14px 0 7px}
-input{width:100%;padding:13px;background:#090909;color:white;border:1px solid #444;border-radius:8px;font-size:16px}
-button{border:0;border-radius:8px;padding:13px 16px;background:var(--gold);color:#111;font-weight:bold;cursor:pointer}
-button:disabled{opacity:.6}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:18px}
+label{display:block;margin:14px 0 7px;font-weight:600;font-size:14px}
+input{width:100%;padding:13px;background:#090909;color:white;border:1px solid #444;border-radius:8px;font-size:16px;outline:none}
+input:focus{border-color:var(--gold);box-shadow:0 0 0 2px #d4af3722}
+button{border:0;border-radius:8px;padding:13px 16px;background:var(--gold);color:#111;font-weight:bold;cursor:pointer;font-size:14px}
+button:disabled{opacity:.6;cursor:wait}
 .submit{width:100%;margin-top:18px}
-.status{display:inline-block;padding:6px 10px;border-radius:20px;background:#292929;font-size:12px}
-.info{line-height:1.8;overflow-wrap:anywhere}
-.message{display:none;padding:14px;border-radius:9px;margin-top:15px;line-height:1.6}
+.status{display:inline-block;padding:6px 10px;border-radius:20px;background:#292929;font-size:12px;overflow-wrap:anywhere}
+.info{line-height:1.9;overflow-wrap:anywhere}
+.message{display:none;padding:14px;border-radius:9px;margin-top:15px;line-height:1.6;font-size:14px}
 .message.show{display:block}
-.message.error{background:#301717;border:1px solid #8a3939}
-.message.ok{background:#13271b;border:1px solid #2f7547}
+.message.error{background:var(--red);border:1px solid #8a3939}
+.message.ok{background:var(--green);border:1px solid #2f7547}
 .empty{text-align:center;color:var(--muted);line-height:1.7}
+.numbers{margin-top:10px;padding:12px;background:#0c0c0c;border:1px solid #302817;border-radius:9px;overflow-wrap:anywhere}
+.numbers strong{color:var(--gold)}
+.order-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.order-top h2{margin-bottom:5px}
+.small{font-size:12px;color:var(--muted)}
 footer{text-align:center;padding:25px;color:var(--muted);font-size:12px;border-top:1px solid #292929}
+@media(max-width:480px){main{padding:22px 12px 55px}.card{padding:15px}nav{gap:12px}nav a{font-size:13px}}
 </style>
 </head>
 <body>
 <header>
   <div class="logo">OKL LIFESTYLE</div>
-  <p style="color:#aaa;margin-bottom:0">CLUB DA SORTE • SHOW DE PRÊMIOS</p>
+  <p>CLUB DA SORTE • SHOW DE PRÊMIOS</p>
 </header>
-<nav>
+
+<nav aria-label="Navegação principal">
   <a href="index.html">Início</a>
   <a href="acoes.html">Ações</a>
   <a href="ultimas-acoes.html">Resultados</a>
   <a href="participar.html">Participar</a>
+  <a href="minhas-participacoes.html" aria-current="page">Minhas participações</a>
 </nav>
+
 <main>
   <h1>Minhas participações 🎟️</h1>
-  <p class="intro">Consulte suas participações registradas no sistema.</p>
+  <p class="intro">Consulte seus pedidos e acompanhe as informações das suas participações usando os mesmos dados informados na reserva.</p>
 
   <section class="card">
     <h2>Consultar pedidos</h2>
-    <p class="intro">Informe os dados usados ao fazer a reserva.</p>
+    <p class="intro">Digite seu CPF e WhatsApp com DDD. Esses dados são usados para localizar seus pedidos no sistema.</p>
     <form id="consulta">
       <label for="cpf">CPF</label>
-      <input id="cpf" inputmode="numeric" maxlength="14" autocomplete="off" required>
+      <input id="cpf" name="cpf" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="000.000.000-00" required>
       <label for="telefone">WhatsApp com DDD</label>
-      <input id="telefone" type="tel" inputmode="tel" maxlength="20" required>
+      <input id="telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel" maxlength="16" placeholder="(27) 99999-9999" required>
       <button class="submit" id="buscar" type="submit">CONSULTAR PARTICIPAÇÕES</button>
     </form>
     <div id="mensagem" class="message" role="status" aria-live="polite"></div>
   </section>
 
-  <div id="historico">
-    <section class="card empty">
-      Seus pedidos serão exibidos aqui após uma consulta autorizada ao sistema.
-    </section>
-  </div>
-  <p class="intro" style="font-size:12px">Os pedidos exibidos dependem dos registros existentes no banco de dados. Este navegador, sozinho, não confirma reservas nem pagamentos.</p>
+  <section id="historico" aria-live="polite">
+    <div class="card empty">Seus pedidos aparecerão aqui depois da consulta.</div>
+  </section>
+  <p class="intro" style="font-size:12px">As informações exibidas dependem dos registros e da confirmação no banco de dados. Esta página não confirma pagamento por conta própria.</p>
 </main>
+
 <footer>OKL Lifestyle • Club da Sorte</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL="https://vlirpvuramslfiftshio.supabase.co";
-const SUPABASE_KEY="sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+(() => {
+  "use strict";
 
-const el=id=>document.getElementById(id);
-function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function brl(v){return Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});}
-function dataBR(v){if(!v)return "Não informada";const d=new Date(v);return Number.isNaN(d.getTime())?"Não informada":d.toLocaleString("pt-BR");}
-function aviso(texto,tipo="error"){const m=el("mensagem");m.className="message show "+tipo;m.textContent=texto;}
+  const SUPABASE_URL = "https://vlirpvuramslfiftshio.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const el = id => document.getElementById(id);
 
-el("cpf").addEventListener("input",e=>{
- let v=e.target.value.replace(/\D/g,"").slice(0,11);
- if(v.length>9)v=v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/,"$1.$2.$3-$4");
- else if(v.length>6)v=v.replace(/(\d{3})(\d{3})(\d{1,3})/,"$1.$2.$3");
- else if(v.length>3)v=v.replace(/(\d{3})(\d{1,3})/,"$1.$2");
- e.target.value=v;
-});
-el("telefone").addEventListener("input",e=>{
- let v=e.target.value.replace(/\D/g,"").slice(0,11);
- if(v.length>10)v=v.replace(/(\d{2})(\d{5})(\d{1,4})/,"($1) $2-$3");
- else if(v.length>6)v=v.replace(/(\d{2})(\d{4})(\d{1,4})/,"($1) $2-$3");
- else if(v.length>2)v=v.replace(/(\d{2})(\d+)/,"($1) $2");
- e.target.value=v;
-});
+  function esc(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+      "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+    }[char]));
+  }
+  function brl(value) {
+    const amount = Number(value);
+    return Number.isFinite(amount)
+      ? amount.toLocaleString("pt-BR", {style:"currency", currency:"BRL"})
+      : "Não informado";
+  }
+  function dataBR(value) {
+    if (!value) return "Não informada";
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? "Não informada" : date.toLocaleString("pt-BR");
+  }
+  function aviso(text, type = "error") {
+    const box = el("mensagem");
+    box.className = "message show " + type;
+    box.textContent = text;
+  }
+  function limparHistorico() {
+    el("historico").innerHTML = '<div class="card empty">Informe CPF e WhatsApp para consultar seus pedidos.</div>';
+  }
 
-el("consulta").addEventListener("submit",async e=>{
- e.preventDefault();
- const cpf=el("cpf").value.replace(/\D/g,"");
- const telefone=el("telefone").value.replace(/\D/g,"");
- if(cpf.length!==11){aviso("Confira o CPF informado.");return;}
- if(telefone.length<10||telefone.length>11){aviso("Confira o WhatsApp informado.");return;}
+  el("cpf").addEventListener("input", event => {
+    let value = event.target.value.replace(/\D/g, "").slice(0, 11);
+    if (value.length > 9) value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, "$1.$2.$3-$4");
+    else if (value.length > 6) value = value.replace(/(\d{3})(\d{3})(\d{1,3})/, "$1.$2.$3");
+    else if (value.length > 3) value = value.replace(/(\d{3})(\d{1,3})/, "$1.$2");
+    event.target.value = value;
+  });
 
- /*
-  * A consulta direta por CPF/telefone não é feita aqui:
-  * é necessário configurar uma função segura no servidor que valide
-  * os dois dados e devolva apenas os pedidos correspondentes.
-  * Não expomos todos os pedidos pessoais ao navegador.
-  */
- el("buscar").disabled=true;
- el("buscar").textContent="CONSULTANDO...";
- try{
-   const {data,error}=await db.rpc("consultar_meus_pedidos",{
-     p_cpf:cpf,
-     p_telefone:telefone
-   });
-   if(error){
-     console.error(error);
-     aviso("A consulta segura ainda não está configurada no banco. Seus dados não foram alterados. Precisamos configurar essa função para habilitar a consulta.");
-     return;
-   }
+  el("telefone").addEventListener("input", event => {
+    let value = event.target.value.replace(/\D/g, "").slice(0, 11);
+    if (value.length > 10) value = value.replace(/(\d{2})(\d{5})(\d{1,4})/, "($1) $2-$3");
+    else if (value.length > 6) value = value.replace(/(\d{2})(\d{4})(\d{1,4})/, "($1) $2-$3");
+    else if (value.length > 2) value = value.replace(/(\d{2})(\d+)/, "($1) $2");
+    event.target.value = value;
+  });
 
-   const pedidos=Array.isArray(data)?data:[];
-   if(!pedidos.length){
-     el("historico").innerHTML='<section class="card empty"><h2>Nenhuma participação encontrada</h2><p>Não encontramos pedidos para os dados informados.</p></section>';
-     aviso("Consulta concluída. Nenhum pedido foi encontrado.","ok");
-     return;
-   }
+  el("consulta").addEventListener("submit", async event => {
+    event.preventDefault();
+    const cpf = el("cpf").value.replace(/\D/g, "");
+    const telefone = el("telefone").value.replace(/\D/g, "");
 
-   el("historico").innerHTML=pedidos.map(p=>{
-     const nums=Array.isArray(p.numeros)?p.numeros:[];
-     return `<section class="card">
-       <h2>${esc(p.acao_nome||"Ação")}</h2>
-       <div class="info">
-       <div><strong>Pedido:</strong> ${esc(p.pedido_id??p.id)}</div>
-       <div><strong>Data:</strong> ${esc(dataBR(p.created_at))}</div>
-       <div><strong>Quantidade:</strong> ${esc(p.quantidade)}</div>
-       <div><strong>Valor:</strong> ${esc(brl(p.valor_total))}</div>
-       <div><strong>Situação:</strong> <span class="status">${esc(p.status||"Não informada")}</span></div>
-       <div><strong>Números:</strong> ${nums.length?nums.map(n=>esc(typeof n==="object"?(n.numero??""):n)).join(", "):"Não informados"}</div>
-       </div></section>`;
-   }).join("");
-   aviso("Consulta concluída.","ok");
- }catch(err){
-   console.error(err);
-   aviso("Não foi possível concluir a consulta. Tente novamente mais tarde.");
- }finally{
-   el("buscar").disabled=false;
-   el("buscar").textContent="CONSULTAR PARTICIPAÇÕES";
- }
-});
+    if (cpf.length !== 11) {
+      aviso("Confira o CPF: informe os 11 números.");
+      el("cpf").focus();
+      return;
+    }
+    if (telefone.length !== 10 && telefone.length !== 11) {
+      aviso("Confira o WhatsApp com DDD.");
+      el("telefone").focus();
+      return;
+    }
+
+    const button = el("buscar");
+    button.disabled = true;
+    button.textContent = "CONSULTANDO...";
+    el("historico").innerHTML = '<div class="card empty">Buscando suas participações...</div>';
+    el("mensagem").className = "message";
+
+    try {
+      const { data, error } = await db.rpc("consultar_meus_pedidos", {
+        p_cpf: cpf,
+        p_telefone: telefone
+      });
+
+      if (error) {
+        console.error("Erro ao consultar participações:", error);
+        limparHistorico();
+        aviso("Não foi possível consultar agora. Confira se os dados estão corretos e tente novamente. Se continuar, precisamos verificar o retorno da função consultar_meus_pedidos no Supabase.");
+        return;
+      }
+
+      const pedidos = Array.isArray(data) ? data : (data ? [data] : []);
+      if (pedidos.length === 0) {
+        el("historico").innerHTML = '<div class="card empty"><h2>Nenhuma participação encontrada</h2><p>Não encontramos pedidos com os dados informados. Confira o CPF e o WhatsApp usados na reserva.</p></div>';
+        aviso("Consulta concluída. Nenhum pedido foi encontrado.", "ok");
+        return;
+      }
+
+      el("historico").innerHTML = pedidos.map(pedido => {
+        const numeros = Array.isArray(pedido.numeros) ? pedido.numeros : [];
+        const nome = pedido.nome_cliente_masked ?? pedido.nome_mascarado ?? pedido.nome_parcial ?? "";
+        const numeroHtml = numeros.length
+          ? numeros.map(item => esc(typeof item === "object" && item !== null ? (item.numero ?? item.numero_sorte ?? "") : item)).filter(Boolean).join(", ")
+          : "Aguardando atribuição ou não informados";
+        const pedidoId = pedido.pedido_id ?? pedido.id ?? "Não informado";
+        const status = pedido.status ?? "Não informado";
+
+        return `<article class="card">
+          <div class="order-top">
+            <div>
+              <h2>${esc(pedido.acao_nome ?? pedido.nome_acao ?? "Ação")}</h2>
+              <div class="small">Pedido: ${esc(pedidoId)}</div>
+            </div>
+            <span class="status">${esc(status)}</span>
+          </div>
+          ${nome ? `<p><strong>Cliente:</strong> ${esc(nome)}</p>` : ""}
+          <div class="info">
+            <div><strong>Data do pedido:</strong> ${esc(dataBR(pedido.created_at ?? pedido.data_pedido))}</div>
+            <div><strong>Quantidade:</strong> ${esc(pedido.quantidade ?? "Não informada")}</div>
+            <div><strong>Valor total:</strong> ${esc(brl(pedido.valor_total ?? pedido.total))}</div>
+          </div>
+          <div class="numbers"><strong>Números da participação:</strong><br>${numeroHtml}</div>
+        </article>`;
+      }).join("");
+
+      aviso(`Consulta concluída. Encontramos ${pedidos.length} pedido(s).`, "ok");
+    } catch (error) {
+      console.error("Falha inesperada na consulta:", error);
+      limparHistorico();
+      aviso("Ocorreu um erro de conexão durante a consulta. Tente novamente.");
+    } finally {
+      button.disabled = false;
+      button.textContent = "CONSULTAR PARTICIPAÇÕES";
+    }
+  });
+})();
 </script>
 </body>
 </html>
