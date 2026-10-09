@@ -48,6 +48,7 @@ th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border);font-si
 .feedback{margin-top:12px;font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}.feedback.error{color:var(--red)}.feedback.success{color:var(--green)}
 .empty{color:var(--muted);padding:25px 12px;text-align:center;border:1px dashed var(--border);border-radius:10px}
 .mobile-menu{display:none}.preview{max-width:180px;max-height:130px;object-fit:contain;margin-top:10px;background:#090909;border-radius:8px}
+.ticket-actions{display:flex;flex-wrap:wrap;gap:6px}.ticket-actions .btn{white-space:nowrap}
 @media(max-width:1050px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.number-grid{grid-template-columns:repeat(6,minmax(0,1fr))}}
 @media(max-width:760px){.topbar{padding:0 13px}.layout{display:block}.sidebar{display:none;position:sticky;top:68px;z-index:9;border-right:0;border-bottom:1px solid var(--border);padding:10px}.sidebar.open{display:block}.mobile-menu{display:inline-block}main{padding:17px 12px 35px}.grid,.grid-2,.action-list{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.page-head{flex-direction:column}.number-grid{grid-template-columns:repeat(5,minmax(0,1fr))}.brand{font-size:17px}.topbar-right .btn{padding:9px;font-size:12px}}
 </style>
@@ -154,11 +155,12 @@ th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border);font-si
 
 <section id="page-premiados" class="admin-page hidden">
   <div class="page-head">
-    <div><h1>🏆 Bilhetes premiados</h1><p>Cadastre os números especiais e o prêmio correspondente a cada um.</p></div>
+    <div><h1>🏆 Bilhetes premiados</h1><p>Cadastre e corrija os números especiais e seus prêmios.</p></div>
   </div>
   <div class="panel">
-    <div class="notice">Selecione a ação, informe o número e descreva o prêmio. O número precisa existir na grade da ação. O cadastro é restrito ao administrador autenticado.</div>
+    <div class="notice">Selecione a ação, informe o número e descreva o prêmio. Só bilhetes em estado “Aguardando” podem ser editados ou cancelados. Bilhetes contemplados ficam protegidos.</div>
     <form id="winningTicketForm">
+      <input id="winningEditId" type="hidden">
       <label for="winningAction">Ação *</label>
       <select id="winningAction" required></select>
       <label for="winningNumber">Número premiado *</label>
@@ -166,7 +168,10 @@ th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border);font-si
       <p id="winningNumberHelp" class="muted small">Selecione uma ação para consultar o intervalo válido.</p>
       <label for="winningPrize">Descrição do prêmio *</label>
       <input id="winningPrize" maxlength="200" required placeholder="Ex.: Óculos Oakley">
-      <button id="winningTicketBtn" class="btn btn-gold btn-block" type="submit">Cadastrar bilhete premiado</button>
+      <div class="toolbar" style="margin-top:12px">
+        <button id="winningTicketBtn" class="btn btn-gold" type="submit">Cadastrar bilhete premiado</button>
+        <button id="cancelWinningEditBtn" class="btn hidden" type="button">Cancelar edição</button>
+      </div>
       <div id="winningFeedback" class="feedback"></div>
     </form>
   </div>
@@ -234,7 +239,7 @@ function showPage(name){
   if(name==="numeros")carregarNumeros();
   if(name==="pedidos")carregarPedidos();
   if(name==="gratis")carregarAcoesNosSelects();
-  if(name==="premiados"){carregarAcoesNosSelects().then(carregarBilhetesPremiados);}
+  if(name==="premiados")carregarAcoesNosSelects().then(()=>carregarBilhetesPremiados());
 }
 document.querySelectorAll(".nav-btn").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
 document.querySelectorAll("[data-goto]").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.goto)));
@@ -243,8 +248,15 @@ $("mobileMenu").addEventListener("click",()=>$("sidebar").classList.toggle("open
 async function verificarSessao(){
   const {data,error}=await db.auth.getSession();
   if(error){feedback("loginFeedback",error.message,"error");return;}
-  if(data.session)abrirPainel(data.session.user);
-  else{$("loginScreen").classList.remove("hidden");$("adminApp").classList.add("hidden");}
+  if(data.session){
+    if(data.session.user.id!==ADMIN_UID){
+      await db.auth.signOut();
+      $("loginScreen").classList.remove("hidden");$("adminApp").classList.add("hidden");
+      feedback("loginFeedback","Este usuário não está autorizado como administrador.","error");
+      return;
+    }
+    abrirPainel(data.session.user);
+  }else{$("loginScreen").classList.remove("hidden");$("adminApp").classList.add("hidden");}
 }
 function abrirPainel(user){
   $("loginScreen").classList.add("hidden");$("adminApp").classList.remove("hidden");
@@ -444,7 +456,7 @@ async function carregarNumeros(silent=false){
   const {data,error}=await db.from("numeros").select("numero,status,pedido_id,reservado_em,reservado_ate").eq("acao_id",actionId).order("numero",{ascending:true});
   if(error){feedback("numbersFeedback",error.message,"error");return;}
   state.numbers=data||[];
-  await carregarBilhetesPremiados(true);
+  await carregarBilhetesPremiados(true,actionId);
   renderNumeros();feedback("numbersFeedback","");
 }
 function renderNumeros(){
@@ -508,7 +520,7 @@ $("freeTicketsForm").addEventListener("submit",async e=>{
   if(!name||!phone){feedback("freeFeedback","Preencha o nome e o WhatsApp do cliente.","error");return;}
   if(!Number.isInteger(quantity)||quantity<1||quantity>100000){feedback("freeFeedback","Informe uma quantidade inteira válida.","error");return;}
   try{
-    const user=await usuarioAdmin();
+    await usuarioAdmin();
     if(!window.confirm(`Confirmar a distribuição de ${quantity} bilhete(s) grátis para ${name}?`))return;
     button.disabled=true;feedback("freeFeedback","Solicitando distribuição segura ao Supabase…");
     const {data,error}=await db.rpc("distribuir_bilhetes_gratis",{p_acao_id:actionId,p_nome_cliente:name,p_telefone:phone,p_quantidade:quantity});
@@ -522,7 +534,7 @@ $("freeTicketsForm").addEventListener("submit",async e=>{
   finally{button.disabled=false;}
 });
 
-/* BILHETES PREMIADOS */
+/* BILHETES PREMIADOS: CADASTRAR, EDITAR E CANCELAR */
 function acaoPremiadaSelecionada(){
   return state.actions.find(a=>String(a.id)===$("winningAction").value);
 }
@@ -538,24 +550,36 @@ function atualizarLimiteNumeroPremiado(){
   input.min="0";
   if(Number.isInteger(total)&&total>0){
     input.max=String(total-1);
-    $("winningNumberHelp").textContent=`Números válidos nesta ação: 0 a ${numberLabel(total-1,total)}. O número será exibido com zeros à esquerda quando necessário.`;
+    $("winningNumberHelp").textContent=`Números válidos nesta ação: 0 a ${numberLabel(total-1,total)}.`;
   }else{
     input.removeAttribute("max");
     $("winningNumberHelp").textContent="Não foi possível identificar o total de números desta ação.";
   }
 }
-$("winningAction").addEventListener("change",()=>{
+function limparEdicaoPremiado(){
+  $("winningEditId").value="";
+  $("winningTicketForm").reset();
+  $("winningTicketBtn").textContent="Cadastrar bilhete premiado";
+  $("cancelWinningEditBtn").classList.add("hidden");
   atualizarLimiteNumeroPremiado();
-  carregarBilhetesPremiados();
+}
+$("winningAction").addEventListener("change",async()=>{
+  if($("winningEditId").value)limparEdicaoPremiado();
+  atualizarLimiteNumeroPremiado();
+  await carregarBilhetesPremiados();
 });
 $("winningSearch").addEventListener("input",renderBilhetesPremiados);
 $("refreshWinningTickets").addEventListener("click",()=>carregarBilhetesPremiados());
+$("cancelWinningEditBtn").addEventListener("click",()=>{
+  limparEdicaoPremiado();
+  feedback("winningFeedback","Edição cancelada.");
+});
 
-async function carregarBilhetesPremiados(silent=false){
-  const actionId=$("winningAction").value||$("numbersAction").value;
+async function carregarBilhetesPremiados(silent=false,explicitActionId=null){
+  const actionId=explicitActionId||$("winningAction").value||$("numbersAction").value;
   if(!actionId){
     state.winningTickets=[];
-    if($("winningTicketsList"))$("winningTicketsList").innerHTML='<div class="empty">Selecione uma ação para ver os bilhetes premiados.</div>';
+    $("winningTicketsList").innerHTML='<div class="empty">Selecione uma ação para ver os bilhetes premiados.</div>';
     return;
   }
   try{
@@ -566,23 +590,93 @@ async function carregarBilhetesPremiados(silent=false){
       .order("numero",{ascending:true});
     if(error)throw error;
     state.winningTickets=data||[];
-    renderBilhetesPremiados();
+    renderBilhetesPremiados(actionId);
     if(!silent)feedback("winningFeedback","");
   }catch(error){
     if(!silent)feedback("winningFeedback","Não foi possível carregar a lista. Confira a política de acesso no Supabase: "+error.message,"error");
     $("winningTicketsList").innerHTML='<div class="empty">Erro ao carregar bilhetes premiados. Veja a mensagem acima.</div>';
   }
 }
-function renderBilhetesPremiados(){
-  const action=acaoPremiadaSelecionada()||state.actions.find(a=>String(a.id)===$("numbersAction").value);
+function renderBilhetesPremiados(actionId=null){
+  const selectedId=actionId||$("winningAction").value||$("numbersAction").value;
+  const action=state.actions.find(a=>String(a.id)===String(selectedId));
   const search=$("winningSearch").value.trim();
-  const tickets=state.winningTickets.filter(t=>!search||String(t.numero)===search);
+  const tickets=state.winningTickets.filter(t=>
+    String(t.acao_id)===String(selectedId)&&(!search||String(t.numero)===search)
+  );
   if(!tickets.length){
     $("winningTicketsList").innerHTML='<div class="empty">Nenhum bilhete premiado cadastrado para esta seleção.</div>';
     return;
   }
-  $("winningTicketsList").innerHTML=`<div class="table-wrap"><table><thead><tr><th>Número</th><th>Prêmio</th><th>Status</th><th>Pedido associado</th><th>Data do cadastro</th></tr></thead><tbody>${tickets.map(t=>`<tr><td><strong style="color:var(--gold2)">${escapeHtml(numberLabel(t.numero,action?.total_numeros))}</strong></td><td>${escapeHtml(t.premio)}</td><td><span class="badge ${t.status==="contemplado"?"green":t.status==="cancelado"?"red":""}">${escapeHtml(statusLabel(t.status))}</span></td><td>${escapeHtml(t.pedido_id??"—")}</td><td>${escapeHtml(t.created_at?new Date(t.created_at).toLocaleString("pt-BR"):"—")}</td></tr>`).join("")}</tbody></table></div>`;
+  $("winningTicketsList").innerHTML=`<div class="table-wrap"><table><thead><tr><th>Número</th><th>Prêmio</th><th>Status</th><th>Pedido associado</th><th>Data do cadastro</th><th>Ações</th></tr></thead><tbody>${tickets.map(t=>{
+    const canManage=t.status==="aguardando";
+    return `<tr>
+      <td><strong style="color:var(--gold2)">${escapeHtml(numberLabel(t.numero,action?.total_numeros))}</strong></td>
+      <td>${escapeHtml(t.premio)}</td>
+      <td><span class="badge ${t.status==="contemplado"?"green":t.status==="cancelado"?"red":""}">${escapeHtml(statusLabel(t.status))}</span></td>
+      <td>${escapeHtml(t.pedido_id??"—")}</td>
+      <td>${escapeHtml(t.created_at?new Date(t.created_at).toLocaleString("pt-BR"):"—")}</td>
+      <td><div class="ticket-actions">
+        ${canManage?`<button class="btn btn-small" type="button" data-winning-edit="${escapeHtml(t.id)}">✏️ Editar</button><button class="btn btn-small btn-danger" type="button" data-winning-cancel="${escapeHtml(t.id)}">Cancelar</button>`:'<span class="muted small">Protegido</span>'}
+      </div></td>
+    </tr>`;
+  }).join("")}</tbody></table></div>`;
+
+  document.querySelectorAll("[data-winning-edit]").forEach(button=>{
+    button.addEventListener("click",()=>{
+      const ticket=state.winningTickets.find(t=>String(t.id)===button.dataset.winningEdit);
+      if(!ticket)return;
+      if(ticket.status!=="aguardando"){
+        feedback("winningFeedback","Somente bilhetes aguardando podem ser editados.","error");return;
+      }
+      $("winningAction").value=ticket.acao_id;
+      $("winningEditId").value=ticket.id;
+      $("winningNumber").value=ticket.numero;
+      $("winningPrize").value=ticket.premio||"";
+      atualizarLimiteNumeroPremiado();
+      $("winningTicketBtn").textContent="Salvar alterações";
+      $("cancelWinningEditBtn").classList.remove("hidden");
+      feedback("winningFeedback",`Editando o bilhete ${numberLabel(ticket.numero,action?.total_numeros)}. Corrija os campos e clique em Salvar alterações.`);
+      $("winningNumber").focus();
+      $("winningTicketForm").scrollIntoView({behavior:"smooth",block:"start"});
+    });
+  });
+  document.querySelectorAll("[data-winning-cancel]").forEach(button=>{
+    button.addEventListener("click",async()=>{
+      const ticket=state.winningTickets.find(t=>String(t.id)===button.dataset.winningCancel);
+      if(!ticket)return;
+      if(ticket.status!=="aguardando"){
+        feedback("winningFeedback","Somente bilhetes aguardando podem ser cancelados.","error");return;
+      }
+      const ticketAction=state.actions.find(a=>String(a.id)===String(ticket.acao_id));
+      const label=numberLabel(ticket.numero,ticketAction?.total_numeros);
+      if(!window.confirm(`Cancelar o bilhete premiado ${label} — ${ticket.premio}?\nO registro será preservado no histórico, mas deixará de aparecer como prêmio ativo.`))return;
+      button.disabled=true;
+      try{
+        await usuarioAdmin();
+        const {data,error}=await db.from("bilhetes_premiados")
+          .update({status:"cancelado"})
+          .eq("id",ticket.id)
+          .eq("acao_id",ticket.acao_id)
+          .eq("status","aguardando")
+          .select("id,status")
+          .maybeSingle();
+        if(error)throw error;
+        if(!data)throw new Error("O bilhete não foi alterado. Ele pode ter mudado de status; atualize a lista.");
+        feedback("winningFeedback",`Bilhete ${label} cancelado. O registro foi preservado no histórico.`,"success");
+        if(String($("winningAction").value)===String(ticket.acao_id)){
+          await carregarBilhetesPremiados();
+        }else{
+          await carregarBilhetesPremiados(true,ticket.acao_id);
+        }
+        if(String($("numbersAction").value)===String(ticket.acao_id))await carregarNumeros(true);
+      }catch(error){
+        feedback("winningFeedback",error.message||"Não foi possível cancelar o bilhete.","error");
+      }finally{button.disabled=false;}
+    });
+  });
 }
+
 $("winningTicketForm").addEventListener("submit",async e=>{
   e.preventDefault();
   const button=$("winningTicketBtn");
@@ -592,30 +686,56 @@ $("winningTicketForm").addEventListener("submit",async e=>{
     const action=acaoPremiadaSelecionada();
     if(!action)throw new Error("Selecione uma ação.");
     const actionId=action.id;
+    const editId=$("winningEditId").value;
     const raw=$("winningNumber").value.trim();
     const numero=Number(raw);
     const premio=$("winningPrize").value.trim();
     const total=Number(action.total_numeros);
-    if(raw===" "||raw==="")throw new Error("Informe o número premiado.");
+    if(raw==="")throw new Error("Informe o número premiado.");
     if(!Number.isInteger(numero)||numero<0)throw new Error("O número deve ser um inteiro igual ou maior que zero.");
     if(!Number.isInteger(total)||total<1||numero>=total)throw new Error(`Para esta ação, informe um número entre 0 e ${total-1}.`);
     if(!premio)throw new Error("Informe a descrição do prêmio.");
-    if(!window.confirm(`Cadastrar o número ${numberLabel(numero,total)} como bilhete premiado?\nPrêmio: ${premio}\nAção: ${action.nome}`))return;
 
-    feedback("winningFeedback","Cadastrando bilhete premiado no Supabase…");
-    const {data,error}=await db.rpc("cadastrar_bilhete_premiado",{
-      p_acao_id:actionId,
-      p_numero:numero,
-      p_premio:premio
-    });
-    if(error)throw error;
-    feedback("winningFeedback",`Bilhete ${numberLabel(numero,total)} cadastrado com sucesso. ${data?.sucesso===true?"":""}`,"success");
-    $("winningNumber").value="";
-    $("winningPrize").value="";
+    if(editId){
+      const original=state.winningTickets.find(t=>String(t.id)===String(editId));
+      if(!original)throw new Error("Não encontrei esse bilhete na lista atual. Atualize a lista.");
+      if(original.status!=="aguardando")throw new Error("Esse bilhete não pode ser editado porque não está aguardando.");
+      if(String(original.acao_id)!==String(actionId))throw new Error("A ação selecionada não corresponde ao bilhete em edição.");
+      if(!window.confirm(`Salvar alterações do bilhete premiado?\nNúmero: ${numberLabel(original.numero,total)} → ${numberLabel(numero,total)}\nPrêmio: ${premio}`))return;
+
+      feedback("winningFeedback","Salvando alterações no Supabase…");
+      const {data,error}=await db.from("bilhetes_premiados")
+        .update({numero,premio})
+        .eq("id",editId)
+        .eq("acao_id",actionId)
+        .eq("status","aguardando")
+        .select("id,numero,premio,status")
+        .maybeSingle();
+      if(error){
+        if(error.code==="23505")throw new Error("Já existe outro bilhete premiado com esse número nesta ação.");
+        throw error;
+      }
+      if(!data)throw new Error("Nenhuma alteração foi feita. O bilhete pode ter sido contemplado ou alterado em outra sessão.");
+      limparEdicaoPremiado();
+      feedback("winningFeedback",`Bilhete atualizado: número ${numberLabel(data.numero,total)} — ${data.premio}.`,"success");
+    }else{
+      if(!window.confirm(`Cadastrar o número ${numberLabel(numero,total)} como bilhete premiado?\nPrêmio: ${premio}\nAção: ${action.nome}`))return;
+      feedback("winningFeedback","Cadastrando bilhete premiado no Supabase…");
+      const {data,error}=await db.rpc("cadastrar_bilhete_premiado",{
+        p_acao_id:actionId,p_numero:numero,p_premio:premio
+      });
+      if(error){
+        if(error.code==="23505")throw new Error("Esse número já está cadastrado como bilhete premiado nesta ação.");
+        throw error;
+      }
+      if(data?.sucesso===false)throw new Error(data.mensagem||"O Supabase não confirmou o cadastro.");
+      $("winningNumber").value="";$("winningPrize").value="";
+      feedback("winningFeedback",`Bilhete ${numberLabel(numero,total)} cadastrado com sucesso.`,"success");
+    }
     await carregarBilhetesPremiados();
     if(String($("numbersAction").value)===String(actionId))await carregarNumeros(true);
   }catch(error){
-    feedback("winningFeedback",error.message||"Não foi possível cadastrar o bilhete premiado.","error");
+    feedback("winningFeedback",error.message||"Não foi possível salvar o bilhete premiado.","error");
   }finally{
     button.disabled=false;
   }
