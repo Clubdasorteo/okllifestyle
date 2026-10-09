@@ -5,6 +5,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ações | OKL Lifestyle</title>
+<meta name="theme-color" content="#080808">
+
 <style>
 :root {
   --gold: #d4af37;
@@ -15,6 +17,7 @@
   --border: rgba(212,175,55,.28);
 }
 * { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
   margin: 0;
   background: var(--black);
@@ -36,6 +39,7 @@ header {
   font-weight: 800;
   letter-spacing: 3px;
   font-size: 20px;
+  text-decoration: none;
 }
 nav {
   display: flex;
@@ -46,6 +50,7 @@ nav a {
   color: #eee;
   text-decoration: none;
   font-size: 13px;
+  transition: color .2s;
 }
 nav a:hover, nav a.atual { color: var(--gold-light); }
 .hero {
@@ -99,6 +104,11 @@ main {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  transition: border-color .2s, transform .2s;
+}
+.card:hover {
+  border-color: rgba(243,215,121,.65);
+  transform: translateY(-3px);
 }
 .foto {
   height: 230px;
@@ -175,6 +185,7 @@ main {
   font-weight: bold;
   text-decoration: none;
   font-size: 14px;
+  transition: filter .2s;
 }
 .botao:hover { filter: brightness(1.1); }
 .estado {
@@ -200,18 +211,25 @@ footer {
   nav { justify-content: center; gap: 13px; }
   .hero { padding-top: 42px; }
   .foto { height: 210px; }
+  .card:hover { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; }
 }
 </style>
 </head>
+
 <body>
 
 <header>
-  <a href="index.html" class="logo" style="text-decoration:none">OKL LIFESTYLE</a>
-  <nav>
-    <a href="index.html">🏠 Início</a>
-    <a href="acoes.html" class="atual">🎟️ Ações</a>
-    <a href="ultimas-acoes.html">🏆 Últimas ações</a>
-    <a href="minhas-participacoes.html">👤 Minhas participações</a>
+  <a href="https://clubdasorteo.github.io/okllifestyle/" class="logo">OKL LIFESTYLE</a>
+
+  <nav aria-label="Menu principal">
+    <a href="https://clubdasorteo.github.io/okllifestyle/">🏠 Início</a>
+    <a href="https://clubdasorteo.github.io/okllifestyle/acoes.html" class="atual">🎟️ Ações</a>
+    <a href="https://clubdasorteo.github.io/okllifestyle/ultimas-acoes.html">🏆 Últimas ações</a>
+    <a href="https://clubdasorteo.github.io/okllifestyle/minhas-participacoes.html">👤 Minhas participações</a>
   </nav>
 </header>
 
@@ -221,13 +239,13 @@ footer {
   <p>Confira as ações disponíveis e conheça os prêmios da OKL Lifestyle.</p>
 </section>
 
-<main>
+<main id="acoes">
   <div class="section-title">
     <h2>Ações <span>disponíveis</span></h2>
-    <div id="contador">Carregando ações...</div>
+    <div id="contador" aria-live="polite">Carregando ações...</div>
   </div>
 
-  <div id="listaAcoes" class="grid">
+  <div id="listaAcoes" class="grid" aria-live="polite">
     <div class="estado">Carregando as ações disponíveis...</div>
   </div>
 </main>
@@ -268,68 +286,80 @@ function moeda(valor) {
 }
 
 async function carregarAcoes() {
-  const { data, error } = await clienteSupabase
-    .from("AÇÕES")
-    .select("id,nome,descricao,foto_url,valor_numero,total_numeros,status,created_at")
-    .eq("status", "ativa")
-    .order("created_at", { ascending: false });
+  try {
+    const { data, error } = await clienteSupabase
+      .from("AÇÕES")
+      .select("id,nome,descricao,foto_url,valor_numero,total_numeros,status,created_at")
+      .eq("status", "ativa")
+      .order("created_at", { ascending: false });
 
-  if (error) {
-    console.error("Erro ao carregar ações:", error);
+    if (error) throw error;
+
+    if (!data || data.length === 0) {
+      contador.textContent = "0 ações";
+      lista.innerHTML = `
+        <div class="estado">
+          <strong>Nenhuma ação disponível no momento.</strong><br>
+          Volte em breve para conferir as novidades.
+        </div>`;
+      return;
+    }
+
+    contador.textContent = data.length + (
+      data.length === 1
+        ? " ação disponível"
+        : " ações disponíveis"
+    );
+
+    lista.innerHTML = data.map(acao => {
+      const nome = escapar(acao.nome || "Ação OKL Lifestyle");
+      const descricao = escapar(
+        acao.descricao || "Confira os detalhes desta ação."
+      );
+
+      const foto = acao.foto_url
+        ? `<img src="${escapar(acao.foto_url)}" alt="${nome}" loading="lazy">`
+        : `<span class="sem-foto">Foto do prêmio em breve</span>`;
+
+      return `
+        <article class="card">
+          <div class="foto">${foto}</div>
+          <div class="conteudo">
+            <div class="status">● Ação disponível</div>
+            <h3>${nome}</h3>
+            <div class="descricao">${descricao}</div>
+
+            <div class="detalhes">
+              <div>
+                <div class="rotulo">Valor por bilhete</div>
+                <div class="preco">${moeda(acao.valor_numero)}</div>
+              </div>
+              <div>
+                <div class="rotulo">Total de bilhetes</div>
+                <div class="qtd">${Number(acao.total_numeros || 0).toLocaleString("pt-BR")}</div>
+              </div>
+            </div>
+
+            <a class="botao" href="https://clubdasorteo.github.io/okllifestyle/#acoes">
+              VER COMO PARTICIPAR
+            </a>
+          </div>
+        </article>`;
+    }).join("");
+
+  } catch (erro) {
+    console.error("Erro ao carregar ações:", erro);
     contador.textContent = "";
     lista.innerHTML = `
       <div class="estado">
         Não foi possível carregar as ações agora.<br>
         <strong>Tente novamente em instantes.</strong>
       </div>`;
-    return;
   }
-
-  if (!data || data.length === 0) {
-    contador.textContent = "0 ações";
-    lista.innerHTML = `
-      <div class="estado">
-        <strong>Nenhuma ação disponível no momento.</strong><br>
-        Volte em breve para conferir as novidades.
-      </div>`;
-    return;
-  }
-
-  contador.textContent = data.length + (data.length === 1
-    ? " ação disponível"
-    : " ações disponíveis");
-
-  lista.innerHTML = data.map(acao => {
-    const nome = escapar(acao.nome || "Ação OKL Lifestyle");
-    const descricao = escapar(acao.descricao || "Confira os detalhes desta ação.");
-    const foto = acao.foto_url
-      ? `<img src="${escapar(acao.foto_url)}" alt="${nome}" loading="lazy">`
-      : `<span class="sem-foto">Foto do prêmio em breve</span>`;
-
-    return `
-      <article class="card">
-        <div class="foto">${foto}</div>
-        <div class="conteudo">
-          <div class="status">● Ação disponível</div>
-          <h3>${nome}</h3>
-          <div class="descricao">${descricao}</div>
-          <div class="detalhes">
-            <div>
-              <div class="rotulo">Valor por bilhete</div>
-              <div class="preco">${moeda(acao.valor_numero)}</div>
-            </div>
-            <div>
-              <div class="rotulo">Total de bilhetes</div>
-              <div class="qtd">${Number(acao.total_numeros || 0).toLocaleString("pt-BR")}</div>
-            </div>
-          </div>
-          <a class="botao" href="index.html#acoes">VER COMO PARTICIPAR</a>
-        </div>
-      </article>`;
-  }).join("");
 }
 
 carregarAcoes();
 </script>
+
 </body>
 </html>
