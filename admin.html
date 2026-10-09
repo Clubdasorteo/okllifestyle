@@ -42,6 +42,7 @@ th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border);font-si
 .number{border:1px solid var(--border);border-radius:7px;min-height:44px;padding:7px 3px;background:#191919;color:#dedbd3;text-align:center;font-size:12px}
 .number.disponivel{border-color:#31563e;background:#122219;color:#a4e6ba}.number.reservado{border-color:#78602c;background:#2c2413;color:#f1d48b}
 .number.vendido,.number.gratuito{border-color:#654343;background:#2a1818;color:#ffb4b4}
+.number-premiado{border:2px solid var(--gold)!important;background:#493713!important;color:#ffe7a0!important;font-weight:900}
 .number-detail{margin-top:14px;padding:14px;background:#0e0e0e;border:1px solid var(--border);border-radius:10px;line-height:1.7;overflow-wrap:anywhere}
 .notice{padding:12px 14px;border-radius:9px;margin:13px 0;background:#201b11;border:1px solid #4d3d20;color:var(--gold2);font-size:13px;line-height:1.5}
 .feedback{margin-top:12px;font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}.feedback.error{color:var(--red)}.feedback.success{color:var(--green)}
@@ -77,6 +78,7 @@ th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border);font-si
   <button class="nav-btn" data-page="numeros">▦ Mapa de números</button>
   <button class="nav-btn" data-page="pedidos">▤ Pedidos e reservas</button>
   <button class="nav-btn" data-page="gratis">🎁 Bilhetes grátis</button>
+  <button class="nav-btn" data-page="premiados">🏆 Bilhetes premiados</button>
 </aside>
 <main><div class="page">
 
@@ -119,19 +121,19 @@ th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border);font-si
 </section>
 
 <section id="page-numeros" class="admin-page hidden">
-  <div class="page-head"><div><h1>Mapa de números</h1><p>Veja os números disponíveis, reservados e ocupados.</p></div></div>
+  <div class="page-head"><div><h1>Mapa de números</h1><p>Veja os números disponíveis, reservados, ocupados e bilhetes premiados.</p></div></div>
   <div class="panel">
     <label for="numbersAction">Escolha a ação</label><select id="numbersAction"></select>
     <div class="toolbar" style="margin-top:15px"><input id="numberSearch" type="number" min="0" placeholder="Buscar número"><select id="numberStatusFilter"><option value="">Todos os status</option><option value="disponivel">Disponíveis</option><option value="reservado">Reservados</option><option value="vendido">Vendidos</option><option value="gratuito">Grátis</option></select><button id="refreshNumbers" class="btn" type="button">Atualizar mapa</button></div>
     <div id="numbersSummary" class="grid"></div>
-    <div class="toolbar" style="margin-top:15px"><span class="badge green">Disponível</span><span class="badge">Reservado</span><span class="badge red">Vendido / grátis</span></div>
+    <div class="toolbar" style="margin-top:15px"><span class="badge green">Disponível</span><span class="badge">Reservado</span><span class="badge red">Vendido / grátis</span><span class="badge" style="border:1px solid var(--gold)">🏆 Bilhete premiado</span></div>
     <div id="numberGrid" class="number-grid"></div><div id="numberDetail" class="number-detail hidden"></div><div id="numbersFeedback" class="feedback"></div>
   </div>
 </section>
 
 <section id="page-pedidos" class="admin-page hidden">
   <div class="page-head"><div><h1>Pedidos e reservas</h1><p>Consulte os pedidos registrados no banco de dados.</p></div><button id="refreshOrders" class="btn" type="button">Atualizar pedidos</button></div>
-  <div class="panel"><div class="toolbar"><input id="orderSearch" placeholder="Buscar por nome, telefone ou ID"><select id="orderStatusFilter"><option value="">Todos os status</option><option value="reservado">Reservado</option><option value="pendente">Pendente</option><option value="pago">Pago</option><option value="gratis">Gratuito</option><option value="cancelado">Cancelado</option></select></div><div id="ordersTable"></div><div id="ordersFeedback" class="feedback"></div></div>
+  <div class="panel"><div class="toolbar"><input id="orderSearch" placeholder="Buscar por nome, telefone ou ID"><select id="orderStatusFilter"><option value="">Todos os status</option><option value="reservado">Reservado</option><option value="pendente">Pendente</option><option value="pago">Pago</option><option value="confirmado">Confirmado</option><option value="gratis">Gratuito</option><option value="cancelado">Cancelado</option></select></div><div id="ordersTable"></div><div id="ordersFeedback" class="feedback"></div></div>
 </section>
 
 <section id="page-gratis" class="admin-page hidden">
@@ -150,6 +152,31 @@ th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border);font-si
   <div class="panel section"><h2>Antes de distribuir</h2><p class="muted">Confira a ação, o nome, o WhatsApp e a quantidade antes de confirmar. Se o Supabase retornar um erro, não repita a operação sem conferir os pedidos e os números.</p></div>
 </section>
 
+<section id="page-premiados" class="admin-page hidden">
+  <div class="page-head">
+    <div><h1>🏆 Bilhetes premiados</h1><p>Cadastre os números especiais e o prêmio correspondente a cada um.</p></div>
+  </div>
+  <div class="panel">
+    <div class="notice">Selecione a ação, informe o número e descreva o prêmio. O número precisa existir na grade da ação. O cadastro é restrito ao administrador autenticado.</div>
+    <form id="winningTicketForm">
+      <label for="winningAction">Ação *</label>
+      <select id="winningAction" required></select>
+      <label for="winningNumber">Número premiado *</label>
+      <input id="winningNumber" type="number" min="0" step="1" required placeholder="Ex.: 25">
+      <p id="winningNumberHelp" class="muted small">Selecione uma ação para consultar o intervalo válido.</p>
+      <label for="winningPrize">Descrição do prêmio *</label>
+      <input id="winningPrize" maxlength="200" required placeholder="Ex.: Óculos Oakley">
+      <button id="winningTicketBtn" class="btn btn-gold btn-block" type="submit">Cadastrar bilhete premiado</button>
+      <div id="winningFeedback" class="feedback"></div>
+    </form>
+  </div>
+  <div class="panel section">
+    <div class="section-head"><h2>Bilhetes cadastrados</h2><button id="refreshWinningTickets" class="btn btn-small" type="button">Atualizar lista</button></div>
+    <div class="toolbar"><input id="winningSearch" type="number" min="0" placeholder="Filtrar pelo número"></div>
+    <div id="winningTicketsList"><div class="empty">Selecione uma ação para ver os bilhetes premiados.</div></div>
+  </div>
+</section>
+
 </div></main></div></div>
 
 <script>
@@ -162,7 +189,7 @@ const STORAGE_BUCKET = "fotos-premios";
 const ADMIN_UID = "a7039801-3bac-48d5-91a0-befd48b3944e";
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const $ = id => document.getElementById(id);
-const state = {actions:[],numbers:[],orders:[],refreshTimer:null};
+const state = {actions:[],numbers:[],orders:[],winningTickets:[],refreshTimer:null};
 
 function escapeHtml(value){
   return String(value ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
@@ -174,8 +201,11 @@ function feedback(id,message,type=""){
 function money(value){
   return Number(value||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
 }
-function numberLabel(value){
-  const n=Number(value);return Number.isFinite(n)?String(n).padStart(2,"0"):String(value??"");
+function numberLabel(value,total=null){
+  const n=Number(value);
+  if(!Number.isFinite(n))return String(value??"");
+  const digits=total?Math.max(2,String(Math.max(0,Number(total)-1)).length):2;
+  return String(n).padStart(digits,"0");
 }
 function statusClass(status){
   const s=String(status||"").toLowerCase();
@@ -186,8 +216,15 @@ function statusClass(status){
 }
 function statusLabel(status){
   const s=String(status||"").toLowerCase();
-  const labels={ativa:"Ativa",pausada:"Pausada",encerrada:"Encerrada",disponivel:"Disponível",reservado:"Reservado",vendido:"Vendido",gratuito:"Gratuito",gratis:"Gratuito","grátis":"Gratuito",pago:"Pago",pendente:"Pendente",cancelado:"Cancelado"};
+  const labels={ativa:"Ativa",pausada:"Pausada",encerrada:"Encerrada",disponivel:"Disponível",reservado:"Reservado",vendido:"Vendido",gratuito:"Gratuito",gratis:"Gratuito","grátis":"Gratuito",pago:"Pago",confirmado:"Confirmado",pendente:"Pendente",cancelado:"Cancelado",aguardando:"Aguardando",contemplado:"Contemplado"};
   return labels[s]||status||"Não informado";
+}
+async function usuarioAdmin(){
+  const {data,error}=await db.auth.getSession();
+  if(error)throw error;
+  if(!data.session)throw new Error("Sua sessão expirou. Entre novamente.");
+  if(data.session.user.id!==ADMIN_UID)throw new Error("Este usuário não corresponde ao administrador autorizado no Supabase.");
+  return data.session.user;
 }
 function showPage(name){
   document.querySelectorAll(".admin-page").forEach(p=>p.classList.toggle("hidden",p.id!=="page-"+name));
@@ -197,6 +234,7 @@ function showPage(name){
   if(name==="numeros")carregarNumeros();
   if(name==="pedidos")carregarPedidos();
   if(name==="gratis")carregarAcoesNosSelects();
+  if(name==="premiados"){carregarAcoesNosSelects().then(carregarBilhetesPremiados);}
 }
 document.querySelectorAll(".nav-btn").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
 document.querySelectorAll("[data-goto]").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.goto)));
@@ -221,6 +259,10 @@ $("loginForm").addEventListener("submit",async e=>{
   e.preventDefault();feedback("loginFeedback","Entrando…");
   const {data,error}=await db.auth.signInWithPassword({email:$("loginEmail").value.trim(),password:$("loginPassword").value});
   if(error){feedback("loginFeedback",error.message,"error");return;}
+  if(data.user?.id!==ADMIN_UID){
+    await db.auth.signOut();
+    feedback("loginFeedback","Este usuário não está autorizado como administrador.","error");return;
+  }
   abrirPainel(data.user);feedback("loginFeedback","");
 });
 $("logoutBtn").addEventListener("click",async()=>{
@@ -282,6 +324,14 @@ function preencherSelectAcoes(){
   $("numbersAction").innerHTML=makeOptions(state.actions)||'<option value="">Nenhuma ação cadastrada</option>';
   if(state.actions.some(a=>String(a.id)===current))$("numbersAction").value=current;
   $("freeAction").innerHTML=makeOptions(active)||'<option value="">Nenhuma ação ativa</option>';
+
+  const winning=$("winningAction");
+  if(winning){
+    const previous=winning.value;
+    winning.innerHTML=makeOptions(state.actions)||'<option value="">Nenhuma ação cadastrada</option>';
+    if(state.actions.some(a=>String(a.id)===previous))winning.value=previous;
+    atualizarLimiteNumeroPremiado();
+  }
 }
 
 $("actionPhoto").addEventListener("change",()=>{
@@ -333,24 +383,17 @@ $("actionForm").addEventListener("submit",async e=>{
     if(file)fotoUrl=await uploadFoto(file);
 
     const payload={
-      nome,
-      descricao:descricao||null,
-      premio:premio||null,
-      premio_descricao:premioDescricao||null,
-      valor_numero:valor,
-      status,
-      quantidade_numeros:quantity,
-      data_sorteio:dateValue?`${dateValue}T12:00:00`:null,
-      link_pagamento:link||null,
-      observacoes:notes||null
+      nome,descricao:descricao||null,premio:premio||null,
+      premio_descricao:premioDescricao||null,valor_numero:valor,status,
+      quantidade_numeros:quantity,data_sorteio:dateValue?`${dateValue}T12:00:00`:null,
+      link_pagamento:link||null,observacoes:notes||null
     };
     if(fotoUrl)payload.foto_url=fotoUrl;
 
     if(id){
-      // Não altera total_numeros na edição: a grade já pode ter sido gerada.
       const {error}=await db.from("AÇÕES").update(payload).eq("id",id);
       if(error)throw error;
-      feedback("actionFeedback","Ação atualizada com sucesso. A quantidade total de números foi preservada para proteger a grade existente.","success");
+      feedback("actionFeedback","Ação atualizada com sucesso. A quantidade total foi preservada para proteger a grade existente.","success");
       await carregarAcoes();cancelarEdicao();
     }else{
       if(!fotoUrl)throw new Error("Envie a foto do prêmio para cadastrar uma nova ação.");
@@ -372,22 +415,16 @@ $("actionForm").addEventListener("submit",async e=>{
 });
 
 function editarAcao(a){
-  $("editId").value=a.id;
-  $("actionName").value=a.nome||"";
-  $("actionPrize").value=a.premio||"";
-  $("prizeDescription").value=a.premio_descricao||"";
-  $("actionDescription").value=a.descricao||"";
-  $("actionPrice").value=a.valor_numero??"";
-  $("actionTotal").value=a.total_numeros??"";
-  $("actionTotal").disabled=true;
+  $("editId").value=a.id;$("actionName").value=a.nome||"";
+  $("actionPrize").value=a.premio||"";$("prizeDescription").value=a.premio_descricao||"";
+  $("actionDescription").value=a.descricao||"";$("actionPrice").value=a.valor_numero??"";
+  $("actionTotal").value=a.total_numeros??"";$("actionTotal").disabled=true;
   $("totalHelp").textContent="A quantidade total não pode ser alterada na edição porque os números já podem ter sido gerados.";
-  $("actionStatus").value=a.status||"ativa";
-  $("actionQuantity").value=a.quantidade_numeros??"";
-  $("actionDate").value=dateForInput(a.data_sorteio);
-  $("paymentLink").value=a.link_pagamento||"";
-  $("actionNotes").value=a.observacoes||"";
-  $("actionPhoto").value="";
-  $("formTitle").textContent="Editar ação";$("saveActionBtn").textContent="Salvar alterações";$("cancelEditBtn").classList.remove("hidden");
+  $("actionStatus").value=a.status||"ativa";$("actionQuantity").value=a.quantidade_numeros??"";
+  $("actionDate").value=dateForInput(a.data_sorteio);$("paymentLink").value=a.link_pagamento||"";
+  $("actionNotes").value=a.observacoes||"";$("actionPhoto").value="";
+  $("formTitle").textContent="Editar ação";$("saveActionBtn").textContent="Salvar alterações";
+  $("cancelEditBtn").classList.remove("hidden");
   if(a.foto_url){$("photoPreview").src=a.foto_url;$("photoPreview").classList.remove("hidden");}
   else $("photoPreview").classList.add("hidden");
   feedback("actionFeedback","");showPage("cadastro");window.scrollTo({top:0,behavior:"smooth"});
@@ -406,7 +443,9 @@ async function carregarNumeros(silent=false){
   if(!silent)feedback("numbersFeedback","Carregando números…");
   const {data,error}=await db.from("numeros").select("numero,status,pedido_id,reservado_em,reservado_ate").eq("acao_id",actionId).order("numero",{ascending:true});
   if(error){feedback("numbersFeedback",error.message,"error");return;}
-  state.numbers=data||[];renderNumeros();feedback("numbersFeedback","");
+  state.numbers=data||[];
+  await carregarBilhetesPremiados(true);
+  renderNumeros();feedback("numbersFeedback","");
 }
 function renderNumeros(){
   const all=state.numbers;
@@ -415,9 +454,14 @@ function renderNumeros(){
   const occupied=all.filter(n=>["vendido","gratuito"].includes(statusClass(n.status))).length;
   $("statDisponiveis").textContent=available;$("statOcupados").textContent=reserved+occupied;
   $("numbersSummary").innerHTML=`<div class="stat"><div class="stat-label">Total</div><div class="stat-value">${all.length}</div></div><div class="stat"><div class="stat-label">Disponíveis</div><div class="stat-value">${available}</div></div><div class="stat"><div class="stat-label">Reservados</div><div class="stat-value">${reserved}</div></div><div class="stat"><div class="stat-label">Ocupados</div><div class="stat-value">${occupied}</div></div>`;
+  const action=state.actions.find(a=>String(a.id)===$("numbersAction").value);
   const filter=$("numberStatusFilter").value,search=$("numberSearch").value.trim();
+  const winningSet=new Set(state.winningTickets.filter(t=>t.status!=="cancelado").map(t=>String(t.numero)));
   const filtered=all.filter(n=>(!filter||statusClass(n.status)===filter)&&(!search||String(n.numero)===search));
-  $("numberGrid").innerHTML=filtered.map(n=>`<button class="number ${statusClass(n.status)}" type="button" data-number="${escapeHtml(n.numero)}" title="Número ${escapeHtml(n.numero)} — ${escapeHtml(statusLabel(n.status))}">${escapeHtml(numberLabel(n.numero))}</button>`).join("")||'<div class="empty">Nenhum número corresponde ao filtro.</div>';
+  $("numberGrid").innerHTML=filtered.map(n=>{
+    const special=winningSet.has(String(n.numero));
+    return `<button class="number ${statusClass(n.status)} ${special?"number-premiado":""}" type="button" data-number="${escapeHtml(n.numero)}" title="Número ${escapeHtml(numberLabel(n.numero,action?.total_numeros))} — ${special?"Bilhete premiado — ":""}${escapeHtml(statusLabel(n.status))}">${special?"🏆 ":""}${escapeHtml(numberLabel(n.numero,action?.total_numeros))}</button>`;
+  }).join("")||'<div class="empty">Nenhum número corresponde ao filtro.</div>';
   document.querySelectorAll("[data-number]").forEach(b=>b.addEventListener("click",()=>{
     const n=state.numbers.find(x=>String(x.numero)===b.dataset.number);if(n)mostrarDetalheNumero(n);
   }));
@@ -429,7 +473,9 @@ async function mostrarDetalheNumero(item){
     const {data,error}=await db.from("pedidos").select("id,nome_cliente,telefone,quantidade,valor_total,status").eq("id",item.pedido_id).maybeSingle();
     if(!error)order=data;
   }
-  box.innerHTML=`<strong>Número ${escapeHtml(numberLabel(item.numero))}</strong><br>Status: ${escapeHtml(statusLabel(item.status))}<br>Pedido: ${escapeHtml(item.pedido_id||"Sem pedido associado")}<br>Reservado em: ${escapeHtml(item.reservado_em?new Date(item.reservado_em).toLocaleString("pt-BR"):"Não informado")}<br>Reserva até: ${escapeHtml(item.reservado_ate?new Date(item.reservado_ate).toLocaleString("pt-BR"):"Não informado")}${order?`<hr style="border-color:var(--border)"><strong>Dados do cliente</strong><br>Nome: ${escapeHtml(order.nome_cliente||"Não informado")}<br>WhatsApp: ${escapeHtml(order.telefone||"Não informado")}<br>Quantidade: ${escapeHtml(order.quantidade??"—")}<br>Valor: ${money(order.valor_total)}<br>Status do pedido: ${escapeHtml(statusLabel(order.status))}`:""}`;
+  const special=state.winningTickets.filter(t=>String(t.numero)===String(item.numero)&&t.status!=="cancelado");
+  const action=state.actions.find(a=>String(a.id)===$("numbersAction").value);
+  box.innerHTML=`<strong>Número ${escapeHtml(numberLabel(item.numero,action?.total_numeros))}</strong><br>Status: ${escapeHtml(statusLabel(item.status))}<br>${special.length?`<strong>🏆 Bilhete premiado:</strong> ${special.map(t=>escapeHtml(t.premio)).join(", ")}<br>`:""}Pedido: ${escapeHtml(item.pedido_id||"Sem pedido associado")}<br>Reservado em: ${escapeHtml(item.reservado_em?new Date(item.reservado_em).toLocaleString("pt-BR"):"Não informado")}<br>Reserva até: ${escapeHtml(item.reservado_ate?new Date(item.reservado_ate).toLocaleString("pt-BR"):"Não informado")}${order?`<hr style="border-color:var(--border)"><strong>Dados do cliente</strong><br>Nome: ${escapeHtml(order.nome_cliente||"Não informado")}<br>WhatsApp: ${escapeHtml(order.telefone||"Não informado")}<br>Quantidade: ${escapeHtml(order.quantidade??"—")}<br>Valor: ${money(order.valor_total)}<br>Status do pedido: ${escapeHtml(statusLabel(order.status))}`:""}`;
 }
 $("numbersAction").addEventListener("change",carregarNumeros);
 $("numberSearch").addEventListener("input",renderNumeros);
@@ -461,12 +507,10 @@ $("freeTicketsForm").addEventListener("submit",async e=>{
   if(!actionId){feedback("freeFeedback","Selecione uma ação ativa.","error");return;}
   if(!name||!phone){feedback("freeFeedback","Preencha o nome e o WhatsApp do cliente.","error");return;}
   if(!Number.isInteger(quantity)||quantity<1||quantity>100000){feedback("freeFeedback","Informe uma quantidade inteira válida.","error");return;}
-  const {data:sessionData,error:sessionError}=await db.auth.getSession();
-  if(sessionError||!sessionData.session){feedback("freeFeedback","Sua sessão expirou. Entre novamente.","error");return;}
-  if(sessionData.session.user.id!==ADMIN_UID){feedback("freeFeedback","Este usuário não corresponde ao administrador autorizado no Supabase.","error");return;}
-  if(!window.confirm(`Confirmar a distribuição de ${quantity} bilhete(s) grátis para ${name}?`))return;
-  button.disabled=true;feedback("freeFeedback","Solicitando distribuição segura ao Supabase…");
   try{
+    const user=await usuarioAdmin();
+    if(!window.confirm(`Confirmar a distribuição de ${quantity} bilhete(s) grátis para ${name}?`))return;
+    button.disabled=true;feedback("freeFeedback","Solicitando distribuição segura ao Supabase…");
     const {data,error}=await db.rpc("distribuir_bilhetes_gratis",{p_acao_id:actionId,p_nome_cliente:name,p_telefone:phone,p_quantidade:quantity});
     if(error)throw new Error("A distribuição não foi confirmada pelo Supabase. Detalhe: "+error.message);
     feedback("freeFeedback","Resposta recebida do Supabase. Confira os números abaixo.","success");
@@ -476,6 +520,105 @@ $("freeTicketsForm").addEventListener("submit",async e=>{
     await carregarAcoes();await carregarPedidos();await carregarNumeros();
   }catch(error){feedback("freeFeedback",error.message||"Não foi possível distribuir os bilhetes.","error");}
   finally{button.disabled=false;}
+});
+
+/* BILHETES PREMIADOS */
+function acaoPremiadaSelecionada(){
+  return state.actions.find(a=>String(a.id)===$("winningAction").value);
+}
+function atualizarLimiteNumeroPremiado(){
+  const action=acaoPremiadaSelecionada();
+  const input=$("winningNumber");
+  if(!action){
+    input.removeAttribute("max");
+    $("winningNumberHelp").textContent="Selecione uma ação para consultar o intervalo válido.";
+    return;
+  }
+  const total=Number(action.total_numeros);
+  input.min="0";
+  if(Number.isInteger(total)&&total>0){
+    input.max=String(total-1);
+    $("winningNumberHelp").textContent=`Números válidos nesta ação: 0 a ${numberLabel(total-1,total)}. O número será exibido com zeros à esquerda quando necessário.`;
+  }else{
+    input.removeAttribute("max");
+    $("winningNumberHelp").textContent="Não foi possível identificar o total de números desta ação.";
+  }
+}
+$("winningAction").addEventListener("change",()=>{
+  atualizarLimiteNumeroPremiado();
+  carregarBilhetesPremiados();
+});
+$("winningSearch").addEventListener("input",renderBilhetesPremiados);
+$("refreshWinningTickets").addEventListener("click",()=>carregarBilhetesPremiados());
+
+async function carregarBilhetesPremiados(silent=false){
+  const actionId=$("winningAction").value||$("numbersAction").value;
+  if(!actionId){
+    state.winningTickets=[];
+    if($("winningTicketsList"))$("winningTicketsList").innerHTML='<div class="empty">Selecione uma ação para ver os bilhetes premiados.</div>';
+    return;
+  }
+  try{
+    if(!silent)feedback("winningFeedback","Carregando bilhetes premiados…");
+    const {data,error}=await db.from("bilhetes_premiados")
+      .select("id,acao_id,numero,premio,status,pedido_id,contemplado_em,created_at")
+      .eq("acao_id",actionId)
+      .order("numero",{ascending:true});
+    if(error)throw error;
+    state.winningTickets=data||[];
+    renderBilhetesPremiados();
+    if(!silent)feedback("winningFeedback","");
+  }catch(error){
+    if(!silent)feedback("winningFeedback","Não foi possível carregar a lista. Confira a política de acesso no Supabase: "+error.message,"error");
+    $("winningTicketsList").innerHTML='<div class="empty">Erro ao carregar bilhetes premiados. Veja a mensagem acima.</div>';
+  }
+}
+function renderBilhetesPremiados(){
+  const action=acaoPremiadaSelecionada()||state.actions.find(a=>String(a.id)===$("numbersAction").value);
+  const search=$("winningSearch").value.trim();
+  const tickets=state.winningTickets.filter(t=>!search||String(t.numero)===search);
+  if(!tickets.length){
+    $("winningTicketsList").innerHTML='<div class="empty">Nenhum bilhete premiado cadastrado para esta seleção.</div>';
+    return;
+  }
+  $("winningTicketsList").innerHTML=`<div class="table-wrap"><table><thead><tr><th>Número</th><th>Prêmio</th><th>Status</th><th>Pedido associado</th><th>Data do cadastro</th></tr></thead><tbody>${tickets.map(t=>`<tr><td><strong style="color:var(--gold2)">${escapeHtml(numberLabel(t.numero,action?.total_numeros))}</strong></td><td>${escapeHtml(t.premio)}</td><td><span class="badge ${t.status==="contemplado"?"green":t.status==="cancelado"?"red":""}">${escapeHtml(statusLabel(t.status))}</span></td><td>${escapeHtml(t.pedido_id??"—")}</td><td>${escapeHtml(t.created_at?new Date(t.created_at).toLocaleString("pt-BR"):"—")}</td></tr>`).join("")}</tbody></table></div>`;
+}
+$("winningTicketForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const button=$("winningTicketBtn");
+  button.disabled=true;
+  try{
+    await usuarioAdmin();
+    const action=acaoPremiadaSelecionada();
+    if(!action)throw new Error("Selecione uma ação.");
+    const actionId=action.id;
+    const raw=$("winningNumber").value.trim();
+    const numero=Number(raw);
+    const premio=$("winningPrize").value.trim();
+    const total=Number(action.total_numeros);
+    if(raw===" "||raw==="")throw new Error("Informe o número premiado.");
+    if(!Number.isInteger(numero)||numero<0)throw new Error("O número deve ser um inteiro igual ou maior que zero.");
+    if(!Number.isInteger(total)||total<1||numero>=total)throw new Error(`Para esta ação, informe um número entre 0 e ${total-1}.`);
+    if(!premio)throw new Error("Informe a descrição do prêmio.");
+    if(!window.confirm(`Cadastrar o número ${numberLabel(numero,total)} como bilhete premiado?\nPrêmio: ${premio}\nAção: ${action.nome}`))return;
+
+    feedback("winningFeedback","Cadastrando bilhete premiado no Supabase…");
+    const {data,error}=await db.rpc("cadastrar_bilhete_premiado",{
+      p_acao_id:actionId,
+      p_numero:numero,
+      p_premio:premio
+    });
+    if(error)throw error;
+    feedback("winningFeedback",`Bilhete ${numberLabel(numero,total)} cadastrado com sucesso. ${data?.sucesso===true?"":""}`,"success");
+    $("winningNumber").value="";
+    $("winningPrize").value="";
+    await carregarBilhetesPremiados();
+    if(String($("numbersAction").value)===String(actionId))await carregarNumeros(true);
+  }catch(error){
+    feedback("winningFeedback",error.message||"Não foi possível cadastrar o bilhete premiado.","error");
+  }finally{
+    button.disabled=false;
+  }
 });
 
 verificarSessao();
