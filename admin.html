@@ -1,2512 +1,1396 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Administração | OKL Lifestyle</title>
 
-<title>Administração - OKL Lifestyle</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    background: #000;
-    color: #fff;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.container {
-    width: 100%;
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-}
-
-h1,
-h2,
-h3 {
-    margin-top: 0;
-}
-
-h1 {
-    color: #d4af37;
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-h2 {
-    color: #d4af37;
-}
-
-label {
-    display: block;
-    margin-top: 14px;
-    margin-bottom: 6px;
-    font-weight: bold;
-}
-
-input,
-textarea,
-select {
-    width: 100%;
-    padding: 12px;
-    border-radius: 7px;
-    border: 1px solid #444;
-    background: #111;
-    color: #fff;
-    font-size: 15px;
-}
-
-textarea {
-    min-height: 90px;
-    resize: vertical;
-}
-
-button {
-    border: none;
-    border-radius: 7px;
-    padding: 12px 15px;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-button:hover {
-    opacity: 0.9;
-}
-
-.btn-principal {
-    width: 100%;
-    background: #d4af37;
-    color: #000;
-    margin-top: 18px;
-}
-
-.btn-secundario {
-    background: #222;
-    color: #fff;
-    border: 1px solid #444;
-}
-
-.btn-editar {
-    background: #d4af37;
-    color: #000;
-    margin-top: 10px;
-}
-
-.btn-numeros {
-    background: #222;
-    color: #d4af37;
-    border: 1px solid #d4af37;
-    margin-top: 10px;
-}
-
-.btn-fechar {
-    background: #222;
-    color: #fff;
-    border: 1px solid #555;
-}
-
-.btn-sair {
-    background: #8b0000;
-    color: #fff;
-    margin-bottom: 20px;
-}
-
-.caixa {
-    background: #0b0b0b;
-    border: 1px solid #333;
-    border-radius: 12px;
-    padding: 18px;
-    margin-bottom: 20px;
-}
-
-.mensagem {
-    margin-top: 12px;
-    padding: 10px;
-    border-radius: 7px;
-    display: none;
-}
-
-.mensagem.sucesso {
-    display: block;
-    background: #123d20;
-    color: #8ff0a4;
-}
-
-.mensagem.erro {
-    display: block;
-    background: #4a1111;
-    color: #ff8c8c;
-}
-
-#painelAdmin {
-    display: none;
-}
-
-#secaoEditor {
-    display: none;
-}
-
-.acao-card {
-    background: #101010;
-    border: 1px solid #333;
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 15px;
-}
-
-.acao-card img {
-    width: 100%;
-    max-height: 260px;
-    object-fit: contain;
-    background: #000;
-    border-radius: 8px;
-    margin-bottom: 12px;
-}
-
-.acao-nome {
-    color: #d4af37;
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 8px;
-}
-
-.acao-info {
-    color: #ccc;
-    line-height: 1.6;
-}
-
-.status {
-    display: inline-block;
-    padding: 5px 9px;
-    border-radius: 5px;
-    font-size: 12px;
-    font-weight: bold;
-    margin-top: 8px;
-}
-
-.status-ativa {
-    background: #176b32;
-    color: #fff;
-}
-
-.status-finalizada {
-    background: #555;
-    color: #fff;
-}
-
-.status-pausada {
-    background: #8a6500;
-    color: #fff;
-}
-
-.preview-foto {
-    display: none;
-    width: 100%;
-    max-height: 220px;
-    object-fit: contain;
-    background: #000;
-    border-radius: 8px;
-    margin-top: 10px;
-}
-
-/* =========================
-   MAPA DE NÚMEROS
-========================= */
-
-.numeros-painel {
-    display: none;
-    margin-top: 18px;
-    padding: 15px;
-    background: #080808;
-    border: 1px solid #333;
-    border-radius: 12px;
-}
-
-.numeros-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.numeros-header h3 {
-    color: #d4af37;
-    margin: 0;
-}
-
-.numeros-resumo {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 7px;
-    margin-bottom: 15px;
-}
-
-.resumo-item {
-    background: #151515;
-    border: 1px solid #333;
-    border-radius: 7px;
-    padding: 8px 4px;
-    text-align: center;
-    font-size: 12px;
-}
-
-.resumo-item strong {
-    display: block;
-    font-size: 17px;
-    margin-top: 3px;
-}
-
-.resumo-disponivel strong {
-    color: #fff;
-}
-
-.resumo-reservado strong {
-    color: #ffd21c;
-}
-
-.resumo-vendido strong {
-    color: #48d86a;
-}
-
-.numeros-legenda {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    margin-bottom: 15px;
-}
-
-.legenda-item {
-    padding: 6px 9px;
-    border-radius: 6px;
-    font-size: 12px;
-    border: 1px solid #444;
-}
-
-.legenda-disponivel {
-    background: #222;
-    color: #fff;
-}
-
-.legenda-reservado {
-    background: #8a6500;
-    color: #fff;
-}
-
-.legenda-vendido {
-    background: #176b32;
-    color: #fff;
-}
-
-.grade-numeros {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 6px;
-    max-height: 500px;
-    overflow-y: auto;
-    padding-right: 3px;
-}
-
-.numero-box {
-    min-height: 43px;
-    border-radius: 6px;
-    border: 1px solid #444;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    flex-direction: column;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 13px;
-    transition: 0.15s;
-}
-
-.numero-box:hover {
-    transform: scale(1.04);
-}
-
-.numero-disponivel {
-    background: #222;
-    color: #fff;
-}
-
-.numero-reservado {
-    background: #8a6500;
-    color: #fff;
-    border-color: #d4af37;
-}
-
-.numero-vendido {
-    background: #176b32;
-    color: #fff;
-    border-color: #62dc7c;
-}
-
-.numero-tempo {
-    display: block;
-    font-size: 9px;
-    margin-top: 3px;
-    font-weight: normal;
-}
-
-.info-numero {
-    display: none;
-    margin-top: 15px;
-    padding: 13px;
-    background: #151515;
-    border: 1px solid #333;
-    border-radius: 8px;
-    line-height: 1.7;
-    color: #ddd;
-}
-
-.info-numero strong {
-    color: #d4af37;
-}
-
-.carregando {
-    color: #aaa;
-    text-align: center;
-    padding: 20px;
-}
-
-@media (max-width: 400px) {
-
-    .grade-numeros {
-        grid-template-columns: repeat(4, 1fr);
+  <style>
+    :root {
+      --bg: #090909;
+      --panel: #141414;
+      --panel2: #1b1b1b;
+      --gold: #d6b15e;
+      --gold2: #f2d994;
+      --text: #f6f3eb;
+      --muted: #aaa49a;
+      --border: #34302a;
+      --green: #69d39a;
+      --red: #ff7979;
     }
 
-    .numero-box {
-        min-height: 40px;
-        font-size: 12px;
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
     }
 
-}
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
 
-</style>
+    .hidden { display: none !important; }
+
+    .login-screen {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      padding: 30px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--panel);
+    }
+
+    .brand {
+      color: var(--gold);
+      font-weight: 900;
+      letter-spacing: 2px;
+      font-size: 23px;
+    }
+
+    h1, h2, h3 { margin-top: 0; }
+    h1 { font-size: 25px; }
+    h2 { font-size: 20px; }
+    h3 { font-size: 16px; }
+
+    p { line-height: 1.5; }
+    .muted { color: var(--muted); }
+    .small { font-size: 12px; }
+
+    label {
+      display: block;
+      margin: 13px 0 6px;
+      color: #ded8ca;
+      font-size: 13px;
+    }
+
+    input, select, textarea {
+      display: block;
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 11px 12px;
+      color: var(--text);
+      background: #0d0d0d;
+      outline: none;
+    }
+
+    textarea { min-height: 90px; resize: vertical; }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--gold);
+    }
+
+    input[type="file"] { padding: 9px; }
+
+    .btn {
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 11px 15px;
+      color: var(--text);
+      background: var(--panel2);
+      font-weight: 700;
+    }
+
+    .btn:hover { border-color: var(--gold); }
+
+    .btn-gold {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #17120a;
+    }
+
+    .btn-danger {
+      border-color: #703939;
+      color: #ffaaaa;
+    }
+
+    .btn-block { width: 100%; margin-top: 18px; }
+    .btn-small { padding: 8px 10px; font-size: 12px; }
+
+    .app { min-height: 100vh; }
+
+    .topbar {
+      height: 68px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 0 22px;
+      background: #101010;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 235px minmax(0, 1fr);
+      min-height: calc(100vh - 68px);
+    }
+
+    .sidebar {
+      padding: 20px 13px;
+      background: #101010;
+      border-right: 1px solid var(--border);
+    }
+
+    .nav-label {
+      padding: 10px 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+    }
+
+    .nav-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 12px;
+      margin-bottom: 5px;
+      border: 1px solid transparent;
+      border-radius: 9px;
+      background: transparent;
+      color: #d9d4ca;
+      text-align: left;
+    }
+
+    .nav-btn:hover, .nav-btn.active {
+      background: #211c12;
+      color: var(--gold2);
+      border-color: #443720;
+    }
+
+    main { min-width: 0; padding: 26px; }
+    .page { max-width: 1250px; margin: 0 auto; }
+
+    .page-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .page-head p { margin-bottom: 0; color: var(--muted); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .panel, .stat {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      min-width: 0;
+    }
+
+    .stat .stat-label { color: var(--muted); font-size: 12px; }
+    .stat .stat-value { color: var(--gold2); font-size: 28px; font-weight: 800; margin-top: 9px; }
+
+    .section { margin-top: 22px; }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 13px;
+    }
+
+    .section-head h2 { margin: 0; }
+
+    .action-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .action-card {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: var(--panel);
+    }
+
+    .action-card img {
+      display: block;
+      width: 100%;
+      height: 190px;
+      object-fit: contain;
+      background: #080808;
+    }
+
+    .action-content { padding: 15px; }
+    .action-content h3 { margin-bottom: 8px; }
+    .action-meta { color: var(--muted); font-size: 13px; line-height: 1.7; }
+
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 13px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 8px;
+      border-radius: 30px;
+      background: #29251d;
+      color: var(--gold2);
+      font-size: 11px;
+    }
+
+    .badge.green { background: #14281d; color: var(--green); }
+    .badge.red { background: #301818; color: #ffaaaa; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 14px;
+    }
+
+    .full { grid-column: 1 / -1; }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .toolbar input, .toolbar select { flex: 1 1 180px; width: auto; }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 650px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      vertical-align: top;
+    }
+
+    th { background: #1b1b1b; color: var(--gold2); }
+    tr:last-child td { border-bottom: 0; }
+
+    .number-grid {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap: 7px;
+      margin-top: 15px;
+    }
+
+    .number {
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      min-height: 44px;
+      padding: 7px 3px;
+      background: #191919;
+      color: #dedbd3;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .number.disponivel { border-color: #31563e; background: #122219; color: #a4e6ba; }
+    .number.reservado { border-color: #78602c; background: #2c2413; color: #f1d48b; }
+    .number.vendido, .number.gratuito { border-color: #654343; background: #2a1818; color: #ffb4b4; }
+
+    .number-detail {
+      margin-top: 14px;
+      padding: 14px;
+      background: #0e0e0e;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+
+    .notice {
+      padding: 12px 14px;
+      border-radius: 9px;
+      margin: 13px 0;
+      background: #201b11;
+      border: 1px solid #4d3d20;
+      color: var(--gold2);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .feedback { margin-top: 12px; font-size: 13px; white-space: pre-wrap; }
+    .feedback.error { color: var(--red); }
+    .feedback.success { color: var(--green); }
+
+    .empty {
+      color: var(--muted);
+      padding: 25px 12px;
+      text-align: center;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+    }
+
+    .mobile-menu { display: none; }
+    .preview {
+      max-width: 180px;
+      max-height: 130px;
+      object-fit: contain;
+      margin-top: 10px;
+      background: #090909;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 1050px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .number-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 760px) {
+      .topbar { padding: 0 13px; }
+      .layout { display: block; }
+      .sidebar {
+        display: none;
+        position: sticky;
+        top: 68px;
+        z-index: 9;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+        padding: 10px;
+      }
+      .sidebar.open { display: block; }
+      .mobile-menu { display: inline-block; }
+      main { padding: 17px 12px 35px; }
+      .grid, .grid-2, .action-list { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .full { grid-column: auto; }
+      .page-head { flex-direction: column; }
+      .number-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+      .brand { font-size: 17px; }
+      .topbar-right .btn { padding: 9px; font-size: 12px; }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="container">
+  <section id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <div class="brand">OKL LIFESTYLE</div>
+      <p class="muted">Painel administrativo</p>
 
-    <!-- LOGIN -->
+      <form id="loginForm">
+        <label for="loginEmail">E-mail</label>
+        <input id="loginEmail" type="email" autocomplete="username" required>
 
-    <div id="telaLogin">
+        <label for="loginPassword">Senha</label>
+        <input id="loginPassword" type="password" autocomplete="current-password" required>
 
-        <h1>🔐 Administração</h1>
-
-        <div class="caixa">
-
-            <label for="loginEmail">
-                E-mail
-            </label>
-
-            <input
-                type="email"
-                id="loginEmail"
-                placeholder="Seu e-mail"
-            >
-
-            <label for="loginSenha">
-                Senha
-            </label>
-
-            <input
-                type="password"
-                id="loginSenha"
-                placeholder="Sua senha"
-            >
-
-            <button
-                id="btnLogin"
-                class="btn-principal"
-            >
-                Entrar
-            </button>
-
-            <div
-                id="loginMensagem"
-                class="mensagem"
-            ></div>
-
-        </div>
-
+        <button class="btn btn-gold btn-block" type="submit">Entrar no painel</button>
+        <div id="loginFeedback" class="feedback"></div>
+      </form>
     </div>
+  </section>
 
+  <div id="adminApp" class="app hidden">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:12px">
+        <button id="mobileMenu" class="btn mobile-menu" type="button">☰</button>
+        <div class="brand">OKL LIFESTYLE</div>
+      </div>
+      <div class="topbar-right">
+        <span class="muted small" id="adminEmail"></span>
+        <button id="logoutBtn" class="btn" type="button">Sair</button>
+      </div>
+    </header>
 
-    <!-- PAINEL ADMIN -->
+    <div class="layout">
+      <aside id="sidebar" class="sidebar">
+        <div class="nav-label">Menu principal</div>
+        <button class="nav-btn active" data-page="dashboard">▦ Visão geral</button>
+        <button class="nav-btn" data-page="acoes">◇ Minhas ações</button>
+        <button class="nav-btn" data-page="cadastro">＋ Cadastrar ação</button>
+        <button class="nav-btn" data-page="numeros">▦ Mapa de números</button>
+        <button class="nav-btn" data-page="pedidos">▤ Pedidos e reservas</button>
+        <button class="nav-btn" data-page="gratis">🎁 Bilhetes grátis</button>
+      </aside>
 
-    <div id="painelAdmin">
+      <main>
+        <div class="page">
 
-        <h1>⚙️ Painel Administrativo</h1>
+          <section id="page-dashboard" class="admin-page">
+            <div class="page-head">
+              <div>
+                <h1>Visão geral</h1>
+                <p>Gerencie suas ações e acompanhe as informações cadastradas.</p>
+              </div>
+              <button class="btn btn-gold" data-goto="cadastro">＋ Nova ação</button>
+            </div>
 
-        <button
-            id="btnLogout"
-            class="btn-sair"
-        >
-            Sair
-        </button>
+            <div class="grid">
+              <div class="stat">
+                <div class="stat-label">Total de ações</div>
+                <div class="stat-value" id="statAcoes">—</div>
+              </div>
+              <div class="stat">
+                <div class="stat-label">Ações ativas</div>
+                <div class="stat-value" id="statAtivas">—</div>
+              </div>
+              <div class="stat">
+                <div class="stat-label">Números disponíveis</div>
+                <div class="stat-value" id="statDisponiveis">—</div>
+              </div>
+              <div class="stat">
+                <div class="stat-label">Reservas e vendas</div>
+                <div class="stat-value" id="statOcupados">—</div>
+              </div>
+            </div>
 
-
-        <!-- AÇÕES -->
-
-        <div class="caixa">
-
-            <div style="
-                display:flex;
-                justify-content:space-between;
-                align-items:center;
-                gap:10px;
-            ">
-
+            <div class="section">
+              <div class="section-head">
                 <h2>Ações cadastradas</h2>
+                <button class="btn btn-small" data-goto="acoes">Ver todas</button>
+              </div>
+              <div id="dashboardActions" class="action-list">
+                <div class="empty">Carregando ações…</div>
+              </div>
+            </div>
+          </section>
 
-                <button
-                    id="btnAtualizar"
-                    class="btn-secundario"
-                >
-                    🔄 Atualizar
+          <section id="page-acoes" class="admin-page hidden">
+            <div class="page-head">
+              <div>
+                <h1>Minhas ações</h1>
+                <p>Consulte, edite e gerencie suas ações.</p>
+              </div>
+              <button class="btn btn-gold" data-goto="cadastro">＋ Cadastrar</button>
+            </div>
+
+            <div class="toolbar">
+              <input id="actionSearch" placeholder="Buscar pelo nome da ação">
+              <button id="refreshActions" class="btn" type="button">Atualizar</button>
+            </div>
+            <div id="allActions" class="action-list"></div>
+          </section>
+
+          <section id="page-cadastro" class="admin-page hidden">
+            <div class="page-head">
+              <div>
+                <h1 id="formTitle">Cadastrar nova ação</h1>
+                <p>Preencha os dados da ação e adicione a foto real do prêmio.</p>
+              </div>
+            </div>
+
+            <div class="panel">
+              <form id="actionForm">
+                <input id="editId" type="hidden">
+
+                <div class="form-grid">
+                  <div>
+                    <label for="actionName">Nome da ação *</label>
+                    <input id="actionName" required>
+                  </div>
+
+                  <div>
+                    <label for="actionPrize">Nome do prêmio</label>
+                    <input id="actionPrize">
+                  </div>
+
+                  <div class="full">
+                    <label for="actionDescription">Descrição da ação</label>
+                    <textarea id="actionDescription"></textarea>
+                  </div>
+
+                  <div class="full">
+                    <label for="prizeDescription">Descrição do prêmio</label>
+                    <textarea id="prizeDescription"></textarea>
+                  </div>
+
+                  <div>
+                    <label for="actionPrice">Valor de cada número (R$) *</label>
+                    <input id="actionPrice" type="number" min="0.01" step="0.01" required>
+                  </div>
+
+                  <div>
+                    <label for="actionTotal">Quantidade total de números *</label>
+                    <input id="actionTotal" type="number" min="1" max="100000" step="1" required>
+                  </div>
+
+                  <div>
+                    <label for="actionQuantity">Quantidade de bilhetes por compra (informativo)</label>
+                    <input id="actionQuantity" type="number" min="1" step="1" placeholder="Ex.: 10">
+                  </div>
+
+                  <div>
+                    <label for="actionStatus">Status</label>
+                    <select id="actionStatus">
+                      <option value="ativa">Ativa</option>
+                      <option value="pausada">Pausada</option>
+                      <option value="encerrada">Encerrada</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label for="actionDate">Data do sorteio (informativo)</label>
+                    <input id="actionDate" type="date">
+                  </div>
+
+                  <div>
+                    <label for="paymentLink">Link de pagamento (informativo)</label>
+                    <input id="paymentLink" type="url" placeholder="https://...">
+                  </div>
+
+                  <div class="full">
+                    <label for="actionNotes">Observações administrativas</label>
+                    <textarea id="actionNotes"></textarea>
+                  </div>
+
+                  <div class="full">
+                    <label for="actionPhoto">Foto do prêmio</label>
+                    <input id="actionPhoto" type="file" accept="image/*">
+                    <p class="muted small">Se estiver editando e não enviar outra foto, a foto atual será mantida.</p>
+                    <img id="photoPreview" class="preview hidden" alt="Prévia da foto do prêmio">
+                  </div>
+                </div>
+
+                <div class="toolbar" style="margin-top:18px">
+                  <button id="saveActionBtn" class="btn btn-gold" type="submit">Salvar ação</button>
+                  <button id="cancelEditBtn" class="btn hidden" type="button">Cancelar edição</button>
+                </div>
+                <div id="actionFeedback" class="feedback"></div>
+              </form>
+            </div>
+          </section>
+
+          <section id="page-numeros" class="admin-page hidden">
+            <div class="page-head">
+              <div>
+                <h1>Mapa de números</h1>
+                <p>Veja os números disponíveis, reservados e vendidos.</p>
+              </div>
+            </div>
+
+            <div class="panel">
+              <label for="numbersAction">Escolha a ação</label>
+              <select id="numbersAction"></select>
+
+              <div class="toolbar" style="margin-top:15px">
+                <input id="numberSearch" type="number" min="0" placeholder="Buscar número">
+                <select id="numberStatusFilter">
+                  <option value="">Todos os status</option>
+                  <option value="disponivel">Disponíveis</option>
+                  <option value="reservado">Reservados</option>
+                  <option value="vendido">Vendidos</option>
+                  <option value="gratuito">Grátis (se cadastrado assim)</option>
+                </select>
+                <button id="refreshNumbers" class="btn" type="button">Atualizar mapa</button>
+              </div>
+
+              <div id="numbersSummary" class="grid"></div>
+              <div id="numberLegend" class="toolbar" style="margin-top:15px">
+                <span class="badge green">Disponível</span>
+                <span class="badge">Reservado</span>
+                <span class="badge red">Vendido / grátis</span>
+              </div>
+              <div id="numberGrid" class="number-grid"></div>
+              <div id="numberDetail" class="number-detail hidden"></div>
+              <div id="numbersFeedback" class="feedback"></div>
+            </div>
+          </section>
+
+          <section id="page-pedidos" class="admin-page hidden">
+            <div class="page-head">
+              <div>
+                <h1>Pedidos e reservas</h1>
+                <p>Consulte os pedidos registrados no banco de dados.</p>
+              </div>
+              <button id="refreshOrders" class="btn" type="button">Atualizar pedidos</button>
+            </div>
+
+            <div class="panel">
+              <div class="toolbar">
+                <input id="orderSearch" placeholder="Buscar por nome, telefone ou ID">
+                <select id="orderStatusFilter">
+                  <option value="">Todos os status</option>
+                  <option value="reservado">Reservado</option>
+                  <option value="pendente">Pendente</option>
+                  <option value="pago">Pago</option>
+                  <option value="gratuito">Gratuito</option>
+                  <option value="cancelado">Cancelado</option>
+                </select>
+              </div>
+              <div id="ordersTable"></div>
+              <div id="ordersFeedback" class="feedback"></div>
+            </div>
+          </section>
+
+          <section id="page-gratis" class="admin-page hidden">
+            <div class="page-head">
+              <div>
+                <h1>Distribuir bilhetes grátis</h1>
+                <p>Escolha a ação, identifique o cliente e informe apenas a quantidade.</p>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="notice">
+                Os números devem ser atribuídos automaticamente pelo banco, sem cobrança,
+                sem duplicidade e sem permitir que números já ocupados sejam entregues novamente.
+                Esta operação precisa da função segura do Supabase para funcionar.
+              </div>
+
+              <form id="freeTicketsForm">
+                <label for="freeAction">Ação *</label>
+                <select id="freeAction" required></select>
+
+                <label for="freeName">Nome do cliente *</label>
+                <input id="freeName" required maxlength="150" placeholder="Nome de quem receberá o brinde">
+
+                <label for="freePhone">WhatsApp do cliente *</label>
+                <input id="freePhone" required inputmode="tel" maxlength="25" placeholder="DDD + número">
+
+                <label for="freeQuantity">Quantidade de bilhetes *</label>
+                <input id="freeQuantity" type="number" required min="1" max="100000" step="1" placeholder="Ex.: 2">
+
+                <button id="freeTicketsBtn" class="btn btn-gold btn-block" type="submit">
+                  Distribuir bilhetes grátis
                 </button>
-
+                <div id="freeFeedback" class="feedback"></div>
+                <div id="freeResult" class="number-detail hidden"></div>
+              </form>
             </div>
 
-            <div id="listaAcoes"></div>
-
-            <div
-                id="listaMensagem"
-                class="mensagem"
-            ></div>
-
-        </div>
-
-
-        <!-- MAPA DE NÚMEROS -->
-
-        <div
-            id="numerosPainel"
-            class="numeros-painel"
-        >
-
-            <div class="numeros-header">
-
-                <h3 id="numerosTitulo">
-                    🎟️ Números da ação
-                </h3>
-
-                <button
-                    id="btnFecharNumeros"
-                    class="btn-fechar"
-                >
-                    Fechar
-                </button>
-
+            <div class="panel section">
+              <h2>Importante</h2>
+              <p class="muted">
+                A função <code>distribuir_bilhetes_gratis</code> precisa existir no Supabase,
+                validar que quem está logado é administrador, criar o registro gratuito e
+                atribuir os números disponíveis em uma única operação segura.
+              </p>
+              <p class="muted">
+                Até essa função ser criada e testada, este formulário não consegue concluir
+                a distribuição. Não use inserções diretas no navegador para liberar números.
+              </p>
             </div>
-
-            <div
-                id="numerosResumo"
-                class="numeros-resumo"
-            ></div>
-
-            <div class="numeros-legenda">
-
-                <div class="legenda-item legenda-disponivel">
-                    ⚪ Disponível
-                </div>
-
-                <div class="legenda-item legenda-reservado">
-                    🟡 Reservado
-                </div>
-
-                <div class="legenda-item legenda-vendido">
-                    🟢 Vendido
-                </div>
-
-            </div>
-
-            <div
-                id="gradeNumeros"
-                class="grade-numeros"
-            ></div>
-
-            <div
-                id="numeroInfo"
-                class="info-numero"
-            ></div>
+          </section>
 
         </div>
-
-
-        <!-- EDITAR AÇÃO -->
-
-        <div
-            id="secaoEditor"
-            class="caixa"
-        >
-
-            <h2>✏️ Editar ação</h2>
-
-            <input
-                type="hidden"
-                id="editar_id"
-            >
-
-            <label>
-                Nome da ação
-            </label>
-
-            <input
-                type="text"
-                id="editar_nome"
-            >
-
-            <label>
-                Descrição
-            </label>
-
-            <textarea
-                id="editar_descricao"
-            ></textarea>
-
-            <label>
-                Valor por número
-            </label>
-
-            <input
-                type="number"
-                step="0.01"
-                id="editar_valor"
-            >
-
-            <label>
-                Total de números
-            </label>
-
-            <input
-                type="number"
-                id="editar_total"
-            >
-
-            <label>
-                Status
-            </label>
-
-            <select id="editar_status">
-
-                <option value="ativa">
-                    Ativa
-                </option>
-
-                <option value="pausada">
-                    Pausada
-                </option>
-
-                <option value="finalizada">
-                    Finalizada
-                </option>
-
-            </select>
-
-            <input
-                type="hidden"
-                id="editarFotoAtual"
-            >
-
-            <label>
-                Alterar foto do prêmio
-            </label>
-
-            <input
-                type="file"
-                id="editar_foto"
-                accept="image/*"
-            >
-
-            <img
-                id="editarFotoPreview"
-                class="preview-foto"
-                alt="Prévia da foto"
-            >
-
-            <button
-                id="btnSalvarEdicao"
-                class="btn-principal"
-            >
-                💾 Salvar alterações
-            </button>
-
-            <button
-                id="btnCancelarEdicao"
-                class="btn-secundario"
-                style="width:100%;margin-top:10px;"
-            >
-                Cancelar
-            </button>
-
-            <div
-                id="editarMensagem"
-                class="mensagem"
-            ></div>
-
-        </div>
-
-
-        <!-- NOVA AÇÃO -->
-
-        <div class="caixa">
-
-            <h2>➕ Nova ação</h2>
-
-            <label>
-                Nome da ação
-            </label>
-
-            <input
-                type="text"
-                id="nome"
-                placeholder="Ex.: AÇÃO ROKR"
-            >
-
-            <label>
-                Prêmio
-            </label>
-
-            <input
-                type="text"
-                id="premio"
-                placeholder="Nome do prêmio"
-            >
-
-            <label>
-                Descrição do prêmio
-            </label>
-
-            <textarea
-                id="premio_descricao"
-                placeholder="Descrição do prêmio"
-            ></textarea>
-
-            <label>
-                Descrição da ação
-            </label>
-
-            <textarea
-                id="descricao"
-                placeholder="Descrição da ação"
-            ></textarea>
-
-            <label>
-                Foto do prêmio
-            </label>
-
-            <input
-                type="file"
-                id="foto"
-                accept="image/*"
-            >
-
-            <img
-                id="fotoPreview"
-                class="preview-foto"
-                alt="Prévia da foto"
-            >
-
-            <label>
-                Valor por número
-            </label>
-
-            <input
-                type="number"
-                step="0.01"
-                id="valor_numero"
-                placeholder="Ex.: 10"
-            >
-
-            <label>
-                Total de números
-            </label>
-
-            <input
-                type="number"
-                id="total_numeros"
-                placeholder="Ex.: 100"
-                min="1"
-                max="100000"
-            >
-
-            <label>
-                Quantidade
-            </label>
-
-            <input
-                type="number"
-                id="quantidade"
-                placeholder="Quantidade"
-            >
-
-            <label>
-                Data do sorteio
-            </label>
-
-            <input
-                type="datetime-local"
-                id="data_sorteio"
-            >
-
-            <label>
-                Link de pagamento
-            </label>
-
-            <input
-                type="text"
-                id="link_pagamento"
-                placeholder="Link"
-            >
-
-            <label>
-                Observações
-            </label>
-
-            <textarea
-                id="observacoes"
-                placeholder="Observações"
-            ></textarea>
-
-            <button
-                id="btnCriarAcao"
-                class="btn-principal"
-            >
-                🚀 Criar ação
-            </button>
-
-            <div
-                id="novaMensagem"
-                class="mensagem"
-            ></div>
-
-        </div>
-
+      </main>
     </div>
-
-</div>
-
+  </div>
 
 <script>
-
-/* =========================
-   SUPABASE
-========================= */
-
-const SUPABASE_URL =
-    "https://vlirpvuramslfiftshio.supabase.co";
-
-const SUPABASE_KEY =
-    "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
-
-const NOME_BUCKET =
-    "fotos-premios";
-
-const clienteSupabase =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
-
-
-/* =========================
-   VARIÁVEIS
-========================= */
-
-let acaoNumerosAtual = null;
-
-let numerosAtuais = [];
-
-let numeroSelecionado = null;
-
-let intervaloMapa = null;
-
-let intervaloContadores = null;
-
-
-/* =========================
-   ELEMENTOS
-========================= */
-
-const telaLogin =
-    document.getElementById("telaLogin");
-
-const painelAdmin =
-    document.getElementById("painelAdmin");
-
-const secaoEditor =
-    document.getElementById("secaoEditor");
-
-const listaAcoes =
-    document.getElementById("listaAcoes");
-
-
-/* =========================
-   UTILITÁRIOS
-========================= */
-
-function escapeHtml(valor) {
-
-    if (valor === null || valor === undefined) {
-        return "";
-    }
-
-    return String(valor)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-
-function formatarMoeda(valor) {
-
-    return Number(valor || 0)
-        .toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL"
-        });
-
-}
-
-
-function formatarNumero(numero) {
-
-    const n = Number(numero);
-
-    if (n <= 99) {
-        return String(n).padStart(2, "0");
-    }
-
-    return String(n);
-}
-
-
-function mostrarMensagem(
-    elemento,
-    texto,
-    tipo
-) {
-
-    elemento.textContent = texto;
-
-    elemento.className =
-        "mensagem " + tipo;
-
-}
-
-
-/* =========================
-   SESSÃO
-========================= */
-
-async function verificarSessao() {
-
-    const {
-        data
-    } = await clienteSupabase
-        .auth
-        .getSession();
-
-    if (
-        data &&
-        data.session
-    ) {
-
-        telaLogin.style.display = "none";
-
-        painelAdmin.style.display = "block";
-
-        await carregarAcoes();
-
-    } else {
-
-        telaLogin.style.display = "block";
-
-        painelAdmin.style.display = "none";
-
-    }
-
-}
-
-
-/* =========================
-   LOGIN
-========================= */
-
-document
-    .getElementById("btnLogin")
-    .addEventListener(
-        "click",
-        async function() {
-
-            const email =
-                document
-                    .getElementById("loginEmail")
-                    .value
-                    .trim();
-
-            const senha =
-                document
-                    .getElementById("loginSenha")
-                    .value;
-
-            const mensagem =
-                document
-                    .getElementById("loginMensagem");
-
-            mensagem.className =
-                "mensagem";
-
-            mensagem.textContent = "";
-
-            const resultado =
-                await clienteSupabase
-                    .auth
-                    .signInWithPassword({
-                        email: email,
-                        password: senha
-                    });
-
-            if (resultado.error) {
-
-                mostrarMensagem(
-                    mensagem,
-                    resultado.error.message,
-                    "erro"
-                );
-
-                return;
-            }
-
-            telaLogin.style.display = "none";
-
-            painelAdmin.style.display = "block";
-
-            await carregarAcoes();
-
-        }
-    );
-
-
-/* =========================
-   LOGOUT
-========================= */
-
-document
-    .getElementById("btnLogout")
-    .addEventListener(
-        "click",
-        async function() {
-
-            await clienteSupabase
-                .auth
-                .signOut();
-
-            location.reload();
-
-        }
-    );
-
-
-/* =========================
-   CARREGAR AÇÕES
-========================= */
-
-async function carregarAcoes() {
-
-    listaAcoes.innerHTML =
-        '<div class="carregando">Carregando ações...</div>';
-
-    const resultado =
-        await clienteSupabase
-            .from("AÇÕES")
-            .select(`
-                id,
-                nome,
-                descricao,
-                foto_url,
-                valor_numero,
-                total_numeros,
-                status,
-                created_at
-            `)
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
-            );
-
-    if (resultado.error) {
-
-        console.error(resultado.error);
-
-        listaAcoes.innerHTML =
-            "<p>❌ Erro ao carregar ações.</p>";
-
-        return;
-    }
-
-    listaAcoes.innerHTML = "";
-
-    const acoes =
-        resultado.data || [];
-
-    if (acoes.length === 0) {
-
-        listaAcoes.innerHTML =
-            "<p>Nenhuma ação cadastrada.</p>";
-
-        return;
-    }
-
-    acoes.forEach(
-        function(acao) {
-
-            const card =
-                document.createElement("div");
-
-            card.className =
-                "acao-card";
-
-            let classeStatus =
-                "status-ativa";
-
-            if (
-                acao.status === "finalizada"
-            ) {
-
-                classeStatus =
-                    "status-finalizada";
-
-            } else if (
-                acao.status === "pausada"
-            ) {
-
-                classeStatus =
-                    "status-pausada";
-
-            }
-
-            card.innerHTML = `
-
-                ${
-                    acao.foto_url
-                    ?
-                    `<img
-                        src="${escapeHtml(acao.foto_url)}"
-                        alt="Foto do prêmio"
-                    >`
-                    :
-                    ""
-                }
-
-                <div class="acao-nome">
-                    ${escapeHtml(acao.nome)}
-                </div>
-
-                <div class="acao-info">
-
-                    <strong>Valor:</strong>
-                    ${formatarMoeda(acao.valor_numero)}
-                    <br>
-
-                    <strong>Total:</strong>
-                    ${acao.total_numeros || 0}
-                    números
-                    <br>
-
-                    <strong>Status:</strong>
-                    <span class="status ${classeStatus}">
-                        ${escapeHtml(acao.status || "")}
-                    </span>
-
-                    ${
-                        acao.descricao
-                        ?
-                        `<br><br>
-                        ${escapeHtml(acao.descricao)}`
-                        :
-                        ""
-                    }
-
-                </div>
-
-                <button
-                    type="button"
-                    class="btn btn-editar"
-                >
-                    ✏️ Editar ação
-                </button>
-
-                <button
-                    type="button"
-                    class="btn btn-numeros"
-                >
-                    🎟️ Ver números
-                </button>
-
-            `;
-
-            listaAcoes.appendChild(card);
-
-            const botaoEditar =
-                card.querySelector(
-                    ".btn-editar"
-                );
-
-            botaoEditar.addEventListener(
-                "click",
-                function() {
-
-                    abrirEditor(acao);
-
-                }
-            );
-
-            const botaoNumeros =
-                card.querySelector(
-                    ".btn-numeros"
-                );
-
-            botaoNumeros.addEventListener(
-                "click",
-                function() {
-
-                    abrirMapaNumeros(acao);
-
-                }
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================
-   EDITOR
-========================= */
-
-function abrirEditor(acao) {
-
-    secaoEditor.style.display =
-        "block";
-
-    document
-        .getElementById("editar_id")
-        .value =
-        acao.id;
-
-    document
-        .getElementById("editar_nome")
-        .value =
-        acao.nome || "";
-
-    document
-        .getElementById("editar_descricao")
-        .value =
-        acao.descricao || "";
-
-    document
-        .getElementById("editar_valor")
-        .value =
-        acao.valor_numero || "";
-
-    document
-        .getElementById("editar_total")
-        .value =
-        acao.total_numeros || "";
-
-    document
-        .getElementById("editar_status")
-        .value =
-        acao.status || "ativa";
-
-    document
-        .getElementById("editarFotoAtual")
-        .value =
-        acao.foto_url || "";
-
-    const preview =
-        document
-            .getElementById("editarFotoPreview");
-
-    if (acao.foto_url) {
-
-        preview.src =
-            acao.foto_url;
-
-        preview.style.display =
-            "block";
-
-    } else {
-
-        preview.style.display =
-            "none";
-
-    }
-
-    secaoEditor.scrollIntoView({
-        behavior: "smooth"
+(() => {
+  "use strict";
+
+  const SUPABASE_URL = "https://vlirpvuramslfiftshio.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
+  const STORAGE_BUCKET = "fotos-premios";
+
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const $ = (id) => document.getElementById(id);
+  const state = {
+    actions: [],
+    numbers: [],
+    orders: [],
+    selectedNumber: null,
+    refreshTimer: null
+  };
+
+  function escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    }[char]));
+  }
+
+  function feedback(id, message, type = "") {
+    const el = $(id);
+    if (!el) return;
+    el.className = "feedback" + (type ? " " + type : "");
+    el.textContent = message || "";
+  }
+
+  function money(value) {
+    return Number(value || 0).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL"
+    });
+  }
+
+  function numberLabel(value) {
+    const n = Number(value);
+    return Number.isFinite(n) ? String(n).padStart(2, "0") : String(value ?? "");
+  }
+
+  function statusClass(status) {
+    const s = String(status || "").toLowerCase();
+    if (s === "disponivel" || s === "disponível") return "disponivel";
+    if (s === "reservado" || s === "pendente") return "reservado";
+    if (s === "gratuito" || s === "gratis" || s === "grátis") return "gratuito";
+    return "vendido";
+  }
+
+  function statusLabel(status) {
+    const s = String(status || "").toLowerCase();
+    const labels = {
+      ativa: "Ativa",
+      pausada: "Pausada",
+      encerrada: "Encerrada",
+      disponivel: "Disponível",
+      reservado: "Reservado",
+      vendido: "Vendido",
+      gratuito: "Gratuito",
+      pago: "Pago",
+      pendente: "Pendente",
+      cancelado: "Cancelado"
+    };
+    return labels[s] || status || "Não informado";
+  }
+
+  function showPage(name) {
+    document.querySelectorAll(".admin-page").forEach((page) => {
+      page.classList.toggle("hidden", page.id !== "page-" + name);
     });
 
-}
+    document.querySelectorAll(".nav-btn").forEach((button) => {
+      button.classList.toggle("active", button.dataset.page === name);
+    });
 
+    $("sidebar").classList.remove("open");
 
-document
-    .getElementById("btnCancelarEdicao")
-    .addEventListener(
-        "click",
-        function() {
+    if (name === "acoes" || name === "dashboard") carregarAcoes();
+    if (name === "numeros") carregarNumeros();
+    if (name === "pedidos") carregarPedidos();
+    if (name === "gratis") carregarAcoesNosSelects();
+  }
 
-            secaoEditor.style.display =
-                "none";
+  document.querySelectorAll(".nav-btn").forEach((button) => {
+    button.addEventListener("click", () => showPage(button.dataset.page));
+  });
 
-        }
-    );
+  document.querySelectorAll("[data-goto]").forEach((button) => {
+    button.addEventListener("click", () => showPage(button.dataset.goto));
+  });
 
+  $("mobileMenu").addEventListener("click", () => {
+    $("sidebar").classList.toggle("open");
+  });
 
-/* =========================
-   PREVIEW FOTO EDIÇÃO
-========================= */
+  async function verificarSessao() {
+    const { data, error } = await db.auth.getSession();
 
-document
-    .getElementById("editar_foto")
-    .addEventListener(
-        "change",
-        function(event) {
-
-            const arquivo =
-                event.target.files[0];
-
-            const preview =
-                document
-                    .getElementById(
-                        "editarFotoPreview"
-                    );
-
-            if (!arquivo) {
-
-                return;
-
-            }
-
-            preview.src =
-                URL.createObjectURL(
-                    arquivo
-                );
-
-            preview.style.display =
-                "block";
-
-        }
-    );
-
-
-/* =========================
-   PREVIEW NOVA FOTO
-========================= */
-
-document
-    .getElementById("foto")
-    .addEventListener(
-        "change",
-        function(event) {
-
-            const arquivo =
-                event.target.files[0];
-
-            const preview =
-                document
-                    .getElementById(
-                        "fotoPreview"
-                    );
-
-            if (!arquivo) {
-
-                return;
-
-            }
-
-            preview.src =
-                URL.createObjectURL(
-                    arquivo
-                );
-
-            preview.style.display =
-                "block";
-
-        }
-    );
-
-
-/* =========================
-   UPLOAD FOTO
-========================= */
-
-async function enviarFoto(arquivo) {
-
-    if (!arquivo) {
-        return "";
+    if (error) {
+      feedback("loginFeedback", error.message, "error");
+      return;
     }
 
-    const extensao =
-        arquivo.name
-            .split(".")
-            .pop()
-            .toLowerCase();
+    if (data.session) {
+      abrirPainel(data.session.user);
+    } else {
+      $("loginScreen").classList.remove("hidden");
+      $("adminApp").classList.add("hidden");
+    }
+  }
 
-    const nomeArquivo =
-        Date.now()
-        + "-"
-        + crypto.randomUUID()
-        + "."
-        + extensao;
+  function abrirPainel(user) {
+    $("loginScreen").classList.add("hidden");
+    $("adminApp").classList.remove("hidden");
+    $("adminEmail").textContent = user?.email || "Administrador";
+    carregarAcoes();
+    carregarPedidos();
+    carregarAcoesNosSelects();
 
-    const resultadoUpload =
-        await clienteSupabase
-            .storage
-            .from(NOME_BUCKET)
-            .upload(
-                nomeArquivo,
-                arquivo,
-                {
-                    cacheControl: "3600",
-                    upsert: false,
-                    contentType:
-                        arquivo.type
-                }
-            );
+    if (state.refreshTimer) clearInterval(state.refreshTimer);
+    state.refreshTimer = setInterval(() => {
+      const currentPage = document.querySelector(".admin-page:not(.hidden)")?.id;
+      if (currentPage === "page-numeros") carregarNumeros(true);
+    }, 10000);
+  }
 
-    if (resultadoUpload.error) {
+  $("loginForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    feedback("loginFeedback", "Entrando…");
 
-        throw resultadoUpload.error;
+    const { data, error } = await db.auth.signInWithPassword({
+      email: $("loginEmail").value.trim(),
+      password: $("loginPassword").value
+    });
 
+    if (error) {
+      feedback("loginFeedback", error.message, "error");
+      return;
     }
 
-    const resultadoUrl =
-        clienteSupabase
-            .storage
-            .from(NOME_BUCKET)
-            .getPublicUrl(
-                nomeArquivo
-            );
+    abrirPainel(data.user);
+    feedback("loginFeedback", "");
+  });
 
-    return resultadoUrl
-        .data
-        .publicUrl;
+  $("logoutBtn").addEventListener("click", async () => {
+    if (state.refreshTimer) clearInterval(state.refreshTimer);
+    await db.auth.signOut();
+    $("adminApp").classList.add("hidden");
+    $("loginScreen").classList.remove("hidden");
+  });
 
-}
+  db.auth.onAuthStateChange((_event, session) => {
+    if (session?.user) {
+      $("loginScreen").classList.add("hidden");
+      $("adminApp").classList.remove("hidden");
+      $("adminEmail").textContent = session.user.email || "Administrador";
+    } else {
+      $("adminApp").classList.add("hidden");
+      $("loginScreen").classList.remove("hidden");
+    }
+  });
 
+  async function carregarAcoes() {
+    const { data, error } = await db
+      .from("AÇÕES")
+      .select("id,nome,descricao,foto_url,valor_numero,total_numeros,status,created_at")
+      .order("created_at", { ascending: false });
 
-/* =========================
-   SALVAR EDIÇÃO
-========================= */
+    if (error) {
+      $("allActions").innerHTML = '<div class="empty">Erro ao carregar ações: ' +
+        escapeHtml(error.message) + "</div>";
+      $("dashboardActions").innerHTML = "";
+      return;
+    }
 
-document
-    .getElementById("btnSalvarEdicao")
-    .addEventListener(
-        "click",
-        async function() {
+    state.actions = data || [];
+    renderAcoes();
+    atualizarResumo();
+    preencherSelectAcoes();
+  }
 
-            const mensagem =
-                document
-                    .getElementById(
-                        "editarMensagem"
-                    );
+  function actionCard(action) {
+    const image = action.foto_url
+      ? `<img src="${escapeHtml(action.foto_url)}" alt="Foto do prêmio" loading="lazy">`
+      : `<div class="empty">Sem foto cadastrada</div>`;
 
-            mensagem.className =
-                "mensagem";
+    return `
+      <article class="action-card">
+        ${image}
+        <div class="action-content">
+          <h3>${escapeHtml(action.nome || "Ação sem nome")}</h3>
+          <div class="action-meta">
+            Valor por número: <strong>${money(action.valor_numero)}</strong><br>
+            Total de números: <strong>${escapeHtml(action.total_numeros ?? "—")}</strong><br>
+            Status: <span class="badge">${escapeHtml(statusLabel(action.status))}</span>
+          </div>
+          <p class="muted small">${escapeHtml(action.descricao || "")}</p>
+          <div class="action-buttons">
+            <button class="btn btn-small" data-edit="${escapeHtml(action.id)}">Editar</button>
+            <button class="btn btn-small" data-map="${escapeHtml(action.id)}">Ver números</button>
+          </div>
+        </div>
+      </article>`;
+  }
 
-            try {
-
-                const id =
-                    document
-                        .getElementById(
-                            "editar_id"
-                        )
-                        .value;
-
-                const nome =
-                    document
-                        .getElementById(
-                            "editar_nome"
-                        )
-                        .value
-                        .trim();
-
-                const descricao =
-                    document
-                        .getElementById(
-                            "editar_descricao"
-                        )
-                        .value
-                        .trim();
-
-                const valor =
-                    Number(
-                        document
-                            .getElementById(
-                                "editar_valor"
-                            )
-                            .value
-                    );
-
-                const total =
-                    Number(
-                        document
-                            .getElementById(
-                                "editar_total"
-                            )
-                            .value
-                    );
-
-                const status =
-                    document
-                        .getElementById(
-                            "editar_status"
-                        )
-                        .value;
-
-                const fotoAtual =
-                    document
-                        .getElementById(
-                            "editarFotoAtual"
-                        )
-                        .value;
-
-                const arquivo =
-                    document
-                        .getElementById(
-                            "editar_foto"
-                        )
-                        .files[0];
-
-                let fotoUrl =
-                    fotoAtual;
-
-                if (arquivo) {
-
-                    fotoUrl =
-                        await enviarFoto(
-                            arquivo
-                        );
-
-                }
-
-                const resultado =
-                    await clienteSupabase
-                        .from("AÇÕES")
-                        .update({
-                            nome: nome,
-                            descricao:
-                                descricao,
-                            valor_numero:
-                                valor,
-                            total_numeros:
-                                total,
-                            status:
-                                status,
-                            foto_url:
-                                fotoUrl
-                        })
-                        .eq(
-                            "id",
-                            id
-                        );
-
-                if (resultado.error) {
-
-                    throw resultado.error;
-
-                }
-
-                mostrarMensagem(
-                    mensagem,
-                    "Ação atualizada com sucesso!",
-                    "sucesso"
-                );
-
-                await carregarAcoes();
-
-            } catch (erro) {
-
-                console.error(erro);
-
-                mostrarMensagem(
-                    mensagem,
-                    erro.message ||
-                    "Erro ao salvar ação.",
-                    "erro"
-                );
-
-            }
-
-        }
+  function renderAcoes() {
+    const query = ($("actionSearch").value || "").toLowerCase().trim();
+    const filtered = state.actions.filter((action) =>
+      String(action.nome || "").toLowerCase().includes(query)
     );
 
+    $("allActions").innerHTML = filtered.length
+      ? filtered.map(actionCard).join("")
+      : '<div class="empty">Nenhuma ação encontrada.</div>';
 
-/* =========================
-   CRIAR NOVA AÇÃO
-========================= */
+    $("dashboardActions").innerHTML = state.actions.length
+      ? state.actions.slice(0, 4).map(actionCard).join("")
+      : '<div class="empty">Nenhuma ação cadastrada.</div>';
 
-document
-    .getElementById("btnCriarAcao")
-    .addEventListener(
-        "click",
-        async function() {
+    document.querySelectorAll("[data-edit]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const action = state.actions.find((item) => String(item.id) === button.dataset.edit);
+        if (action) editarAcao(action);
+      });
+    });
 
-            const mensagem =
-                document
-                    .getElementById(
-                        "novaMensagem"
-                    );
+    document.querySelectorAll("[data-map]").forEach((button) => {
+      button.addEventListener("click", () => {
+        $("numbersAction").value = button.dataset.map;
+        showPage("numeros");
+        carregarNumeros();
+      });
+    });
+  }
 
-            mensagem.className =
-                "mensagem";
+  function atualizarResumo() {
+    $("statAcoes").textContent = state.actions.length;
+    $("statAtivas").textContent = state.actions.filter((a) => a.status === "ativa").length;
+  }
 
-            try {
+  $("actionSearch").addEventListener("input", renderAcoes);
+  $("refreshActions").addEventListener("click", carregarAcoes);
 
-                const nome =
-                    document
-                        .getElementById(
-                            "nome"
-                        )
-                        .value
-                        .trim();
+  async function carregarAcoesNosSelects() {
+    if (!state.actions.length) await carregarAcoes();
+    preencherSelectAcoes();
+  }
 
-                const premio =
-                    document
-                        .getElementById(
-                            "premio"
-                        )
-                        .value
-                        .trim();
+  function preencherSelectAcoes() {
+    const active = state.actions.filter((action) => action.status === "ativa");
+    const options = active.map((action) =>
+      `<option value="${escapeHtml(action.id)}">${escapeHtml(action.nome)}</option>`
+    ).join("");
 
-                const premioDescricao =
-                    document
-                        .getElementById(
-                            "premio_descricao"
-                        )
-                        .value
-                        .trim();
+    const fullOptions = state.actions.map((action) =>
+      `<option value="${escapeHtml(action.id)}">${escapeHtml(action.nome)}</option>`
+    ).join("");
 
-                const descricao =
-                    document
-                        .getElementById(
-                            "descricao"
-                        )
-                        .value
-                        .trim();
+    const numbersCurrent = $("numbersAction").value;
+    $("numbersAction").innerHTML = fullOptions || '<option value="">Nenhuma ação</option>';
+    if (state.actions.some((a) => String(a.id) === numbersCurrent)) {
+      $("numbersAction").value = numbersCurrent;
+    }
 
-                const valor =
-                    Number(
-                        document
-                            .getElementById(
-                                "valor_numero"
-                            )
-                            .value
-                    );
+    $("freeAction").innerHTML = options || '<option value="">Nenhuma ação ativa</option>';
+  }
 
-                const total =
-                    Number(
-                        document
-                            .getElementById(
-                                "total_numeros"
-                            )
-                            .value
-                    );
+  $("actionPhoto").addEventListener("change", () => {
+    const file = $("actionPhoto").files[0];
+    const preview = $("photoPreview");
+    if (!file) return;
 
-                const arquivo =
-                    document
-                        .getElementById(
-                            "foto"
-                        )
-                        .files[0];
+    if (!file.type.startsWith("image/")) {
+      feedback("actionFeedback", "Selecione um arquivo de imagem.", "error");
+      $("actionPhoto").value = "";
+      return;
+    }
 
-                if (!nome) {
+    preview.src = URL.createObjectURL(file);
+    preview.classList.remove("hidden");
+  });
 
-                    throw new Error(
-                        "Informe o nome da ação."
-                    );
+  async function uploadFoto(file) {
+    const extension = file.name.split(".").pop().toLowerCase().replace(/[^a-z0-9]/g, "") || "jpg";
+    const path = `${Date.now()}-${crypto.randomUUID()}.${extension}`;
 
-                }
+    const { error } = await db.storage.from(STORAGE_BUCKET).upload(path, file, {
+      cacheControl: "3600",
+      upsert: false,
+      contentType: file.type
+    });
 
-                if (
-                    !total ||
-                    total < 1 ||
-                    total > 100000
-                ) {
+    if (error) throw error;
 
-                    throw new Error(
-                        "O total deve estar entre 1 e 100.000 números."
-                    );
+    const { data } = db.storage.from(STORAGE_BUCKET).getPublicUrl(path);
+    if (!data?.publicUrl) throw new Error("Não foi possível obter o endereço público da foto.");
+    return data.publicUrl;
+  }
 
-                }
+  $("actionForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-                if (!valor || valor <= 0) {
+    const button = $("saveActionBtn");
+    button.disabled = true;
+    feedback("actionFeedback", "Salvando ação…");
 
-                    throw new Error(
-                        "Informe um valor válido por número."
-                    );
+    try {
+      const id = $("editId").value;
+      const nome = $("actionName").value.trim();
+      const premio = $("actionPrize").value.trim();
+      const premioDescricao = $("prizeDescription").value.trim();
+      const descricao = $("actionDescription").value.trim();
+      const valor = Number($("actionPrice").value);
+      const total = Number($("actionTotal").value);
+      const status = $("actionStatus").value;
 
-                }
+      if (!nome) throw new Error("Informe o nome da ação.");
+      if (!Number.isFinite(valor) || valor <= 0) throw new Error("O valor por número precisa ser maior que zero.");
+      if (!Number.isInteger(total) || total < 1 || total > 100000) {
+        throw new Error("A quantidade total precisa ser um número inteiro entre 1 e 100.000.");
+      }
 
-                let fotoUrl = "";
+      let fotoUrl = null;
+      const file = $("actionPhoto").files[0];
 
-                if (arquivo) {
+      if (file) fotoUrl = await uploadFoto(file);
 
-                    fotoUrl =
-                        await enviarFoto(
-                            arquivo
-                        );
+      const payload = {
+        nome,
+        descricao: descricao || premioDescricao || premio,
+        valor_numero: valor,
+        total_numeros: total,
+        status
+      };
 
-                }
+      if (fotoUrl) payload.foto_url = fotoUrl;
 
-                const resultado =
-                    await clienteSupabase
-                        .from("AÇÕES")
-                        .insert({
-                            nome: nome,
-                            descricao:
-                                descricao ||
-                                premioDescricao ||
-                                premio,
-                            valor_numero:
-                                valor,
-                            total_numeros:
-                                total,
-                            status:
-                                "ativa",
-                            foto_url:
-                                fotoUrl
-                        })
-                        .select()
-                        .single();
+      if (id) {
+        const { error } = await db.from("AÇÕES").update(payload).eq("id", id);
+        if (error) throw error;
 
-                if (resultado.error) {
-
-                    throw resultado.error;
-
-                }
-
-                const acaoId =
-                    resultado.data.id;
-
-                const numeros =
-                    await clienteSupabase
-                        .rpc(
-                            "gerar_numeros_acao",
-                            {
-                                p_acao_id:
-                                    acaoId
-                            }
-                        );
-
-                if (numeros.error) {
-
-                    throw numeros.error;
-
-                }
-
-                mostrarMensagem(
-                    mensagem,
-                    "Ação criada e números gerados com sucesso!",
-                    "sucesso"
-                );
-
-                document
-                    .getElementById(
-                        "nome"
-                    )
-                    .value = "";
-
-                document
-                    .getElementById(
-                        "premio"
-                    )
-                    .value = "";
-
-                document
-                    .getElementById(
-                        "premio_descricao"
-                    )
-                    .value = "";
-
-                document
-                    .getElementById(
-                        "descricao"
-                    )
-                    .value = "";
-
-                document
-                    .getElementById(
-                        "valor_numero"
-                    )
-                    .value = "";
-
-                document
-                    .getElementById(
-                        "total_numeros"
-                    )
-                    .value = "";
-
-                document
-                    .getElementById(
-                        "foto"
-                    )
-                    .value = "";
-
-                document
-                    .getElementById(
-                        "fotoPreview"
-                    )
-                    .style.display = "none";
-
-                await carregarAcoes();
-
-            } catch (erro) {
-
-                console.error(erro);
-
-                mostrarMensagem(
-                    mensagem,
-                    erro.message ||
-                    "Erro ao criar ação.",
-                    "erro"
-                );
-
-            }
-
+        feedback("actionFeedback",
+          "Ação atualizada. Os campos de data, link de pagamento e observações são apenas informativos neste formulário e não foram salvos no banco.",
+          "success");
+      } else {
+        if (!fotoUrl) {
+          throw new Error("Envie a foto do prêmio para cadastrar uma nova ação.");
         }
-    );
 
+        const { data, error } = await db.from("AÇÕES").insert(payload).select("id").single();
+        if (error) throw error;
 
-/* =========================
-   ABRIR MAPA
-========================= */
-
-async function abrirMapaNumeros(acao) {
-
-    acaoNumerosAtual =
-        acao;
-
-    document
-        .getElementById(
-            "numerosTitulo"
-        )
-        .textContent =
-        "🎟️ " + acao.nome;
-
-    document
-        .getElementById(
-            "numerosPainel"
-        )
-        .style.display =
-        "block";
-
-    document
-        .getElementById(
-            "gradeNumeros"
-        )
-        .innerHTML =
-        '<div class="carregando">Carregando números...</div>';
-
-    document
-        .getElementById(
-            "numerosPainel"
-        )
-        .scrollIntoView({
-            behavior: "smooth"
+        const { error: generationError } = await db.rpc("gerar_numeros_acao", {
+          p_acao_id: data.id
         });
 
-    await carregarNumeros(
-        acao.id
-    );
-
-    iniciarAtualizacaoMapa();
-
-}
-
-
-/* =========================
-   CARREGAR NÚMEROS
-========================= */
-
-async function carregarNumeros(
-    acaoId
-) {
-
-    const grade =
-        document
-            .getElementById(
-                "gradeNumeros"
-            );
-
-    const resumo =
-        document
-            .getElementById(
-                "numerosResumo"
-            );
-
-    const info =
-        document
-            .getElementById(
-                "numeroInfo"
-            );
-
-    const resultadoNumeros =
-        await clienteSupabase
-            .from("numeros")
-            .select(`
-                numero,
-                status,
-                pedido_id,
-                reservado_em,
-                reservado_ate
-            `)
-            .eq(
-                "acao_id",
-                acaoId
-            )
-            .order(
-                "numero",
-                {
-                    ascending: true
-                }
-            );
-
-    if (resultadoNumeros.error) {
-
-        console.error(
-            resultadoNumeros.error
-        );
-
-        grade.innerHTML =
-            "❌ Erro ao carregar números.";
-
-        return;
-
-    }
-
-    const numeros =
-        resultadoNumeros.data || [];
-
-    const pedidoIds =
-        [
-            ...new Set(
-                numeros
-                    .map(
-                        numero =>
-                            numero.pedido_id
-                    )
-                    .filter(Boolean)
-            )
-        ];
-
-    let pedidosMap = {};
-
-    if (pedidoIds.length > 0) {
-
-        const resultadoPedidos =
-            await clienteSupabase
-                .from("pedidos")
-                .select(`
-                    id,
-                    nome_cliente,
-                    telefone,
-                    quantidade,
-                    valor_total,
-                    status
-                `)
-                .in(
-                    "id",
-                    pedidoIds
-                );
-
-        if (
-            resultadoPedidos.error
-        ) {
-
-            console.error(
-                resultadoPedidos.error
-            );
-
-        } else {
-
-            (resultadoPedidos.data || [])
-                .forEach(
-                    pedido => {
-
-                        pedidosMap[
-                            pedido.id
-                        ] = pedido;
-
-                    }
-                );
-
+        if (generationError) {
+          feedback("actionFeedback",
+            "A ação foi cadastrada, mas a geração dos números retornou erro: " +
+            generationError.message + ". Verifique o banco antes de cadastrar outra ação.",
+            "error");
+          await carregarAcoes();
+          return;
         }
 
+        feedback("actionFeedback", "Ação cadastrada e geração de números solicitada com sucesso.", "success");
+      }
+
+      await carregarAcoes();
+      preencherSelectAcoes();
+      if (id) cancelarEdicao();
+
+    } catch (error) {
+      feedback("actionFeedback", error.message || "Não foi possível salvar a ação.", "error");
+    } finally {
+      button.disabled = false;
     }
-
-    numerosAtuais =
-        numeros.map(
-            numero => ({
-                ...numero,
-                pedido:
-                    numero.pedido_id
-                    ?
-                    pedidosMap[
-                        numero.pedido_id
-                    ]
-                    :
-                    null
-            })
-        );
-
-    const disponiveis =
-        numerosAtuais.filter(
-            n =>
-                n.status ===
-                "disponivel"
-        ).length;
-
-    const reservados =
-        numerosAtuais.filter(
-            n =>
-                n.status ===
-                "reservado"
-        ).length;
-
-    const vendidos =
-        numerosAtuais.filter(
-            n =>
-                n.status ===
-                "vendido"
-        ).length;
-
-    resumo.innerHTML = `
-
-        <div class="resumo-item resumo-disponivel">
-            Disponíveis
-            <strong>${disponiveis}</strong>
-        </div>
-
-        <div class="resumo-item resumo-reservado">
-            Reservados
-            <strong>${reservados}</strong>
-        </div>
-
-        <div class="resumo-item resumo-vendido">
-            Vendidos
-            <strong>${vendidos}</strong>
-        </div>
-
-    `;
-
-    grade.innerHTML = "";
-
-    numerosAtuais.forEach(
-        numero => {
-
-            const box =
-                document.createElement(
-                    "div"
-                );
-
-            box.className =
-                "numero-box";
-
-            if (
-                numero.status ===
-                "reservado"
-            ) {
-
-                box.classList.add(
-                    "numero-reservado"
-                );
-
-            } else if (
-                numero.status ===
-                "vendido"
-            ) {
-
-                box.classList.add(
-                    "numero-vendido"
-                );
-
-            } else {
-
-                box.classList.add(
-                    "numero-disponivel"
-                );
-
-            }
-
-            const numeroTexto =
-                document.createElement(
-                    "span"
-                );
-
-            numeroTexto.textContent =
-                formatarNumero(
-                    numero.numero
-                );
-
-            box.appendChild(
-                numeroTexto
-            );
-
-            if (
-                numero.status ===
-                "reservado"
-            ) {
-
-                const tempo =
-                    document.createElement(
-                        "span"
-                    );
-
-                tempo.className =
-                    "numero-tempo";
-
-                tempo.dataset.expira =
-                    numero.reservado_ate || "";
-
-                tempo.textContent =
-                    calcularTempoRestante(
-                        numero.reservado_ate
-                    );
-
-                box.appendChild(
-                    tempo
-                );
-
-            }
-
-            box.addEventListener(
-                "click",
-                function() {
-
-                    mostrarDetalhesNumero(
-                        numero
-                    );
-
-                }
-            );
-
-            grade.appendChild(
-                box
-            );
-
-        }
-    );
-
-    if (
-        numeroSelecionado
-    ) {
-
-        const atual =
-            numerosAtuais.find(
-                n =>
-                    Number(n.numero) ===
-                    Number(
-                        numeroSelecionado
-                            .numero
-                    )
-            );
-
-        if (atual) {
-
-            numeroSelecionado =
-                atual;
-
-            mostrarDetalhesNumero(
-                atual
-            );
-
-        }
-
-    }
-
-}
-
-
-/* =========================
-   DETALHES DO NÚMERO
-========================= */
-
-function mostrarDetalhesNumero(
-    numero
-) {
-
-    numeroSelecionado =
-        numero;
-
-    const info =
-        document
-            .getElementById(
-                "numeroInfo"
-            );
-
-    let html = `
-
-        <strong>🎟️ Número:</strong>
-        ${formatarNumero(numero.numero)}
-        <br>
-
-        <strong>📌 Status:</strong>
-        ${escapeHtml(
-            numero.status ||
-            "disponivel"
-        )}
-
-        <br>
-
-    `;
-
-    if (
-        numero.status ===
-        "reservado"
-    ) {
-
-        html += `
-
-            <strong>⏳ Reserva até:</strong>
-            ${
-                numero.reservado_ate
-                ?
-                new Date(
-                    numero.reservado_ate
-                ).toLocaleString(
-                    "pt-BR"
-                )
-                :
-                "Não informado"
-            }
-
-            <br>
-
-            <strong>⏱️ Tempo restante:</strong>
-            ${calcularTempoRestante(
-                numero.reservado_ate
-            )}
-
-            <br>
-
-        `;
-
-    }
-
-    if (
-        numero.pedido
-    ) {
-
-        const pedido =
-            numero.pedido;
-
-        html += `
-
-            <hr style="
-                border:0;
-                border-top:1px solid #333;
-                margin:10px 0;
-            ">
-
-            <strong>👤 Cliente:</strong>
-            ${escapeHtml(
-                pedido.nome_cliente
-            )}
-            <br>
-
-            <strong>📱 WhatsApp:</strong>
-            ${escapeHtml(
-                pedido.telefone
-            )}
-            <br>
-
-            <strong>🎟️ Quantidade no pedido:</strong>
-            ${pedido.quantidade || 0}
-            <br>
-
-            <strong>💰 Valor total:</strong>
-            ${formatarMoeda(
-                pedido.valor_total
-            )}
-            <br>
-
-            <strong>📦 Pedido:</strong>
-            #${numero.pedido_id}
-            <br>
-
-            <strong>📌 Status do pedido:</strong>
-            ${escapeHtml(
-                pedido.status
-            )}
-
-        `;
-
+  });
+
+  function editarAcao(action) {
+    $("editId").value = action.id;
+    $("actionName").value = action.nome || "";
+    $("actionPrize").value = "";
+    $("prizeDescription").value = "";
+    $("actionDescription").value = action.descricao || "";
+    $("actionPrice").value = action.valor_numero ?? "";
+    $("actionTotal").value = action.total_numeros ?? "";
+    $("actionStatus").value = action.status || "ativa";
+    $("actionPhoto").value = "";
+
+    $("formTitle").textContent = "Editar ação";
+    $("saveActionBtn").textContent = "Salvar alterações";
+    $("cancelEditBtn").classList.remove("hidden");
+
+    if (action.foto_url) {
+      $("photoPreview").src = action.foto_url;
+      $("photoPreview").classList.remove("hidden");
     } else {
-
-        html += `
-
-            <br>
-
-            <span style="color:#999;">
-                Este número ainda não possui pedido vinculado.
-            </span>
-
-        `;
-
+      $("photoPreview").classList.add("hidden");
     }
 
-    info.innerHTML =
-        html;
+    feedback("actionFeedback", "");
+    showPage("cadastro");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
-    info.style.display =
-        "block";
+  function cancelarEdicao() {
+    $("actionForm").reset();
+    $("editId").value = "";
+    $("formTitle").textContent = "Cadastrar nova ação";
+    $("saveActionBtn").textContent = "Salvar ação";
+    $("cancelEditBtn").classList.add("hidden");
+    $("photoPreview").classList.add("hidden");
+    feedback("actionFeedback", "");
+  }
 
-}
+  $("cancelEditBtn").addEventListener("click", cancelarEdicao);
 
-
-/* =========================
-   CONTADOR DE RESERVA
-========================= */
-
-function calcularTempoRestante(
-    data
-) {
-
-    if (!data) {
-
-        return "--";
-
+  async function carregarNumeros(silent = false) {
+    const actionId = $("numbersAction").value;
+    if (!actionId) {
+      $("numberGrid").innerHTML = '<div class="empty">Cadastre ou selecione uma ação.</div>';
+      return;
     }
 
-    const agora =
-        new Date();
+    if (!silent) feedback("numbersFeedback", "Carregando números…");
 
-    const fim =
-        new Date(data);
+    const { data, error } = await db
+      .from("numeros")
+      .select("numero,status,pedido_id,reservado_em,reservado_ate")
+      .eq("acao_id", actionId)
+      .order("numero", { ascending: true });
 
-    const diferenca =
-        fim - agora;
-
-    if (
-        diferenca <= 0
-    ) {
-
-        return "Expirado";
-
+    if (error) {
+      feedback("numbersFeedback", error.message, "error");
+      return;
     }
 
-    const minutos =
-        Math.floor(
-            diferenca /
-            60000
-        );
+    state.numbers = data || [];
+    renderNumeros();
+    feedback("numbersFeedback", "");
+  }
 
-    const segundos =
-        Math.floor(
-            (diferenca %
-                60000) /
-            1000
-        );
+  function renderNumeros() {
+    const all = state.numbers;
+    const available = all.filter((n) => statusClass(n.status) === "disponivel").length;
+    const reserved = all.filter((n) => statusClass(n.status) === "reservado").length;
+    const occupied = all.filter((n) => ["vendido", "gratuito"].includes(statusClass(n.status))).length;
 
-    return (
-        minutos +
-        "m " +
-        String(segundos)
-            .padStart(2, "0") +
-        "s"
+    $("statDisponiveis").textContent = available;
+    $("statOcupados").textContent = reserved + occupied;
+
+    $("numbersSummary").innerHTML = `
+      <div class="stat"><div class="stat-label">Total</div><div class="stat-value">${all.length}</div></div>
+      <div class="stat"><div class="stat-label">Disponíveis</div><div class="stat-value">${available}</div></div>
+      <div class="stat"><div class="stat-label">Reservados</div><div class="stat-value">${reserved}</div></div>
+      <div class="stat"><div class="stat-label">Ocupados</div><div class="stat-value">${occupied}</div></div>`;
+
+    const statusFilter = $("numberStatusFilter").value;
+    const search = $("numberSearch").value.trim();
+
+    const filtered = all.filter((item) => {
+      const cls = statusClass(item.status);
+      const statusOk = !statusFilter || cls === statusFilter;
+      const searchOk = !search || String(item.numero) === search;
+      return statusOk && searchOk;
+    });
+
+    $("numberGrid").innerHTML = filtered.map((item) => `
+      <button class="number ${statusClass(item.status)}"
+        type="button" data-number="${escapeHtml(item.numero)}"
+        title="Número ${escapeHtml(item.numero)} — ${escapeHtml(statusLabel(item.status))}">
+        ${escapeHtml(numberLabel(item.numero))}
+      </button>`).join("") || '<div class="empty">Nenhum número corresponde ao filtro.</div>';
+
+    document.querySelectorAll("[data-number]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const item = state.numbers.find((n) => String(n.numero) === button.dataset.number);
+        if (item) mostrarDetalheNumero(item);
+      });
+    });
+  }
+
+  async function mostrarDetalheNumero(item) {
+    const box = $("numberDetail");
+    box.classList.remove("hidden");
+    box.textContent = "Carregando detalhes do número…";
+
+    let order = null;
+    if (item.pedido_id) {
+      const { data, error } = await db
+        .from("pedidos")
+        .select("id,nome_cliente,telefone,quantidade,valor_total,status")
+        .eq("id", item.pedido_id)
+        .maybeSingle();
+
+      if (!error) order = data;
+    }
+
+    const reservation = item.reservado_em
+      ? new Date(item.reservado_em).toLocaleString("pt-BR")
+      : "Não informado";
+
+    box.innerHTML = `
+      <strong>Número ${escapeHtml(numberLabel(item.numero))}</strong><br>
+      Status: ${escapeHtml(statusLabel(item.status))}<br>
+      Pedido: ${escapeHtml(item.pedido_id || "Sem pedido associado")}<br>
+      Reservado em: ${escapeHtml(reservation)}<br>
+      Reserva até: ${escapeHtml(item.reservado_ate
+        ? new Date(item.reservado_ate).toLocaleString("pt-BR")
+        : "Não informado")}
+      ${order ? `<hr style="border-color:var(--border)">
+        <strong>Dados do cliente</strong><br>
+        Nome: ${escapeHtml(order.nome_cliente || "Não informado")}<br>
+        WhatsApp: ${escapeHtml(order.telefone || "Não informado")}<br>
+        Quantidade do pedido: ${escapeHtml(order.quantidade ?? "—")}<br>
+        Valor do pedido: ${money(order.valor_total)}<br>
+        Status do pedido: ${escapeHtml(statusLabel(order.status))}` : ""}`;
+  }
+
+  $("numbersAction").addEventListener("change", carregarNumeros);
+  $("numberSearch").addEventListener("input", renderNumeros);
+  $("numberStatusFilter").addEventListener("change", renderNumeros);
+  $("refreshNumbers").addEventListener("click", () => carregarNumeros());
+
+  async function carregarPedidos() {
+    const { data, error } = await db
+      .from("pedidos")
+      .select("id,nome_cliente,telefone,quantidade,valor_total,status")
+      .order("id", { ascending: false })
+      .limit(500);
+
+    if (error) {
+      $("ordersTable").innerHTML = '<div class="empty">Não foi possível carregar pedidos: ' +
+        escapeHtml(error.message) + "</div>";
+      return;
+    }
+
+    state.orders = data || [];
+    renderPedidos();
+  }
+
+  function renderPedidos() {
+    const query = $("orderSearch").value.toLowerCase().trim();
+    const statusFilter = $("orderStatusFilter").value;
+
+    const filtered = state.orders.filter((order) => {
+      const text = [
+        order.id, order.nome_cliente, order.telefone, order.status
+      ].join(" ").toLowerCase();
+
+      return text.includes(query) &&
+        (!statusFilter || String(order.status || "").toLowerCase() === statusFilter);
+    });
+
+    if (!filtered.length) {
+      $("ordersTable").innerHTML = '<div class="empty">Nenhum pedido encontrado.</div>';
+      return;
+    }
+
+    $("ordersTable").innerHTML = `
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>Pedido</th><th>Cliente</th><th>WhatsApp</th>
+            <th>Quantidade</th><th>Total</th><th>Status</th>
+          </tr></thead>
+          <tbody>
+            ${filtered.map((order) => `
+              <tr>
+                <td>${escapeHtml(order.id)}</td>
+                <td>${escapeHtml(order.nome_cliente || "—")}</td>
+                <td>${escapeHtml(order.telefone || "—")}</td>
+                <td>${escapeHtml(order.quantidade ?? "—")}</td>
+                <td>${money(order.valor_total)}</td>
+                <td>${escapeHtml(statusLabel(order.status))}</td>
+              </tr>`).join("")}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
+  $("refreshOrders").addEventListener("click", carregarPedidos);
+  $("orderSearch").addEventListener("input", renderPedidos);
+  $("orderStatusFilter").addEventListener("change", renderPedidos);
+
+  $("freeTicketsForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const actionId = $("freeAction").value;
+    const name = $("freeName").value.trim();
+    const phone = $("freePhone").value.trim();
+    const quantity = Number($("freeQuantity").value);
+    const button = $("freeTicketsBtn");
+
+    $("freeResult").classList.add("hidden");
+
+    if (!actionId) {
+      feedback("freeFeedback", "Selecione uma ação ativa.", "error");
+      return;
+    }
+    if (!name || !phone) {
+      feedback("freeFeedback", "Preencha o nome e o WhatsApp do cliente.", "error");
+      return;
+    }
+    if (!Number.isInteger(quantity) || quantity < 1 || quantity > 100000) {
+      feedback("freeFeedback", "Informe uma quantidade inteira válida.", "error");
+      return;
+    }
+
+    const { data: sessionData } = await db.auth.getSession();
+    if (!sessionData.session) {
+      feedback("freeFeedback", "Sua sessão expirou. Entre novamente.", "error");
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `Confirmar a distribuição de ${quantity} bilhete(s) grátis para ${name}?`
     );
+    if (!confirmed) return;
 
-}
+    button.disabled = true;
+    feedback("freeFeedback", "Solicitando distribuição segura ao Supabase…");
 
+    try {
+      const { data, error } = await db.rpc("distribuir_bilhetes_gratis", {
+        p_acao_id: actionId,
+        p_nome_cliente: name,
+        p_telefone: phone,
+        p_quantidade: quantity
+      });
 
-function atualizarContadores() {
-
-    document
-        .querySelectorAll(
-            ".numero-tempo"
-        )
-        .forEach(
-            elemento => {
-
-                elemento.textContent =
-                    calcularTempoRestante(
-                        elemento.dataset.expira
-                    );
-
-            }
+      if (error) {
+        throw new Error(
+          "A distribuição não foi concluída. A função segura distribuir_bilhetes_gratis " +
+          "precisa ser criada e autorizada no Supabase. Detalhe: " + error.message
         );
+      }
 
-}
+      feedback("freeFeedback", "O Supabase retornou uma resposta. Confira os números abaixo.", "success");
 
+      const resultBox = $("freeResult");
+      resultBox.classList.remove("hidden");
+      resultBox.textContent = typeof data === "string" ? data : JSON.stringify(data, null, 2);
 
-/* =========================
-   ATUALIZAÇÃO AUTOMÁTICA
-========================= */
+      $("freeTicketsForm").reset();
+      await carregarAcoes();
+      await carregarPedidos();
+      await carregarNumeros();
 
-function iniciarAtualizacaoMapa() {
-
-    if (
-        intervaloMapa
-    ) {
-
-        clearInterval(
-            intervaloMapa
-        );
-
+    } catch (error) {
+      feedback("freeFeedback", error.message || "Não foi possível distribuir os bilhetes.", "error");
+    } finally {
+      button.disabled = false;
     }
+  });
 
-    if (
-        intervaloContadores
-    ) {
-
-        clearInterval(
-            intervaloContadores
-        );
-
+  db.auth.onAuthStateChange((_event, session) => {
+    if (!session) {
+      if (state.refreshTimer) clearInterval(state.refreshTimer);
     }
+  });
 
-    intervaloMapa =
-        setInterval(
-            async function() {
-
-                if (
-                    acaoNumerosAtual
-                ) {
-
-                    await carregarNumeros(
-                        acaoNumerosAtual.id
-                    );
-
-                }
-
-            },
-            5000
-        );
-
-    intervaloContadores =
-        setInterval(
-            atualizarContadores,
-            1000
-        );
-
-}
-
-
-/* =========================
-   FECHAR MAPA
-========================= */
-
-document
-    .getElementById(
-        "btnFecharNumeros"
-    )
-    .addEventListener(
-        "click",
-        function() {
-
-            document
-                .getElementById(
-                    "numerosPainel"
-                )
-                .style.display =
-                "none";
-
-            numeroSelecionado =
-                null;
-
-            acaoNumerosAtual =
-                null;
-
-            numerosAtuais =
-                [];
-
-            if (
-                intervaloMapa
-            ) {
-
-                clearInterval(
-                    intervaloMapa
-                );
-
-                intervaloMapa =
-                    null;
-
-            }
-
-            if (
-                intervaloContadores
-            ) {
-
-                clearInterval(
-                    intervaloContadores
-                );
-
-                intervaloContadores =
-                    null;
-
-            }
-
-        }
-    );
-
-
-/* =========================
-   ATUALIZAR AÇÕES
-========================= */
-
-document
-    .getElementById(
-        "btnAtualizar"
-    )
-    .addEventListener(
-        "click",
-        async function() {
-
-            await carregarAcoes();
-
-            if (
-                acaoNumerosAtual
-            ) {
-
-                await carregarNumeros(
-                    acaoNumerosAtual.id
-                );
-
-            }
-
-        }
-    );
-
-
-/* =========================
-   INICIAR
-========================= */
-
-verificarSessao();
-
+  verificarSessao();
+})();
 </script>
-
 </body>
 </html>
+
