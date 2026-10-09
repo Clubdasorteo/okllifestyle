@@ -8,66 +8,115 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--bg:#090909;--panel:#141414;--panel2:#1b1b1b;--gold:#d6b15e;--gold2:#f2d994;--text:#f6f3eb;--muted:#aaa49a;--border:#34302a;--green:#69d39a;--red:#ff7979}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
-button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
 .login-screen{min-height:100vh;display:grid;place-items:center;padding:20px}
 .login-card{width:100%;max-width:420px;padding:30px;border:1px solid var(--border);border-radius:18px;background:var(--panel)}
 .brand{color:var(--gold);font-weight:900;letter-spacing:2px;font-size:23px}
-h1,h2,h3{margin-top:0}h1{font-size:25px}h2{font-size:20px}h3{font-size:16px}p{line-height:1.5}.muted{color:var(--muted)}.small{font-size:12px}
+h1,h2,h3{margin-top:0}
+h1{font-size:25px}h2{font-size:20px}h3{font-size:16px}
+p{line-height:1.5}.muted{color:var(--muted)}.small{font-size:12px}
 label{display:block;margin:13px 0 6px;color:#ded8ca;font-size:13px}
 input,select,textarea{display:block;width:100%;min-height:44px;border:1px solid var(--border);border-radius:9px;padding:11px 12px;color:var(--text);background:#0d0d0d;outline:none}
-textarea{min-height:90px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--gold)}input[type=file]{padding:9px}
+textarea{min-height:90px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+input[type=file]{padding:9px}
 .btn{border:1px solid var(--border);border-radius:9px;padding:11px 15px;color:var(--text);background:var(--panel2);font-weight:700}
-.btn:hover{border-color:var(--gold)}.btn-gold{background:var(--gold);border-color:var(--gold);color:#17120a}.btn-danger{border-color:#703939;color:#ffaaaa}
-.btn-block{width:100%;margin-top:18px}.btn-small{padding:8px 10px;font-size:12px}.btn:disabled{opacity:.5;cursor:not-allowed}
-.app{min-height:100vh}.topbar{height:68px;position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 22px;background:#101010;border-bottom:1px solid var(--border)}
-.topbar-right{display:flex;align-items:center;gap:10px}.layout{display:grid;grid-template-columns:235px minmax(0,1fr);min-height:calc(100vh - 68px)}
-.sidebar{padding:20px 13px;background:#101010;border-right:1px solid var(--border)}.nav-label{padding:10px 12px;color:var(--muted);text-transform:uppercase;font-size:10px;letter-spacing:1.5px}
+.btn:hover{border-color:var(--gold)}
+.btn-gold{background:var(--gold);border-color:var(--gold);color:#17120a}
+.btn-danger{border-color:#703939;color:#ffaaaa}
+.btn-block{width:100%;margin-top:18px}
+.btn-small{padding:8px 10px;font-size:12px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.app{min-height:100vh}
+.topbar{height:68px;position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 22px;background:#101010;border-bottom:1px solid var(--border)}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.layout{display:grid;grid-template-columns:235px minmax(0,1fr);min-height:calc(100vh - 68px)}
+.sidebar{padding:20px 13px;background:#101010;border-right:1px solid var(--border)}
+.nav-label{padding:10px 12px;color:var(--muted);text-transform:uppercase;font-size:10px;letter-spacing:1.5px}
 .nav-btn{width:100%;display:flex;align-items:center;gap:10px;padding:13px 12px;margin-bottom:5px;border:1px solid transparent;border-radius:9px;background:transparent;color:#d9d4ca;text-align:left}
 .nav-btn:hover,.nav-btn.active{background:#211c12;color:var(--gold2);border-color:#443720}
-main{min-width:0;padding:26px}.page{max-width:1250px;margin:0 auto}.page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:22px}.page-head p{margin-bottom:0;color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+main{min-width:0;padding:26px}
+.page{max-width:1250px;margin:0 auto}
+.page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:22px}
+.page-head p{margin-bottom:0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .panel,.stat{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px;min-width:0}
-.stat-label{color:var(--muted);font-size:12px}.stat-value{color:var(--gold2);font-size:28px;font-weight:800;margin-top:9px}.section{margin-top:22px}
-.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:13px}.section-head h2{margin:0}
-.action-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.action-card{overflow:hidden;border:1px solid var(--border);border-radius:13px;background:var(--panel)}
-.action-card img{display:block;width:100%;height:190px;object-fit:contain;background:#080808}.action-content{padding:15px}.action-content h3{margin-bottom:8px}
-.action-meta{color:var(--muted);font-size:13px;line-height:1.7}.action-buttons{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
-.badge{display:inline-block;padding:5px 8px;border-radius:30px;background:#29251d;color:var(--gold2);font-size:11px}.badge.green{background:#14281d;color:var(--green)}.badge.red{background:#301818;color:#ffaaaa}
-.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}.full{grid-column:1/-1}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:15px}.toolbar input,.toolbar select{flex:1 1 180px;width:auto}
-.table-wrap{width:100%;overflow-x:auto;border:1px solid var(--border);border-radius:11px}table{width:100%;border-collapse:collapse;min-width:650px}
-th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border);font-size:13px;vertical-align:top}th{background:#1b1b1b;color:var(--gold2)}tr:last-child td{border-bottom:0}
+.stat-label{color:var(--muted);font-size:12px}
+.stat-value{color:var(--gold2);font-size:28px;font-weight:800;margin-top:9px}
+.section{margin-top:22px}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:13px}
+.section-head h2{margin:0}
+.action-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.action-card{overflow:hidden;border:1px solid var(--border);border-radius:13px;background:var(--panel)}
+.action-card img{display:block;width:100%;height:190px;object-fit:contain;background:#080808}
+.action-content{padding:15px}
+.action-content h3{margin-bottom:8px}
+.action-meta{color:var(--muted);font-size:13px;line-height:1.7}
+.action-buttons{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
+.badge{display:inline-block;padding:5px 8px;border-radius:30px;background:#29251d;color:var(--gold2);font-size:11px}
+.badge.green{background:#14281d;color:var(--green)}
+.badge.red{background:#301818;color:#ffaaaa}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}
+.full{grid-column:1/-1}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:15px}
+.toolbar input,.toolbar select{flex:1 1 180px;width:auto}
+.table-wrap{width:100%;overflow-x:auto;border:1px solid var(--border);border-radius:11px}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border);font-size:13px;vertical-align:top}
+th{background:#1b1b1b;color:var(--gold2)}
+tr:last-child td{border-bottom:0}
 .number-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:7px;margin-top:15px}
 .number{border:1px solid var(--border);border-radius:7px;min-height:44px;padding:7px 3px;background:#191919;color:#dedbd3;text-align:center;font-size:12px}
-.number.disponivel{border-color:#31563e;background:#122219;color:#a4e6ba}.number.reservado{border-color:#78602c;background:#2c2413;color:#f1d48b}
+.number.disponivel{border-color:#31563e;background:#122219;color:#a4e6ba}
+.number.reservado{border-color:#78602c;background:#2c2413;color:#f1d48b}
 .number.vendido,.number.gratuito{border-color:#654343;background:#2a1818;color:#ffb4b4}
 .number-premiado{border:2px solid var(--gold)!important;background:#493713!important;color:#ffe7a0!important;font-weight:900}
 .number-detail{margin-top:14px;padding:14px;background:#0e0e0e;border:1px solid var(--border);border-radius:10px;line-height:1.7;overflow-wrap:anywhere}
 .notice{padding:12px 14px;border-radius:9px;margin:13px 0;background:#201b11;border:1px solid #4d3d20;color:var(--gold2);font-size:13px;line-height:1.5}
-.feedback{margin-top:12px;font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}.feedback.error{color:var(--red)}.feedback.success{color:var(--green)}
+.feedback{margin-top:12px;font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}
+.feedback.error{color:var(--red)}.feedback.success{color:var(--green)}
 .empty{color:var(--muted);padding:25px 12px;text-align:center;border:1px dashed var(--border);border-radius:10px}
-.mobile-menu{display:none}.preview{max-width:180px;max-height:130px;object-fit:contain;margin-top:10px;background:#090909;border-radius:8px}
-.ticket-actions{display:flex;flex-wrap:wrap;gap:6px}.ticket-actions .btn{white-space:nowrap}
+.mobile-menu{display:none}
+.preview{max-width:180px;max-height:130px;object-fit:contain;margin-top:10px;background:#090909;border-radius:8px}
+.ticket-actions{display:flex;flex-wrap:wrap;gap:6px}
+.ticket-actions .btn{white-space:nowrap}
 @media(max-width:1050px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.number-grid{grid-template-columns:repeat(6,minmax(0,1fr))}}
-@media(max-width:760px){.topbar{padding:0 13px}.layout{display:block}.sidebar{display:none;position:sticky;top:68px;z-index:9;border-right:0;border-bottom:1px solid var(--border);padding:10px}.sidebar.open{display:block}.mobile-menu{display:inline-block}main{padding:17px 12px 35px}.grid,.grid-2,.action-list{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.page-head{flex-direction:column}.number-grid{grid-template-columns:repeat(5,minmax(0,1fr))}.brand{font-size:17px}.topbar-right .btn{padding:9px;font-size:12px}}
+@media(max-width:760px){
+.topbar{padding:0 13px}.layout{display:block}.sidebar{display:none;position:sticky;top:68px;z-index:9;border-right:0;border-bottom:1px solid var(--border);padding:10px}
+.sidebar.open{display:block}.mobile-menu{display:inline-block}main{padding:17px 12px 35px}
+.grid,.grid-2,.action-list{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}
+.full{grid-column:auto}.page-head{flex-direction:column}.number-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+.brand{font-size:17px}.topbar-right .btn{padding:9px;font-size:12px}
+}
 </style>
 </head>
 <body>
 <section id="loginScreen" class="login-screen">
   <div class="login-card">
-    <div class="brand">OKL LIFESTYLE</div><p class="muted">Painel administrativo</p>
+    <div class="brand">OKL LIFESTYLE</div>
+    <p class="muted">Painel administrativo</p>
     <form id="loginForm">
-      <label for="loginEmail">E-mail</label><input id="loginEmail" type="email" autocomplete="username" required>
-      <label for="loginPassword">Senha</label><input id="loginPassword" type="password" autocomplete="current-password" required>
-      <button class="btn btn-gold btn-block" type="submit">Entrar no painel</button><div id="loginFeedback" class="feedback"></div>
+      <label for="loginEmail">E-mail</label>
+      <input id="loginEmail" type="email" autocomplete="username" required>
+      <label for="loginPassword">Senha</label>
+      <input id="loginPassword" type="password" autocomplete="current-password" required>
+      <button class="btn btn-gold btn-block" type="submit">Entrar no painel</button>
+      <div id="loginFeedback" class="feedback"></div>
     </form>
   </div>
 </section>
 
 <div id="adminApp" class="app hidden">
 <header class="topbar">
-  <div style="display:flex;align-items:center;gap:12px"><button id="mobileMenu" class="btn mobile-menu" type="button">☰</button><div class="brand">OKL LIFESTYLE</div></div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <button id="mobileMenu" class="btn mobile-menu" type="button">☰</button>
+    <div class="brand">OKL LIFESTYLE</div>
+  </div>
   <div class="topbar-right"><span class="muted small" id="adminEmail"></span><button id="logoutBtn" class="btn" type="button">Sair</button></div>
 </header>
 <div class="layout">
@@ -154,20 +203,15 @@ th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border);font-si
 </section>
 
 <section id="page-premiados" class="admin-page hidden">
-  <div class="page-head">
-    <div><h1>🏆 Bilhetes premiados</h1><p>Cadastre e corrija os números especiais e seus prêmios.</p></div>
-  </div>
+  <div class="page-head"><div><h1>🏆 Bilhetes premiados</h1><p>Cadastre e corrija os números especiais e seus prêmios.</p></div></div>
   <div class="panel">
     <div class="notice">Selecione a ação, informe o número e descreva o prêmio. Só bilhetes em estado “Aguardando” podem ser editados ou cancelados. Bilhetes contemplados ficam protegidos.</div>
     <form id="winningTicketForm">
       <input id="winningEditId" type="hidden">
-      <label for="winningAction">Ação *</label>
-      <select id="winningAction" required></select>
-      <label for="winningNumber">Número premiado *</label>
-      <input id="winningNumber" type="number" min="0" step="1" required placeholder="Ex.: 25">
+      <label for="winningAction">Ação *</label><select id="winningAction" required></select>
+      <label for="winningNumber">Número premiado *</label><input id="winningNumber" type="number" min="0" step="1" required placeholder="Ex.: 25">
       <p id="winningNumberHelp" class="muted small">Selecione uma ação para consultar o intervalo válido.</p>
-      <label for="winningPrize">Descrição do prêmio *</label>
-      <input id="winningPrize" maxlength="200" required placeholder="Ex.: Óculos Oakley">
+      <label for="winningPrize">Descrição do prêmio *</label><input id="winningPrize" maxlength="200" required placeholder="Ex.: Óculos Oakley">
       <div class="toolbar" style="margin-top:12px">
         <button id="winningTicketBtn" class="btn btn-gold" type="submit">Cadastrar bilhete premiado</button>
         <button id="cancelWinningEditBtn" class="btn hidden" type="button">Cancelar edição</button>
@@ -194,14 +238,25 @@ const STORAGE_BUCKET = "fotos-premios";
 const ADMIN_UID = "a7039801-3bac-48d5-91a0-befd48b3944e";
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const $ = id => document.getElementById(id);
-const state = {actions:[],numbers:[],orders:[],winningTickets:[],refreshTimer:null};
+
+/* Dados do mapa e dados da lista são mantidos separados. */
+const state = {
+  actions: [],
+  numbers: [],
+  orders: [],
+  winningTickets: [],
+  mapWinningTickets: [],
+  refreshTimer: null
+};
 
 function escapeHtml(value){
   return String(value ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
 }
 function feedback(id,message,type=""){
-  const el=$(id);if(!el)return;
-  el.className="feedback"+(type?" "+type:"");el.textContent=message||"";
+  const el=$(id);
+  if(!el)return;
+  el.className="feedback"+(type?" "+type:"");
+  el.textContent=message||"";
 }
 function money(value){
   return Number(value||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
@@ -251,38 +306,57 @@ async function verificarSessao(){
   if(data.session){
     if(data.session.user.id!==ADMIN_UID){
       await db.auth.signOut();
-      $("loginScreen").classList.remove("hidden");$("adminApp").classList.add("hidden");
+      $("loginScreen").classList.remove("hidden");
+      $("adminApp").classList.add("hidden");
       feedback("loginFeedback","Este usuário não está autorizado como administrador.","error");
       return;
     }
     abrirPainel(data.session.user);
-  }else{$("loginScreen").classList.remove("hidden");$("adminApp").classList.add("hidden");}
+  }else{
+    $("loginScreen").classList.remove("hidden");
+    $("adminApp").classList.add("hidden");
+  }
 }
 function abrirPainel(user){
-  $("loginScreen").classList.add("hidden");$("adminApp").classList.remove("hidden");
+  $("loginScreen").classList.add("hidden");
+  $("adminApp").classList.remove("hidden");
   $("adminEmail").textContent=user?.email||"Administrador";
-  carregarAcoes();carregarPedidos();carregarAcoesNosSelects();
+  carregarAcoes();
+  carregarPedidos();
+  carregarAcoesNosSelects();
   if(state.refreshTimer)clearInterval(state.refreshTimer);
   state.refreshTimer=setInterval(()=>{
     if(document.querySelector(".admin-page:not(.hidden)")?.id==="page-numeros")carregarNumeros(true);
   },10000);
 }
 $("loginForm").addEventListener("submit",async e=>{
-  e.preventDefault();feedback("loginFeedback","Entrando…");
-  const {data,error}=await db.auth.signInWithPassword({email:$("loginEmail").value.trim(),password:$("loginPassword").value});
+  e.preventDefault();
+  feedback("loginFeedback","Entrando…");
+  const {data,error}=await db.auth.signInWithPassword({
+    email:$("loginEmail").value.trim(),
+    password:$("loginPassword").value
+  });
   if(error){feedback("loginFeedback",error.message,"error");return;}
   if(data.user?.id!==ADMIN_UID){
     await db.auth.signOut();
-    feedback("loginFeedback","Este usuário não está autorizado como administrador.","error");return;
+    feedback("loginFeedback","Este usuário não está autorizado como administrador.","error");
+    return;
   }
-  abrirPainel(data.user);feedback("loginFeedback","");
+  abrirPainel(data.user);
+  feedback("loginFeedback","");
 });
 $("logoutBtn").addEventListener("click",async()=>{
   if(state.refreshTimer)clearInterval(state.refreshTimer);
-  await db.auth.signOut();$("adminApp").classList.add("hidden");$("loginScreen").classList.remove("hidden");
+  await db.auth.signOut();
+  $("adminApp").classList.add("hidden");
+  $("loginScreen").classList.remove("hidden");
 });
 db.auth.onAuthStateChange((_event,session)=>{
-  if(!session){if(state.refreshTimer)clearInterval(state.refreshTimer);$("adminApp").classList.add("hidden");$("loginScreen").classList.remove("hidden");}
+  if(!session){
+    if(state.refreshTimer)clearInterval(state.refreshTimer);
+    $("adminApp").classList.add("hidden");
+    $("loginScreen").classList.remove("hidden");
+  }
 });
 
 async function carregarAcoes(){
@@ -291,12 +365,19 @@ async function carregarAcoes(){
     .order("created_at",{ascending:false});
   if(error){
     $("allActions").innerHTML='<div class="empty">Erro ao carregar ações: '+escapeHtml(error.message)+"</div>";
-    $("dashboardActions").innerHTML="";feedback("actionFeedback",error.message,"error");return;
+    $("dashboardActions").innerHTML="";
+    feedback("actionFeedback",error.message,"error");
+    return;
   }
-  state.actions=data||[];renderAcoes();atualizarResumo();preencherSelectAcoes();
+  state.actions=data||[];
+  renderAcoes();
+  atualizarResumo();
+  preencherSelectAcoes();
 }
 function actionCard(a){
-  const image=a.foto_url?`<img src="${escapeHtml(a.foto_url)}" alt="Foto do prêmio" loading="lazy">`:'<div class="empty">Sem foto cadastrada</div>';
+  const image=a.foto_url
+    ?`<img src="${escapeHtml(a.foto_url)}" alt="Foto do prêmio" loading="lazy">`
+    :'<div class="empty">Sem foto cadastrada</div>';
   return `<article class="action-card">${image}<div class="action-content">
   <h3>${escapeHtml(a.nome||"Ação sem nome")}</h3><div class="action-meta">
   Prêmio: <strong>${escapeHtml(a.premio||"Não informado")}</strong><br>
@@ -312,10 +393,13 @@ function renderAcoes(){
   $("allActions").innerHTML=filtered.length?filtered.map(actionCard).join(""):'<div class="empty">Nenhuma ação encontrada.</div>';
   $("dashboardActions").innerHTML=state.actions.length?state.actions.slice(0,4).map(actionCard).join(""):'<div class="empty">Nenhuma ação cadastrada.</div>';
   document.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>{
-    const a=state.actions.find(x=>String(x.id)===b.dataset.edit);if(a)editarAcao(a);
+    const a=state.actions.find(x=>String(x.id)===b.dataset.edit);
+    if(a)editarAcao(a);
   }));
   document.querySelectorAll("[data-map]").forEach(b=>b.addEventListener("click",()=>{
-    $("numbersAction").value=b.dataset.map;showPage("numeros");carregarNumeros();
+    $("numbersAction").value=b.dataset.map;
+    showPage("numeros");
+    carregarNumeros();
   }));
 }
 function atualizarResumo(){
@@ -347,14 +431,22 @@ function preencherSelectAcoes(){
 }
 
 $("actionPhoto").addEventListener("change",()=>{
-  const file=$("actionPhoto").files[0],preview=$("photoPreview");if(!file)return;
-  if(!file.type.startsWith("image/")){feedback("actionFeedback","Selecione um arquivo de imagem.","error");$("actionPhoto").value="";return;}
-  preview.src=URL.createObjectURL(file);preview.classList.remove("hidden");
+  const file=$("actionPhoto").files[0],preview=$("photoPreview");
+  if(!file)return;
+  if(!file.type.startsWith("image/")){
+    feedback("actionFeedback","Selecione um arquivo de imagem.","error");
+    $("actionPhoto").value="";
+    return;
+  }
+  preview.src=URL.createObjectURL(file);
+  preview.classList.remove("hidden");
 });
 async function uploadFoto(file){
   const extension=file.name.split(".").pop().toLowerCase().replace(/[^a-z0-9]/g,"")||"jpg";
   const path=`${Date.now()}-${crypto.randomUUID()}.${extension}`;
-  const {error}=await db.storage.from(STORAGE_BUCKET).upload(path,file,{cacheControl:"3600",upsert:false,contentType:file.type});
+  const {error}=await db.storage.from(STORAGE_BUCKET).upload(path,file,{
+    cacheControl:"3600",upsert:false,contentType:file.type
+  });
   if(error)throw error;
   const {data}=db.storage.from(STORAGE_BUCKET).getPublicUrl(path);
   if(!data?.publicUrl)throw new Error("Não foi possível obter o endereço público da foto.");
@@ -362,13 +454,16 @@ async function uploadFoto(file){
 }
 function dateForInput(value){
   if(!value)return "";
-  const d=new Date(value);if(Number.isNaN(d.getTime()))return "";
+  const d=new Date(value);
+  if(Number.isNaN(d.getTime()))return "";
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
 }
 
 $("actionForm").addEventListener("submit",async e=>{
   e.preventDefault();
-  const button=$("saveActionBtn");button.disabled=true;feedback("actionFeedback","Salvando ação…");
+  const button=$("saveActionBtn");
+  button.disabled=true;
+  feedback("actionFeedback","Salvando ação…");
   try{
     const id=$("editId").value;
     const nome=$("actionName").value.trim();
@@ -386,7 +481,7 @@ $("actionForm").addEventListener("submit",async e=>{
 
     if(!nome)throw new Error("Informe o nome da ação.");
     if(!Number.isFinite(valor)||valor<=0)throw new Error("O valor por número precisa ser maior que zero.");
-    if(!Number.isInteger(total)||total<1||total>100000)throw new Error("A quantidade total precisa ser um número inteiro entre 1 e 100.000.");
+    if(!id&&(!Number.isInteger(total)||total<1||total>100000))throw new Error("A quantidade total precisa ser um número inteiro entre 1 e 100.000.");
     if(quantity!==null&&(!Number.isInteger(quantity)||quantity<1))throw new Error("A quantidade de bilhetes por compra precisa ser um inteiro positivo.");
     if(link){try{new URL(link);}catch{throw new Error("Informe um link de pagamento válido.");}}
 
@@ -405,8 +500,9 @@ $("actionForm").addEventListener("submit",async e=>{
     if(id){
       const {error}=await db.from("AÇÕES").update(payload).eq("id",id);
       if(error)throw error;
+      await carregarAcoes();
+      cancelarEdicao();
       feedback("actionFeedback","Ação atualizada com sucesso. A quantidade total foi preservada para proteger a grade existente.","success");
-      await carregarAcoes();cancelarEdicao();
     }else{
       if(!fotoUrl)throw new Error("Envie a foto do prêmio para cadastrar uma nova ação.");
       payload.total_numeros=total;
@@ -415,126 +511,223 @@ $("actionForm").addEventListener("submit",async e=>{
       const {error:generationError}=await db.rpc("gerar_numeros_acao",{p_acao_id:data.id});
       if(generationError){
         feedback("actionFeedback","A ação foi criada, mas a geração de números falhou: "+generationError.message+". Confira o banco antes de tentar novamente.","error");
-        await carregarAcoes();return;
+        await carregarAcoes();
+        return;
       }
       feedback("actionFeedback","Ação cadastrada e geração de números solicitada com sucesso.","success");
-      $("actionForm").reset();$("photoPreview").classList.add("hidden");
+      $("actionForm").reset();
+      $("photoPreview").classList.add("hidden");
       await carregarAcoes();
     }
   }catch(error){
     feedback("actionFeedback",error.message||"Não foi possível salvar a ação.","error");
-  }finally{button.disabled=false;}
+  }finally{
+    button.disabled=false;
+  }
 });
 
 function editarAcao(a){
-  $("editId").value=a.id;$("actionName").value=a.nome||"";
-  $("actionPrize").value=a.premio||"";$("prizeDescription").value=a.premio_descricao||"";
-  $("actionDescription").value=a.descricao||"";$("actionPrice").value=a.valor_numero??"";
-  $("actionTotal").value=a.total_numeros??"";$("actionTotal").disabled=true;
+  $("editId").value=a.id;
+  $("actionName").value=a.nome||"";
+  $("actionPrize").value=a.premio||"";
+  $("prizeDescription").value=a.premio_descricao||"";
+  $("actionDescription").value=a.descricao||"";
+  $("actionPrice").value=a.valor_numero??"";
+  $("actionTotal").value=a.total_numeros??"";
+  $("actionTotal").disabled=true;
   $("totalHelp").textContent="A quantidade total não pode ser alterada na edição porque os números já podem ter sido gerados.";
-  $("actionStatus").value=a.status||"ativa";$("actionQuantity").value=a.quantidade_numeros??"";
-  $("actionDate").value=dateForInput(a.data_sorteio);$("paymentLink").value=a.link_pagamento||"";
-  $("actionNotes").value=a.observacoes||"";$("actionPhoto").value="";
-  $("formTitle").textContent="Editar ação";$("saveActionBtn").textContent="Salvar alterações";
+  $("actionStatus").value=a.status||"ativa";
+  $("actionQuantity").value=a.quantidade_numeros??"";
+  $("actionDate").value=dateForInput(a.data_sorteio);
+  $("paymentLink").value=a.link_pagamento||"";
+  $("actionNotes").value=a.observacoes||"";
+  $("actionPhoto").value="";
+  $("formTitle").textContent="Editar ação";
+  $("saveActionBtn").textContent="Salvar alterações";
   $("cancelEditBtn").classList.remove("hidden");
-  if(a.foto_url){$("photoPreview").src=a.foto_url;$("photoPreview").classList.remove("hidden");}
-  else $("photoPreview").classList.add("hidden");
-  feedback("actionFeedback","");showPage("cadastro");window.scrollTo({top:0,behavior:"smooth"});
+  if(a.foto_url){
+    $("photoPreview").src=a.foto_url;
+    $("photoPreview").classList.remove("hidden");
+  }else $("photoPreview").classList.add("hidden");
+  feedback("actionFeedback","");
+  showPage("cadastro");
+  window.scrollTo({top:0,behavior:"smooth"});
 }
 function cancelarEdicao(){
-  $("actionForm").reset();$("editId").value="";$("actionTotal").disabled=false;
+  $("actionForm").reset();
+  $("editId").value="";
+  $("actionTotal").disabled=false;
   $("totalHelp").textContent="Máximo: 100.000 números por ação.";
-  $("formTitle").textContent="Cadastrar nova ação";$("saveActionBtn").textContent="Salvar ação";
-  $("cancelEditBtn").classList.add("hidden");$("photoPreview").classList.add("hidden");feedback("actionFeedback","");
+  $("formTitle").textContent="Cadastrar nova ação";
+  $("saveActionBtn").textContent="Salvar ação";
+  $("cancelEditBtn").classList.add("hidden");
+  $("photoPreview").classList.add("hidden");
+  feedback("actionFeedback","");
 }
 $("cancelEditBtn").addEventListener("click",cancelarEdicao);
 
+/* MAPA DE NÚMEROS */
 async function carregarNumeros(silent=false){
   const actionId=$("numbersAction").value;
-  if(!actionId){$("numberGrid").innerHTML='<div class="empty">Cadastre ou selecione uma ação.</div>';return;}
+  if(!actionId){
+    state.numbers=[];
+    state.mapWinningTickets=[];
+    $("numberGrid").innerHTML='<div class="empty">Cadastre ou selecione uma ação.</div>';
+    $("numbersSummary").innerHTML="";
+    $("numberDetail").classList.add("hidden");
+    return;
+  }
   if(!silent)feedback("numbersFeedback","Carregando números…");
-  const {data,error}=await db.from("numeros").select("numero,status,pedido_id,reservado_em,reservado_ate").eq("acao_id",actionId).order("numero",{ascending:true});
-  if(error){feedback("numbersFeedback",error.message,"error");return;}
-  state.numbers=data||[];
-  await carregarBilhetesPremiados(true,actionId);
-  renderNumeros();feedback("numbersFeedback","");
+  try{
+    const [numbersResult,ticketsResult]=await Promise.all([
+      db.from("numeros")
+        .select("numero,status,pedido_id,reservado_em,reservado_ate")
+        .eq("acao_id",actionId)
+        .order("numero",{ascending:true}),
+      db.from("bilhetes_premiados")
+        .select("id,acao_id,numero,premio,status,pedido_id,contemplado_em,created_at")
+        .eq("acao_id",actionId)
+        .neq("status","cancelado")
+        .order("numero",{ascending:true})
+    ]);
+    if(numbersResult.error)throw numbersResult.error;
+    if(ticketsResult.error)throw ticketsResult.error;
+
+    /* Cada carregamento do mapa atualiza apenas os dados do mapa. */
+    if(String($("numbersAction").value)!==String(actionId))return;
+    state.numbers=numbersResult.data||[];
+    state.mapWinningTickets=ticketsResult.data||[];
+    renderNumeros();
+    feedback("numbersFeedback","");
+  }catch(error){
+    feedback("numbersFeedback","Não foi possível carregar o mapa: "+error.message,"error");
+  }
 }
 function renderNumeros(){
   const all=state.numbers;
   const available=all.filter(n=>statusClass(n.status)==="disponivel").length;
   const reserved=all.filter(n=>statusClass(n.status)==="reservado").length;
   const occupied=all.filter(n=>["vendido","gratuito"].includes(statusClass(n.status))).length;
-  $("statDisponiveis").textContent=available;$("statOcupados").textContent=reserved+occupied;
+  $("statDisponiveis").textContent=available;
+  $("statOcupados").textContent=reserved+occupied;
   $("numbersSummary").innerHTML=`<div class="stat"><div class="stat-label">Total</div><div class="stat-value">${all.length}</div></div><div class="stat"><div class="stat-label">Disponíveis</div><div class="stat-value">${available}</div></div><div class="stat"><div class="stat-label">Reservados</div><div class="stat-value">${reserved}</div></div><div class="stat"><div class="stat-label">Ocupados</div><div class="stat-value">${occupied}</div></div>`;
+
   const action=state.actions.find(a=>String(a.id)===$("numbersAction").value);
-  const filter=$("numberStatusFilter").value,search=$("numberSearch").value.trim();
-  const winningSet=new Set(state.winningTickets.filter(t=>t.status!=="cancelado").map(t=>String(t.numero)));
-  const filtered=all.filter(n=>(!filter||statusClass(n.status)===filter)&&(!search||String(n.numero)===search));
+  const filter=$("numberStatusFilter").value;
+  const search=$("numberSearch").value.trim();
+  const winningSet=new Set(state.mapWinningTickets.map(t=>String(t.numero)));
+  const filtered=all.filter(n=>
+    (!filter||statusClass(n.status)===filter)&&
+    (!search||String(n.numero)===search)
+  );
   $("numberGrid").innerHTML=filtered.map(n=>{
     const special=winningSet.has(String(n.numero));
     return `<button class="number ${statusClass(n.status)} ${special?"number-premiado":""}" type="button" data-number="${escapeHtml(n.numero)}" title="Número ${escapeHtml(numberLabel(n.numero,action?.total_numeros))} — ${special?"Bilhete premiado — ":""}${escapeHtml(statusLabel(n.status))}">${special?"🏆 ":""}${escapeHtml(numberLabel(n.numero,action?.total_numeros))}</button>`;
   }).join("")||'<div class="empty">Nenhum número corresponde ao filtro.</div>';
+
   document.querySelectorAll("[data-number]").forEach(b=>b.addEventListener("click",()=>{
-    const n=state.numbers.find(x=>String(x.numero)===b.dataset.number);if(n)mostrarDetalheNumero(n);
+    const n=state.numbers.find(x=>String(x.numero)===b.dataset.number);
+    if(n)mostrarDetalheNumero(n);
   }));
 }
 async function mostrarDetalheNumero(item){
-  const box=$("numberDetail");box.classList.remove("hidden");box.textContent="Carregando detalhes do número…";
+  const box=$("numberDetail");
+  box.classList.remove("hidden");
+  box.textContent="Carregando detalhes do número…";
   let order=null;
   if(item.pedido_id){
-    const {data,error}=await db.from("pedidos").select("id,nome_cliente,telefone,quantidade,valor_total,status").eq("id",item.pedido_id).maybeSingle();
+    const {data,error}=await db.from("pedidos")
+      .select("id,nome_cliente,telefone,quantidade,valor_total,status")
+      .eq("id",item.pedido_id).maybeSingle();
     if(!error)order=data;
   }
-  const special=state.winningTickets.filter(t=>String(t.numero)===String(item.numero)&&t.status!=="cancelado");
-  const action=state.actions.find(a=>String(a.id)===$("numbersAction").value);
-  box.innerHTML=`<strong>Número ${escapeHtml(numberLabel(item.numero,action?.total_numeros))}</strong><br>Status: ${escapeHtml(statusLabel(item.status))}<br>${special.length?`<strong>🏆 Bilhete premiado:</strong> ${special.map(t=>escapeHtml(t.premio)).join(", ")}<br>`:""}Pedido: ${escapeHtml(item.pedido_id||"Sem pedido associado")}<br>Reservado em: ${escapeHtml(item.reservado_em?new Date(item.reservado_em).toLocaleString("pt-BR"):"Não informado")}<br>Reserva até: ${escapeHtml(item.reservado_ate?new Date(item.reservado_ate).toLocaleString("pt-BR"):"Não informado")}${order?`<hr style="border-color:var(--border)"><strong>Dados do cliente</strong><br>Nome: ${escapeHtml(order.nome_cliente||"Não informado")}<br>WhatsApp: ${escapeHtml(order.telefone||"Não informado")}<br>Quantidade: ${escapeHtml(order.quantidade??"—")}<br>Valor: ${money(order.valor_total)}<br>Status do pedido: ${escapeHtml(statusLabel(order.status))}`:""}`;
+  const actionId=$("numbersAction").value;
+  const special=state.mapWinningTickets.filter(t=>
+    String(t.acao_id)===String(actionId)&&String(t.numero)===String(item.numero)
+  );
+  const action=state.actions.find(a=>String(a.id)===String(actionId));
+  box.innerHTML=`<strong>Número ${escapeHtml(numberLabel(item.numero,action?.total_numeros))}</strong><br>
+  Status: ${escapeHtml(statusLabel(item.status))}<br>
+  ${special.length?`<strong>🏆 Bilhete premiado:</strong> ${special.map(t=>escapeHtml(t.premio)).join(", ")}<br>`:""}
+  Pedido: ${escapeHtml(item.pedido_id||"Sem pedido associado")}<br>
+  Reservado em: ${escapeHtml(item.reservado_em?new Date(item.reservado_em).toLocaleString("pt-BR"):"Não informado")}<br>
+  Reserva até: ${escapeHtml(item.reservado_ate?new Date(item.reservado_ate).toLocaleString("pt-BR"):"Não informado")}
+  ${order?`<hr style="border-color:var(--border)"><strong>Dados do cliente</strong><br>Nome: ${escapeHtml(order.nome_cliente||"Não informado")}<br>WhatsApp: ${escapeHtml(order.telefone||"Não informado")}<br>Quantidade: ${escapeHtml(order.quantidade??"—")}<br>Valor: ${money(order.valor_total)}<br>Status do pedido: ${escapeHtml(statusLabel(order.status))}`:""}`;
 }
-$("numbersAction").addEventListener("change",carregarNumeros);
+$("numbersAction").addEventListener("change",()=>carregarNumeros());
 $("numberSearch").addEventListener("input",renderNumeros);
 $("numberStatusFilter").addEventListener("change",renderNumeros);
 $("refreshNumbers").addEventListener("click",()=>carregarNumeros());
 
+/* PEDIDOS */
 async function carregarPedidos(){
-  const {data,error}=await db.from("pedidos").select("id,nome_cliente,telefone,quantidade,valor_total,status").order("id",{ascending:false}).limit(500);
-  if(error){$("ordersTable").innerHTML='<div class="empty">Não foi possível carregar pedidos: '+escapeHtml(error.message)+"</div>";feedback("ordersFeedback",error.message,"error");return;}
-  state.orders=data||[];renderPedidos();
+  const {data,error}=await db.from("pedidos")
+    .select("id,nome_cliente,telefone,quantidade,valor_total,status")
+    .order("id",{ascending:false}).limit(500);
+  if(error){
+    $("ordersTable").innerHTML='<div class="empty">Não foi possível carregar pedidos: '+escapeHtml(error.message)+"</div>";
+    feedback("ordersFeedback",error.message,"error");
+    return;
+  }
+  state.orders=data||[];
+  renderPedidos();
 }
 function renderPedidos(){
-  const query=$("orderSearch").value.toLowerCase().trim(),filter=$("orderStatusFilter").value;
+  const query=$("orderSearch").value.toLowerCase().trim();
+  const filter=$("orderStatusFilter").value;
   const filtered=state.orders.filter(o=>{
     const text=[o.id,o.nome_cliente,o.telefone,o.status].join(" ").toLowerCase();
     return text.includes(query)&&(!filter||String(o.status||"").toLowerCase()===filter);
   });
-  if(!filtered.length){$("ordersTable").innerHTML='<div class="empty">Nenhum pedido encontrado.</div>';return;}
+  if(!filtered.length){
+    $("ordersTable").innerHTML='<div class="empty">Nenhum pedido encontrado.</div>';
+    return;
+  }
   $("ordersTable").innerHTML=`<div class="table-wrap"><table><thead><tr><th>Pedido</th><th>Cliente</th><th>WhatsApp</th><th>Quantidade</th><th>Total</th><th>Status</th></tr></thead><tbody>${filtered.map(o=>`<tr><td>${escapeHtml(o.id)}</td><td>${escapeHtml(o.nome_cliente||"—")}</td><td>${escapeHtml(o.telefone||"—")}</td><td>${escapeHtml(o.quantidade??"—")}</td><td>${money(o.valor_total)}</td><td>${escapeHtml(statusLabel(o.status))}</td></tr>`).join("")}</tbody></table></div>`;
 }
 $("refreshOrders").addEventListener("click",carregarPedidos);
 $("orderSearch").addEventListener("input",renderPedidos);
 $("orderStatusFilter").addEventListener("change",renderPedidos);
 
+/* BILHETES GRÁTIS */
 $("freeTicketsForm").addEventListener("submit",async e=>{
   e.preventDefault();
-  const actionId=$("freeAction").value,name=$("freeName").value.trim(),phone=$("freePhone").value.trim(),quantity=Number($("freeQuantity").value),button=$("freeTicketsBtn");
+  const actionId=$("freeAction").value;
+  const name=$("freeName").value.trim();
+  const phone=$("freePhone").value.trim();
+  const quantity=Number($("freeQuantity").value);
+  const button=$("freeTicketsBtn");
   $("freeResult").classList.add("hidden");
   if(!actionId){feedback("freeFeedback","Selecione uma ação ativa.","error");return;}
   if(!name||!phone){feedback("freeFeedback","Preencha o nome e o WhatsApp do cliente.","error");return;}
-  if(!Number.isInteger(quantity)||quantity<1||quantity>100000){feedback("freeFeedback","Informe uma quantidade inteira válida.","error");return;}
+  if(!Number.isInteger(quantity)||quantity<1||quantity>100000){
+    feedback("freeFeedback","Informe uma quantidade inteira válida.","error");return;
+  }
   try{
     await usuarioAdmin();
     if(!window.confirm(`Confirmar a distribuição de ${quantity} bilhete(s) grátis para ${name}?`))return;
-    button.disabled=true;feedback("freeFeedback","Solicitando distribuição segura ao Supabase…");
-    const {data,error}=await db.rpc("distribuir_bilhetes_gratis",{p_acao_id:actionId,p_nome_cliente:name,p_telefone:phone,p_quantidade:quantity});
+    button.disabled=true;
+    feedback("freeFeedback","Solicitando distribuição segura ao Supabase…");
+    const {data,error}=await db.rpc("distribuir_bilhetes_gratis",{
+      p_acao_id:actionId,p_nome_cliente:name,p_telefone:phone,p_quantidade:quantity
+    });
     if(error)throw new Error("A distribuição não foi confirmada pelo Supabase. Detalhe: "+error.message);
     feedback("freeFeedback","Resposta recebida do Supabase. Confira os números abaixo.","success");
-    const resultBox=$("freeResult");resultBox.classList.remove("hidden");
+    const resultBox=$("freeResult");
+    resultBox.classList.remove("hidden");
     resultBox.textContent=typeof data==="string"?data:JSON.stringify(data,null,2);
     $("freeTicketsForm").reset();
-    await carregarAcoes();await carregarPedidos();await carregarNumeros();
-  }catch(error){feedback("freeFeedback",error.message||"Não foi possível distribuir os bilhetes.","error");}
-  finally{button.disabled=false;}
+    await carregarAcoes();
+    await carregarPedidos();
+    if(String($("numbersAction").value)===String(actionId))await carregarNumeros(true);
+  }catch(error){
+    feedback("freeFeedback",error.message||"Não foi possível distribuir os bilhetes.","error");
+  }finally{
+    button.disabled=false;
+  }
 });
 
-/* BILHETES PREMIADOS: CADASTRAR, EDITAR E CANCELAR */
+/* BILHETES PREMIADOS: CADASTRO, EDIÇÃO E CANCELAMENTO */
 function acaoPremiadaSelecionada(){
   return state.actions.find(a=>String(a.id)===$("winningAction").value);
 }
@@ -557,14 +750,23 @@ function atualizarLimiteNumeroPremiado(){
   }
 }
 function limparEdicaoPremiado(){
+  const selectedAction=$("winningAction").value;
   $("winningEditId").value="";
   $("winningTicketForm").reset();
+  if([...$("winningAction").options].some(o=>o.value===selectedAction)){
+    $("winningAction").value=selectedAction;
+  }
+  $("winningAction").disabled=false;
   $("winningTicketBtn").textContent="Cadastrar bilhete premiado";
   $("cancelWinningEditBtn").classList.add("hidden");
   atualizarLimiteNumeroPremiado();
 }
 $("winningAction").addEventListener("change",async()=>{
-  if($("winningEditId").value)limparEdicaoPremiado();
+  const selectedAction=$("winningAction").value;
+  if($("winningEditId").value){
+    limparEdicaoPremiado();
+    $("winningAction").value=selectedAction;
+  }
   atualizarLimiteNumeroPremiado();
   await carregarBilhetesPremiados();
 });
@@ -575,30 +777,31 @@ $("cancelWinningEditBtn").addEventListener("click",()=>{
   feedback("winningFeedback","Edição cancelada.");
 });
 
-async function carregarBilhetesPremiados(silent=false,explicitActionId=null){
-  const actionId=explicitActionId||$("winningAction").value||$("numbersAction").value;
+async function carregarBilhetesPremiados(){
+  const actionId=$("winningAction").value;
   if(!actionId){
     state.winningTickets=[];
     $("winningTicketsList").innerHTML='<div class="empty">Selecione uma ação para ver os bilhetes premiados.</div>';
     return;
   }
   try{
-    if(!silent)feedback("winningFeedback","Carregando bilhetes premiados…");
+    feedback("winningFeedback","Carregando bilhetes premiados…");
     const {data,error}=await db.from("bilhetes_premiados")
       .select("id,acao_id,numero,premio,status,pedido_id,contemplado_em,created_at")
       .eq("acao_id",actionId)
       .order("numero",{ascending:true});
     if(error)throw error;
+    if(String($("winningAction").value)!==String(actionId))return;
     state.winningTickets=data||[];
-    renderBilhetesPremiados(actionId);
-    if(!silent)feedback("winningFeedback","");
+    renderBilhetesPremiados();
+    feedback("winningFeedback","");
   }catch(error){
-    if(!silent)feedback("winningFeedback","Não foi possível carregar a lista. Confira a política de acesso no Supabase: "+error.message,"error");
+    feedback("winningFeedback","Não foi possível carregar a lista. Confira a política de acesso no Supabase: "+error.message,"error");
     $("winningTicketsList").innerHTML='<div class="empty">Erro ao carregar bilhetes premiados. Veja a mensagem acima.</div>';
   }
 }
-function renderBilhetesPremiados(actionId=null){
-  const selectedId=actionId||$("winningAction").value||$("numbersAction").value;
+function renderBilhetesPremiados(){
+  const selectedId=$("winningAction").value;
   const action=state.actions.find(a=>String(a.id)===String(selectedId));
   const search=$("winningSearch").value.trim();
   const tickets=state.winningTickets.filter(t=>
@@ -627,9 +830,11 @@ function renderBilhetesPremiados(actionId=null){
       const ticket=state.winningTickets.find(t=>String(t.id)===button.dataset.winningEdit);
       if(!ticket)return;
       if(ticket.status!=="aguardando"){
-        feedback("winningFeedback","Somente bilhetes aguardando podem ser editados.","error");return;
+        feedback("winningFeedback","Somente bilhetes aguardando podem ser editados.","error");
+        return;
       }
       $("winningAction").value=ticket.acao_id;
+      $("winningAction").disabled=true;
       $("winningEditId").value=ticket.id;
       $("winningNumber").value=ticket.numero;
       $("winningPrize").value=ticket.premio||"";
@@ -641,16 +846,19 @@ function renderBilhetesPremiados(actionId=null){
       $("winningTicketForm").scrollIntoView({behavior:"smooth",block:"start"});
     });
   });
+
   document.querySelectorAll("[data-winning-cancel]").forEach(button=>{
     button.addEventListener("click",async()=>{
       const ticket=state.winningTickets.find(t=>String(t.id)===button.dataset.winningCancel);
       if(!ticket)return;
       if(ticket.status!=="aguardando"){
-        feedback("winningFeedback","Somente bilhetes aguardando podem ser cancelados.","error");return;
+        feedback("winningFeedback","Somente bilhetes aguardando podem ser cancelados.","error");
+        return;
       }
       const ticketAction=state.actions.find(a=>String(a.id)===String(ticket.acao_id));
       const label=numberLabel(ticket.numero,ticketAction?.total_numeros);
       if(!window.confirm(`Cancelar o bilhete premiado ${label} — ${ticket.premio}?\nO registro será preservado no histórico, mas deixará de aparecer como prêmio ativo.`))return;
+
       button.disabled=true;
       try{
         await usuarioAdmin();
@@ -663,16 +871,19 @@ function renderBilhetesPremiados(actionId=null){
           .maybeSingle();
         if(error)throw error;
         if(!data)throw new Error("O bilhete não foi alterado. Ele pode ter mudado de status; atualize a lista.");
+
         feedback("winningFeedback",`Bilhete ${label} cancelado. O registro foi preservado no histórico.`,"success");
         if(String($("winningAction").value)===String(ticket.acao_id)){
           await carregarBilhetesPremiados();
-        }else{
-          await carregarBilhetesPremiados(true,ticket.acao_id);
         }
-        if(String($("numbersAction").value)===String(ticket.acao_id))await carregarNumeros(true);
+        if(String($("numbersAction").value)===String(ticket.acao_id)){
+          await carregarNumeros(true);
+        }
       }catch(error){
         feedback("winningFeedback",error.message||"Não foi possível cancelar o bilhete.","error");
-      }finally{button.disabled=false;}
+      }finally{
+        button.disabled=false;
+      }
     });
   });
 }
@@ -691,6 +902,7 @@ $("winningTicketForm").addEventListener("submit",async e=>{
     const numero=Number(raw);
     const premio=$("winningPrize").value.trim();
     const total=Number(action.total_numeros);
+
     if(raw==="")throw new Error("Informe o número premiado.");
     if(!Number.isInteger(numero)||numero<0)throw new Error("O número deve ser um inteiro igual ou maior que zero.");
     if(!Number.isInteger(total)||total<1||numero>=total)throw new Error(`Para esta ação, informe um número entre 0 e ${total-1}.`);
@@ -701,6 +913,7 @@ $("winningTicketForm").addEventListener("submit",async e=>{
       if(!original)throw new Error("Não encontrei esse bilhete na lista atual. Atualize a lista.");
       if(original.status!=="aguardando")throw new Error("Esse bilhete não pode ser editado porque não está aguardando.");
       if(String(original.acao_id)!==String(actionId))throw new Error("A ação selecionada não corresponde ao bilhete em edição.");
+
       if(!window.confirm(`Salvar alterações do bilhete premiado?\nNúmero: ${numberLabel(original.numero,total)} → ${numberLabel(numero,total)}\nPrêmio: ${premio}`))return;
 
       feedback("winningFeedback","Salvando alterações no Supabase…");
@@ -716,6 +929,7 @@ $("winningTicketForm").addEventListener("submit",async e=>{
         throw error;
       }
       if(!data)throw new Error("Nenhuma alteração foi feita. O bilhete pode ter sido contemplado ou alterado em outra sessão.");
+
       limparEdicaoPremiado();
       feedback("winningFeedback",`Bilhete atualizado: número ${numberLabel(data.numero,total)} — ${data.premio}.`,"success");
     }else{
@@ -729,9 +943,11 @@ $("winningTicketForm").addEventListener("submit",async e=>{
         throw error;
       }
       if(data?.sucesso===false)throw new Error(data.mensagem||"O Supabase não confirmou o cadastro.");
-      $("winningNumber").value="";$("winningPrize").value="";
+      $("winningNumber").value="";
+      $("winningPrize").value="";
       feedback("winningFeedback",`Bilhete ${numberLabel(numero,total)} cadastrado com sucesso.`,"success");
     }
+
     await carregarBilhetesPremiados();
     if(String($("numbersAction").value)===String(actionId))await carregarNumeros(true);
   }catch(error){
