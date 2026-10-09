@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,71 +6,410 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ações | OKL Lifestyle</title>
 <meta name="theme-color" content="#080808">
+
 <style>
-:root{--gold:#d4af37;--gold-light:#f3d779;--black:#080808;--muted:#aaa;--border:rgba(212,175,55,.28)}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--black);color:#fff;font-family:Arial,Helvetica,sans-serif}
-header{padding:18px 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;border-bottom:1px solid var(--border);background:#090909}
-.logo{color:var(--gold-light);font-weight:800;letter-spacing:3px;font-size:20px;text-decoration:none}
-nav{display:flex;flex-wrap:wrap;gap:18px}
-nav a{color:#eee;text-decoration:none;font-size:13px;transition:color .2s}
-nav a:hover,nav a.atual{color:var(--gold-light)}
-.hero{text-align:center;padding:58px 20px 38px;background:radial-gradient(ellipse at top,#29200c 0%,#080808 65%)}
-.eyebrow{color:var(--gold-light);font-size:12px;letter-spacing:4px;font-weight:bold}
-h1{font-size:clamp(32px,6vw,52px);margin:15px 0 12px}
-h1 span,.section-title h2 span{color:var(--gold-light)}
-.hero p{color:var(--muted);line-height:1.6;max-width:600px;margin:0 auto}
-main{width:min(1150px,92%);margin:0 auto;padding:30px 0 65px}
-.section-title{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:22px}
-.section-title h2{margin:0;font-size:23px}
-#contador{color:var(--muted);font-size:13px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:22px}
-.card{background:linear-gradient(145deg,#171717,#0d0d0d);border:1px solid var(--border);border-radius:13px;overflow:hidden;display:flex;flex-direction:column;min-width:0;transition:border-color .2s,transform .2s}
-.card:hover{border-color:rgba(243,215,121,.65);transform:translateY(-3px)}
-.foto{height:230px;background:#0d0d0d;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.foto img{width:100%;height:100%;object-fit:contain}
-.sem-foto{color:#777;font-size:13px}
-.conteudo{padding:20px;display:flex;flex-direction:column;flex:1}
-.status{color:var(--gold-light);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
-.card h3{font-size:20px;line-height:1.3;margin:0 0 10px;overflow-wrap:anywhere}
-.descricao{color:var(--muted);font-size:14px;line-height:1.6;white-space:pre-line;overflow-wrap:anywhere;flex:1}
-.detalhes{border-top:1px solid #292929;margin-top:18px;padding-top:16px;display:flex;justify-content:space-between;gap:12px}
-.rotulo{color:var(--muted);font-size:11px}
-.preco{color:var(--gold-light);font-size:21px;font-weight:bold;margin-top:5px}
-.qtd{font-size:13px;margin-top:5px;text-align:right}
-.botao{display:block;text-align:center;margin-top:20px;padding:14px 12px;border-radius:7px;background:linear-gradient(100deg,#b38b22,#f3d779,#b38b22);color:#080808;font-weight:bold;text-decoration:none;font-size:14px;transition:filter .2s}
-.botao:hover{filter:brightness(1.1)}
-.estado{padding:35px 20px;border:1px dashed var(--border);border-radius:10px;color:var(--muted);text-align:center;line-height:1.7;grid-column:1/-1}
-.estado strong{color:var(--gold-light)}
-footer{border-top:1px solid var(--border);padding:25px 15px;color:#888;font-size:12px;text-align:center;line-height:1.7}
-@media(max-width:600px){header{justify-content:center}nav{justify-content:center;gap:13px}.hero{padding-top:42px}.foto{height:210px}.card:hover{transform:none}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}}
+:root {
+  --gold: #d4af37;
+  --gold-light: #f3d779;
+  --black: #080808;
+  --muted: #aaa;
+  --border: rgba(212,175,55,.25);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--black);
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+  min-height: 76px;
+  padding: 18px 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  background: #090909;
+}
+
+.logo {
+  color: var(--gold-light);
+  font-weight: 800;
+  letter-spacing: 3px;
+  font-size: 20px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+}
+
+nav a {
+  color: #eee;
+  text-decoration: none;
+  font-size: 13px;
+  transition: color .2s;
+}
+
+nav a:hover,
+nav a.atual {
+  color: var(--gold-light);
+}
+
+/* CAPA REFINADA */
+.hero {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: 76px 20px 68px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(166,125,28,.16), transparent 62%),
+    linear-gradient(180deg, #10100e 0%, #080808 100%);
+  border-bottom: 1px solid rgba(212,175,55,.12);
+}
+
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.hero::before {
+  top: 30px;
+  width: min(260px, 55%);
+  opacity: .7;
+}
+
+.hero::after {
+  bottom: 28px;
+  width: min(150px, 35%);
+  opacity: .45;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  color: var(--gold-light);
+  font-size: 10px;
+  letter-spacing: 5px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: clamp(36px, 6vw, 60px);
+  font-weight: 500;
+  letter-spacing: 1px;
+  line-height: 1.12;
+  margin: 22px 0 18px;
+}
+
+h1 span,
+.section-title h2 span {
+  color: var(--gold-light);
+}
+
+.hero p {
+  color: #b4b4b4;
+  font-size: 15px;
+  line-height: 1.8;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.hero-line {
+  width: 38px;
+  height: 2px;
+  background: var(--gold);
+  margin: 25px auto 0;
+}
+
+main {
+  width: min(1150px, 92%);
+  margin: 0 auto;
+  padding: 48px 0 75px;
+}
+
+.section-title {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 27px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(255,255,255,.09);
+}
+
+.section-label {
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: 3px;
+  margin-bottom: 9px;
+  text-transform: uppercase;
+}
+
+.section-title h2 {
+  margin: 0;
+  font-size: clamp(23px, 3vw, 30px);
+  font-weight: 500;
+}
+
+#contador {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 25px;
+}
+
+.card {
+  background: linear-gradient(145deg, #171717, #0c0c0c);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  transition: border-color .2s, transform .2s;
+}
+
+.card:hover {
+  border-color: rgba(243,215,121,.65);
+  transform: translateY(-3px);
+}
+
+.foto {
+  height: 255px;
+  padding: 14px;
+  background: radial-gradient(ellipse at center, #1b1a16 0%, #0b0b0b 75%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(212,175,55,.14);
+}
+
+.foto img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.sem-foto {
+  color: #777;
+  font-size: 13px;
+}
+
+.conteudo {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.status {
+  color: var(--gold-light);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.card h3 {
+  font-size: 21px;
+  line-height: 1.35;
+  font-weight: 600;
+  margin: 0 0 12px;
+  overflow-wrap: anywhere;
+}
+
+.descricao {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  flex: 1;
+}
+
+.detalhes {
+  border-top: 1px solid #292929;
+  margin-top: 20px;
+  padding-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.rotulo {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.preco {
+  color: var(--gold-light);
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 7px;
+}
+
+.qtd {
+  font-size: 13px;
+  margin-top: 7px;
+  text-align: right;
+}
+
+.botao {
+  display: block;
+  text-align: center;
+  margin-top: 23px;
+  padding: 15px 12px;
+  border-radius: 5px;
+  background: linear-gradient(100deg, #b38b22, #f3d779, #b38b22);
+  color: #080808;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: .8px;
+  transition: filter .2s;
+}
+
+.botao:hover {
+  filter: brightness(1.1);
+}
+
+.estado {
+  padding: 40px 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.8;
+  grid-column: 1 / -1;
+}
+
+.estado strong {
+  color: var(--gold-light);
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 15px;
+  color: #888;
+  font-size: 11px;
+  text-align: center;
+  line-height: 1.9;
+  letter-spacing: .5px;
+}
+
+@media (max-width: 700px) {
+  header {
+    justify-content: center;
+    padding: 20px 4%;
+  }
+
+  nav {
+    justify-content: center;
+    gap: 14px 18px;
+  }
+
+  nav a { font-size: 12px; }
+
+  .hero {
+    padding: 62px 20px 56px;
+  }
+
+  .hero p { font-size: 14px; }
+
+  main {
+    padding-top: 35px;
+  }
+
+  .foto { height: 235px; }
+
+  .card:hover { transform: none; }
+
+  .section-title {
+    align-items: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; }
+}
 </style>
 </head>
+
 <body>
 
 <header>
-  <a href="https://clubdasorteo.github.io/okllifestyle/" class="logo" onclick="irParaInicio(event)">OKL LIFESTYLE</a>
+  <a href="https://clubdasorteo.github.io/okllifestyle/?inicio=1"
+     class="logo"
+     onclick="irParaInicio(event)">OKL LIFESTYLE</a>
+
   <nav aria-label="Menu principal">
-    <a href="https://clubdasorteo.github.io/okllifestyle/" onclick="irParaInicio(event)">🏠 Início</a>
-    <a href="https://clubdasorteo.github.io/okllifestyle/acoes.html" class="atual">🎟️ Ações</a>
-    <a href="https://clubdasorteo.github.io/okllifestyle/ultimas-acoes.html">🏆 Últimas ações</a>
-    <a href="https://clubdasorteo.github.io/okllifestyle/minhas-participacoes.html">👤 Minhas participações</a>
+    <a href="https://clubdasorteo.github.io/okllifestyle/?inicio=1"
+       onclick="irParaInicio(event)">🏠 Início</a>
+
+    <a href="https://clubdasorteo.github.io/okllifestyle/acoes.html"
+       class="atual">🎟️ Ações</a>
+
+    <a href="https://clubdasorteo.github.io/okllifestyle/ultimas-acoes.html">
+      🏆 Últimas ações
+    </a>
+
+    <a href="https://clubdasorteo.github.io/okllifestyle/minhas-participacoes.html">
+      👤 Minhas participações
+    </a>
   </nav>
 </header>
 
 <section class="hero">
-  <div class="eyebrow">EXCLUSIVIDADE • EXPERIÊNCIA • PRÊMIOS</div>
-  <h1>Nossas <span>Ações</span></h1>
-  <p>Confira as ações disponíveis e conheça os prêmios da OKL Lifestyle.</p>
+  <div class="hero-content">
+    <div class="eyebrow">OKL Lifestyle • Club da Sorte</div>
+    <h1>Uma experiência<br><span>de prêmios exclusivos</span></h1>
+    <p>
+      Descubra nossas ações, conheça os prêmios e acompanhe
+      as oportunidades da OKL Lifestyle.
+    </p>
+    <div class="hero-line"></div>
+  </div>
 </section>
 
 <main id="acoes">
   <div class="section-title">
-    <h2>Ações <span>disponíveis</span></h2>
+    <div>
+      <div class="section-label">Escolha sua próxima experiência</div>
+      <h2>Ações <span>disponíveis</span></h2>
+    </div>
     <div id="contador" aria-live="polite">Carregando ações...</div>
   </div>
+
   <div id="listaAcoes" class="grid" aria-live="polite">
     <div class="estado">Carregando as ações disponíveis...</div>
   </div>
@@ -83,52 +422,70 @@ footer{border-top:1px solid var(--border);padding:25px 15px;color:#888;font-size
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const URL_INICIO = "https://clubdasorteo.github.io/okllifestyle/";
+const URL_INICIO = "https://clubdasorteo.github.io/okllifestyle/?inicio=1";
 
 function irParaInicio(event) {
-  event.preventDefault();
-  window.location.href = URL_INICIO;
+  if (event) event.preventDefault();
+  window.location.assign(URL_INICIO);
 }
 
 const SUPABASE_URL = "https://vlirpvuramslfiftshio.supabase.co";
 const SUPABASE_KEY = "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
-const clienteSupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const clienteSupabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
 const lista = document.getElementById("listaAcoes");
 const contador = document.getElementById("contador");
 
 function escapar(valor) {
   return String(valor ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
   })[c]);
 }
 
 function moeda(valor) {
   return Number(valor || 0).toLocaleString("pt-BR", {
-    style:"currency",currency:"BRL"
+    style: "currency",
+    currency: "BRL"
   });
 }
 
 async function carregarAcoes() {
   try {
-    const {data,error} = await clienteSupabase
+    const {data, error} = await clienteSupabase
       .from("AÇÕES")
       .select("id,nome,descricao,foto_url,valor_numero,total_numeros,status,created_at")
-      .eq("status","ativa")
-      .order("created_at",{ascending:false});
+      .eq("status", "ativa")
+      .order("created_at", {ascending: false});
 
     if (error) throw error;
 
     if (!data || data.length === 0) {
       contador.textContent = "0 ações";
-      lista.innerHTML = `<div class="estado"><strong>Nenhuma ação disponível no momento.</strong><br>Volte em breve para conferir as novidades.</div>`;
+      lista.innerHTML = `
+        <div class="estado">
+          <strong>Nenhuma ação disponível no momento.</strong><br>
+          Volte em breve para conferir as novidades.
+        </div>`;
       return;
     }
 
-    contador.textContent = data.length + (data.length === 1 ? " ação disponível" : " ações disponíveis");
+    contador.textContent = data.length +
+      (data.length === 1 ? " ação disponível" : " ações disponíveis");
 
     lista.innerHTML = data.map(acao => {
       const nome = escapar(acao.nome || "Ação OKL Lifestyle");
-      const descricao = escapar(acao.descricao || "Confira os detalhes desta ação.");
+      const descricao = escapar(
+        acao.descricao || "Confira os detalhes desta ação."
+      );
+
       const foto = acao.foto_url
         ? `<img src="${escapar(acao.foto_url)}" alt="${nome}" loading="lazy">`
         : `<span class="sem-foto">Foto do prêmio em breve</span>`;
@@ -136,26 +493,48 @@ async function carregarAcoes() {
       return `
         <article class="card">
           <div class="foto">${foto}</div>
+
           <div class="conteudo">
             <div class="status">● Ação disponível</div>
             <h3>${nome}</h3>
             <div class="descricao">${descricao}</div>
+
             <div class="detalhes">
-              <div><div class="rotulo">Valor por bilhete</div><div class="preco">${moeda(acao.valor_numero)}</div></div>
-              <div><div class="rotulo">Total de bilhetes</div><div class="qtd">${Number(acao.total_numeros || 0).toLocaleString("pt-BR")}</div></div>
+              <div>
+                <div class="rotulo">Valor por bilhete</div>
+                <div class="preco">${moeda(acao.valor_numero)}</div>
+              </div>
+
+              <div>
+                <div class="rotulo">Total de bilhetes</div>
+                <div class="qtd">
+                  ${Number(acao.total_numeros || 0).toLocaleString("pt-BR")}
+                </div>
+              </div>
             </div>
-            <a class="botao" href="https://clubdasorteo.github.io/okllifestyle/#acoes">VER COMO PARTICIPAR</a>
+
+            <a class="botao"
+               href="https://clubdasorteo.github.io/okllifestyle/#acoes">
+               VER COMO PARTICIPAR
+            </a>
           </div>
         </article>`;
     }).join("");
+
   } catch (erro) {
-    console.error("Erro ao carregar ações:",erro);
+    console.error("Erro ao carregar ações:", erro);
     contador.textContent = "";
-    lista.innerHTML = `<div class="estado">Não foi possível carregar as ações agora.<br><strong>Tente novamente em instantes.</strong></div>`;
+    lista.innerHTML = `
+      <div class="estado">
+        Não foi possível carregar as ações agora.<br>
+        <strong>Tente novamente em instantes.</strong>
+      </div>`;
   }
 }
 
 carregarAcoes();
 </script>
+
 </body>
 </html>
+```
