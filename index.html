@@ -1,632 +1,1150 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050505">
-<title>Club da Sorte | OKL Lifestyle</title>
+<title>OKL Lifestyle | Clube da Sorte</title>
+<meta name="description" content="Acompanhe as ações e novidades da OKL Lifestyle.">
 
 <style>
-:root{
-  --fundo:#050505;
-  --painel:#0d0d0d;
-  --painel2:#151515;
-  --dourado:#f5c542;
-  --texto:#fff;
-  --cinza:#aaa;
-  --borda:#303030;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:25px}
+
 body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--fundo);
-  color:var(--texto);
-  min-height:100vh;
-  padding-bottom:88px;
+    font-family:Inter,Arial,sans-serif;
+    background:#080808;
+    color:#f4f1e8;
+    line-height:1.55;
 }
+:root{--gold:#d4af37;--gold-light:#f1d989;--panel:#121212;--line:#2a2a2a;--muted:#aaa69a}
 a{color:inherit}
+.site-top{position:sticky;top:0;z-index:20;background:rgba(8,8,8,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top-inner{max-width:1180px;margin:auto;min-height:82px;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.top-inner .logo-img{width:118px;margin:0}
+.nav-links{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.nav-links a{text-decoration:none;color:#d9d5ca;font-size:14px;font-weight:700}
+.nav-links a:hover{color:var(--gold-light)}
+.nav-cta{padding:10px 16px;border-radius:8px;background:var(--gold);color:#080808!important}
+.promo-strip{padding:9px 16px;text-align:center;background:#17130a;border-bottom:1px solid #3b3016;color:var(--gold-light);font-size:12px;font-weight:800;letter-spacing:.08em}
+.hero{max-width:1180px;margin:0 auto;padding:62px 24px 34px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:30px}
+.hero-copy{max-width:720px}
+.hero-kicker{display:inline-block;border:1px solid #51421e;border-radius:99px;padding:7px 12px;color:var(--gold-light);font-size:11px;font-weight:800;letter-spacing:.12em;margin-bottom:18px}
+.hero h1{font-size:clamp(32px,5vw,58px);line-height:1.04;font-weight:900;letter-spacing:-.04em;margin-bottom:18px;color:#f7f4eb}
+.hero h1 span{color:var(--gold)}
+.hero p{color:#bcb7aa;font-size:17px;font-weight:500;max-width:560px}
+.hero-action{display:inline-flex;align-items:center;justify-content:center;margin-top:24px;padding:14px 22px;border-radius:9px;background:var(--gold);color:#080808;font-weight:900;text-decoration:none}
+.hero-mark{flex:0 0 150px;width:150px;height:150px;border:1px solid #40351b;border-radius:28px;display:grid;place-items:center;color:var(--gold);font-size:58px;background:radial-gradient(circle at 30% 20%,#282111,#101010 65%);box-shadow:0 18px 55px #000}
+.container{width:calc(100% - 40px);max-width:1180px;margin:auto}
+.section-heading{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:26px 0 18px}
+.section-heading p{color:var(--muted);font-size:13px}
+.card{box-shadow:0 18px 45px rgba(0,0,0,.22)}
+.prize{background:radial-gradient(circle at 50% 35%,#2c2618,#111 65%);min-height:260px}
+.card-content{padding:clamp(18px,3vw,30px)}
+.card h2{font-size:clamp(22px,3vw,30px);line-height:1.15}
+.card-content p{color:#d3cec2}
+.progress{height:8px;background:#292929}
+.progress-bar{background:linear-gradient(90deg,#a98522,#f1d989)}
+.button{background:linear-gradient(135deg,#f1d989,#c29a25);box-shadow:0 7px 22px #d4af3722}
+.how{background:linear-gradient(145deg,#151515,#0e0e0e);box-shadow:0 14px 40px #0003}
+.option{background:#151515;border-color:#303030}
+.option.selected{background:#211b0d;border-color:var(--gold)}
+.highlight{background:linear-gradient(145deg,#151515,#0d0d0d);padding:22px 14px}
+.highlight strong{color:var(--gold-light)}
+footer{margin-top:48px;background:#050505}
+@media(max-width:700px){.top-inner{min-height:68px;padding:10px 16px}.top-inner .logo-img{width:96px}.nav-links{gap:12px}.nav-links a{font-size:12px}.nav-links a:not(.nav-cta){display:none}.hero{padding:42px 20px 24px}.hero-mark{display:none}.hero p{font-size:15px}.container{width:calc(100% - 28px)}.section-heading{align-items:start;flex-direction:column}}
+
 header{
-  padding:16px 20px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  border-bottom:1px solid #292929;
-  background:#050505;
+    padding:22px;
+    text-align:center;
+    border-bottom:1px solid #242424;
 }
-header img{max-width:150px;max-height:70px;object-fit:contain}
-nav.menu-principal{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:8px;
-  padding:12px;
-  border-bottom:1px solid #292929;
-  background:#090909;
+
+.logo-img{
+    width:150px;
+    max-width:70%;
+    height:auto;
+    display:block;
+    margin:0 auto;
+    object-fit:contain;
 }
-.menu-principal a{
-  color:#eee;
-  text-decoration:none;
-  padding:11px 13px;
-  border-radius:9px;
-  font-size:14px;
-  transition:background .2s,color .2s;
+
+.hero{
+    padding:45px 20px;
+    text-align:center;
 }
-.menu-principal a:hover,.menu-principal a:focus-visible{
-  background:#202020;
-  color:var(--dourado);
+
+.hero h1{
+    font-size:38px;
+    font-weight:800;
+    letter-spacing:1px;
+    margin-bottom:15px;
+    color:#d4af37;
 }
-.hero{text-align:center;padding:42px 20px 30px}
-.hero h1{font-size:34px;font-weight:900;margin-bottom:12px}
-.hero h1 span,.hero strong{color:var(--dourado)}
-.hero p{color:#cfcfcf;font-size:16px;line-height:1.5}
-.container{width:100%;max-width:900px;margin:0 auto;padding:0 16px 50px}
-.titulo-secao{
-  font-size:25px;font-weight:900;margin:34px 0 18px;
-  border-left:5px solid var(--dourado);padding-left:12px;
+
+.hero p{
+    color:#f2f0e8;
+    font-size:17px;
+    font-weight:600;
 }
-.acao-card{
-  background:var(--painel);border:1px solid var(--borda);
-  border-radius:18px;overflow:hidden;box-shadow:0 10px 35px #0007;
+
+.container{
+    width:92%;
+    max-width:1000px;
+    margin:auto;
 }
-.acao-foto-area{
-  width:100%;background:#111;min-height:200px;
-  display:flex;justify-content:center;align-items:center;
+
+.section-title{
+    margin:30px 0 15px;
+    font-size:24px;
+    font-weight:800;
+    color:#d4af37;
 }
-.acao-foto{
-  width:100%;max-height:520px;object-fit:contain;
-  display:block;background:#111;
+
+.card{
+    background:#111;
+    border:1px solid #292929;
+    border-radius:16px;
+    overflow:hidden;
+    margin-bottom:25px;
 }
-.foto-erro{padding:35px 20px;text-align:center;color:#aaa;line-height:1.5}
-.acao-conteudo{padding:24px}
-.acao-conteudo h3{font-size:29px;margin-bottom:10px}
-.acao-descricao{
-  color:#c7c7c7;line-height:1.6;white-space:pre-line;margin-bottom:20px;
+
+.prize{
+    background:linear-gradient(135deg,#222,#111);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+    min-height:180px;
 }
-.acao-info{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
-.info-box{
-  background:var(--painel2);border:1px solid #333;
-  border-radius:12px;padding:16px;
+
+.prize img{
+    width:100%;
+    height:auto;
+    max-height:400px;
+    object-fit:contain;
+    display:block;
 }
-.info-box span{
-  display:block;color:#999;font-size:12px;margin-bottom:6px;text-transform:uppercase;
+
+.card-content{
+    padding:22px;
 }
-.info-box strong{font-size:21px;color:var(--dourado)}
-.participacao{
-  margin-top:30px;background:var(--painel);
-  border:1px solid var(--borda);border-radius:18px;padding:24px;
+
+.card h2{
+    margin-bottom:10px;
+    font-size:25px;
+    font-weight:800;
 }
-.participacao h2{font-size:25px;margin-bottom:8px}
-.participacao-subtitulo{color:#aaa;margin-bottom:20px;line-height:1.5}
-.pacotes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
-.pacote{
-  border:1px solid #3a3a3a;background:var(--painel2);color:#fff;
-  padding:16px 8px;border-radius:12px;cursor:pointer;text-align:center;
-  transition:border-color .2s,background .2s;
+
+.card-content p{
+    font-size:16px;
+    font-weight:500;
+    margin-bottom:8px;
 }
-.pacote:hover,.pacote.selecionado{border-color:var(--dourado);background:#211c0e}
-.pacote strong{display:block;font-size:21px;margin-bottom:5px;color:var(--dourado)}
-.pacote small{color:#aaa}
-.campo{margin-top:15px}
-.campo label{display:block;margin-bottom:7px;font-size:14px;color:#ddd}
-.campo input{
-  width:100%;padding:14px;border-radius:10px;border:1px solid #363636;
-  background:#111;color:#fff;outline:none;font-size:16px;
+
+.card-content p strong{
+    color:#d4af37;
+    font-size:19px;
+    font-weight:800;
 }
-.campo input:focus{border-color:var(--dourado)}
-.aviso-quantidade{display:none;color:#ff8585;font-size:13px;margin-top:7px;line-height:1.4}
-.aviso-quantidade.visivel{display:block}
-.total-box{
-  margin-top:20px;padding:18px;background:var(--painel2);border-radius:12px;
-  border:1px solid #333;display:flex;justify-content:space-between;
-  align-items:center;gap:10px;
+
+.progress{
+    height:10px;
+    background:#292929;
+    border-radius:20px;
+    overflow:hidden;
+    margin:18px 0;
 }
-.total-box span{color:#aaa}
-.total-box strong{font-size:26px;color:var(--dourado)}
-.botao{
-  display:block;width:100%;margin-top:18px;padding:17px;border:none;
-  border-radius:12px;background:var(--dourado);color:#000;font-size:16px;
-  font-weight:900;cursor:pointer;text-align:center;text-decoration:none;
+
+.progress-bar{
+    width:0%;
+    height:100%;
+    background:#d4af37;
+    transition:width .3s ease;
 }
-.botao:hover{background:#ffd75e}
-.botao:disabled{opacity:.6;cursor:not-allowed}
-.botao-secundario{
-  display:inline-block;width:100%;margin-top:12px;padding:15px;
-  border:1px solid var(--dourado);border-radius:12px;background:transparent;
-  color:var(--dourado);font-size:15px;font-weight:800;text-align:center;
-  text-decoration:none;
+
+.info{
+    display:flex;
+    justify-content:space-between;
+    color:#f2f0e8;
+    font-size:14px;
+    font-weight:600;
+    gap:15px;
 }
-.botao-secundario:hover{background:#211c0e}
-.resultado-reserva{
-  margin-top:20px;background:#111;border:1px solid var(--dourado);
-  border-radius:14px;padding:20px;
+
+.button{
+    display:block;
+    width:100%;
+    margin-top:20px;
+    padding:16px;
+    border:none;
+    border-radius:10px;
+    background:#d4af37;
+    color:#050505;
+    font-size:17px;
+    font-weight:800;
+    cursor:pointer;
+    text-align:center;
+    text-decoration:none;
 }
-.resultado-reserva h3{color:var(--dourado);margin-bottom:10px}
-.resultado-reserva p{color:#ccc;line-height:1.5;margin-bottom:8px}
-.numeros-reservados{margin-top:15px;display:flex;flex-wrap:wrap;gap:7px}
-.numero-reservado{
-  background:var(--dourado);color:#000;border-radius:7px;padding:8px 10px;
-  font-weight:900;font-size:14px;font-variant-numeric:tabular-nums;
-  min-width:38px;text-align:center;
+
+.button:hover{
+    opacity:.9;
 }
-.aviso-seguranca{
-  margin-top:18px;padding:16px;border:1px solid #454545;
-  background:var(--painel2);border-radius:12px;color:#ccc;line-height:1.6;
+
+.how{
+    background:#111;
+    padding:25px;
+    border-radius:16px;
+    margin-bottom:40px;
+    border:1px solid #292929;
 }
-.aviso-seguranca strong{color:var(--dourado)}
-.aviso-seguranca p{margin-top:8px}
-.destaques{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}
-.destaque{background:var(--painel);border:1px solid var(--borda);border-radius:14px;padding:20px}
-.destaque h3{font-size:17px;margin-bottom:8px;color:var(--dourado)}
-.destaque p{color:#999;font-size:14px;line-height:1.5}
-.passos{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
-.passo{background:var(--painel);border:1px solid var(--borda);border-radius:14px;padding:20px}
-.passo-numero{font-size:28px;font-weight:900;margin-bottom:10px;color:var(--dourado)}
-.passo h3{margin-bottom:8px}
-.passo p{color:#999;font-size:14px;line-height:1.5}
-.sem-acao{
-  background:var(--painel);border:1px solid var(--borda);border-radius:18px;
-  padding:35px 20px;text-align:center;color:#999;line-height:1.6;
+
+.how h2{
+    font-size:23px;
+    font-weight:800;
+    color:#d4af37;
+    margin-bottom:15px;
 }
-footer{border-top:1px solid #292929;text-align:center;padding:25px 15px;color:#666;font-size:13px}
-.menu-inferior{
-  position:fixed;z-index:1000;bottom:0;left:0;right:0;width:100%;
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
-  background:rgba(8,8,8,.98);border-top:1px solid #383838;
-  padding:8px 5px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -5px 20px #0008;
+
+.how p{
+    margin:15px 0;
+    font-size:16px;
+    font-weight:500;
 }
-.menu-inferior a{
-  min-width:0;min-height:54px;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:4px;color:#aaa;
-  text-decoration:none;font-size:11px;font-weight:700;border-radius:9px;text-align:center;
+
+.how p strong{
+    color:#d4af37;
 }
-.menu-inferior a .icone{font-size:22px;line-height:1.1}
-.menu-inferior a:hover,.menu-inferior a:focus-visible{color:var(--dourado);background:#17140b}
-.menu-inferior a.ativo{color:var(--dourado)}
-.menu-inferior a.ativo .icone{filter:drop-shadow(0 0 4px #f5c54255)}
-@media(max-width:650px){
-  .hero{padding-top:32px}
-  .hero h1{font-size:28px}
-  .pacotes{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .acao-info,.destaques,.passos{grid-template-columns:1fr}
-  .acao-conteudo{padding:18px}
-  .participacao{padding:18px}
-  .acao-conteudo h3{font-size:25px}
-  .total-box strong{font-size:22px}
-  .titulo-secao{font-size:23px}
-  nav.menu-principal{gap:4px;padding:8px 5px}
-  .menu-principal a{font-size:12px;padding:10px 8px}
+
+.options{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-top:20px;
 }
-@media(prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{transition:none!important}
+
+.option{
+    padding:18px;
+    background:#111;
+    color:#f2f0e8;
+    border:1px solid #3a3a3a;
+    border-radius:12px;
+    font-size:16px;
+    cursor:pointer;
+    text-align:center;
+    transition:.2s;
 }
+
+.option:hover{
+    border-color:#d4af37;
+}
+
+.option.selected{
+    border:2px solid #d4af37;
+    background:#181818;
+}
+
+.option strong{
+    display:block;
+    font-size:18px;
+    margin-bottom:6px;
+}
+
+.option span{
+    color:#d4af37;
+    font-size:16px;
+    font-weight:700;
+}
+
+.selected-info{
+    margin-top:20px;
+    padding:15px;
+    border-radius:10px;
+    background:#080808;
+    border:1px solid #292929;
+    text-align:center;
+    display:none;
+}
+
+.selected-info strong{
+    color:#d4af37;
+}
+
+.form-section{
+    display:none;
+    margin-top:25px;
+}
+
+.form-section h3{
+    color:#d4af37;
+    margin-bottom:15px;
+    font-size:22px;
+}
+
+.form-section input{
+    width:100%;
+    padding:15px;
+    margin-bottom:12px;
+    background:#050505;
+    border:1px solid #3a3a3a;
+    border-radius:10px;
+    color:#f2f0e8;
+    font-size:16px;
+    outline:none;
+}
+
+.form-section input:focus{
+    border-color:#d4af37;
+}
+
+.highlights{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:40px;
+}
+
+.highlight{
+    background:#111;
+    border:1px solid #292929;
+    padding:25px 15px;
+    border-radius:14px;
+    text-align:center;
+}
+
+.highlight strong{
+    display:block;
+    margin-top:10px;
+    color:#d4af37;
+    font-size:16px;
+}
+
+.highlight small{
+    display:block;
+    margin-top:5px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.loading,
+.error{
+    text-align:center;
+    padding:30px;
+    font-weight:700;
+}
+
+.loading{
+    color:#d4af37;
+}
+
+.error{
+    color:#ff6b6b;
+}
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:#777;
+    border-top:1px solid #222;
+    font-size:14px;
+}
+
+@media(max-width:700px){
+
+    .logo-img{
+        width:135px;
+    }
+
+    .hero h1{
+        font-size:30px;
+        line-height:1.2;
+    }
+
+    .highlights{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .info{
+        font-size:13px;
+    }
+}
+
+@media(max-width:500px){
+
+    .options{
+        grid-template-columns:1fr;
+    }
+
+    .card-content{
+        padding:20px;
+    }
+
+    .card h2{
+        font-size:23px;
+    }
+}
+
+#formSection input{display:block;width:100%;margin:10px 0;padding:14px 15px;border:1px solid #343434;border-radius:9px;background:#090909;color:#f7f4eb;font:inherit;outline:none}
+#formSection input:focus{border-color:var(--gold);box-shadow:0 0 0 3px #d4af3718}
+#formSection button:disabled{opacity:.65;cursor:wait}
+.notice{padding:20px;border:1px solid #5b4926;border-radius:12px;background:#17130a;color:#f4f1e8}
+.notice h3{color:var(--gold-light);margin-bottom:10px}
+.notice p{margin:7px 0}
 </style>
 </head>
 
 <body>
-<header id="topo">
-  <a href="index.html" aria-label="Ir para a página inicial da OKL Lifestyle">
-    <img src="Design%20sem%20nome%20(1).jpg" alt="OKL Lifestyle"
-         onerror="this.style.display='none'">
-  </a>
+
+<div class="promo-strip">OKL LIFESTYLE · AÇÕES E NOVIDADES</div>
+<header class="site-top">
+  <div class="top-inner">
+    <a href="#inicio" aria-label="OKL Lifestyle - início"><img src="Design%20sem%20nome%20(1).jpg" alt="OKL Lifestyle" class="logo-img"></a>
+    <nav class="nav-links" aria-label="Navegação principal">
+      <a href="#inicio">Início</a>
+      <a href="#acoes">Ações</a>
+      <a href="#participar">Como participar</a>
+      <a href="#destaques">Destaques</a>
+      <a class="nav-cta" href="#participar">Participar</a>
+    </nav>
+  </div>
 </header>
 
-<nav class="menu-principal" aria-label="Menu principal">
-  <a href="index.html">🏠 Início</a>
-  <a href="acoes.html">🎟️ Ações</a>
-  <a href="#participacao">🛒 Participar</a>
-  <a href="minhas-participacoes.html">👤 Minhas participações</a>
-</nav>
-
 <section class="hero" id="inicio">
-  <h1>BEM-VINDO AO <span>CLUB</span></h1>
-  <p>Uma experiência exclusiva <strong>OKL LIFESTYLE.</strong></p>
+  <div class="hero-copy">
+    <span class="hero-kicker">EXPERIÊNCIA OKL LIFESTYLE</span>
+    <h1>Seu próximo prêmio<br><span>pode estar aqui.</span></h1>
+    <p>Acompanhe as ações disponíveis, confira os detalhes e escolha a quantidade de participações que deseja.</p>
+    <a class="hero-action" href="#acoes">VER A AÇÃO EM DESTAQUE ↓</a>
+  </div>
+  <div class="hero-mark" aria-hidden="true">OKL</div>
 </section>
 
-<main class="container">
-  <h2 class="titulo-secao" id="acoes">🔥 Ação em destaque</h2>
+<main class="container" id="acoes">
+  <div class="section-heading"><div><h2 class="section-title">Ação em destaque</h2><p>Confira o prêmio, as condições e o andamento da ação.</p></div></div>
 
-  <div id="acaoContainer" aria-live="polite">
-    <div class="sem-acao">Carregando ação...</div>
-  </div>
-
-  <section class="participacao" id="participacao">
-    <h2>🎟️ Escolha sua quantidade</h2>
-    <p class="participacao-subtitulo">
-      Escolha um pacote ou digite a quantidade desejada.
-      A quantidade mínima é de 10 bilhetes. Os números são atribuídos
-      automaticamente pelo sistema durante a reserva.
-    </p>
-
-    <div class="pacotes">
-      <button type="button" class="pacote" data-quantidade="10" onclick="selecionarQuantidade(10)"><strong>10</strong><small>bilhetes</small></button>
-      <button type="button" class="pacote" data-quantidade="20" onclick="selecionarQuantidade(20)"><strong>20</strong><small>bilhetes</small></button>
-      <button type="button" class="pacote" data-quantidade="50" onclick="selecionarQuantidade(50)"><strong>50</strong><small>bilhetes</small></button>
-      <button type="button" class="pacote" data-quantidade="100" onclick="selecionarQuantidade(100)"><strong>100</strong><small>bilhetes</small></button>
-      <button type="button" class="pacote" data-quantidade="200" onclick="selecionarQuantidade(200)"><strong>200</strong><small>bilhetes</small></button>
-      <button type="button" class="pacote" data-quantidade="500" onclick="selecionarQuantidade(500)"><strong>500</strong><small>bilhetes</small></button>
+    <div id="acaoContainer">
+        <div class="loading">
+            Carregando ação...
+        </div>
     </div>
 
-    <div class="campo">
-      <label for="quantidade">Ou digite a quantidade desejada</label>
-      <input type="number" id="quantidade" min="10" step="1" inputmode="numeric"
-             placeholder="Ex.: 17, 25, 37, 83..." oninput="calcularTotal()"
-             aria-describedby="avisoQuantidade">
-      <p id="avisoQuantidade" class="aviso-quantidade" role="alert">
-        A quantidade mínima é de 10 bilhetes. Digite um número inteiro.
-      </p>
-    </div>
-
-    <div class="campo">
-      <label for="nome">Nome completo</label>
-      <input type="text" id="nome" placeholder="Digite seu nome"
-             autocomplete="name" maxlength="150" required>
-    </div>
-
-    <div class="campo">
-      <label for="cpf">CPF</label>
-      <input type="text" id="cpf" inputmode="numeric" maxlength="14"
-             placeholder="000.000.000-00" autocomplete="off" required>
-    </div>
-
-    <div class="campo">
-      <label for="whatsapp">WhatsApp com DDD</label>
-      <input type="tel" id="whatsapp" placeholder="(00) 00000-0000"
-             autocomplete="tel" maxlength="20" required>
-    </div>
-
-    <div class="total-box">
-      <span>Total estimado</span>
-      <strong id="valorTotal">R$ 0,00</strong>
-    </div>
-
-    <button type="button" class="botao" id="botaoContinuar" onclick="continuarCompra()">CONTINUAR</button>
-    <div id="resultadoReserva" style="display:none" aria-live="polite"></div>
-  </section>
-
-  <h2 class="titulo-secao">🏆 Destaques</h2>
-  <section class="destaques">
-    <div class="destaque">
-      <h3>👑 Top Comprador</h3>
-      <p>Área de destaque para os participantes das ações.</p>
-    </div>
-    <div class="destaque">
-      <h3>🎯 Menor Cota</h3>
-      <p>Informações das cotas serão exibidas quando disponíveis.</p>
-    </div>
-    <div class="destaque">
-      <h3>🔥 Maior Cota</h3>
-      <p>Informações das cotas serão exibidas quando disponíveis.</p>
-    </div>
-    <div class="destaque">
-      <h3>🎟️ Bilhetes Premiados</h3>
-      <p>Resultados poderão ser publicados nesta área.</p>
-    </div>
-  </section>
-
-  <h2 class="titulo-secao">📋 Como funciona</h2>
-  <section class="passos">
-    <div class="passo">
-      <div class="passo-numero">01</div>
-      <h3>Escolha</h3>
-      <p>Escolha a quantidade de bilhetes que deseja reservar.</p>
-    </div>
-    <div class="passo">
-      <div class="passo-numero">02</div>
-      <h3>Pagamento</h3>
-      <p>Siga as instruções oficiais de pagamento disponibilizadas para a ação.</p>
-    </div>
-    <div class="passo">
-      <div class="passo-numero">03</div>
-      <h3>Acompanhe</h3>
-      <p>Consulte suas participações e confira as informações da ação.</p>
-    </div>
-  </section>
 </main>
 
-<footer>© 2026 Club da Sorte | OKL Lifestyle</footer>
+<section id="participar" class="how container">
 
-<nav class="menu-inferior" aria-label="Atalhos rápidos">
-  <a href="index.html">
-    <span class="icone" aria-hidden="true">🏠</span><span>Início</span>
-  </a>
-  <a href="acoes.html">
-    <span class="icone" aria-hidden="true">🎟️</span><span>Ações</span>
-  </a>
-  <a href="#participacao" data-secao="participacao">
-    <span class="icone" aria-hidden="true">🛒</span><span>Participar</span>
-  </a>
-  <a href="minhas-participacoes.html">
-    <span class="icone" aria-hidden="true">👤</span><span>Minha área</span>
-  </a>
-</nav>
+    <h2>Participar</h2>
+
+    <p>Escolha quantas participações deseja.</p>
+
+    <div class="options" id="optionsContainer"></div>
+
+    <div class="selected-info" id="selectedInfo">
+
+        Você selecionou
+        <strong id="selectedNumbers"></strong>
+        por
+        <strong id="selectedPrice"></strong>.
+
+    </div>
+
+    <div class="form-section" id="formSection">
+
+        <h3>Seus dados</h3>
+
+        <input
+            type="text"
+            id="nome"
+            placeholder="Nome completo"
+            autocomplete="name"
+            required
+        >
+
+        <input
+            type="text"
+            id="cpf"
+            placeholder="CPF (somente números)"
+            inputmode="numeric"
+            autocomplete="off"
+            maxlength="14"
+            required
+        >
+
+        <input
+            type="tel"
+            id="telefone"
+            placeholder="WhatsApp"
+        >
+
+        <button
+            class="button"
+            onclick="continuar()"
+        >
+            CONTINUAR
+        </button>
+
+    </div>
+
+</section>
+
+<section id="destaques" class="container"><div class="section-heading"><div><h2 class="section-title">🏆 Destaques</h2><p>Informações da ação e recursos disponíveis.</p></div></div></section>
+
+<div class="highlights container">
+
+    <div class="highlight">
+        🥇
+        <strong>Top Comprador</strong>
+        <small>Mais bilhetes</small>
+    </div>
+
+    <div class="highlight">
+        ⬇️
+        <strong>Menor Cota</strong>
+        <small>Menor número</small>
+    </div>
+
+    <div class="highlight">
+        ⬆️
+        <strong>Maior Cota</strong>
+        <small>Maior número</small>
+    </div>
+
+    <div class="highlight">
+        🎫
+        <strong>Bilhetes Premiados</strong>
+        <small>6 a 8 prêmios extras</small>
+    </div>
+
+</div>
+
+<section class="how container">
+
+    <h2>📋 Como funciona</h2>
+
+    <p>
+        <strong>01.</strong>
+        Escolha sua participação.
+    </p>
+
+    <p>
+        <strong>02.</strong>
+        Realize o pagamento.
+    </p>
+
+    <p>
+        <strong>03.</strong>
+        Receba seus números.
+    </p>
+
+    <p>
+        <strong>04.</strong>
+        Acompanhe o resultado.
+    </p>
+
+</section>
+
+<footer>
+  <p><strong>OKL LIFESTYLE</strong></p>
+  <p>Consulte as informações e regras da ação antes de participar.</p>
+  <p>© 2026 OKL Lifestyle · Todos os direitos reservados</p>
+</footer>
+
+
+<!-- SUPABASE -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-"use strict";
 
-const SUPABASE_URL = "https://vlirpvuramslfiftshio.supabase.co";
-const SUPABASE_KEY = "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
-const clienteSupabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const SUPABASE_URL =
+    "https://vlirpvuramslfiftshio.supabase.co";
 
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
+
+const supabase =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+let quantidadeSelecionada = 0;
+let valorSelecionado = 0;
 let acaoAtual = null;
 
-async function carregarAcao() {
-  const container = document.getElementById("acaoContainer");
-  container.innerHTML = '<div class="sem-acao">Carregando ação...</div>';
 
-  try {
-    const {data, error} = await clienteSupabase
-      .from("AÇÕES")
-      .select("id,nome,descricao,foto_url,valor_numero,total_numeros,status,created_at")
-      .eq("status", "ativa")
-      .order("created_at", {ascending:false})
-      .limit(1);
+/* =========================
+   CARREGAR AÇÃO
+========================= */
 
-    if (error) throw error;
+async function carregarAcao(){
 
-    if (!data || data.length === 0) {
-      acaoAtual = null;
-      container.innerHTML = '<div class="sem-acao">Nenhuma ação disponível no momento.</div>';
-      calcularTotal();
-      return;
+    const container =
+        document.getElementById("acaoContainer");
+
+    try{
+
+        const { data, error } =
+            await supabase
+                .from("AÇÕES")
+                .select(`
+                    id,
+                    nome,
+                    descricao,
+                    foto_url,
+                    valor_numero,
+                    total_numeros,
+                    status,
+                    created_at
+                `)
+                .eq("status","ativa")
+                .order("created_at",{ascending:false})
+                .limit(1)
+                .maybeSingle();
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        if(!data){
+
+            container.innerHTML = `
+                <div class="error">
+                    Nenhuma ação disponível no momento.
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        acaoAtual = data;
+
+
+        renderizarAcao(data);
+
+
+        criarOpcoes(data.valor_numero);
+
+
+        atualizarResumoAcao(data.id);
+
     }
 
-    acaoAtual = data[0];
-    renderizarAcao();
-    calcularTotal();
-  } catch (erro) {
-    console.error("Erro ao carregar ação:", erro);
-    container.innerHTML = '<div class="sem-acao">Não foi possível carregar a ação. Tente atualizar a página.</div>';
-  }
+    catch(error){
+
+        console.error(
+            "Erro ao carregar ação:",
+            error
+        );
+
+        container.innerHTML = `
+            <div class="error">
+                Não foi possível carregar a ação.
+            </div>
+        `;
+
+    }
+
 }
 
-function renderizarAcao() {
-  const container = document.getElementById("acaoContainer");
-  if (!acaoAtual) return;
 
-  const fotoHTML = acaoAtual.foto_url && String(acaoAtual.foto_url).trim()
-    ? `<div class="acao-foto-area"><img class="acao-foto"
-        src="${escapeHtml(String(acaoAtual.foto_url).trim())}"
-        alt="${escapeHtml(acaoAtual.nome || "Prêmio")}"
-        onerror="mostrarErroFoto(this)"></div>`
-    : '<div class="acao-foto-area"><div class="foto-erro">📷 Foto do prêmio ainda não cadastrada.</div></div>';
+/* =========================
+   MOSTRAR AÇÃO
+========================= */
 
-  container.innerHTML = `
-    <article class="acao-card">
-      ${fotoHTML}
-      <div class="acao-conteudo">
-        <h3>${escapeHtml(acaoAtual.nome || "")}</h3>
-        ${acaoAtual.descricao ? `<p class="acao-descricao">${escapeHtml(acaoAtual.descricao)}</p>` : ""}
-        <div class="acao-info">
-          <div class="info-box"><span>Valor por bilhete</span><strong>${formatarMoeda(acaoAtual.valor_numero)}</strong></div>
-          <div class="info-box"><span>Total de bilhetes</span><strong>${Number(acaoAtual.total_numeros || 0).toLocaleString("pt-BR")}</strong></div>
+function renderizarAcao(acao){
+
+    const container =
+        document.getElementById("acaoContainer");
+
+
+    const valor =
+        Number(
+            acao.valor_numero || 0
+        )
+        .toFixed(2)
+        .replace(".",",");
+
+
+    const imagem =
+        acao.foto_url || "";
+
+
+    container.innerHTML = `
+
+        <div class="card">
+
+            <div class="prize">
+
+                ${
+                    imagem
+
+                    ?
+
+                    `
+                    <img
+                        src="${imagem}"
+                        alt="Prêmio"
+                    >
+                    `
+
+                    :
+
+                    `
+                    <div class="loading">
+                        Foto do prêmio não cadastrada.
+                    </div>
+                    `
+                }
+
+            </div>
+
+
+            <div class="card-content">
+
+                <h2>
+                    ${escapeHtml(acao.nome)}
+                </h2>
+
+
+                <p>
+                    ${escapeHtml(
+                        acao.descricao || ""
+                    )}
+                </p>
+
+
+                <p>
+                    <strong>
+                        R$ ${valor} por número
+                    </strong>
+                </p>
+
+
+                <div class="progress">
+
+                    <div
+                        class="progress-bar"
+                        id="progressBar"
+                    ></div>
+
+                </div>
+
+
+                <div class="info">
+
+                    <span id="vendidosInfo">
+                        0 vendidos
+                    </span>
+
+                    <span>
+                        ${
+                            Number(
+                                acao.total_numeros || 0
+                            ).toLocaleString("pt-BR")
+                        }
+                        números
+                    </span>
+
+                </div>
+
+
+                <a
+                    href="#participar"
+                    class="button"
+                >
+                    PARTICIPAR
+                </a>
+
+            </div>
+
         </div>
-        <a class="botao" href="#participacao">🛒 Participar desta ação</a>
-      </div>
-    </article>`;
+
+    `;
+
 }
 
-function mostrarErroFoto(imagem) {
-  imagem.parentElement.innerHTML = '<div class="foto-erro">⚠️ Não foi possível carregar a foto do prêmio.</div>';
-}
 
-function selecionarQuantidade(quantidade) {
-  const campo = document.getElementById("quantidade");
-  campo.value = quantidade;
-  calcularTotal();
-  campo.scrollIntoView({behavior:"smooth", block:"center"});
-}
+/* =========================
+   VALORES DAS PARTICIPAÇÕES
+========================= */
 
-function calcularTotal() {
-  const campo = document.getElementById("quantidade");
-  const texto = campo.value.trim();
-  const quantidade = Number(texto);
-  const valorUnitario = Number(acaoAtual?.valor_numero || 0);
-  const valida = texto !== "" && Number.isSafeInteger(quantidade) && quantidade >= 10;
+function criarOpcoes(valorNumero){
 
-  document.getElementById("valorTotal").textContent =
-    formatarMoeda(valida && acaoAtual ? quantidade * valorUnitario : 0);
+    const container =
+        document.getElementById(
+            "optionsContainer"
+        );
 
-  document.getElementById("avisoQuantidade").classList.toggle(
-    "visivel", texto !== "" && !valida
-  );
 
-  campo.setCustomValidity(
-    texto !== "" && !valida ? "Digite um número inteiro, mínimo de 10." : ""
-  );
+    const valor =
+        Number(valorNumero || 0);
 
-  document.querySelectorAll(".pacote").forEach(botao => {
-    botao.classList.toggle(
-      "selecionado",
-      valida && Number(botao.dataset.quantidade) === quantidade
-    );
-  });
-}
 
-document.getElementById("cpf").addEventListener("input", function() {
-  let valor = this.value.replace(/\D/g, "").substring(0, 11);
-  if (valor.length > 9) {
-    valor = valor.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, "$1.$2.$3-$4");
-  } else if (valor.length > 6) {
-    valor = valor.replace(/(\d{3})(\d{3})(\d{1,3})/, "$1.$2.$3");
-  } else if (valor.length > 3) {
-    valor = valor.replace(/(\d{3})(\d{1,3})/, "$1.$2");
-  }
-  this.value = valor;
-});
+    if(!valor){
 
-async function continuarCompra() {
-  if (!acaoAtual) {
-    alert("Nenhuma ação disponível no momento.");
-    return;
-  }
+        container.innerHTML = `
+            <div class="error">
+                Valor do número não cadastrado.
+            </div>
+        `;
 
-  const campoQuantidade = document.getElementById("quantidade");
-  const textoQuantidade = campoQuantidade.value.trim();
-  const quantidade = Number(textoQuantidade);
-  const nome = document.getElementById("nome").value.trim();
-  const cpf = document.getElementById("cpf").value.replace(/\D/g, "");
-  const whatsapp = document.getElementById("whatsapp").value.replace(/\D/g, "");
-  const totalNumeros = Number(acaoAtual.total_numeros || 0);
+        return;
 
-  if (textoQuantidade === "" || !Number.isSafeInteger(quantidade) || quantidade < 10) {
-    calcularTotal();
-    campoQuantidade.focus();
-    alert("A quantidade mínima é de 10 bilhetes. Digite um número inteiro.");
-    return;
-  }
-
-  if (totalNumeros > 0 && quantidade > totalNumeros) {
-    alert("A quantidade informada é maior que o total de bilhetes da ação.");
-    return;
-  }
-
-  if (!nome) {
-    alert("Digite seu nome completo.");
-    document.getElementById("nome").focus();
-    return;
-  }
-
-  if (!validarCPF(cpf)) {
-    alert("Confira o CPF informado.");
-    document.getElementById("cpf").focus();
-    return;
-  }
-
-  if (whatsapp.length < 10 || whatsapp.length > 13) {
-    alert("Digite um WhatsApp válido com DDD.");
-    document.getElementById("whatsapp").focus();
-    return;
-  }
-
-  const botao = document.getElementById("botaoContinuar");
-  const resultado = document.getElementById("resultadoReserva");
-  botao.disabled = true;
-  botao.textContent = "RESERVANDO...";
-  resultado.style.display = "none";
-  resultado.innerHTML = "";
-
-  try {
-    const {data, error} = await clienteSupabase.rpc("criar_pedido_e_reservar", {
-      p_acao_id: acaoAtual.id,
-      p_quantidade: quantidade,
-      p_cpf: cpf,
-      p_telefone: whatsapp,
-      p_nome_cliente: nome
-    });
-
-    if (error) throw new Error(error.message || "Não foi possível criar sua participação.");
-
-    const pedido = Array.isArray(data) ? data[0] : data;
-    if (!pedido || typeof pedido !== "object") {
-      throw new Error("O sistema não retornou os dados da reserva.");
     }
 
-    mostrarResultadoReserva(pedido);
-  } catch (erro) {
-    console.error("Falha na reserva:", erro);
-    alert("Não foi possível reservar seus bilhetes.\n\n" + (erro.message || "Tente novamente mais tarde."));
-  } finally {
-    botao.disabled = false;
-    botao.textContent = "CONTINUAR";
-  }
+
+    /*
+       QUANTIDADES DISPONÍVEIS
+       O VALOR É CALCULADO
+       AUTOMATICAMENTE.
+    */
+
+    const quantidades = [
+        10,
+        15,
+        50,
+        100,
+        200,
+        500
+    ];
+
+
+    container.innerHTML = "";
+
+
+    quantidades.forEach(
+        function(quantidade){
+
+            const total =
+                quantidade * valor;
+
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.className =
+                "option";
+
+
+            button.innerHTML = `
+
+                <strong>
+                    ${quantidade} números
+                </strong>
+
+                <span>
+                    R$ ${formatarMoeda(total)}
+                </span>
+
+            `;
+
+
+            button.onclick =
+                function(){
+
+                    selecionar(
+                        quantidade,
+                        total,
+                        button
+                    );
+
+                };
+
+
+            container.appendChild(
+                button
+            );
+
+        }
+    );
+
 }
 
-function validarCPF(cpf) {
-  if (!/^\d{11}$/.test(cpf) || /^(\d)\1{10}$/.test(cpf)) return false;
 
-  let soma = 0;
-  for (let i = 0; i < 9; i++) soma += Number(cpf[i]) * (10 - i);
+/* =========================
+   RESUMO DA AÇÃO
+========================= */
 
-  let digito = (soma * 10) % 11;
-  if (digito === 10) digito = 0;
-  if (digito !== Number(cpf[9])) return false;
+async function atualizarResumoAcao(acaoId){
 
-  soma = 0;
-  for (let i = 0; i < 10; i++) soma += Number(cpf[i]) * (11 - i);
+    const { data, error } =
+        await supabase
+            .from("acoes_resumo")
+            .select(`
+                total_numeros,
+                numeros_vendidos,
+                numeros_disponiveis
+            `)
+            .eq("id",acaoId)
+            .maybeSingle();
 
-  digito = (soma * 10) % 11;
-  if (digito === 10) digito = 0;
-  return digito === Number(cpf[10]);
+
+    if(error){
+
+        console.error(
+            "Erro ao carregar resumo:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    if(!data){
+
+        return;
+
+    }
+
+
+    const total =
+        Number(
+            data.total_numeros || 0
+        );
+
+
+    const vendidos =
+        Number(
+            data.numeros_vendidos || 0
+        );
+
+
+    const porcentagem =
+        total > 0
+        ?
+        (vendidos / total) * 100
+        :
+        0;
+
+
+    const vendidosInfo =
+        document.getElementById(
+            "vendidosInfo"
+        );
+
+
+    const progressBar =
+        document.getElementById(
+            "progressBar"
+        );
+
+
+    if(vendidosInfo){
+
+        vendidosInfo.textContent =
+            vendidos.toLocaleString("pt-BR")
+            +
+            " vendidos";
+
+    }
+
+
+    if(progressBar){
+
+        progressBar.style.width =
+            Math.min(
+                porcentagem,
+                100
+            )
+            +
+            "%";
+
+    }
+
 }
 
-function formatarNumeroBilhete(numero) {
-  const total = Number(acaoAtual?.total_numeros || 0);
-  const digitos = Math.max(2, String(Math.max(total - 1, 0)).length);
-  return String(Number(numero)).padStart(digitos, "0");
-}
 
-function mostrarResultadoReserva(data) {
-  const resultado = document.getElementById("resultadoReserva");
-  const numeros = Array.isArray(data.numeros) ? data.numeros : [];
-  const valorTotal = Number(data.valor_total ?? data.valor ?? 0);
+/* =========================
+   SELECIONAR PARTICIPAÇÃO
+========================= */
 
-  const numerosHTML = numeros.map(numero =>
-    `<span class="numero-reservado">${escapeHtml(formatarNumeroBilhete(numero))}</span>`
-  ).join("");
+function selecionar(
+    quantidade,
+    valor,
+    elemento
+){
 
-  resultado.innerHTML = `
-    <div class="resultado-reserva">
-      <h3>✅ Reserva registrada</h3>
-      <p><strong>Pedido:</strong> #${escapeHtml(data.pedido_id ?? data.id ?? "")}</p>
-      <p><strong>Quantidade:</strong> ${escapeHtml(data.quantidade ?? numeros.length)} bilhetes</p>
-      <p><strong>Total:</strong> ${formatarMoeda(valorTotal)}</p>
-      <p>Confira os números retornados pelo sistema:</p>
-      <div class="numeros-reservados">${numerosHTML || "<p>Números não retornados. Guarde o número do pedido e entre em contato para conferir.</p>"}</div>
-      <div class="aviso-seguranca">
-        <strong>Importante:</strong>
-        esta tela não confirma pagamento. Siga as instruções oficiais da ação.
-        <p>Para consultar suas participações posteriormente, acesse sua área pelo menu.</p>
-        <a class="botao-secundario" href="minhas-participacoes.html">CONSULTAR MINHAS PARTICIPAÇÕES</a>
-      </div>
-    </div>`;
+    quantidadeSelecionada =
+        quantidade;
 
-  resultado.style.display = "block";
-  resultado.scrollIntoView({behavior:"smooth", block:"center"});
 
-  // Este histórico existe somente neste navegador e não substitui o banco.
-  try {
-    const pedidos = JSON.parse(localStorage.getItem("club_da_sorte_pedidos") || "[]");
-    pedidos.push({
-      pedido_id: data.pedido_id ?? data.id ?? null,
-      acao_id: data.acao_id ?? acaoAtual?.id ?? null,
-      quantidade: data.quantidade ?? numeros.length,
-      valor_total: valorTotal,
-      criado_em: new Date().toISOString()
+    valorSelecionado =
+        valor;
+
+
+    document
+        .querySelectorAll(".option")
+        .forEach(
+            function(opcao){
+
+                opcao.classList.remove(
+                    "selected"
+                );
+
+            }
+        );
+
+
+    elemento.classList.add(
+        "selected"
+    );
+
+
+    document.getElementById(
+        "selectedNumbers"
+    ).textContent =
+        quantidade +
+        " números";
+
+
+    document.getElementById(
+        "selectedPrice"
+    ).textContent =
+        "R$ " +
+        formatarMoeda(valor);
+
+
+    document.getElementById(
+        "selectedInfo"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "formSection"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "formSection"
+    ).scrollIntoView({
+
+        behavior:"smooth",
+
+        block:"center"
+
     });
-    localStorage.setItem("club_da_sorte_pedidos", JSON.stringify(pedidos.slice(-50)));
-  } catch (erro) {
-    console.error("Não foi possível salvar o histórico local:", erro);
-  }
+
 }
 
-function formatarMoeda(valor) {
-  const numero = Number(valor || 0);
-  if (!Number.isFinite(numero)) return "R$ 0,00";
-  return numero.toLocaleString("pt-BR", {style:"currency", currency:"BRL"});
+
+/* =========================
+   CONTINUAR
+========================= */
+
+async function continuar(){
+    const nome = document.getElementById("nome").value.trim();
+    const cpf = document.getElementById("cpf").value.replace(/\D/g, "");
+    const telefone = document.getElementById("telefone").value.trim();
+    const botao = document.querySelector('#formSection button');
+
+    if (!acaoAtual) { alert("A ação ainda não carregou. Atualize a página e tente novamente."); return; }
+    if (!quantidadeSelecionada) { alert("Escolha um pacote de participações primeiro."); return; }
+    if (nome.split(/\s+/).length < 2) { alert("Digite seu nome completo."); document.getElementById("nome").focus(); return; }
+    if (!validarCPF(cpf)) { alert("Confira o CPF informado."); document.getElementById("cpf").focus(); return; }
+    if (telefone.replace(/\D/g, "").length < 10) { alert("Digite um WhatsApp válido com DDD."); document.getElementById("telefone").focus(); return; }
+
+    if (!confirm(`Confirmar a reserva de ${quantidadeSelecionada} participações por R$ ${formatarMoeda(valorSelecionado)}?`)) return;
+    const textoOriginal = botao.textContent;
+    botao.disabled = true;
+    botao.textContent = "PROCESSANDO...";
+    try {
+        const { data, error } = await supabase.rpc("criar_pedido_e_reservar", {
+            p_acao_id: acaoAtual.id,
+            p_quantidade: quantidadeSelecionada,
+            p_cpf: cpf,
+            p_telefone: telefone,
+            p_nome_cliente: nome
+        });
+        if (error) throw error;
+        const pedido = Array.isArray(data) ? data[0] : data;
+        if (!pedido || !(pedido.pedido_id || pedido.id)) {
+            throw new Error("A função retornou uma resposta inesperada. Nenhuma confirmação de pedido foi exibida.");
+        }
+        const pedidoId = pedido.pedido_id || pedido.id;
+        const quantidade = Number(pedido.quantidade || quantidadeSelecionada);
+        const valorTotal = Number(pedido.valor_total ?? pedido.valor ?? valorSelecionado);
+        const numeros = Array.isArray(pedido.numeros) ? pedido.numeros : [];
+        const container = document.getElementById("formSection");
+        container.innerHTML = `<div class="notice" role="status"><h3>Solicitação registrada</h3><p>Pedido: <strong>${escapeHtml(String(pedidoId))}</strong></p><p>Participações: <strong>${quantidade}</strong></p><p>Total: <strong>R$ ${formatarMoeda(valorTotal)}</strong></p>${numeros.length ? `<p>Números atribuídos: <strong>${numeros.map(n => escapeHtml(String(n))).join(", ")}</strong></p>` : ""}<p>Esta mensagem confirma somente o retorno da reserva pelo sistema. Confira as instruções de pagamento e aguarde a confirmação antes de considerar a participação paga.</p></div>`;
+        container.scrollIntoView({behavior:"smooth", block:"center"});
+    } catch (error) {
+        console.error("Falha ao criar reserva:", error);
+        let msg = error?.message || "Erro desconhecido";
+        if (/criar_pedido_e_reservar|function|schema cache|could not find/i.test(msg)) {
+            msg = "O Supabase não encontrou a função de reserva esperada ou a assinatura dela é diferente. Nenhum pedido foi confirmado. É necessário conferir a função no banco antes de liberar as compras.";
+        }
+        alert("Não foi possível concluir a reserva. " + msg);
+        botao.disabled = false;
+        botao.textContent = textoOriginal;
+    }
 }
 
-function escapeHtml(valor) {
-  return String(valor ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+function validarCPF(valor){
+    const cpf = String(valor || "").replace(/\D/g, "");
+    if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+    let soma = 0;
+    for (let i = 0; i < 9; i++) soma += Number(cpf[i]) * (10 - i);
+    let digito = (soma * 10) % 11; if (digito === 10) digito = 0;
+    if (digito !== Number(cpf[9])) return false;
+    soma = 0;
+    for (let i = 0; i < 10; i++) soma += Number(cpf[i]) * (11 - i);
+    digito = (soma * 10) % 11; if (digito === 10) digito = 0;
+    return digito === Number(cpf[10]);
 }
 
-document.querySelectorAll('.menu-inferior a[data-secao]').forEach(link => {
-  link.addEventListener("click", function() {
-    document.querySelectorAll(".menu-inferior a").forEach(item => item.classList.remove("ativo"));
-    this.classList.add("ativo");
-  });
-});
+/* =========================
+   FORMATAÇÃO
+========================= */
+
+function formatarMoeda(valor){
+
+    return Number(valor)
+        .toFixed(2)
+        .replace(".",",");
+
+}
+
+
+/* =========================
+   SEGURANÇA DO TEXTO
+========================= */
+
+function escapeHtml(text){
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text ?? "";
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================
+   INICIAR
+========================= */
 
 carregarAcao();
+
 </script>
+
 </body>
 </html>
