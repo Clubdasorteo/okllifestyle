@@ -4,143 +4,379 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090909">
 <title>Ações | OKL Lifestyle</title>
-<meta name="theme-color" content="#080808">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--gold:#d4af37;--light:#f3d779;--black:#080808;--muted:#aaa;--border:rgba(212,175,55,.25)}
+:root{
+  --gold:#d4af37;
+  --gold-light:#f5dfa0;
+  --bg:#090909;
+  --card:#151515;
+  --line:#383126;
+  --text:#f5f5f5;
+  --muted:#aaa;
+}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--black);color:#fff;font-family:Arial,Helvetica,sans-serif}
-header{min-height:76px;padding:18px 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;border-bottom:1px solid var(--border);background:#090909}
-.logo{color:var(--light);font-weight:800;letter-spacing:3px;font-size:20px;text-decoration:none;white-space:nowrap}
-nav{display:flex;flex-wrap:wrap;gap:22px}
-nav a{color:#eee;text-decoration:none;font-size:13px}
-nav a:hover,nav a.atual{color:var(--light)}
-.hero{position:relative;overflow:hidden;text-align:center;padding:76px 20px 68px;background:radial-gradient(ellipse at 50% 0%,rgba(166,125,28,.16),transparent 62%),linear-gradient(180deg,#10100e,#080808);border-bottom:1px solid rgba(212,175,55,.12)}
-.hero-content{max-width:760px;margin:auto}
-.eyebrow{color:var(--light);font-size:10px;letter-spacing:5px;font-weight:bold;text-transform:uppercase}
-h1{font-size:clamp(36px,6vw,60px);font-weight:500;line-height:1.12;margin:22px 0 18px}
-h1 span,.section-title h2 span{color:var(--light)}
-.hero p{color:#b4b4b4;font-size:15px;line-height:1.8;max-width:540px;margin:auto}
-.hero-line{width:38px;height:2px;background:var(--gold);margin:25px auto 0}
-main{width:min(1150px,92%);margin:auto;padding:48px 0 75px}
-.section-title{display:flex;align-items:end;justify-content:space-between;flex-wrap:wrap;gap:15px;margin-bottom:27px;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.09)}
-.section-label{color:var(--gold);font-size:10px;letter-spacing:3px;margin-bottom:9px;text-transform:uppercase}
-.section-title h2{margin:0;font-size:clamp(23px,3vw,30px);font-weight:500}
-#contador{color:var(--muted);font-size:12px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:25px}
-.card{background:linear-gradient(145deg,#171717,#0c0c0c);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;min-width:0;transition:border-color .2s,transform .2s}
-.card:hover{border-color:rgba(243,215,121,.65);transform:translateY(-3px)}
-.foto{height:255px;padding:14px;background:radial-gradient(ellipse at center,#1b1a16,#0b0b0b 75%);display:flex;align-items:center;justify-content:center;overflow:hidden;border-bottom:1px solid rgba(212,175,55,.14)}
-.foto img{display:block;width:100%;height:100%;object-fit:contain}
-.sem-foto{color:#777;font-size:13px}
-.conteudo{padding:22px;display:flex;flex-direction:column;flex:1}
-.status{color:var(--light);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
-.card h3{font-size:21px;line-height:1.35;margin:0 0 12px;overflow-wrap:anywhere}
-.descricao{color:var(--muted);font-size:14px;line-height:1.7;white-space:pre-line;overflow-wrap:anywhere;flex:1}
-.detalhes{border-top:1px solid #292929;margin-top:20px;padding-top:18px;display:flex;justify-content:space-between;gap:12px}
-.rotulo{color:var(--muted);font-size:11px}
-.preco{color:var(--light);font-size:22px;font-weight:bold;margin-top:7px}
-.qtd{font-size:13px;margin-top:7px;text-align:right}
-.botao{display:block;text-align:center;margin-top:23px;padding:15px 12px;border-radius:5px;background:linear-gradient(100deg,#b38b22,#f3d779,#b38b22);color:#080808;font-weight:bold;text-decoration:none;font-size:12px;letter-spacing:.8px}
-.botao:hover{filter:brightness(1.1)}
-.estado{padding:40px 20px;border:1px solid var(--border);border-radius:8px;color:var(--muted);text-align:center;line-height:1.8;grid-column:1/-1}
-.estado strong{color:var(--light)}
-footer{border-top:1px solid var(--border);padding:28px 15px;color:#888;font-size:11px;text-align:center;line-height:1.9;letter-spacing:.5px}
-@media(max-width:700px){header{justify-content:center;padding:20px 4%}nav{justify-content:center;gap:14px 18px}nav a{font-size:12px}.hero{padding:62px 20px 56px}.hero p{font-size:14px}main{padding-top:35px}.foto{height:235px}.card:hover{transform:none}.section-title{align-items:start}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Montserrat,Arial,sans-serif;
+}
+header{
+  text-align:center;padding:25px 15px 18px;
+  border-bottom:1px solid #292929;
+}
+.logo{font-size:25px;font-weight:800;letter-spacing:3px;color:var(--gold)}
+header p{font-size:11px;letter-spacing:2px;color:var(--muted);margin:8px 0 0}
+nav{
+  display:flex;justify-content:center;gap:20px;flex-wrap:wrap;
+  padding:15px 12px;border-bottom:1px solid #242424;
+}
+nav a{color:#ddd;text-decoration:none;font-size:13px;font-weight:600}
+nav a:hover{color:var(--gold)}
+.hero{
+  text-align:center;padding:43px 18px 35px;
+  background:radial-gradient(ellipse at top,#292112 0%,#090909 68%);
+}
+.hero .eyebrow{color:var(--gold);font-size:11px;letter-spacing:2px;font-weight:700}
+.hero h1{font-size:clamp(25px,5vw,40px);margin:13px 0;color:#fff}
+.hero p{color:var(--muted);font-size:14px;line-height:1.7;max-width:620px;margin:auto}
+main{max-width:1100px;margin:auto;padding:28px 18px 55px}
+.section-title{font-size:23px;margin:0 0 8px}
+.section-intro{font-size:13px;color:var(--muted);line-height:1.7;margin:0 0 24px}
+#listaAcoes{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr));
+  gap:22px;align-items:start;
+}
+.action-card{
+  min-width:0;overflow:hidden;background:var(--card);
+  border:1px solid var(--line);border-radius:15px;
+}
+.action-image{
+  width:100%;max-height:360px;object-fit:contain;display:block;
+  background:#0d0d0d;
+}
+.action-content{padding:19px}
+.action-content h3{font-size:21px;line-height:1.4;margin:0 0 9px}
+.description{font-size:13px;line-height:1.7;color:#bbb;white-space:pre-line}
+.price-row{
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  border-top:1px solid #302a20;border-bottom:1px solid #302a20;
+  padding:13px 0;margin:15px 0;
+}
+.price-label{font-size:12px;color:var(--muted)}
+.price-value{color:var(--gold-light);font-weight:800;font-size:15px;margin-top:5px}
+.action-button{
+  display:block;text-align:center;background:var(--gold);color:#111;
+  font-weight:800;font-size:12px;letter-spacing:.5px;text-decoration:none;
+  padding:14px;border-radius:8px;
+}
+.action-button:hover{background:var(--gold-light)}
+.indicators{
+  margin-top:18px;padding-top:17px;border-top:1px solid #3a3020;
+}
+.indicators h4{margin:0 0 13px;font-size:14px;color:var(--gold-light)}
+.indicator-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.indicator{
+  background:#0d0d0d;border:1px solid #302a20;border-radius:9px;
+  padding:12px;min-width:0;
+}
+.indicator-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+.indicator-value{font-size:13px;font-weight:700;margin-top:7px;overflow-wrap:anywhere}
+.indicator-sub{font-size:11px;color:#aaa;margin-top:5px;overflow-wrap:anywhere}
+.data-section{margin-top:16px;background:#0d0d0d;border:1px solid #302a20;border-radius:10px;padding:13px}
+.data-section h5{font-size:12px;margin:0 0 11px;color:var(--gold-light)}
+.data-empty{font-size:12px;color:var(--muted);line-height:1.6}
+.ranking-row{
+  display:flex;align-items:flex-start;gap:10px;padding:9px 0;
+  border-bottom:1px solid #242424;font-size:12px;
+}
+.ranking-row:last-child{border-bottom:0;padding-bottom:0}
+.rank-number{color:var(--gold);font-weight:800;min-width:22px}
+.rank-name{flex:1;overflow-wrap:anywhere;line-height:1.5}
+.rank-qty{color:#eee;font-weight:700;white-space:nowrap}
+.ticket-row{
+  padding:10px 0;border-bottom:1px solid #242424;
+  font-size:12px;line-height:1.6;
+}
+.ticket-row:last-child{border-bottom:0;padding-bottom:0}
+.ticket-number{color:var(--gold-light);font-weight:800}
+.status-note{font-size:10px;color:#aaa;margin-top:3px}
+.loading,.empty{
+  grid-column:1/-1;text-align:center;color:var(--muted);
+  background:#111;border:1px solid #302a20;border-radius:12px;
+  padding:25px;font-size:13px;line-height:1.7;
+}
+footer{
+  text-align:center;padding:25px;color:var(--muted);
+  font-size:12px;border-top:1px solid #292929;
+}
+@media(max-width:480px){
+  header{padding-top:22px}
+  .logo{font-size:21px}
+  nav{gap:13px}
+  nav a{font-size:11px}
+  main{padding:24px 12px 40px}
+  .action-content{padding:15px}
+  .indicator-grid{gap:7px}
+  .indicator{padding:10px}
+}
 </style>
 </head>
 <body>
+
 <header>
-  <a href="index.html" class="logo">OKL LIFESTYLE</a>
-  <nav aria-label="Menu principal">
-    <a href="index.html">🏠 Início</a>
-    <a href="acoes.html" class="atual">🎟️ Ações</a>
-    <a href="ultimas-acoes.html">🏆 Últimas ações</a>
-    <a href="participar.html">🎟️ Participar</a>
-    <a href="minhas-participacoes.html">👤 Minhas participações</a>
-  </nav>
+  <div class="logo">OKL LIFESTYLE</div>
+  <p>CLUB DA SORTE • SHOW DE PRÊMIOS</p>
 </header>
 
+<nav aria-label="Navegação principal">
+  <a href="index.html">Início</a>
+  <a href="acoes.html" aria-current="page">Ações</a>
+  <a href="ultimas-acoes.html">Resultados</a>
+  <a href="participar.html">Participar</a>
+  <a href="minhas-participacoes.html">Minhas participações</a>
+</nav>
+
 <section class="hero">
-  <div class="hero-content">
-    <div class="eyebrow">OKL Lifestyle • Club da Sorte</div>
-    <h1>Uma experiência<br><span>de prêmios exclusivos</span></h1>
-    <p>Descubra nossas ações, conheça os prêmios e acompanhe as oportunidades da OKL Lifestyle.</p>
-    <div class="hero-line"></div>
-  </div>
+  <div class="eyebrow">OKL LIFESTYLE • CLUBE DA SORTE</div>
+  <h1>Uma experiência de prêmios exclusivos</h1>
+  <p>Acompanhe as ações disponíveis, confira os indicadores de cada ação e veja os resultados divulgados.</p>
 </section>
 
-<main id="acoes">
-  <div class="section-title">
-    <div>
-      <div class="section-label">Escolha sua próxima experiência</div>
-      <h2>Ações <span>disponíveis</span></h2>
-    </div>
-    <div id="contador" aria-live="polite">Carregando ações...</div>
-  </div>
-  <div id="listaAcoes" class="grid" aria-live="polite">
-    <div class="estado">Carregando as ações disponíveis...</div>
+<main>
+  <h2 class="section-title">Ações disponíveis</h2>
+  <p class="section-intro">
+    Confira os detalhes de cada ação, acompanhe o ranking e consulte os indicadores.
+    Os dados são apresentados separadamente por ação.
+  </p>
+  <div id="listaAcoes">
+    <div class="loading">Carregando ações...</div>
   </div>
 </main>
 
-<footer>OKL LIFESTYLE • CLUB DA SORTE<br>Consulte as regras e condições de cada ação antes de participar.</footer>
+<footer>OKL Lifestyle • Club da Sorte</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL="https://vlirpvuramslfiftshio.supabase.co";
-const SUPABASE_KEY="sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-const lista=document.getElementById("listaAcoes");
-const contador=document.getElementById("contador");
+(() => {
+  "use strict";
 
-function escapar(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function moeda(v){return Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});}
+  const SUPABASE_URL = "https://vlirpvuramslfiftshio.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_XOysBwuj";
 
-async function carregarAcoes(){
-  try{
-    const {data,error}=await db.from("AÇÕES")
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const lista = document.getElementById("listaAcoes");
+
+  const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[char]);
+
+  const money = value => Number(value || 0).toLocaleString("pt-BR", {
+    style:"currency", currency:"BRL"
+  });
+
+  const formatDate = value => {
+    if (!value) return "—";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "—";
+    return date.toLocaleDateString("pt-BR");
+  };
+
+  function numeroCota(value, total) {
+    if (value === null || value === undefined || value === "") return "—";
+    const digits = Math.max(2, String(Math.max(0, Number(total || 0) - 1)).length);
+    return String(value).padStart(digits, "0");
+  }
+
+  function renderIndicador(label, nome, numero) {
+    return `
+      <div class="indicator">
+        <div class="indicator-label">${escapeHtml(label)}</div>
+        <div class="indicator-value">${escapeHtml(numero ?? "Ainda não apurado")}</div>
+        <div class="indicator-sub">${escapeHtml(nome || "Sem informação divulgada")}</div>
+      </div>`;
+  }
+
+  async function carregarIndicadores(acao) {
+    const [topResult, extremesResult, participantsResult, configResult, ticketsResult] =
+      await Promise.all([
+        db.rpc("top_comprador_acao", {p_acao_id:acao.id}),
+        db.rpc("cotas_extremas_acao", {p_acao_id:acao.id}),
+        db.rpc("participacoes_publicas", {p_acao_id:acao.id}),
+        db.from("configuracoes_cotas")
+          .select("menor_cota_encerrada_em,maior_cota_encerrada_em,menor_cota_numero_final,menor_cota_nome_final,maior_cota_numero_final,maior_cota_nome_final")
+          .eq("acao_id", acao.id)
+          .maybeSingle(),
+        db.from("bilhetes_premiados")
+          .select("numero,premio,status,contemplado_em")
+          .eq("acao_id", acao.id)
+          .eq("status", "contemplado")
+          .order("numero", {ascending:true})
+      ]);
+
+    const topRows = topResult.error ? [] : (topResult.data || []);
+    const extremes = extremesResult.error ? [] : (extremesResult.data || []);
+    const participants = participantsResult.error ? [] : (participantsResult.data || []);
+    const config = configResult.error ? {} : (configResult.data || {});
+    const tickets = ticketsResult.error ? [] : (ticketsResult.data || []);
+
+    const top = topRows[0] || null;
+    const menor = extremes.find(item =>
+      String(item.tipo_cota || "").toLowerCase().includes("menor")
+    );
+    const maior = extremes.find(item =>
+      String(item.tipo_cota || "").toLowerCase().includes("maior")
+    );
+
+    const minNumber = config.menor_cota_encerrada_em &&
+      config.menor_cota_numero_final != null
+        ? config.menor_cota_numero_final
+        : menor?.numero_cota;
+
+    const minName = config.menor_cota_encerrada_em &&
+      config.menor_cota_nome_final
+        ? config.menor_cota_nome_final
+        : menor?.nome_publico;
+
+    const maxNumber = config.maior_cota_encerrada_em &&
+      config.maior_cota_numero_final != null
+        ? config.maior_cota_numero_final
+        : maior?.numero_cota;
+
+    const maxName = config.maior_cota_encerrada_em &&
+      config.maior_cota_nome_final
+        ? config.maior_cota_nome_final
+        : maior?.nome_publico;
+
+    const topHtml = top
+      ? renderIndicador(
+          "Top comprador",
+          `${top.quantidade_numeros ?? 0} números`,
+          top.nome_publico || "Cliente"
+        )
+      : renderIndicador("Top comprador", "Ainda sem apuração", "—");
+
+    const minHtml = minNumber != null
+      ? renderIndicador("Menor cota", minName, numeroCota(minNumber, acao.total_numeros))
+      : renderIndicador("Menor cota", "Ainda sem apuração", "—");
+
+    const maxHtml = maxNumber != null
+      ? renderIndicador("Maior cota", maxName, numeroCota(maxNumber, acao.total_numeros))
+      : renderIndicador("Maior cota", "Ainda sem apuração", "—");
+
+    const sortedParticipants = [...participants].sort((a,b) =>
+      Number(b.quantidade || 0) - Number(a.quantidade || 0)
+    );
+
+    const rankingHtml = sortedParticipants.length
+      ? sortedParticipants.slice(0,10).map((person,index) => `
+          <div class="ranking-row">
+            <span class="rank-number">${index + 1}º</span>
+            <span class="rank-name">
+              ${escapeHtml(person.nome_publico || "Participante")}
+              <div class="status-note">Atualizado em ${escapeHtml(formatDate(person.created_at))}</div>
+            </span>
+            <span class="rank-qty">${escapeHtml(person.quantidade ?? 0)} números</span>
+          </div>`).join("")
+      : `<div class="data-empty">O ranking será exibido quando houver participações públicas registradas.</div>`;
+
+    const ticketsHtml = tickets.length
+      ? tickets.map(ticket => `
+          <div class="ticket-row">
+            <span class="ticket-number">Cota ${escapeHtml(numeroCota(ticket.numero, acao.total_numeros))}</span>
+            ${ticket.premio ? ` — ${escapeHtml(ticket.premio)}` : ""}
+            <div class="status-note">Contemplado${ticket.contemplado_em ? " em " + escapeHtml(formatDate(ticket.contemplado_em)) : ""}</div>
+          </div>`).join("")
+      : `<div class="data-empty">Nenhum bilhete contemplado divulgado nesta ação.</div>`;
+
+    return `
+      <section class="indicators">
+        <h4>Indicadores desta ação</h4>
+        <div class="indicator-grid">
+          ${topHtml}
+          ${minHtml}
+          ${maxHtml}
+        </div>
+        <div class="data-section">
+          <h5>🏆 Ranking de participantes</h5>
+          ${rankingHtml}
+        </div>
+        <div class="data-section">
+          <h5>🎟️ Bilhetes contemplados</h5>
+          ${ticketsHtml}
+        </div>
+      </section>`;
+  }
+
+  async function renderAcao(acao) {
+    const card = document.createElement("article");
+    card.className = "action-card";
+
+    const image = acao.foto_url
+      ? `<img class="action-image" src="${escapeHtml(acao.foto_url)}" alt="${escapeHtml(acao.nome || "Foto do prêmio")}" loading="lazy">`
+      : "";
+
+    card.innerHTML = `
+      ${image}
+      <div class="action-content">
+        <h3>${escapeHtml(acao.nome || "Ação")}</h3>
+        ${acao.descricao ? `<div class="description">${escapeHtml(acao.descricao)}</div>` : ""}
+        <div class="price-row">
+          <div>
+            <div class="price-label">Valor por número</div>
+            <div class="price-value">${escapeHtml(money(acao.valor_numero))}</div>
+          </div>
+          <div>
+            <div class="price-label">Total de números</div>
+            <div class="price-value">${escapeHtml(acao.total_numeros ?? "—")}</div>
+          </div>
+        </div>
+        <a class="action-button" href="participar.html?acao=${encodeURIComponent(acao.id)}">
+          VER COMO PARTICIPAR
+        </a>
+        <div class="indicators">
+          <div class="data-empty">Carregando indicadores desta ação...</div>
+        </div>
+      </div>`;
+
+    lista.appendChild(card);
+
+    const indicators = await carregarIndicadores(acao);
+    const section = card.querySelector(".action-content > .indicators");
+    if (section) section.outerHTML = indicators;
+  }
+
+  async function carregarAcoes() {
+    const {data, error} = await db.from("AÇÕES")
       .select("id,nome,descricao,foto_url,valor_numero,total_numeros,status,created_at")
-      .eq("status","ativa")
-      .order("created_at",{ascending:false});
-    if(error)throw error;
+      .eq("status", "ativa")
+      .order("created_at", {ascending:false});
 
-    if(!data||!data.length){
-      contador.textContent="0 ações";
-      lista.innerHTML='<div class="estado"><strong>Nenhuma ação disponível no momento.</strong><br>Volte em breve para conferir as novidades.</div>';
+    if (error) {
+      lista.innerHTML = `<div class="empty">Não foi possível carregar as ações agora. Tente novamente em instantes.</div>`;
+      console.error("Erro ao carregar ações:", error);
       return;
     }
 
-    contador.textContent=data.length+(data.length===1?" ação disponível":" ações disponíveis");
-    lista.innerHTML=data.map(a=>{
-      const nome=escapar(a.nome||"Ação OKL Lifestyle");
-      const descricao=escapar(a.descricao||"Confira os detalhes desta ação.");
-      const foto=a.foto_url
-        ? `<img src="${escapar(a.foto_url)}" alt="${nome}" loading="lazy" onerror="this.parentElement.innerHTML='<span class=&quot;sem-foto&quot;>Foto do prêmio indisponível</span>'">`
-        : '<span class="sem-foto">Foto do prêmio em breve</span>';
-      const destino="participar.html?acao="+encodeURIComponent(a.id);
-      return `<article class="card">
-        <div class="foto">${foto}</div>
-        <div class="conteudo">
-          <div class="status">● Ação disponível</div>
-          <h3>${nome}</h3>
-          <div class="descricao">${descricao}</div>
-          <div class="detalhes">
-            <div><div class="rotulo">Valor por bilhete</div><div class="preco">${moeda(a.valor_numero)}</div></div>
-            <div><div class="rotulo">Total de bilhetes</div><div class="qtd">${Number(a.total_numeros||0).toLocaleString("pt-BR")}</div></div>
-          </div>
-          <a class="botao" href="${destino}">VER COMO PARTICIPAR</a>
-        </div>
-      </article>`;
-    }).join("");
-  }catch(e){
-    console.error("Erro ao carregar ações:",e);
-    contador.textContent="";
-    lista.innerHTML='<div class="estado">Não foi possível carregar as ações agora.<br><strong>Tente novamente em instantes.</strong></div>';
+    if (!data || data.length === 0) {
+      lista.innerHTML = `<div class="empty">Nenhuma ação disponível no momento. Volte em breve para conferir as novidades.</div>`;
+      return;
+    }
+
+    lista.innerHTML = "";
+    for (const acao of data) {
+      await renderAcao(acao);
+    }
   }
-}
-carregarAcoes();
+
+  carregarAcoes();
+})();
 </script>
 </body>
 </html>
