@@ -2,1200 +2,216 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OKL Lifestyle | Clube de Prêmios</title>
-<meta name="description" content="Acompanhe as ações e novidades da OKL Lifestyle.">
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090909">
+<title>Minhas Participações | OKL Lifestyle</title>
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-body{
-    font-family:Inter,Arial,sans-serif;
-    background:#080808;
-    color:#f4f1e8;
-    line-height:1.55;
-}
-:root{--gold:#d4af37;--gold-light:#f1d989;--panel:#121212;--line:#2a2a2a;--muted:#aaa69a}
-a{color:inherit}
-.site-top{position:sticky;top:0;z-index:20;background:rgba(8,8,8,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.top-inner{max-width:1180px;margin:auto;min-height:82px;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.top-inner .logo-img{width:118px;margin:0}
-.nav-links{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
-.nav-links a{text-decoration:none;color:#d9d5ca;font-size:14px;font-weight:700}
-.nav-links a:hover{color:var(--gold-light)}
-.nav-cta{padding:10px 16px;border-radius:8px;background:var(--gold);color:#080808!important}
-.promo-strip{padding:9px 16px;text-align:center;background:#17130a;border-bottom:1px solid #3b3016;color:var(--gold-light);font-size:12px;font-weight:800;letter-spacing:.08em}
-.hero{max-width:1180px;margin:0 auto;padding:62px 24px 34px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:30px}
-.hero-copy{max-width:720px}
-.hero-kicker{display:inline-block;border:1px solid #51421e;border-radius:99px;padding:7px 12px;color:var(--gold-light);font-size:11px;font-weight:800;letter-spacing:.12em;margin-bottom:18px}
-.hero h1{font-size:clamp(32px,5vw,58px);line-height:1.04;font-weight:900;letter-spacing:-.04em;margin-bottom:18px;color:#f7f4eb}
-.hero h1 span{color:var(--gold)}
-.hero p{color:#bcb7aa;font-size:17px;font-weight:500;max-width:560px}
-.hero-action{display:inline-flex;align-items:center;justify-content:center;margin-top:24px;padding:14px 22px;border-radius:9px;background:var(--gold);color:#080808;font-weight:900;text-decoration:none}
-.hero-mark{flex:0 0 150px;width:150px;height:150px;border:1px solid #40351b;border-radius:28px;display:grid;place-items:center;color:var(--gold);font-size:58px;background:radial-gradient(circle at 30% 20%,#282111,#101010 65%);box-shadow:0 18px 55px #000}
-.container{width:calc(100% - 40px);max-width:1180px;margin:auto}
-.section-heading{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:26px 0 18px}
-.section-heading p{color:var(--muted);font-size:13px}
-.card{box-shadow:0 18px 45px rgba(0,0,0,.22)}
-.prize{background:radial-gradient(circle at 50% 35%,#2c2618,#111 65%);min-height:260px}
-.card-content{padding:clamp(18px,3vw,30px)}
-.card h2{font-size:clamp(22px,3vw,30px);line-height:1.15}
-.card-content p{color:#d3cec2}
-.progress{height:8px;background:#292929}
-.progress-bar{background:linear-gradient(90deg,#a98522,#f1d989)}
-.button{background:linear-gradient(135deg,#f1d989,#c29a25);box-shadow:0 7px 22px #d4af3722}
-.how{background:linear-gradient(145deg,#151515,#0e0e0e);box-shadow:0 14px 40px #0003}
-.option{background:#151515;border-color:#303030}
-.option.selected{background:#211b0d;border-color:var(--gold)}
-.highlight{background:linear-gradient(145deg,#151515,#0d0d0d);padding:22px 14px}
-.highlight strong{color:var(--gold-light)}
-footer{margin-top:48px;background:#050505}
-@media(max-width:700px){.top-inner{min-height:68px;padding:10px 16px}.top-inner .logo-img{width:96px}.nav-links{gap:12px}.nav-links a{font-size:12px}.nav-links a:not(.nav-cta){display:none}.hero{padding:42px 20px 24px}.hero-mark{display:none}.hero p{font-size:15px}.container{width:calc(100% - 28px)}.section-heading{align-items:start;flex-direction:column}}
-
-header{
-    padding:22px;
-    text-align:center;
-    border-bottom:1px solid #242424;
-}
-
-.logo-img{
-    width:150px;
-    max-width:70%;
-    height:auto;
-    display:block;
-    margin:0 auto;
-    object-fit:contain;
-}
-
-.hero{
-    padding:45px 20px;
-    text-align:center;
-}
-
-.hero h1{
-    font-size:38px;
-    font-weight:800;
-    letter-spacing:1px;
-    margin-bottom:15px;
-    color:#d4af37;
-}
-
-.hero p{
-    color:#f2f0e8;
-    font-size:17px;
-    font-weight:600;
-}
-
-.container{
-    width:92%;
-    max-width:1000px;
-    margin:auto;
-}
-
-.section-title{
-    margin:30px 0 15px;
-    font-size:24px;
-    font-weight:800;
-    color:#d4af37;
-}
-
-.card{
-    background:#111;
-    border:1px solid #292929;
-    border-radius:16px;
-    overflow:hidden;
-    margin-bottom:25px;
-}
-
-.prize{
-    background:linear-gradient(135deg,#222,#111);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:15px;
-    min-height:180px;
-}
-
-.prize img{
-    width:100%;
-    height:auto;
-    max-height:400px;
-    object-fit:contain;
-    display:block;
-}
-
-.card-content{
-    padding:22px;
-}
-
-.card h2{
-    margin-bottom:10px;
-    font-size:25px;
-    font-weight:800;
-}
-
-.card-content p{
-    font-size:16px;
-    font-weight:500;
-    margin-bottom:8px;
-}
-
-.card-content p strong{
-    color:#d4af37;
-    font-size:19px;
-    font-weight:800;
-}
-
-.progress{
-    height:10px;
-    background:#292929;
-    border-radius:20px;
-    overflow:hidden;
-    margin:18px 0;
-}
-
-.progress-bar{
-    width:0%;
-    height:100%;
-    background:#d4af37;
-    transition:width .3s ease;
-}
-
-.info{
-    display:flex;
-    justify-content:space-between;
-    color:#f2f0e8;
-    font-size:14px;
-    font-weight:600;
-    gap:15px;
-}
-
-.button{
-    display:block;
-    width:100%;
-    margin-top:20px;
-    padding:16px;
-    border:none;
-    border-radius:10px;
-    background:#d4af37;
-    color:#050505;
-    font-size:17px;
-    font-weight:800;
-    cursor:pointer;
-    text-align:center;
-    text-decoration:none;
-}
-
-.button:hover{
-    opacity:.9;
-}
-
-.how{
-    background:#111;
-    padding:25px;
-    border-radius:16px;
-    margin-bottom:40px;
-    border:1px solid #292929;
-}
-
-.how h2{
-    font-size:23px;
-    font-weight:800;
-    color:#d4af37;
-    margin-bottom:15px;
-}
-
-.how p{
-    margin:15px 0;
-    font-size:16px;
-    font-weight:500;
-}
-
-.how p strong{
-    color:#d4af37;
-}
-
-.options{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-    margin-top:20px;
-}
-
-.option{
-    padding:18px;
-    background:#111;
-    color:#f2f0e8;
-    border:1px solid #3a3a3a;
-    border-radius:12px;
-    font-size:16px;
-    cursor:pointer;
-    text-align:center;
-    transition:.2s;
-}
-
-.option:hover{
-    border-color:#d4af37;
-}
-
-.option.selected{
-    border:2px solid #d4af37;
-    background:#181818;
-}
-
-.option strong{
-    display:block;
-    font-size:18px;
-    margin-bottom:6px;
-}
-
-.option span{
-    color:#d4af37;
-    font-size:16px;
-    font-weight:700;
-}
-
-.selected-info{
-    margin-top:20px;
-    padding:15px;
-    border-radius:10px;
-    background:#080808;
-    border:1px solid #292929;
-    text-align:center;
-    display:none;
-}
-
-.selected-info strong{
-    color:#d4af37;
-}
-
-.form-section{
-    display:none;
-    margin-top:25px;
-}
-
-.form-section h3{
-    color:#d4af37;
-    margin-bottom:15px;
-    font-size:22px;
-}
-
-.form-section input{
-    width:100%;
-    padding:15px;
-    margin-bottom:12px;
-    background:#050505;
-    border:1px solid #3a3a3a;
-    border-radius:10px;
-    color:#f2f0e8;
-    font-size:16px;
-    outline:none;
-}
-
-.form-section input:focus{
-    border-color:#d4af37;
-}
-
-.highlights{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-    margin-bottom:40px;
-}
-
-.highlight{
-    background:#111;
-    border:1px solid #292929;
-    padding:25px 15px;
-    border-radius:14px;
-    text-align:center;
-}
-
-.highlight strong{
-    display:block;
-    margin-top:10px;
-    color:#d4af37;
-    font-size:16px;
-}
-
-.highlight small{
-    display:block;
-    margin-top:5px;
-    font-size:13px;
-    font-weight:600;
-}
-
-.loading,
-.error{
-    text-align:center;
-    padding:30px;
-    font-weight:700;
-}
-
-.loading{
-    color:#d4af37;
-}
-
-.error{
-    color:#ff6b6b;
-}
-
-footer{
-    text-align:center;
-    padding:30px;
-    color:#777;
-    border-top:1px solid #222;
-    font-size:14px;
-}
-
-@media(max-width:700px){
-
-    .logo-img{
-        width:135px;
-    }
-
-    .hero h1{
-        font-size:30px;
-        line-height:1.2;
-    }
-
-    .highlights{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .info{
-        font-size:13px;
-    }
-}
-
-@media(max-width:500px){
-
-    .options{
-        grid-template-columns:1fr;
-    }
-
-    .card-content{
-        padding:20px;
-    }
-
-    .card h2{
-        font-size:23px;
-    }
-}
-
-/* Ajustes finais de layout: cartões e pacotes em grade, estilo premium preto/dourado */
-.site-top{position:sticky;top:0;z-index:30;background:rgba(7,7,7,.97);border-bottom:1px solid #342a16}
-.top-inner{max-width:1200px;min-height:78px;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.top-inner .logo-img{width:118px;height:auto;margin:0;max-width:100%}
-.nav-links{display:flex;align-items:center;gap:clamp(10px,2vw,24px)}
-.nav-links a{font-size:13px;letter-spacing:.02em}
-.nav-cta{border:1px solid #e6c85f;border-radius:7px;padding:11px 17px;background:linear-gradient(135deg,#f4df91,#c59b2b);color:#080808!important}
-.hero{max-width:1200px;min-height:290px;margin:0 auto;padding:56px 24px 36px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:28px}
-.hero h1{font-size:clamp(34px,5vw,58px);line-height:1.04;letter-spacing:-.035em;color:#f8f4e8;margin:0 0 18px}
-.hero h1 span{color:#d4af37}
-.hero p{max-width:610px;color:#c7c0b1;font-size:16px;line-height:1.7}
-.hero-mark{flex:0 0 145px;width:145px;height:145px;border:1px solid #4b3c1a;border-radius:24px;display:grid;place-items:center;background:radial-gradient(circle at 35% 25%,#342a13,#101010 70%);color:#d4af37;font-size:52px;font-weight:900}
-.container{width:calc(100% - 40px);max-width:1120px;margin-left:auto;margin-right:auto}
-.section-heading{margin:24px 0 18px}
-.section-heading h2,.section-title{color:#e0bd52;font-weight:850;letter-spacing:-.02em}
-#acaoContainer .card{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);background:#101010;border:1px solid #342d1b;border-radius:16px;overflow:hidden;box-shadow:0 18px 48px #0008}
-#acaoContainer .prize{min-height:330px;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(circle at 50% 40%,#2b2415,#101010 72%)}
-#acaoContainer .prize img{width:100%;height:100%;max-height:480px;object-fit:contain;border-radius:8px}
-#acaoContainer .card-content{align-self:center;padding:clamp(22px,4vw,40px)}
-#acaoContainer .card h2{color:#f8f3e6;font-size:clamp(24px,3vw,34px);margin-bottom:12px}
-#acaoContainer .card-content p{line-height:1.65;margin:10px 0;color:#c9c2b4}
-#acaoContainer .card-content p strong{color:#e4c45e}
-#acaoContainer .progress{margin:22px 0 12px}
-#acaoContainer .button,.button{border:0;border-radius:8px;background:linear-gradient(135deg,#f2dc8a,#c59a27);color:#100e08;font-weight:900;letter-spacing:.04em;text-decoration:none;padding:14px 18px;cursor:pointer}
-#acaoContainer .button{display:block;text-align:center;margin-top:22px}
-.how{max-width:1120px;margin-top:28px;padding:clamp(22px,4vw,36px);border:1px solid #302817;border-radius:16px;background:linear-gradient(145deg,#151515,#0b0b0b);box-shadow:0 15px 40px #0005}
-.how h2{color:#e0bd52;margin-bottom:8px}
-.options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:22px}
-.option{min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:16px 10px;background:linear-gradient(145deg,#191919,#101010);border:1px solid #393124;border-radius:12px;color:#f6f0df;box-shadow:inset 0 1px #ffffff08;transition:transform .18s,border-color .18s,background .18s}
-.option:hover{transform:translateY(-2px);border-color:#d4af37}
-.option strong{font-size:17px;margin:0}
-.option span{color:#e2c25b;font-size:16px;font-weight:850}
-.option.selected{border:2px solid #e0bd52;background:linear-gradient(145deg,#2b230f,#17130b)}
-.selected-info{display:none;margin-top:20px;padding:16px;border:1px solid #4a3a18;border-radius:10px;background:#19150c;color:#e9e0c7}
-.form-section{display:none;margin-top:20px}
-.form-section h3{color:#e0bd52;margin-bottom:14px}
-.form-section input{width:100%;display:block;margin:10px 0;padding:14px 15px;background:#090909;color:#f5f0e5;border:1px solid #393939;border-radius:8px;font:inherit}
-.form-section input:focus{outline:2px solid #d4af3766;border-color:#d4af37}
-.form-section .button{width:100%;margin-top:12px}
-.highlights{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px auto 36px}
-.highlight{border:1px solid #302817;border-radius:13px;text-align:center;background:linear-gradient(145deg,#151515,#0b0b0b);padding:23px 14px}
-.highlight strong{display:block;color:#e0bd52;margin-top:9px}
-.highlight small{display:block;color:#b9b2a4;margin-top:5px}
-footer{margin-top:44px;padding:30px 20px;text-align:center;background:#050505;border-top:1px solid #252016;color:#8f887a}
-@media(max-width:760px){.top-inner{min-height:66px;padding:10px 14px}.top-inner .logo-img{width:88px}.nav-links{gap:10px}.nav-links a{font-size:11px}.nav-links a:not(.nav-cta){display:none}.hero{padding:42px 20px 24px;min-height:0}.hero-mark{display:none}.hero h1{font-size:clamp(32px,9vw,44px)}.hero p{font-size:15px}.container{width:calc(100% - 28px)}#acaoContainer .card{grid-template-columns:1fr}#acaoContainer .prize{min-height:230px;max-height:360px}#acaoContainer .prize img{max-height:330px}.options{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.option{min-height:82px;padding:12px 8px}.option strong{font-size:15px}.option span{font-size:14px}.highlights{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:390px){.options{grid-template-columns:1fr}.option{min-height:70px}.promo-strip{font-size:10px}}
-
-
-.prize{display:flex;align-items:center;justify-content:center;padding:18px;overflow:hidden}
-.prize img{display:block;width:100%;max-width:560px;max-height:420px;object-fit:contain;border-radius:10px}
-.options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.option{width:100%;min-height:88px;border:1px solid #303030;border-radius:12px;padding:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#f4f1e8;cursor:pointer}
-.option strong{color:#f1d989;font-size:16px}.option span{font-weight:800}
-.option.selected{outline:2px solid #d4af37}
-@media(max-width:600px){.options{grid-template-columns:repeat(2,minmax(0,1fr))}}
+:root{--gold:#d4af37;--bg:#090909;--card:#151515;--text:#f5f5f5;--muted:#aaa;--line:#39301b;--green:#183522;--red:#351919}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+header{text-align:center;padding:22px 16px;border-bottom:1px solid #332a12}
+.logo{color:var(--gold);font-size:23px;font-weight:900;letter-spacing:1px}
+header p{color:var(--muted);margin:8px 0 0;font-size:12px;letter-spacing:1px}
+nav{display:flex;justify-content:center;flex-wrap:wrap;gap:10px 18px;padding:15px 10px;background:#111;border-bottom:1px solid #242424}
+nav a{font-size:14px;color:var(--gold);text-decoration:none}
+nav a:hover,nav a:focus{text-decoration:underline}
+main{width:min(760px,100%);margin:auto;padding:25px 16px 70px}
+h1{font-size:clamp(24px,5vw,30px);margin:0 0 8px}
+h2{font-size:18px;color:var(--gold);margin:0 0 12px}
+.intro{color:var(--muted);line-height:1.6}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:18px}
+label{display:block;margin:14px 0 7px;font-weight:600;font-size:14px}
+input{width:100%;padding:13px;background:#090909;color:white;border:1px solid #444;border-radius:8px;font-size:16px;outline:none}
+input:focus{border-color:var(--gold);box-shadow:0 0 0 2px #d4af3722}
+button{border:0;border-radius:8px;padding:13px 16px;background:var(--gold);color:#111;font-weight:bold;cursor:pointer;font-size:14px}
+button:disabled{opacity:.6;cursor:wait}
+.submit{width:100%;margin-top:18px}
+.status{display:inline-block;padding:6px 10px;border-radius:20px;background:#292929;font-size:12px;overflow-wrap:anywhere}
+.info{line-height:1.9;overflow-wrap:anywhere}
+.message{display:none;padding:14px;border-radius:9px;margin-top:15px;line-height:1.6;font-size:14px}
+.message.show{display:block}
+.message.error{background:var(--red);border:1px solid #8a3939}
+.message.ok{background:var(--green);border:1px solid #2f7547}
+.empty{text-align:center;color:var(--muted);line-height:1.7}
+.numbers{margin-top:10px;padding:12px;background:#0c0c0c;border:1px solid #302817;border-radius:9px;overflow-wrap:anywhere}
+.numbers strong{color:var(--gold)}
+.order-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.order-top h2{margin-bottom:5px}
+.small{font-size:12px;color:var(--muted)}
+footer{text-align:center;padding:25px;color:var(--muted);font-size:12px;border-top:1px solid #292929}
+@media(max-width:480px){main{padding:22px 12px 55px}.card{padding:15px}nav{gap:12px}nav a{font-size:13px}}
 </style>
 </head>
-
 <body>
-
-<div class="promo-strip">OKL LIFESTYLE · AÇÕES E NOVIDADES</div>
-<header class="site-top">
-  <div class="top-inner">
-    <a href="#inicio" aria-label="OKL Lifestyle - início"><img src="Design%20sem%20nome%20(1).jpg" alt="OKL Lifestyle" class="logo-img"></a>
-    <nav class="nav-links" aria-label="Navegação principal">
-      <a href="#inicio">Início</a>
-      <a href="#acoes">Ações</a>
-      <a href="#participar">Como participar</a>
-      <a href="#destaques">Destaques</a>
-      <a class="nav-cta" href="#participar">Participar</a>
-    </nav>
-  </div>
+<header>
+  <div class="logo">OKL LIFESTYLE</div>
+  <p>CLUB DA SORTE • SHOW DE PRÊMIOS</p>
 </header>
 
-<section class="hero" id="inicio">
-  <div class="hero-copy">
-    <span class="hero-kicker">EXPERIÊNCIA OKL LIFESTYLE</span>
-    <h1>Seu próximo prêmio<br><span>pode estar aqui.</span></h1>
-    <p>Acompanhe as ações disponíveis, confira os detalhes e escolha a quantidade de participações que deseja.</p>
-    <a class="hero-action" href="#acoes">VER A AÇÃO EM DESTAQUE ↓</a>
-  </div>
-  <div class="hero-mark" aria-hidden="true">OKL</div>
-</section>
+<nav aria-label="Navegação principal">
+  <a href="index.html">Início</a>
+  <a href="acoes.html">Ações</a>
+  <a href="ultimas-acoes.html">Resultados</a>
+  <a href="participar.html">Participar</a>
+  <a href="minhas-participacoes.html" aria-current="page">Minhas participações</a>
+</nav>
 
-<main class="container" id="acoes">
-  <div class="section-heading"><div><h2 class="section-title">Ação em destaque</h2><p>Confira o prêmio, as condições e o andamento da ação.</p></div></div>
+<main>
+  <h1>Minhas participações 🎟️</h1>
+  <p class="intro">Consulte seus pedidos e acompanhe as informações das suas participações usando os mesmos dados informados na reserva.</p>
 
-    <div id="acaoContainer">
-        <div class="loading">
-            Carregando ação...
-        </div>
-    </div>
+  <section class="card">
+    <h2>Consultar pedidos</h2>
+    <p class="intro">Digite seu CPF e WhatsApp com DDD. Esses dados são usados para localizar seus pedidos no sistema.</p>
+    <form id="consulta">
+      <label for="cpf">CPF</label>
+      <input id="cpf" name="cpf" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="000.000.000-00" required>
+      <label for="telefone">WhatsApp com DDD</label>
+      <input id="telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel" maxlength="16" placeholder="(27) 99999-9999" required>
+      <button class="submit" id="buscar" type="submit">CONSULTAR PARTICIPAÇÕES</button>
+    </form>
+    <div id="mensagem" class="message" role="status" aria-live="polite"></div>
+  </section>
 
+  <section id="historico" aria-live="polite">
+    <div class="card empty">Seus pedidos aparecerão aqui depois da consulta.</div>
+  </section>
+  <p class="intro" style="font-size:12px">As informações exibidas dependem dos registros e da confirmação no banco de dados. Esta página não confirma pagamento por conta própria.</p>
 </main>
 
-<section id="participar" class="how container">
-
-    <h2>Participar</h2>
-
-    <p>Escolha quantas participações deseja.</p>
-
-    <div class="options" id="optionsContainer"></div>
-
-    <div class="selected-info" id="selectedInfo">
-
-        Você selecionou
-        <strong id="selectedNumbers"></strong>
-        por
-        <strong id="selectedPrice"></strong>.
-
-    </div>
-
-    <div class="form-section" id="formSection">
-
-        <h3>Seus dados</h3>
-
-        <input
-            type="text"
-            id="nome"
-            placeholder="Nome completo"
-        >
-
-        <input
-            type="tel"
-            id="telefone"
-            placeholder="WhatsApp"
-        >
-
-        <button
-            class="button"
-            onclick="continuar()"
-        >
-            CONTINUAR
-        </button>
-
-    </div>
-
-</section>
-
-<section id="destaques" class="container"><div class="section-heading"><div><h2 class="section-title">🏆 Destaques</h2><p>Informações da ação e recursos disponíveis.</p></div></div></section>
-
-<div class="highlights container">
-
-    <div class="highlight">
-        🥇
-        <strong>Top Comprador</strong>
-        <small>Mais bilhetes</small>
-    </div>
-
-    <div class="highlight">
-        ⬇️
-        <strong>Menor Cota</strong>
-        <small>Menor número</small>
-    </div>
-
-    <div class="highlight">
-        ⬆️
-        <strong>Maior Cota</strong>
-        <small>Maior número</small>
-    </div>
-
-    <div class="highlight">
-        🎫
-        <strong>Bilhetes Premiados</strong>
-        <small>6 a 8 prêmios extras</small>
-    </div>
-
-</div>
-
-<section class="how container">
-
-    <h2>📋 Como funciona</h2>
-
-    <p>
-        <strong>01.</strong>
-        Escolha sua participação.
-    </p>
-
-    <p>
-        <strong>02.</strong>
-        Realize o pagamento.
-    </p>
-
-    <p>
-        <strong>03.</strong>
-        Receba seus números.
-    </p>
-
-    <p>
-        <strong>04.</strong>
-        Acompanhe o resultado.
-    </p>
-
-</section>
-
-<footer>
-  <p><strong>OKL LIFESTYLE</strong></p>
-  <p>Consulte as informações e regras da ação antes de participar.</p>
-  <p>© 2026 OKL Lifestyle · Todos os direitos reservados</p>
-</footer>
-
-
-<!-- SUPABASE -->
+<footer>OKL Lifestyle • Club da Sorte</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
 (() => {
-  // Isola as declarações para evitar conflito caso outro script use nomes iguais.
-  if (window.__oklLifestyleIndexInitialized) return;
-  window.__oklLifestyleIndexInitialized = true;
+  "use strict";
 
-const SUPABASE_URL =
-    "https://vlirpvuramslfiftshio.supabase.co";
+  const SUPABASE_URL = "https://vlirpvuramslfiftshio.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const el = id => document.getElementById(id);
 
-const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
+  function esc(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+      "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+    }[char]));
+  }
+  function brl(value) {
+    const amount = Number(value);
+    return Number.isFinite(amount)
+      ? amount.toLocaleString("pt-BR", {style:"currency", currency:"BRL"})
+      : "Não informado";
+  }
+  function dataBR(value) {
+    if (!value) return "Não informada";
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? "Não informada" : date.toLocaleString("pt-BR");
+  }
+  function aviso(text, type = "error") {
+    const box = el("mensagem");
+    box.className = "message show " + type;
+    box.textContent = text;
+  }
+  function limparHistorico() {
+    el("historico").innerHTML = '<div class="card empty">Informe CPF e WhatsApp para consultar seus pedidos.</div>';
+  }
 
-if (!window.supabase || typeof window.supabase.createClient !== "function") {
-    document.getElementById("acaoContainer").innerHTML =
-        '<div class="error">Não foi possível iniciar a conexão. Atualize a página e tente novamente.</div>';
-    document.getElementById("optionsContainer").innerHTML = "";
-    return;
-}
+  el("cpf").addEventListener("input", event => {
+    let value = event.target.value.replace(/\D/g, "").slice(0, 11);
+    if (value.length > 9) value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, "$1.$2.$3-$4");
+    else if (value.length > 6) value = value.replace(/(\d{3})(\d{3})(\d{1,3})/, "$1.$2.$3");
+    else if (value.length > 3) value = value.replace(/(\d{3})(\d{1,3})/, "$1.$2");
+    event.target.value = value;
+  });
 
-const supabase = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-);
+  el("telefone").addEventListener("input", event => {
+    let value = event.target.value.replace(/\D/g, "").slice(0, 11);
+    if (value.length > 10) value = value.replace(/(\d{2})(\d{5})(\d{1,4})/, "($1) $2-$3");
+    else if (value.length > 6) value = value.replace(/(\d{2})(\d{4})(\d{1,4})/, "($1) $2-$3");
+    else if (value.length > 2) value = value.replace(/(\d{2})(\d+)/, "($1) $2");
+    event.target.value = value;
+  });
 
+  el("consulta").addEventListener("submit", async event => {
+    event.preventDefault();
+    const cpf = el("cpf").value.replace(/\D/g, "");
+    const telefone = el("telefone").value.replace(/\D/g, "");
 
-let quantidadeSelecionada = 0;
-let valorSelecionado = 0;
-let acaoAtual = null;
+    if (cpf.length !== 11) {
+      aviso("Confira o CPF: informe os 11 números.");
+      el("cpf").focus();
+      return;
+    }
+    if (telefone.length !== 10 && telefone.length !== 11) {
+      aviso("Confira o WhatsApp com DDD.");
+      el("telefone").focus();
+      return;
+    }
 
-
-/* =========================
-   CARREGAR AÇÃO
-========================= */
-
-async function carregarAcao(){
-    const container = document.getElementById("acaoContainer");
-    const opcoes = document.getElementById("optionsContainer");
-    container.innerHTML = '<div class="loading">Carregando ação...</div>';
-    opcoes.innerHTML = '<div class="loading">Carregando pacotes...</div>';
+    const button = el("buscar");
+    button.disabled = true;
+    button.textContent = "CONSULTANDO...";
+    el("historico").innerHTML = '<div class="card empty">Buscando suas participações...</div>';
+    el("mensagem").className = "message";
 
     try {
-        // Busca os registros sem depender de uma lista fixa de colunas.
-        const { data, error } = await supabase
-            .from("AÇÕES")
-            .select("*")
-            .limit(100);
+      const { data, error } = await db.rpc("consultar_meus_pedidos", {
+        p_cpf: cpf,
+        p_telefone: telefone
+      });
 
-        if (error) throw error;
+      if (error) {
+        console.error("Erro ao consultar participações:", error);
+        limparHistorico();
+        aviso("Não foi possível consultar agora. Confira se os dados estão corretos e tente novamente. Se continuar, precisamos verificar o retorno da função consultar_meus_pedidos no Supabase.");
+        return;
+      }
 
-        const ativas = (data || []).filter(a =>
-            String(a.status || "").trim().toLocaleLowerCase("pt-BR") === "ativa"
-        );
-        ativas.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
-        const acao = ativas[0];
+      const pedidos = Array.isArray(data) ? data : (data ? [data] : []);
+      if (pedidos.length === 0) {
+        el("historico").innerHTML = '<div class="card empty"><h2>Nenhuma participação encontrada</h2><p>Não encontramos pedidos com os dados informados. Confira o CPF e o WhatsApp usados na reserva.</p></div>';
+        aviso("Consulta concluída. Nenhum pedido foi encontrado.", "ok");
+        return;
+      }
 
-        if (!acao) {
-            container.innerHTML = '<div class="error">Não encontrei uma ação com status “ativa”. Confira o status da ROKR na tabela AÇÕES.</div>';
-            opcoes.innerHTML = '';
-            return;
-        }
+      el("historico").innerHTML = pedidos.map(pedido => {
+        const numeros = Array.isArray(pedido.numeros) ? pedido.numeros : [];
+        const nome = pedido.nome_cliente_masked ?? pedido.nome_mascarado ?? pedido.nome_parcial ?? "";
+        const numeroHtml = numeros.length
+          ? numeros.map(item => esc(typeof item === "object" && item !== null ? (item.numero ?? item.numero_sorte ?? "") : item)).filter(Boolean).join(", ")
+          : "Aguardando atribuição ou não informados";
+        const pedidoId = pedido.pedido_id ?? pedido.id ?? "Não informado";
+        const status = pedido.status ?? "Não informado";
 
-        // Normaliza os nomes esperados pelo layout, preservando os dados cadastrados.
-        acaoAtual = {
-            ...acao,
-            nome: acao.nome || acao.titulo || acao.nome_acao || "Ação em destaque",
-            descricao: acao.descricao || acao.descrição || "",
-            foto_url: acao.foto_url || acao.imagem_url || acao.foto || "",
-            valor_numero: acao.valor_numero ?? acao.valor_cota ?? acao.valor ?? 0,
-            total_numeros: acao.total_numeros ?? acao.quantidade_numeros ?? acao.total_cotas ?? 0
-        };
+        return `<article class="card">
+          <div class="order-top">
+            <div>
+              <h2>${esc(pedido.acao_nome ?? pedido.nome_acao ?? "Ação")}</h2>
+              <div class="small">Pedido: ${esc(pedidoId)}</div>
+            </div>
+            <span class="status">${esc(status)}</span>
+          </div>
+          ${nome ? `<p><strong>Cliente:</strong> ${esc(nome)}</p>` : ""}
+          <div class="info">
+            <div><strong>Data do pedido:</strong> ${esc(dataBR(pedido.created_at ?? pedido.data_pedido))}</div>
+            <div><strong>Quantidade:</strong> ${esc(pedido.quantidade ?? "Não informada")}</div>
+            <div><strong>Valor total:</strong> ${esc(brl(pedido.valor_total ?? pedido.total))}</div>
+          </div>
+          <div class="numbers"><strong>Números da participação:</strong><br>${numeroHtml}</div>
+        </article>`;
+      }).join("");
 
-        renderizarAcao(acaoAtual);
-        criarOpcoes(acaoAtual.valor_numero);
-        atualizarResumoAcao(acaoAtual.id).catch(err => console.warn("Resumo indisponível:", err));
+      aviso(`Consulta concluída. Encontramos ${pedidos.length} pedido(s).`, "ok");
     } catch (error) {
-        console.error("Erro ao carregar ação da tabela AÇÕES:", error);
-        container.innerHTML = '<div class="error" style="background:#15110b;border:1px solid #5a4218;border-radius:12px;padding:22px;color:#f0d98d">Não consegui carregar a ação do Supabase. Confira a conexão e as permissões de leitura da tabela AÇÕES. Abra o Console do navegador (F12) para ver o erro técnico.</div>';
-        opcoes.innerHTML = '';
+      console.error("Falha inesperada na consulta:", error);
+      limparHistorico();
+      aviso("Ocorreu um erro de conexão durante a consulta. Tente novamente.");
+    } finally {
+      button.disabled = false;
+      button.textContent = "CONSULTAR PARTICIPAÇÕES";
     }
-}
-
-/* =========================
-   MOSTRAR AÇÃO
-========================= */
-
-function renderizarAcao(acao){
-
-    const container =
-        document.getElementById("acaoContainer");
-
-
-    const valor =
-        Number(
-            acao.valor_numero || 0
-        )
-        .toFixed(2)
-        .replace(".",",");
-
-
-    const imagem =
-        acao.foto_url || "";
-
-
-    container.innerHTML = `
-
-        <div class="card">
-
-            <div class="prize">
-
-                ${
-                    imagem
-
-                    ?
-
-                    `
-                    <img
-                        src="${imagem}"
-                        alt="Prêmio"
-                    >
-                    `
-
-                    :
-
-                    `
-                    <div class="loading">
-                        Foto do prêmio não cadastrada.
-                    </div>
-                    `
-                }
-
-            </div>
-
-
-            <div class="card-content">
-
-                <h2>
-                    ${escapeHtml(acao.nome)}
-                </h2>
-
-
-                <p>
-                    ${escapeHtml(
-                        acao.descricao || ""
-                    )}
-                </p>
-
-
-                <p>
-                    <strong>
-                        R$ ${valor} por número
-                    </strong>
-                </p>
-
-
-                <div class="progress">
-
-                    <div
-                        class="progress-bar"
-                        id="progressBar"
-                    ></div>
-
-                </div>
-
-
-                <div class="info">
-
-                    <span id="vendidosInfo">
-                        0 vendidos
-                    </span>
-
-                    <span>
-                        ${
-                            Number(
-                                acao.total_numeros || 0
-                            ).toLocaleString("pt-BR")
-                        }
-                        números
-                    </span>
-
-                </div>
-
-
-                <a
-                    href="#participar"
-                    class="button"
-                >
-                    PARTICIPAR
-                </a>
-
-            </div>
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================
-   VALORES DAS PARTICIPAÇÕES
-========================= */
-
-function criarOpcoes(valorNumero){
-
-    const container =
-        document.getElementById(
-            "optionsContainer"
-        );
-
-
-    const valor =
-        Number(valorNumero || 0);
-
-
-    if(!valor){
-
-        container.innerHTML = `
-            <div class="error">
-                Valor do número não cadastrado.
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    /*
-       QUANTIDADES DISPONÍVEIS
-       O VALOR É CALCULADO
-       AUTOMATICAMENTE.
-    */
-
-    const quantidades = [
-        10,
-        15,
-        50,
-        100,
-        200,
-        500
-    ];
-
-
-    container.innerHTML = "";
-
-
-    quantidades.forEach(
-        function(quantidade){
-
-            const total =
-                quantidade * valor;
-
-
-            const button =
-                document.createElement(
-                    "button"
-                );
-
-
-            button.className =
-                "option";
-
-
-            button.innerHTML = `
-
-                <strong>
-                    ${quantidade} números
-                </strong>
-
-                <span>
-                    R$ ${formatarMoeda(total)}
-                </span>
-
-            `;
-
-
-            button.onclick =
-                function(){
-
-                    selecionar(
-                        quantidade,
-                        total,
-                        button
-                    );
-
-                };
-
-
-            container.appendChild(
-                button
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================
-   RESUMO DA AÇÃO
-========================= */
-
-async function atualizarResumoAcao(acaoId){
-
-    const { data, error } =
-        await supabase
-            .from("acoes_resumo")
-            .select(`
-                total_numeros,
-                numeros_vendidos,
-                numeros_disponiveis
-            `)
-            .eq("id",acaoId)
-            .maybeSingle();
-
-
-    if(error){
-
-        console.error(
-            "Erro ao carregar resumo:",
-            error
-        );
-
-        return;
-
-    }
-
-
-    if(!data){
-
-        return;
-
-    }
-
-
-    const total =
-        Number(
-            data.total_numeros || 0
-        );
-
-
-    const vendidos =
-        Number(
-            data.numeros_vendidos || 0
-        );
-
-
-    const porcentagem =
-        total > 0
-        ?
-        (vendidos / total) * 100
-        :
-        0;
-
-
-    const vendidosInfo =
-        document.getElementById(
-            "vendidosInfo"
-        );
-
-
-    const progressBar =
-        document.getElementById(
-            "progressBar"
-        );
-
-
-    if(vendidosInfo){
-
-        vendidosInfo.textContent =
-            vendidos.toLocaleString("pt-BR")
-            +
-            " vendidos";
-
-    }
-
-
-    if(progressBar){
-
-        progressBar.style.width =
-            Math.min(
-                porcentagem,
-                100
-            )
-            +
-            "%";
-
-    }
-
-}
-
-
-/* =========================
-   SELECIONAR PARTICIPAÇÃO
-========================= */
-
-function selecionar(
-    quantidade,
-    valor,
-    elemento
-){
-
-    quantidadeSelecionada =
-        quantidade;
-
-
-    valorSelecionado =
-        valor;
-
-
-    document
-        .querySelectorAll(".option")
-        .forEach(
-            function(opcao){
-
-                opcao.classList.remove(
-                    "selected"
-                );
-
-            }
-        );
-
-
-    elemento.classList.add(
-        "selected"
-    );
-
-
-    document.getElementById(
-        "selectedNumbers"
-    ).textContent =
-        quantidade +
-        " números";
-
-
-    document.getElementById(
-        "selectedPrice"
-    ).textContent =
-        "R$ " +
-        formatarMoeda(valor);
-
-
-    document.getElementById(
-        "selectedInfo"
-    ).style.display =
-        "block";
-
-
-    document.getElementById(
-        "formSection"
-    ).style.display =
-        "block";
-
-
-    document.getElementById(
-        "formSection"
-    ).scrollIntoView({
-
-        behavior:"smooth",
-
-        block:"center"
-
-    });
-
-}
-
-
-/* =========================
-   CONTINUAR
-========================= */
-
-function continuar(){
-
-    const nome =
-        document
-            .getElementById("nome")
-            .value
-            .trim();
-
-
-    const telefone =
-        document
-            .getElementById("telefone")
-            .value
-            .trim();
-
-
-    if(
-        quantidadeSelecionada === 0
-    ){
-
-        alert(
-            "Escolha uma participação primeiro."
-        );
-
-        return;
-
-    }
-
-
-    if(!nome){
-
-        alert(
-            "Digite seu nome completo."
-        );
-
-        document
-            .getElementById("nome")
-            .focus();
-
-        return;
-
-    }
-
-
-    if(!telefone){
-
-        alert(
-            "Digite seu WhatsApp."
-        );
-
-        document
-            .getElementById("telefone")
-            .focus();
-
-        return;
-
-    }
-
-
-    alert(
-
-        "Participação selecionada!\n\n"
-
-        +
-
-        "Quantidade: "
-
-        +
-
-        quantidadeSelecionada
-
-        +
-
-        " números\n"
-
-        +
-
-        "Valor: R$ "
-
-        +
-
-        formatarMoeda(
-            valorSelecionado
-        )
-
-        +
-
-        "\n\nPróxima etapa: pagamento."
-
-    );
-
-}
-
-
-/* =========================
-   FORMATAÇÃO
-========================= */
-
-function formatarMoeda(valor){
-
-    return Number(valor)
-        .toFixed(2)
-        .replace(".",",");
-
-}
-
-
-/* =========================
-   SEGURANÇA DO TEXTO
-========================= */
-
-function escapeHtml(text){
-
-    const div =
-        document.createElement("div");
-
-    div.textContent =
-        text ?? "";
-
-    return div.innerHTML;
-
-}
-
-
-/* =========================
-   INICIAR
-========================= */
-
-carregarAcao();
-
+  });
 })();
 </script>
-
 </body>
 </html>
