@@ -594,6 +594,10 @@ footer{margin-top:44px;padding:30px 20px;text-align:center;background:#050505;bo
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+(() => {
+  // Isola as declarações para evitar conflito caso outro script use nomes iguais.
+  if (window.__oklLifestyleIndexInitialized) return;
+  window.__oklLifestyleIndexInitialized = true;
 
 const SUPABASE_URL =
     "https://vlirpvuramslfiftshio.supabase.co";
@@ -601,11 +605,17 @@ const SUPABASE_URL =
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
 
-const supabase =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-    );
+if (!window.supabase || typeof window.supabase.createClient !== "function") {
+    document.getElementById("acaoContainer").innerHTML =
+        '<div class="error">Não foi possível iniciar a conexão. Atualize a página e tente novamente.</div>';
+    document.getElementById("optionsContainer").innerHTML = "";
+    return;
+}
+
+const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
 
 
 let quantidadeSelecionada = 0;
@@ -1184,6 +1194,7 @@ function escapeHtml(text){
 
 carregarAcao();
 
+})();
 </script>
 
 </body>
