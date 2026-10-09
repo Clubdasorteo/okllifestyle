@@ -6,8 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#090909">
 <title>Ações | OKL Lifestyle</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
 :root{
   --gold:#d4af37;
@@ -20,97 +22,266 @@
 }
 *{box-sizing:border-box}
 body{
-  margin:0;background:var(--bg);color:var(--text);
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
   font-family:Montserrat,Arial,sans-serif;
 }
 header{
-  text-align:center;padding:25px 15px 18px;
+  text-align:center;
+  padding:25px 15px 18px;
   border-bottom:1px solid #292929;
 }
-.logo{font-size:25px;font-weight:800;letter-spacing:3px;color:var(--gold)}
-header p{font-size:11px;letter-spacing:2px;color:var(--muted);margin:8px 0 0}
-nav{
-  display:flex;justify-content:center;gap:20px;flex-wrap:wrap;
-  padding:15px 12px;border-bottom:1px solid #242424;
+.logo{
+  font-size:25px;
+  font-weight:800;
+  letter-spacing:3px;
+  color:var(--gold);
 }
-nav a{color:#ddd;text-decoration:none;font-size:13px;font-weight:600}
+header p{
+  font-size:11px;
+  letter-spacing:2px;
+  color:var(--muted);
+  margin:8px 0 0;
+}
+nav{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+  padding:15px 12px;
+  border-bottom:1px solid #242424;
+}
+nav a{
+  color:#ddd;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:600;
+}
 nav a:hover{color:var(--gold)}
 .hero{
-  text-align:center;padding:43px 18px 35px;
+  text-align:center;
+  padding:43px 18px 35px;
   background:radial-gradient(ellipse at top,#292112 0%,#090909 68%);
 }
-.hero .eyebrow{color:var(--gold);font-size:11px;letter-spacing:2px;font-weight:700}
-.hero h1{font-size:clamp(25px,5vw,40px);margin:13px 0;color:#fff}
-.hero p{color:var(--muted);font-size:14px;line-height:1.7;max-width:620px;margin:auto}
-main{max-width:1100px;margin:auto;padding:28px 18px 55px}
-.section-title{font-size:23px;margin:0 0 8px}
-.section-intro{font-size:13px;color:var(--muted);line-height:1.7;margin:0 0 24px}
+.hero .eyebrow{
+  color:var(--gold);
+  font-size:11px;
+  letter-spacing:2px;
+  font-weight:700;
+}
+.hero h1{
+  font-size:clamp(25px,5vw,40px);
+  margin:13px 0;
+  color:#fff;
+}
+.hero p{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.7;
+  max-width:620px;
+  margin:auto;
+}
+main{
+  max-width:1100px;
+  margin:auto;
+  padding:28px 18px 55px;
+}
+.section-title{
+  font-size:23px;
+  margin:0 0 8px;
+}
+.section-intro{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.7;
+  margin:0 0 24px;
+}
 #listaAcoes{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr));
-  gap:22px;align-items:start;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr));
+  gap:22px;
+  align-items:start;
 }
 .action-card{
-  min-width:0;overflow:hidden;background:var(--card);
-  border:1px solid var(--line);border-radius:15px;
+  min-width:0;
+  overflow:hidden;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:15px;
 }
 .action-image{
-  width:100%;max-height:360px;object-fit:contain;display:block;
+  width:100%;
+  max-height:360px;
+  object-fit:contain;
+  display:block;
   background:#0d0d0d;
 }
 .action-content{padding:19px}
-.action-content h3{font-size:21px;line-height:1.4;margin:0 0 9px}
-.description{font-size:13px;line-height:1.7;color:#bbb;white-space:pre-line}
-.price-row{
-  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
-  border-top:1px solid #302a20;border-bottom:1px solid #302a20;
-  padding:13px 0;margin:15px 0;
+.action-content h3{
+  font-size:21px;
+  line-height:1.4;
+  margin:0 0 9px;
 }
-.price-label{font-size:12px;color:var(--muted)}
-.price-value{color:var(--gold-light);font-weight:800;font-size:15px;margin-top:5px}
+.description{
+  font-size:13px;
+  line-height:1.7;
+  color:#bbb;
+  white-space:pre-line;
+}
+.price-row{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  border-top:1px solid #302a20;
+  border-bottom:1px solid #302a20;
+  padding:13px 0;
+  margin:15px 0;
+}
+.price-label{
+  font-size:12px;
+  color:var(--muted);
+}
+.price-value{
+  color:var(--gold-light);
+  font-weight:800;
+  font-size:15px;
+  margin-top:5px;
+}
 .action-button{
-  display:block;text-align:center;background:var(--gold);color:#111;
-  font-weight:800;font-size:12px;letter-spacing:.5px;text-decoration:none;
-  padding:14px;border-radius:8px;
+  display:block;
+  text-align:center;
+  background:var(--gold);
+  color:#111;
+  font-weight:800;
+  font-size:12px;
+  letter-spacing:.5px;
+  text-decoration:none;
+  padding:14px;
+  border-radius:8px;
 }
 .action-button:hover{background:var(--gold-light)}
 .indicators{
-  margin-top:18px;padding-top:17px;border-top:1px solid #3a3020;
+  margin-top:18px;
+  padding-top:17px;
+  border-top:1px solid #3a3020;
 }
-.indicators h4{margin:0 0 13px;font-size:14px;color:var(--gold-light)}
-.indicator-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.indicators h4{
+  margin:0 0 13px;
+  font-size:14px;
+  color:var(--gold-light);
+}
+.indicator-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
 .indicator{
-  background:#0d0d0d;border:1px solid #302a20;border-radius:9px;
-  padding:12px;min-width:0;
+  background:#0d0d0d;
+  border:1px solid #302a20;
+  border-radius:9px;
+  padding:12px;
+  min-width:0;
 }
-.indicator-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
-.indicator-value{font-size:13px;font-weight:700;margin-top:7px;overflow-wrap:anywhere}
-.indicator-sub{font-size:11px;color:#aaa;margin-top:5px;overflow-wrap:anywhere}
-.data-section{margin-top:16px;background:#0d0d0d;border:1px solid #302a20;border-radius:10px;padding:13px}
-.data-section h5{font-size:12px;margin:0 0 11px;color:var(--gold-light)}
-.data-empty{font-size:12px;color:var(--muted);line-height:1.6}
+.indicator-label{
+  font-size:10px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.6px;
+}
+.indicator-value{
+  font-size:13px;
+  font-weight:700;
+  margin-top:7px;
+  overflow-wrap:anywhere;
+}
+.indicator-sub{
+  font-size:11px;
+  color:#aaa;
+  margin-top:5px;
+  overflow-wrap:anywhere;
+}
+.data-section{
+  margin-top:16px;
+  background:#0d0d0d;
+  border:1px solid #302a20;
+  border-radius:10px;
+  padding:13px;
+}
+.data-section h5{
+  font-size:12px;
+  margin:0 0 11px;
+  color:var(--gold-light);
+}
+.data-empty{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.6;
+}
 .ranking-row{
-  display:flex;align-items:flex-start;gap:10px;padding:9px 0;
-  border-bottom:1px solid #242424;font-size:12px;
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:9px 0;
+  border-bottom:1px solid #242424;
+  font-size:12px;
 }
-.ranking-row:last-child{border-bottom:0;padding-bottom:0}
-.rank-number{color:var(--gold);font-weight:800;min-width:22px}
-.rank-name{flex:1;overflow-wrap:anywhere;line-height:1.5}
-.rank-qty{color:#eee;font-weight:700;white-space:nowrap}
+.ranking-row:last-child{
+  border-bottom:0;
+  padding-bottom:0;
+}
+.rank-number{
+  color:var(--gold);
+  font-weight:800;
+  min-width:22px;
+}
+.rank-name{
+  flex:1;
+  overflow-wrap:anywhere;
+  line-height:1.5;
+}
+.rank-qty{
+  color:#eee;
+  font-weight:700;
+  white-space:nowrap;
+}
 .ticket-row{
-  padding:10px 0;border-bottom:1px solid #242424;
-  font-size:12px;line-height:1.6;
+  padding:10px 0;
+  border-bottom:1px solid #242424;
+  font-size:12px;
+  line-height:1.6;
 }
-.ticket-row:last-child{border-bottom:0;padding-bottom:0}
-.ticket-number{color:var(--gold-light);font-weight:800}
-.status-note{font-size:10px;color:#aaa;margin-top:3px}
+.ticket-row:last-child{
+  border-bottom:0;
+  padding-bottom:0;
+}
+.ticket-number{
+  color:var(--gold-light);
+  font-weight:800;
+}
+.status-note{
+  font-size:10px;
+  color:#aaa;
+  margin-top:3px;
+}
 .loading,.empty{
-  grid-column:1/-1;text-align:center;color:var(--muted);
-  background:#111;border:1px solid #302a20;border-radius:12px;
-  padding:25px;font-size:13px;line-height:1.7;
+  grid-column:1/-1;
+  text-align:center;
+  color:var(--muted);
+  background:#111;
+  border:1px solid #302a20;
+  border-radius:12px;
+  padding:25px;
+  font-size:13px;
+  line-height:1.7;
 }
 footer{
-  text-align:center;padding:25px;color:var(--muted);
-  font-size:12px;border-top:1px solid #292929;
+  text-align:center;
+  padding:25px;
+  color:var(--muted);
+  font-size:12px;
+  border-top:1px solid #292929;
 }
 @media(max-width:480px){
   header{padding-top:22px}
@@ -124,6 +295,7 @@ footer{
 }
 </style>
 </head>
+
 <body>
 
 <header>
@@ -151,6 +323,7 @@ footer{
     Confira os detalhes de cada ação, acompanhe o ranking e consulte os indicadores.
     Os dados são apresentados separadamente por ação.
   </p>
+
   <div id="listaAcoes">
     <div class="loading">Carregando ações...</div>
   </div>
@@ -159,6 +332,7 @@ footer{
 <footer>OKL Lifestyle • Club da Sorte</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 (() => {
   "use strict";
@@ -166,20 +340,34 @@ footer{
   const SUPABASE_URL = "https://vlirpvuramslfiftshio.supabase.co";
   const SUPABASE_KEY = "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_XOysBwuj";
 
-  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
   const lista = document.getElementById("listaAcoes");
 
-  const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
-  })[char]);
+  if (!window.supabase || !lista) {
+    if (lista) {
+      lista.innerHTML = `
+        <div class="empty">
+          Não foi possível iniciar a página. Atualize e tente novamente.
+        </div>`;
+    }
+    return;
+  }
 
-  const money = value => Number(value || 0).toLocaleString("pt-BR", {
-    style:"currency", currency:"BRL"
-  });
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const escapeHtml = value =>
+    String(value ?? "").replace(/[&<>"']/g, char => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
+    })[char]);
+
+  const money = value =>
+    Number(value || 0).toLocaleString("pt-BR", {
+      style:"currency",
+      currency:"BRL"
+    });
 
   const formatDate = value => {
     if (!value) return "—";
@@ -190,29 +378,52 @@ footer{
 
   function numeroCota(value, total) {
     if (value === null || value === undefined || value === "") return "—";
-    const digits = Math.max(2, String(Math.max(0, Number(total || 0) - 1)).length);
+
+    const totalNumeros = Number(total || 0);
+    const digits = Math.max(
+      2,
+      String(Math.max(0, totalNumeros - 1)).length
+    );
+
     return String(value).padStart(digits, "0");
   }
 
-  function renderIndicador(label, nome, numero) {
+  function renderIndicador(label, valor, complemento) {
     return `
       <div class="indicator">
         <div class="indicator-label">${escapeHtml(label)}</div>
-        <div class="indicator-value">${escapeHtml(numero ?? "Ainda não apurado")}</div>
-        <div class="indicator-sub">${escapeHtml(nome || "Sem informação divulgada")}</div>
+        <div class="indicator-value">${escapeHtml(valor ?? "Ainda não apurado")}</div>
+        <div class="indicator-sub">${escapeHtml(complemento || "Sem informação divulgada")}</div>
       </div>`;
   }
 
   async function carregarIndicadores(acao) {
     const [topResult, extremesResult, participantsResult, configResult, ticketsResult] =
       await Promise.all([
-        db.rpc("top_comprador_acao", {p_acao_id:acao.id}),
-        db.rpc("cotas_extremas_acao", {p_acao_id:acao.id}),
-        db.rpc("participacoes_publicas", {p_acao_id:acao.id}),
+        db.rpc("top_comprador_acao", {
+          p_acao_id: acao.id
+        }),
+
+        db.rpc("cotas_extremas_acao", {
+          p_acao_id: acao.id
+        }),
+
+        db.rpc("participacoes_publicas", {
+          p_acao_id: acao.id
+        }),
+
         db.from("configuracoes_cotas")
-          .select("menor_cota_encerrada_em,maior_cota_encerrada_em,menor_cota_numero_final,menor_cota_nome_final,maior_cota_numero_final,maior_cota_nome_final")
+          .select(`
+            menor_cota_encerrada_em,
+            maior_cota_encerrada_em,
+            menor_cota_numero_final,
+            menor_cota_nome_final,
+            maior_cota_numero_final,
+            maior_cota_nome_final
+          `)
           .eq("acao_id", acao.id)
           .maybeSingle(),
+
         db.from("bilhetes_premiados")
           .select("numero,premio,status,contemplado_em")
           .eq("acao_id", acao.id)
@@ -227,86 +438,131 @@ footer{
     const tickets = ticketsResult.error ? [] : (ticketsResult.data || []);
 
     const top = topRows[0] || null;
+
     const menor = extremes.find(item =>
       String(item.tipo_cota || "").toLowerCase().includes("menor")
     );
+
     const maior = extremes.find(item =>
       String(item.tipo_cota || "").toLowerCase().includes("maior")
     );
 
-    const minNumber = config.menor_cota_encerrada_em &&
+    const minNumber =
+      config.menor_cota_encerrada_em &&
       config.menor_cota_numero_final != null
         ? config.menor_cota_numero_final
         : menor?.numero_cota;
 
-    const minName = config.menor_cota_encerrada_em &&
-      config.menor_cota_nome_final
+    const minName =
+      config.menor_cota_encerrada_em && config.menor_cota_nome_final
         ? config.menor_cota_nome_final
         : menor?.nome_publico;
 
-    const maxNumber = config.maior_cota_encerrada_em &&
+    const maxNumber =
+      config.maior_cota_encerrada_em &&
       config.maior_cota_numero_final != null
         ? config.maior_cota_numero_final
         : maior?.numero_cota;
 
-    const maxName = config.maior_cota_encerrada_em &&
-      config.maior_cota_nome_final
+    const maxName =
+      config.maior_cota_encerrada_em && config.maior_cota_nome_final
         ? config.maior_cota_nome_final
         : maior?.nome_publico;
 
     const topHtml = top
       ? renderIndicador(
           "Top comprador",
-          `${top.quantidade_numeros ?? 0} números`,
-          top.nome_publico || "Cliente"
+          top.nome_publico || "Participante",
+          `${Number(top.quantidade_numeros || 0)} números`
         )
-      : renderIndicador("Top comprador", "Ainda sem apuração", "—");
+      : renderIndicador(
+          "Top comprador",
+          "Ainda não apurado",
+          "Aguardando participações confirmadas"
+        );
 
     const minHtml = minNumber != null
-      ? renderIndicador("Menor cota", minName, numeroCota(minNumber, acao.total_numeros))
-      : renderIndicador("Menor cota", "Ainda sem apuração", "—");
+      ? renderIndicador(
+          "Menor cota",
+          numeroCota(minNumber, acao.total_numeros),
+          minName || "Participante"
+        )
+      : renderIndicador(
+          "Menor cota",
+          "—",
+          "Ainda não apurada"
+        );
 
     const maxHtml = maxNumber != null
-      ? renderIndicador("Maior cota", maxName, numeroCota(maxNumber, acao.total_numeros))
-      : renderIndicador("Maior cota", "Ainda sem apuração", "—");
+      ? renderIndicador(
+          "Maior cota",
+          numeroCota(maxNumber, acao.total_numeros),
+          maxName || "Participante"
+        )
+      : renderIndicador(
+          "Maior cota",
+          "—",
+          "Ainda não apurada"
+        );
 
-    const sortedParticipants = [...participants].sort((a,b) =>
+    const sortedParticipants = [...participants].sort((a, b) =>
       Number(b.quantidade || 0) - Number(a.quantidade || 0)
     );
 
     const rankingHtml = sortedParticipants.length
-      ? sortedParticipants.slice(0,10).map((person,index) => `
+      ? sortedParticipants.slice(0, 10).map((person, index) => `
           <div class="ranking-row">
             <span class="rank-number">${index + 1}º</span>
             <span class="rank-name">
               ${escapeHtml(person.nome_publico || "Participante")}
-              <div class="status-note">Atualizado em ${escapeHtml(formatDate(person.created_at))}</div>
+              <div class="status-note">
+                Atualizado em ${escapeHtml(formatDate(person.created_at))}
+              </div>
             </span>
-            <span class="rank-qty">${escapeHtml(person.quantidade ?? 0)} números</span>
-          </div>`).join("")
-      : `<div class="data-empty">O ranking será exibido quando houver participações públicas registradas.</div>`;
+            <span class="rank-qty">
+              ${escapeHtml(person.quantidade ?? 0)} números
+            </span>
+          </div>
+        `).join("")
+      : `
+          <div class="data-empty">
+            O ranking será exibido quando houver participações públicas registradas.
+          </div>`;
 
     const ticketsHtml = tickets.length
       ? tickets.map(ticket => `
           <div class="ticket-row">
-            <span class="ticket-number">Cota ${escapeHtml(numeroCota(ticket.numero, acao.total_numeros))}</span>
+            <span class="ticket-number">
+              Cota ${escapeHtml(numeroCota(ticket.numero, acao.total_numeros))}
+            </span>
             ${ticket.premio ? ` — ${escapeHtml(ticket.premio)}` : ""}
-            <div class="status-note">Contemplado${ticket.contemplado_em ? " em " + escapeHtml(formatDate(ticket.contemplado_em)) : ""}</div>
-          </div>`).join("")
-      : `<div class="data-empty">Nenhum bilhete contemplado divulgado nesta ação.</div>`;
+            <div class="status-note">
+              Contemplado${ticket.contemplado_em
+                ? " em " + escapeHtml(formatDate(ticket.contemplado_em))
+                : ""}
+            </div>
+          </div>
+        `).join("")
+      : `
+          <div class="data-empty">
+            Nenhum bilhete contemplado divulgado nesta ação.
+          </div>`;
 
     return `
       <section class="indicators">
         <h4>Indicadores desta ação</h4>
+
         <div class="indicator-grid">
           ${topHtml}
           ${minHtml}
           ${maxHtml}
         </div>
+
         <div class="data-section">
           <h5>🏆 Ranking de participantes</h5>
           ${rankingHtml}
         </div>
+
         <div class="data-section">
           <h5>🎟️ Bilhetes contemplados</h5>
           ${ticketsHtml}
@@ -319,64 +575,174 @@ footer{
     card.className = "action-card";
 
     const image = acao.foto_url
-      ? `<img class="action-image" src="${escapeHtml(acao.foto_url)}" alt="${escapeHtml(acao.nome || "Foto do prêmio")}" loading="lazy">`
+      ? `
+        <img
+          class="action-image"
+          src="${escapeHtml(acao.foto_url)}"
+          alt="${escapeHtml(acao.nome || "Foto do prêmio")}"
+          loading="lazy"
+        >
+      `
       : "";
 
     card.innerHTML = `
       ${image}
+
       <div class="action-content">
         <h3>${escapeHtml(acao.nome || "Ação")}</h3>
-        ${acao.descricao ? `<div class="description">${escapeHtml(acao.descricao)}</div>` : ""}
+
+        ${acao.descricao
+          ? `<div class="description">${escapeHtml(acao.descricao)}</div>`
+          : ""}
+
         <div class="price-row">
           <div>
             <div class="price-label">Valor por número</div>
             <div class="price-value">${escapeHtml(money(acao.valor_numero))}</div>
           </div>
+
           <div>
             <div class="price-label">Total de números</div>
             <div class="price-value">${escapeHtml(acao.total_numeros ?? "—")}</div>
           </div>
         </div>
-        <a class="action-button" href="participar.html?acao=${encodeURIComponent(acao.id)}">
+
+        <a
+          class="action-button"
+          href="participar.html?acao=${encodeURIComponent(acao.id)}"
+        >
           VER COMO PARTICIPAR
         </a>
-        <div class="indicators">
-          <div class="data-empty">Carregando indicadores desta ação...</div>
-        </div>
-      </div>`;
 
+        <div class="indicators">
+          <div class="data-empty">
+            Carregando indicadores desta ação...
+          </div>
+        </div>
+      </div>
+    `;
+
+    // O cartão é exibido antes de carregar os indicadores.
+    // Assim, uma falha nos indicadores não esconde a ação.
     lista.appendChild(card);
 
-    const indicators = await carregarIndicadores(acao);
-    const section = card.querySelector(".action-content > .indicators");
-    if (section) section.outerHTML = indicators;
+    try {
+      const indicators = await carregarIndicadores(acao);
+      const section = card.querySelector(".action-content > .indicators");
+
+      if (section) {
+        section.outerHTML = indicators;
+      }
+    } catch (error) {
+      console.error("Erro nos indicadores da ação:", acao.id, error);
+
+      const section = card.querySelector(".action-content > .indicators");
+
+      if (section) {
+        section.innerHTML = `
+          <div class="data-empty">
+            Os indicadores estão temporariamente indisponíveis.
+          </div>
+        `;
+      }
+    }
   }
 
   async function carregarAcoes() {
-    const {data, error} = await db.from("AÇÕES")
-      .select("id,nome,descricao,foto_url,valor_numero,total_numeros,status,created_at")
-      .eq("status", "ativa")
+    lista.innerHTML = `
+      <div class="loading">Carregando ações...</div>
+    `;
+
+    // Busca as ações sem depender de uma comparação exata de status.
+    const {data, error} = await db
+      .from("AÇÕES")
+      .select(`
+        id,
+        nome,
+        descricao,
+        foto_url,
+        valor_numero,
+        total_numeros,
+        status,
+        created_at
+      `)
       .order("created_at", {ascending:false});
 
     if (error) {
-      lista.innerHTML = `<div class="empty">Não foi possível carregar as ações agora. Tente novamente em instantes.</div>`;
       console.error("Erro ao carregar ações:", error);
+
+      lista.innerHTML = `
+        <div class="empty">
+          Não foi possível carregar as ações.
+          Confira a conexão com o Supabase e tente novamente.
+        </div>
+      `;
       return;
     }
 
     if (!data || data.length === 0) {
-      lista.innerHTML = `<div class="empty">Nenhuma ação disponível no momento. Volte em breve para conferir as novidades.</div>`;
+      lista.innerHTML = `
+        <div class="empty">
+          Nenhuma ação cadastrada foi encontrada.
+        </div>
+      `;
+      return;
+    }
+
+    // Exibe ações publicáveis, reconhecendo variações de escrita.
+    // Estados explicitamente encerrados ou inativos permanecem ocultos.
+    const estadosOcultos = new Set([
+      "inativa",
+      "inativo",
+      "cancelada",
+      "cancelado",
+      "encerrada",
+      "encerrado",
+      "finalizada",
+      "finalizado",
+      "pausada",
+      "pausado",
+      "rascunho",
+      "draft"
+    ]);
+
+    const acoesVisiveis = data.filter(acao => {
+      const status = String(acao.status || "")
+        .trim()
+        .toLowerCase();
+
+      return !estadosOcultos.has(status);
+    });
+
+    if (acoesVisiveis.length === 0) {
+      lista.innerHTML = `
+        <div class="empty">
+          Nenhuma ação disponível no momento.
+          Confira o status das ações no painel administrativo.
+        </div>
+      `;
       return;
     }
 
     lista.innerHTML = "";
-    for (const acao of data) {
+
+    for (const acao of acoesVisiveis) {
       await renderAcao(acao);
     }
   }
 
-  carregarAcoes();
+  carregarAcoes().catch(error => {
+    console.error("Erro inesperado ao carregar a página:", error);
+
+    lista.innerHTML = `
+      <div class="empty">
+        Ocorreu um erro ao carregar as ações.
+        Atualize a página e tente novamente.
+      </div>
+    `;
+  });
 })();
 </script>
+
 </body>
 </html>
