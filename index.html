@@ -94,11 +94,11 @@ nav.menu-principal{
   display:block;color:#999;font-size:12px;margin-bottom:6px;text-transform:uppercase;
 }
 .info-box strong{font-size:21px;color:var(--dourado)}
-.participacao,.consulta-card{
+.participacao{
   margin-top:30px;background:var(--painel);
   border:1px solid var(--borda);border-radius:18px;padding:24px;
 }
-.participacao h2,.consulta-card h2{font-size:25px;margin-bottom:8px}
+.participacao h2{font-size:25px;margin-bottom:8px}
 .participacao-subtitulo{color:#aaa;margin-bottom:20px;line-height:1.5}
 .pacotes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
 .pacote{
@@ -192,7 +192,7 @@ footer{border-top:1px solid #292929;text-align:center;padding:25px 15px;color:#6
   .pacotes{grid-template-columns:repeat(2,minmax(0,1fr))}
   .acao-info,.destaques,.passos{grid-template-columns:1fr}
   .acao-conteudo{padding:18px}
-  .participacao,.consulta-card{padding:18px}
+  .participacao{padding:18px}
   .acao-conteudo h3{font-size:25px}
   .total-box strong{font-size:22px}
   .titulo-secao{font-size:23px}
@@ -285,17 +285,6 @@ footer{border-top:1px solid #292929;text-align:center;padding:25px 15px;color:#6
 
     <button type="button" class="botao" id="botaoContinuar" onclick="continuarCompra()">CONTINUAR</button>
     <div id="resultadoReserva" style="display:none" aria-live="polite"></div>
-  </section>
-
-  <section class="consulta-card" id="minhas-participacoes">
-    <h2>👤 Minhas participações</h2>
-    <p class="participacao-subtitulo">
-      Consulte seus pedidos e os números atribuídos à sua participação.
-    </p>
-    <p style="color:#ccc;line-height:1.6">
-      Acesse sua área para consultar suas participações registradas no sistema.
-    </p>
-    <a class="botao" href="minhas-participacoes.html">CONSULTAR MINHAS PARTICIPAÇÕES</a>
   </section>
 
   <h2 class="titulo-secao">🏆 Destaques</h2>
@@ -591,7 +580,7 @@ function mostrarResultadoReserva(data) {
       <div class="aviso-seguranca">
         <strong>Importante:</strong>
         esta tela não confirma pagamento. Siga as instruções oficiais da ação.
-        <p>Para consultar suas participações posteriormente, acesse a área abaixo.</p>
+        <p>Para consultar suas participações posteriormente, acesse sua área pelo menu.</p>
         <a class="botao-secundario" href="minhas-participacoes.html">CONSULTAR MINHAS PARTICIPAÇÕES</a>
       </div>
     </div>`;
