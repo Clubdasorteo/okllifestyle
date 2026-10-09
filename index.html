@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -34,11 +35,7 @@ header{
   border-bottom:1px solid #292929;
   background:#050505;
 }
-header img{
-  max-width:150px;
-  max-height:70px;
-  object-fit:contain;
-}
+header img{max-width:150px;max-height:70px;object-fit:contain}
 nav.menu-principal{
   display:flex;
   justify-content:center;
@@ -57,314 +54,138 @@ nav.menu-principal{
   font-size:14px;
   transition:background .2s,color .2s;
 }
-.menu-principal a:hover,
-.menu-principal a:focus-visible{
+.menu-principal a:hover,.menu-principal a:focus-visible{
   background:#202020;
   color:var(--dourado);
 }
-.hero{
-  text-align:center;
-  padding:42px 20px 30px;
-}
-.hero h1{
-  font-size:34px;
-  font-weight:900;
-  margin-bottom:12px;
-}
+.hero{text-align:center;padding:42px 20px 30px}
+.hero h1{font-size:34px;font-weight:900;margin-bottom:12px}
 .hero h1 span,.hero strong{color:var(--dourado)}
 .hero p{color:#cfcfcf;font-size:16px;line-height:1.5}
-.container{
-  width:100%;
-  max-width:900px;
-  margin:0 auto;
-  padding:0 16px 50px;
-}
+.container{width:100%;max-width:900px;margin:0 auto;padding:0 16px 50px}
 .titulo-secao{
-  font-size:25px;
-  font-weight:900;
-  margin:34px 0 18px;
-  border-left:5px solid var(--dourado);
-  padding-left:12px;
+  font-size:25px;font-weight:900;margin:34px 0 18px;
+  border-left:5px solid var(--dourado);padding-left:12px;
 }
 .acao-card{
-  background:var(--painel);
-  border:1px solid var(--borda);
-  border-radius:18px;
-  overflow:hidden;
-  box-shadow:0 10px 35px #0007;
+  background:var(--painel);border:1px solid var(--borda);
+  border-radius:18px;overflow:hidden;box-shadow:0 10px 35px #0007;
 }
 .acao-foto-area{
-  width:100%;
-  background:#111;
-  min-height:200px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  width:100%;background:#111;min-height:200px;
+  display:flex;justify-content:center;align-items:center;
 }
 .acao-foto{
-  width:100%;
-  max-height:520px;
-  object-fit:contain;
-  display:block;
-  background:#111;
+  width:100%;max-height:520px;object-fit:contain;
+  display:block;background:#111;
 }
-.foto-erro{
-  padding:35px 20px;
-  text-align:center;
-  color:#aaa;
-  line-height:1.5;
-}
+.foto-erro{padding:35px 20px;text-align:center;color:#aaa;line-height:1.5}
 .acao-conteudo{padding:24px}
 .acao-conteudo h3{font-size:29px;margin-bottom:10px}
 .acao-descricao{
-  color:#c7c7c7;
-  line-height:1.6;
-  white-space:pre-line;
-  margin-bottom:20px;
+  color:#c7c7c7;line-height:1.6;white-space:pre-line;margin-bottom:20px;
 }
-.acao-info{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:18px;
-}
+.acao-info{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
 .info-box{
-  background:var(--painel2);
-  border:1px solid #333;
-  border-radius:12px;
-  padding:16px;
+  background:var(--painel2);border:1px solid #333;
+  border-radius:12px;padding:16px;
 }
 .info-box span{
-  display:block;
-  color:#999;
-  font-size:12px;
-  margin-bottom:6px;
-  text-transform:uppercase;
+  display:block;color:#999;font-size:12px;margin-bottom:6px;text-transform:uppercase;
 }
 .info-box strong{font-size:21px;color:var(--dourado)}
 .participacao,.consulta-card{
-  margin-top:30px;
-  background:var(--painel);
-  border:1px solid var(--borda);
-  border-radius:18px;
-  padding:24px;
+  margin-top:30px;background:var(--painel);
+  border:1px solid var(--borda);border-radius:18px;padding:24px;
 }
 .participacao h2,.consulta-card h2{font-size:25px;margin-bottom:8px}
-.participacao-subtitulo{
-  color:#aaa;
-  margin-bottom:20px;
-  line-height:1.5;
-}
-.pacotes{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-bottom:20px;
-}
+.participacao-subtitulo{color:#aaa;margin-bottom:20px;line-height:1.5}
+.pacotes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
 .pacote{
-  border:1px solid #3a3a3a;
-  background:var(--painel2);
-  color:#fff;
-  padding:16px 8px;
-  border-radius:12px;
-  cursor:pointer;
-  text-align:center;
+  border:1px solid #3a3a3a;background:var(--painel2);color:#fff;
+  padding:16px 8px;border-radius:12px;cursor:pointer;text-align:center;
   transition:border-color .2s,background .2s;
 }
-.pacote:hover,.pacote.selecionado{
-  border-color:var(--dourado);
-  background:#211c0e;
-}
-.pacote strong{
-  display:block;
-  font-size:21px;
-  margin-bottom:5px;
-  color:var(--dourado);
-}
+.pacote:hover,.pacote.selecionado{border-color:var(--dourado);background:#211c0e}
+.pacote strong{display:block;font-size:21px;margin-bottom:5px;color:var(--dourado)}
 .pacote small{color:#aaa}
 .campo{margin-top:15px}
-.campo label{
-  display:block;
-  margin-bottom:7px;
-  font-size:14px;
-  color:#ddd;
-}
+.campo label{display:block;margin-bottom:7px;font-size:14px;color:#ddd}
 .campo input{
-  width:100%;
-  padding:14px;
-  border-radius:10px;
-  border:1px solid #363636;
-  background:#111;
-  color:#fff;
-  outline:none;
-  font-size:16px;
+  width:100%;padding:14px;border-radius:10px;border:1px solid #363636;
+  background:#111;color:#fff;outline:none;font-size:16px;
 }
 .campo input:focus{border-color:var(--dourado)}
-.aviso-quantidade{
-  display:none;
-  color:#ff8585;
-  font-size:13px;
-  margin-top:7px;
-  line-height:1.4;
-}
+.aviso-quantidade{display:none;color:#ff8585;font-size:13px;margin-top:7px;line-height:1.4}
 .aviso-quantidade.visivel{display:block}
 .total-box{
-  margin-top:20px;
-  padding:18px;
-  background:var(--painel2);
-  border-radius:12px;
-  border:1px solid #333;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
+  margin-top:20px;padding:18px;background:var(--painel2);border-radius:12px;
+  border:1px solid #333;display:flex;justify-content:space-between;
+  align-items:center;gap:10px;
 }
 .total-box span{color:#aaa}
 .total-box strong{font-size:26px;color:var(--dourado)}
 .botao{
-  display:block;
-  width:100%;
-  margin-top:18px;
-  padding:17px;
-  border:none;
-  border-radius:12px;
-  background:var(--dourado);
-  color:#000;
-  font-size:16px;
-  font-weight:900;
-  cursor:pointer;
-  text-align:center;
-  text-decoration:none;
+  display:block;width:100%;margin-top:18px;padding:17px;border:none;
+  border-radius:12px;background:var(--dourado);color:#000;font-size:16px;
+  font-weight:900;cursor:pointer;text-align:center;text-decoration:none;
 }
 .botao:hover{background:#ffd75e}
 .botao:disabled{opacity:.6;cursor:not-allowed}
+.botao-secundario{
+  display:inline-block;width:100%;margin-top:12px;padding:15px;
+  border:1px solid var(--dourado);border-radius:12px;background:transparent;
+  color:var(--dourado);font-size:15px;font-weight:800;text-align:center;
+  text-decoration:none;
+}
+.botao-secundario:hover{background:#211c0e}
 .resultado-reserva{
-  margin-top:20px;
-  background:#111;
-  border:1px solid var(--dourado);
-  border-radius:14px;
-  padding:20px;
+  margin-top:20px;background:#111;border:1px solid var(--dourado);
+  border-radius:14px;padding:20px;
 }
 .resultado-reserva h3{color:var(--dourado);margin-bottom:10px}
 .resultado-reserva p{color:#ccc;line-height:1.5;margin-bottom:8px}
-.numeros-reservados{
-  margin-top:15px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:7px;
-}
+.numeros-reservados{margin-top:15px;display:flex;flex-wrap:wrap;gap:7px}
 .numero-reservado{
-  background:var(--dourado);
-  color:#000;
-  border-radius:7px;
-  padding:8px 10px;
-  font-weight:900;
-  font-size:14px;
-  font-variant-numeric:tabular-nums;
-  min-width:38px;
-  text-align:center;
+  background:var(--dourado);color:#000;border-radius:7px;padding:8px 10px;
+  font-weight:900;font-size:14px;font-variant-numeric:tabular-nums;
+  min-width:38px;text-align:center;
 }
 .aviso-seguranca{
-  margin-top:18px;
-  padding:16px;
-  border:1px solid #454545;
-  background:var(--painel2);
-  border-radius:12px;
-  color:#ccc;
-  line-height:1.6;
+  margin-top:18px;padding:16px;border:1px solid #454545;
+  background:var(--painel2);border-radius:12px;color:#ccc;line-height:1.6;
 }
 .aviso-seguranca strong{color:var(--dourado)}
 .aviso-seguranca p{margin-top:8px}
-.destaques{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-  margin-top:18px;
-}
-.destaque{
-  background:var(--painel);
-  border:1px solid var(--borda);
-  border-radius:14px;
-  padding:20px;
-}
+.destaques{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}
+.destaque{background:var(--painel);border:1px solid var(--borda);border-radius:14px;padding:20px}
 .destaque h3{font-size:17px;margin-bottom:8px;color:var(--dourado)}
 .destaque p{color:#999;font-size:14px;line-height:1.5}
-.passos{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  margin-top:18px;
-}
-.passo{
-  background:var(--painel);
-  border:1px solid var(--borda);
-  border-radius:14px;
-  padding:20px;
-}
-.passo-numero{
-  font-size:28px;
-  font-weight:900;
-  margin-bottom:10px;
-  color:var(--dourado);
-}
+.passos{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.passo{background:var(--painel);border:1px solid var(--borda);border-radius:14px;padding:20px}
+.passo-numero{font-size:28px;font-weight:900;margin-bottom:10px;color:var(--dourado)}
 .passo h3{margin-bottom:8px}
 .passo p{color:#999;font-size:14px;line-height:1.5}
 .sem-acao{
-  background:var(--painel);
-  border:1px solid var(--borda);
-  border-radius:18px;
-  padding:35px 20px;
-  text-align:center;
-  color:#999;
-  line-height:1.6;
+  background:var(--painel);border:1px solid var(--borda);border-radius:18px;
+  padding:35px 20px;text-align:center;color:#999;line-height:1.6;
 }
-footer{
-  border-top:1px solid #292929;
-  text-align:center;
-  padding:25px 15px;
-  color:#666;
-  font-size:13px;
-}
-
-/* Menu fixo inferior */
+footer{border-top:1px solid #292929;text-align:center;padding:25px 15px;color:#666;font-size:13px}
 .menu-inferior{
-  position:fixed;
-  z-index:1000;
-  bottom:0;
-  left:0;
-  right:0;
-  width:100%;
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  background:rgba(8,8,8,.98);
-  border-top:1px solid #383838;
-  padding:8px 5px calc(8px + env(safe-area-inset-bottom));
-  box-shadow:0 -5px 20px #0008;
+  position:fixed;z-index:1000;bottom:0;left:0;right:0;width:100%;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  background:rgba(8,8,8,.98);border-top:1px solid #383838;
+  padding:8px 5px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -5px 20px #0008;
 }
 .menu-inferior a{
-  min-width:0;
-  min-height:54px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:4px;
-  color:#aaa;
-  text-decoration:none;
-  font-size:11px;
-  font-weight:700;
-  border-radius:9px;
-  text-align:center;
+  min-width:0;min-height:54px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:4px;color:#aaa;
+  text-decoration:none;font-size:11px;font-weight:700;border-radius:9px;text-align:center;
 }
 .menu-inferior a .icone{font-size:22px;line-height:1.1}
-.menu-inferior a:hover,
-.menu-inferior a:focus-visible{
-  color:var(--dourado);
-  background:#17140b;
-}
+.menu-inferior a:hover,.menu-inferior a:focus-visible{color:var(--dourado);background:#17140b}
 .menu-inferior a.ativo{color:var(--dourado)}
 .menu-inferior a.ativo .icone{filter:drop-shadow(0 0 4px #f5c54255)}
-
 @media(max-width:650px){
   .hero{padding-top:32px}
   .hero h1{font-size:28px}
@@ -386,21 +207,18 @@ footer{
 </head>
 
 <body>
-
 <header id="topo">
-  <a href="https://clubdasorteo.github.io/okllifestyle/acoes.html"
-     aria-label="Ir para a página inicial da OKL Lifestyle">
-    <img src="Design%20sem%20nome%20(1).jpg"
-         alt="OKL Lifestyle"
+  <a href="index.html" aria-label="Ir para a página inicial da OKL Lifestyle">
+    <img src="Design%20sem%20nome%20(1).jpg" alt="OKL Lifestyle"
          onerror="this.style.display='none'">
   </a>
 </header>
 
 <nav class="menu-principal" aria-label="Menu principal">
-  <a href="https://clubdasorteo.github.io/okllifestyle/acoes.html">🏠 Início</a>
-  <a href="https://clubdasorteo.github.io/okllifestyle/acoes.html">🎟️ Ações</a>
+  <a href="index.html">🏠 Início</a>
+  <a href="acoes.html">🎟️ Ações</a>
   <a href="#participacao">🛒 Participar</a>
-  <a href="#minhas-participacoes">👤 Minha área</a>
+  <a href="minhas-participacoes.html">👤 Minhas participações</a>
 </nav>
 
 <section class="hero" id="inicio">
@@ -409,7 +227,6 @@ footer{
 </section>
 
 <main class="container">
-
   <h2 class="titulo-secao" id="acoes">🔥 Ação em destaque</h2>
 
   <div id="acaoContainer" aria-live="polite">
@@ -425,38 +242,18 @@ footer{
     </p>
 
     <div class="pacotes">
-      <button type="button" class="pacote" data-quantidade="10"
-              onclick="selecionarQuantidade(10)">
-        <strong>10</strong><small>bilhetes</small>
-      </button>
-      <button type="button" class="pacote" data-quantidade="20"
-              onclick="selecionarQuantidade(20)">
-        <strong>20</strong><small>bilhetes</small>
-      </button>
-      <button type="button" class="pacote" data-quantidade="50"
-              onclick="selecionarQuantidade(50)">
-        <strong>50</strong><small>bilhetes</small>
-      </button>
-      <button type="button" class="pacote" data-quantidade="100"
-              onclick="selecionarQuantidade(100)">
-        <strong>100</strong><small>bilhetes</small>
-      </button>
-      <button type="button" class="pacote" data-quantidade="200"
-              onclick="selecionarQuantidade(200)">
-        <strong>200</strong><small>bilhetes</small>
-      </button>
-      <button type="button" class="pacote" data-quantidade="500"
-              onclick="selecionarQuantidade(500)">
-        <strong>500</strong><small>bilhetes</small>
-      </button>
+      <button type="button" class="pacote" data-quantidade="10" onclick="selecionarQuantidade(10)"><strong>10</strong><small>bilhetes</small></button>
+      <button type="button" class="pacote" data-quantidade="20" onclick="selecionarQuantidade(20)"><strong>20</strong><small>bilhetes</small></button>
+      <button type="button" class="pacote" data-quantidade="50" onclick="selecionarQuantidade(50)"><strong>50</strong><small>bilhetes</small></button>
+      <button type="button" class="pacote" data-quantidade="100" onclick="selecionarQuantidade(100)"><strong>100</strong><small>bilhetes</small></button>
+      <button type="button" class="pacote" data-quantidade="200" onclick="selecionarQuantidade(200)"><strong>200</strong><small>bilhetes</small></button>
+      <button type="button" class="pacote" data-quantidade="500" onclick="selecionarQuantidade(500)"><strong>500</strong><small>bilhetes</small></button>
     </div>
 
     <div class="campo">
       <label for="quantidade">Ou digite a quantidade desejada</label>
-      <input type="number" id="quantidade" min="10" step="1"
-             inputmode="numeric"
-             placeholder="Ex.: 17, 25, 37, 83..."
-             oninput="calcularTotal()"
+      <input type="number" id="quantidade" min="10" step="1" inputmode="numeric"
+             placeholder="Ex.: 17, 25, 37, 83..." oninput="calcularTotal()"
              aria-describedby="avisoQuantidade">
       <p id="avisoQuantidade" class="aviso-quantidade" role="alert">
         A quantidade mínima é de 10 bilhetes. Digite um número inteiro.
@@ -486,11 +283,7 @@ footer{
       <strong id="valorTotal">R$ 0,00</strong>
     </div>
 
-    <button type="button" class="botao" id="botaoContinuar"
-            onclick="continuarCompra()">
-      CONTINUAR
-    </button>
-
+    <button type="button" class="botao" id="botaoContinuar" onclick="continuarCompra()">CONTINUAR</button>
     <div id="resultadoReserva" style="display:none" aria-live="polite"></div>
   </section>
 
@@ -499,24 +292,13 @@ footer{
     <p class="participacao-subtitulo">
       Consulte seus pedidos e os números atribuídos à sua participação.
     </p>
-
-    <div class="aviso-seguranca">
-      <strong>Consulta em preparação</strong>
-      <p>
-        Estamos preparando o acesso seguro para que cada cliente possa
-        consultar somente suas próprias participações. Esta área ainda
-        não consulta pedidos anteriores.
-      </p>
-      <p>
-        Se você já fez uma reserva, não faça outra reserva apenas para
-        conferir seus números. Guarde as informações apresentadas ao
-        finalizar a reserva.
-      </p>
-    </div>
+    <p style="color:#ccc;line-height:1.6">
+      Acesse sua área para consultar suas participações registradas no sistema.
+    </p>
+    <a class="botao" href="minhas-participacoes.html">CONSULTAR MINHAS PARTICIPAÇÕES</a>
   </section>
 
   <h2 class="titulo-secao">🏆 Destaques</h2>
-
   <section class="destaques">
     <div class="destaque">
       <h3>👑 Top Comprador</h3>
@@ -537,7 +319,6 @@ footer{
   </section>
 
   <h2 class="titulo-secao">📋 Como funciona</h2>
-
   <section class="passos">
     <div class="passo">
       <div class="passo-numero">01</div>
@@ -547,51 +328,40 @@ footer{
     <div class="passo">
       <div class="passo-numero">02</div>
       <h3>Pagamento</h3>
-      <p>Siga as instruções de pagamento disponibilizadas para a ação.</p>
+      <p>Siga as instruções oficiais de pagamento disponibilizadas para a ação.</p>
     </div>
     <div class="passo">
       <div class="passo-numero">03</div>
       <h3>Acompanhe</h3>
-      <p>Confira os números exibidos após a reserva e as instruções da ação.</p>
+      <p>Consulte suas participações e confira as informações da ação.</p>
     </div>
   </section>
-
 </main>
 
-<footer>
-  © 2026 Club da Sorte | OKL Lifestyle
-</footer>
+<footer>© 2026 Club da Sorte | OKL Lifestyle</footer>
 
-<!-- Menu fixo inferior: acompanha o cliente durante a navegação -->
 <nav class="menu-inferior" aria-label="Atalhos rápidos">
-  <a href="https://clubdasorteo.github.io/okllifestyle/acoes.html">
-    <span class="icone" aria-hidden="true">🏠</span>
-    <span>Início</span>
+  <a href="index.html">
+    <span class="icone" aria-hidden="true">🏠</span><span>Início</span>
   </a>
-  <a href="https://clubdasorteo.github.io/okllifestyle/acoes.html">
-    <span class="icone" aria-hidden="true">🎟️</span>
-    <span>Ações</span>
+  <a href="acoes.html">
+    <span class="icone" aria-hidden="true">🎟️</span><span>Ações</span>
   </a>
   <a href="#participacao" data-secao="participacao">
-    <span class="icone" aria-hidden="true">🛒</span>
-    <span>Participar</span>
+    <span class="icone" aria-hidden="true">🛒</span><span>Participar</span>
   </a>
-  <a href="#minhas-participacoes" data-secao="minhas-participacoes">
-    <span class="icone" aria-hidden="true">👤</span>
-    <span>Minha área</span>
+  <a href="minhas-participacoes.html">
+    <span class="icone" aria-hidden="true">👤</span><span>Minha área</span>
   </a>
 </nav>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
 "use strict";
 
 const SUPABASE_URL = "https://vlirpvuramslfiftshio.supabase.co";
 const SUPABASE_KEY = "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
 const clienteSupabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-const URL_INICIO = "https://clubdasorteo.github.io/okllifestyle/acoes.html";
 
 let acaoAtual = null;
 
@@ -600,19 +370,18 @@ async function carregarAcao() {
   container.innerHTML = '<div class="sem-acao">Carregando ação...</div>';
 
   try {
-    const { data, error } = await clienteSupabase
+    const {data, error} = await clienteSupabase
       .from("AÇÕES")
       .select("id,nome,descricao,foto_url,valor_numero,total_numeros,status,created_at")
       .eq("status", "ativa")
-      .order("created_at", { ascending: false })
+      .order("created_at", {ascending:false})
       .limit(1);
 
     if (error) throw error;
 
     if (!data || data.length === 0) {
       acaoAtual = null;
-      container.innerHTML =
-        '<div class="sem-acao">Nenhuma ação disponível no momento.</div>';
+      container.innerHTML = '<div class="sem-acao">Nenhuma ação disponível no momento.</div>';
       calcularTotal();
       return;
     }
@@ -622,8 +391,7 @@ async function carregarAcao() {
     calcularTotal();
   } catch (erro) {
     console.error("Erro ao carregar ação:", erro);
-    container.innerHTML =
-      '<div class="sem-acao">Não foi possível carregar a ação. Tente atualizar a página.</div>';
+    container.innerHTML = '<div class="sem-acao">Não foi possível carregar a ação. Tente atualizar a página.</div>';
   }
 }
 
@@ -631,42 +399,22 @@ function renderizarAcao() {
   const container = document.getElementById("acaoContainer");
   if (!acaoAtual) return;
 
-  let fotoHTML = "";
-
-  if (acaoAtual.foto_url && String(acaoAtual.foto_url).trim() !== "") {
-    fotoHTML = `
-      <div class="acao-foto-area">
-        <img class="acao-foto"
-          src="${escapeHtml(String(acaoAtual.foto_url).trim())}"
-          alt="${escapeHtml(acaoAtual.nome || "Prêmio")}"
-          onerror="mostrarErroFoto(this)">
-      </div>`;
-  } else {
-    fotoHTML = `
-      <div class="acao-foto-area">
-        <div class="foto-erro">📷 Foto do prêmio ainda não cadastrada.</div>
-      </div>`;
-  }
+  const fotoHTML = acaoAtual.foto_url && String(acaoAtual.foto_url).trim()
+    ? `<div class="acao-foto-area"><img class="acao-foto"
+        src="${escapeHtml(String(acaoAtual.foto_url).trim())}"
+        alt="${escapeHtml(acaoAtual.nome || "Prêmio")}"
+        onerror="mostrarErroFoto(this)"></div>`
+    : '<div class="acao-foto-area"><div class="foto-erro">📷 Foto do prêmio ainda não cadastrada.</div></div>';
 
   container.innerHTML = `
     <article class="acao-card">
       ${fotoHTML}
       <div class="acao-conteudo">
         <h3>${escapeHtml(acaoAtual.nome || "")}</h3>
-        ${
-          acaoAtual.descricao
-            ? `<p class="acao-descricao">${escapeHtml(acaoAtual.descricao)}</p>`
-            : ""
-        }
+        ${acaoAtual.descricao ? `<p class="acao-descricao">${escapeHtml(acaoAtual.descricao)}</p>` : ""}
         <div class="acao-info">
-          <div class="info-box">
-            <span>Valor por bilhete</span>
-            <strong>${formatarMoeda(acaoAtual.valor_numero)}</strong>
-          </div>
-          <div class="info-box">
-            <span>Total de bilhetes</span>
-            <strong>${Number(acaoAtual.total_numeros || 0).toLocaleString("pt-BR")}</strong>
-          </div>
+          <div class="info-box"><span>Valor por bilhete</span><strong>${formatarMoeda(acaoAtual.valor_numero)}</strong></div>
+          <div class="info-box"><span>Total de bilhetes</span><strong>${Number(acaoAtual.total_numeros || 0).toLocaleString("pt-BR")}</strong></div>
         </div>
         <a class="botao" href="#participacao">🛒 Participar desta ação</a>
       </div>
@@ -674,84 +422,51 @@ function renderizarAcao() {
 }
 
 function mostrarErroFoto(imagem) {
-  imagem.parentElement.innerHTML =
-    '<div class="foto-erro">⚠️ Não foi possível carregar a foto do prêmio.</div>';
+  imagem.parentElement.innerHTML = '<div class="foto-erro">⚠️ Não foi possível carregar a foto do prêmio.</div>';
 }
 
 function selecionarQuantidade(quantidade) {
   const campo = document.getElementById("quantidade");
   campo.value = quantidade;
-
-  document.querySelectorAll(".pacote").forEach(botao => {
-    botao.classList.toggle(
-      "selecionado",
-      Number(botao.dataset.quantidade) === quantidade
-    );
-  });
-
   calcularTotal();
-  campo.scrollIntoView({ behavior: "smooth", block: "center" });
+  campo.scrollIntoView({behavior:"smooth", block:"center"});
 }
 
 function calcularTotal() {
   const campo = document.getElementById("quantidade");
-  const valorTexto = campo.value.trim();
-  const quantidade = Number(valorTexto);
-  const valorPorNumero = Number(acaoAtual?.valor_numero || 0);
-  const total = document.getElementById("valorTotal");
-  const aviso = document.getElementById("avisoQuantidade");
+  const texto = campo.value.trim();
+  const quantidade = Number(texto);
+  const valorUnitario = Number(acaoAtual?.valor_numero || 0);
+  const valida = texto !== "" && Number.isSafeInteger(quantidade) && quantidade >= 10;
 
-  const quantidadeValida =
-    valorTexto !== "" &&
-    Number.isSafeInteger(quantidade) &&
-    quantidade >= 10;
+  document.getElementById("valorTotal").textContent =
+    formatarMoeda(valida && acaoAtual ? quantidade * valorUnitario : 0);
 
-  total.textContent = formatarMoeda(
-    quantidadeValida && acaoAtual
-      ? quantidade * valorPorNumero
-      : 0
-  );
-
-  aviso.classList.toggle(
-    "visivel",
-    valorTexto !== "" && !quantidadeValida
+  document.getElementById("avisoQuantidade").classList.toggle(
+    "visivel", texto !== "" && !valida
   );
 
   campo.setCustomValidity(
-    valorTexto !== "" && !quantidadeValida
-      ? "A quantidade mínima é de 10 bilhetes. Digite um número inteiro."
-      : ""
+    texto !== "" && !valida ? "Digite um número inteiro, mínimo de 10." : ""
   );
 
   document.querySelectorAll(".pacote").forEach(botao => {
     botao.classList.toggle(
       "selecionado",
-      quantidadeValida &&
-      Number(botao.dataset.quantidade) === quantidade
+      valida && Number(botao.dataset.quantidade) === quantidade
     );
   });
 }
 
-document.getElementById("cpf").addEventListener("input", function () {
+document.getElementById("cpf").addEventListener("input", function() {
   let valor = this.value.replace(/\D/g, "").substring(0, 11);
-
   if (valor.length > 9) {
-    valor = valor.replace(
-      /(\d{3})(\d{3})(\d{3})(\d{1,2})/,
-      "$1.$2.$3-$4"
-    );
+    valor = valor.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, "$1.$2.$3-$4");
   } else if (valor.length > 6) {
-    valor = valor.replace(
-      /(\d{3})(\d{3})(\d{1,3})/,
-      "$1.$2.$3"
-    );
+    valor = valor.replace(/(\d{3})(\d{3})(\d{1,3})/, "$1.$2.$3");
   } else if (valor.length > 3) {
-    valor = valor.replace(
-      /(\d{3})(\d{1,3})/,
-      "$1.$2"
-    );
+    valor = valor.replace(/(\d{3})(\d{1,3})/, "$1.$2");
   }
-
   this.value = valor;
 });
 
@@ -769,11 +484,7 @@ async function continuarCompra() {
   const whatsapp = document.getElementById("whatsapp").value.replace(/\D/g, "");
   const totalNumeros = Number(acaoAtual.total_numeros || 0);
 
-  if (
-    textoQuantidade === "" ||
-    !Number.isSafeInteger(quantidade) ||
-    quantidade < 10
-  ) {
+  if (textoQuantidade === "" || !Number.isSafeInteger(quantidade) || quantidade < 10) {
     calcularTotal();
     campoQuantidade.focus();
     alert("A quantidade mínima é de 10 bilhetes. Digite um número inteiro.");
@@ -805,33 +516,23 @@ async function continuarCompra() {
 
   const botao = document.getElementById("botaoContinuar");
   const resultado = document.getElementById("resultadoReserva");
-
   botao.disabled = true;
   botao.textContent = "RESERVANDO...";
   resultado.style.display = "none";
   resultado.innerHTML = "";
 
   try {
-    const { data, error } = await clienteSupabase.rpc(
-      "criar_pedido_e_reservar",
-      {
-        p_acao_id: acaoAtual.id,
-        p_quantidade: quantidade,
-        p_cpf: cpf,
-        p_telefone: whatsapp,
-        p_nome_cliente: nome
-      }
-    );
+    const {data, error} = await clienteSupabase.rpc("criar_pedido_e_reservar", {
+      p_acao_id: acaoAtual.id,
+      p_quantidade: quantidade,
+      p_cpf: cpf,
+      p_telefone: whatsapp,
+      p_nome_cliente: nome
+    });
 
-    if (error) {
-      console.error("Erro ao criar pedido:", error);
-      throw new Error(
-        error.message || "Não foi possível criar sua participação."
-      );
-    }
+    if (error) throw new Error(error.message || "Não foi possível criar sua participação.");
 
     const pedido = Array.isArray(data) ? data[0] : data;
-
     if (!pedido || typeof pedido !== "object") {
       throw new Error("O sistema não retornou os dados da reserva.");
     }
@@ -839,10 +540,7 @@ async function continuarCompra() {
     mostrarResultadoReserva(pedido);
   } catch (erro) {
     console.error("Falha na reserva:", erro);
-    alert(
-      "Não foi possível reservar seus bilhetes.\n\n" +
-      (erro.message || "Tente novamente mais tarde.")
-    );
+    alert("Não foi possível reservar seus bilhetes.\n\n" + (erro.message || "Tente novamente mais tarde."));
   } finally {
     botao.disabled = false;
     botao.textContent = "CONTINUAR";
@@ -850,39 +548,27 @@ async function continuarCompra() {
 }
 
 function validarCPF(cpf) {
-  if (!/^\d{11}$/.test(cpf)) return false;
-  if (/^(\d)\1{10}$/.test(cpf)) return false;
+  if (!/^\d{11}$/.test(cpf) || /^(\d)\1{10}$/.test(cpf)) return false;
 
   let soma = 0;
-
-  for (let i = 0; i < 9; i++) {
-    soma += Number(cpf[i]) * (10 - i);
-  }
+  for (let i = 0; i < 9; i++) soma += Number(cpf[i]) * (10 - i);
 
   let digito = (soma * 10) % 11;
   if (digito === 10) digito = 0;
   if (digito !== Number(cpf[9])) return false;
 
   soma = 0;
-
-  for (let i = 0; i < 10; i++) {
-    soma += Number(cpf[i]) * (11 - i);
-  }
+  for (let i = 0; i < 10; i++) soma += Number(cpf[i]) * (11 - i);
 
   digito = (soma * 10) % 11;
   if (digito === 10) digito = 0;
-
   return digito === Number(cpf[10]);
 }
 
 function formatarNumeroBilhete(numero) {
-  const totalNumeros = Number(acaoAtual?.total_numeros || 0);
-  const quantidadeDigitos = Math.max(
-    2,
-    String(Math.max(totalNumeros - 1, 0)).length
-  );
-
-  return String(Number(numero)).padStart(quantidadeDigitos, "0");
+  const total = Number(acaoAtual?.total_numeros || 0);
+  const digitos = Math.max(2, String(Math.max(total - 1, 0)).length);
+  return String(Number(numero)).padStart(digitos, "0");
 }
 
 function mostrarResultadoReserva(data) {
@@ -896,30 +582,26 @@ function mostrarResultadoReserva(data) {
 
   resultado.innerHTML = `
     <div class="resultado-reserva">
-      <h3>✅ Reserva realizada!</h3>
+      <h3>✅ Reserva registrada</h3>
       <p><strong>Pedido:</strong> #${escapeHtml(data.pedido_id ?? data.id ?? "")}</p>
       <p><strong>Quantidade:</strong> ${escapeHtml(data.quantidade ?? numeros.length)} bilhetes</p>
       <p><strong>Total:</strong> ${formatarMoeda(valorTotal)}</p>
-      <p>Confira abaixo os números retornados pelo sistema.</p>
-      <p><strong>Seus números:</strong></p>
+      <p>Confira os números retornados pelo sistema:</p>
       <div class="numeros-reservados">${numerosHTML || "<p>Números não retornados. Guarde o número do pedido e entre em contato para conferir.</p>"}</div>
       <div class="aviso-seguranca">
         <strong>Importante:</strong>
-        esta tela confirma o retorno da reserva pelo sistema.
-        Ela não confirma pagamento. Siga as instruções oficiais da ação.
+        esta tela não confirma pagamento. Siga as instruções oficiais da ação.
+        <p>Para consultar suas participações posteriormente, acesse a área abaixo.</p>
+        <a class="botao-secundario" href="minhas-participacoes.html">CONSULTAR MINHAS PARTICIPAÇÕES</a>
       </div>
     </div>`;
 
   resultado.style.display = "block";
-  resultado.scrollIntoView({ behavior: "smooth", block: "center" });
+  resultado.scrollIntoView({behavior:"smooth", block:"center"});
 
-  // Histórico local apenas para conveniência neste dispositivo.
-  // Não substitui uma consulta segura aos pedidos no servidor.
+  // Este histórico existe somente neste navegador e não substitui o banco.
   try {
-    const pedidos = JSON.parse(
-      localStorage.getItem("club_da_sorte_pedidos") || "[]"
-    );
-
+    const pedidos = JSON.parse(localStorage.getItem("club_da_sorte_pedidos") || "[]");
     pedidos.push({
       pedido_id: data.pedido_id ?? data.id ?? null,
       acao_id: data.acao_id ?? acaoAtual?.id ?? null,
@@ -927,11 +609,7 @@ function mostrarResultadoReserva(data) {
       valor_total: valorTotal,
       criado_em: new Date().toISOString()
     });
-
-    localStorage.setItem(
-      "club_da_sorte_pedidos",
-      JSON.stringify(pedidos.slice(-50))
-    );
+    localStorage.setItem("club_da_sorte_pedidos", JSON.stringify(pedidos.slice(-50)));
   } catch (erro) {
     console.error("Não foi possível salvar o histórico local:", erro);
   }
@@ -939,13 +617,8 @@ function mostrarResultadoReserva(data) {
 
 function formatarMoeda(valor) {
   const numero = Number(valor || 0);
-
   if (!Number.isFinite(numero)) return "R$ 0,00";
-
-  return numero.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL"
-  });
+  return numero.toLocaleString("pt-BR", {style:"currency", currency:"BRL"});
 }
 
 function escapeHtml(valor) {
@@ -957,23 +630,14 @@ function escapeHtml(valor) {
     .replace(/'/g, "&#039;");
 }
 
-// Os atalhos internos levam às seções correspondentes.
-document.querySelectorAll(".menu-inferior a[data-secao]").forEach(link => {
-  link.addEventListener("click", function () {
-    const secao = document.getElementById(this.dataset.secao);
-    if (secao) {
-      // A navegação pelo href continua funcionando normalmente.
-      document.querySelectorAll(".menu-inferior a").forEach(item => {
-        item.classList.remove("ativo");
-      });
-      this.classList.add("ativo");
-    }
+document.querySelectorAll('.menu-inferior a[data-secao]').forEach(link => {
+  link.addEventListener("click", function() {
+    document.querySelectorAll(".menu-inferior a").forEach(item => item.classList.remove("ativo"));
+    this.classList.add("ativo");
   });
 });
 
 carregarAcao();
 </script>
-
 </body>
 </html>
-
