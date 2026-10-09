@@ -1,0 +1,335 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ações | OKL Lifestyle</title>
+<style>
+:root {
+  --gold: #d4af37;
+  --gold-light: #f3d779;
+  --black: #080808;
+  --card: #121212;
+  --muted: #aaa;
+  --border: rgba(212,175,55,.28);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--black);
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+header {
+  padding: 18px 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  background: #090909;
+}
+.logo {
+  color: var(--gold-light);
+  font-weight: 800;
+  letter-spacing: 3px;
+  font-size: 20px;
+}
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+nav a {
+  color: #eee;
+  text-decoration: none;
+  font-size: 13px;
+}
+nav a:hover, nav a.atual { color: var(--gold-light); }
+.hero {
+  text-align: center;
+  padding: 58px 20px 38px;
+  background: radial-gradient(ellipse at top, #29200c 0%, #080808 65%);
+}
+.eyebrow {
+  color: var(--gold-light);
+  font-size: 12px;
+  letter-spacing: 4px;
+  font-weight: bold;
+}
+h1 {
+  font-size: clamp(32px, 6vw, 52px);
+  margin: 15px 0 12px;
+}
+h1 span { color: var(--gold-light); }
+.hero p {
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+main {
+  width: min(1150px, 92%);
+  margin: 0 auto;
+  padding: 30px 0 65px;
+}
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.section-title h2 { margin: 0; font-size: 23px; }
+.section-title h2 span { color: var(--gold-light); }
+#contador { color: var(--muted); font-size: 13px; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 22px;
+}
+.card {
+  background: linear-gradient(145deg, #171717, #0d0d0d);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.foto {
+  height: 230px;
+  background: #0d0d0d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.sem-foto {
+  color: #777;
+  font-size: 13px;
+}
+.conteudo {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.status {
+  color: var(--gold-light);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.card h3 {
+  font-size: 20px;
+  line-height: 1.3;
+  margin: 0 0 10px;
+  overflow-wrap: anywhere;
+}
+.descricao {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  flex: 1;
+}
+.detalhes {
+  border-top: 1px solid #292929;
+  margin-top: 18px;
+  padding-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.rotulo { color: var(--muted); font-size: 11px; }
+.preco {
+  color: var(--gold-light);
+  font-size: 21px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+.qtd {
+  font-size: 13px;
+  margin-top: 5px;
+  text-align: right;
+}
+.botao {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  padding: 14px 12px;
+  border-radius: 7px;
+  background: linear-gradient(100deg, #b38b22, #f3d779, #b38b22);
+  color: #080808;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 14px;
+}
+.botao:hover { filter: brightness(1.1); }
+.estado {
+  padding: 35px 20px;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.7;
+  grid-column: 1 / -1;
+}
+.estado strong { color: var(--gold-light); }
+footer {
+  border-top: 1px solid var(--border);
+  padding: 25px 15px;
+  color: #888;
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.7;
+}
+@media (max-width: 600px) {
+  header { justify-content: center; }
+  nav { justify-content: center; gap: 13px; }
+  .hero { padding-top: 42px; }
+  .foto { height: 210px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo" style="text-decoration:none">OKL LIFESTYLE</a>
+  <nav>
+    <a href="index.html">🏠 Início</a>
+    <a href="acoes.html" class="atual">🎟️ Ações</a>
+    <a href="ultimas-acoes.html">🏆 Últimas ações</a>
+    <a href="minhas-participacoes.html">👤 Minhas participações</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">EXCLUSIVIDADE • EXPERIÊNCIA • PRÊMIOS</div>
+  <h1>Nossas <span>Ações</span></h1>
+  <p>Confira as ações disponíveis e conheça os prêmios da OKL Lifestyle.</p>
+</section>
+
+<main>
+  <div class="section-title">
+    <h2>Ações <span>disponíveis</span></h2>
+    <div id="contador">Carregando ações...</div>
+  </div>
+
+  <div id="listaAcoes" class="grid">
+    <div class="estado">Carregando as ações disponíveis...</div>
+  </div>
+</main>
+
+<footer>
+  OKL LIFESTYLE • CLUB DA SORTE<br>
+  Consulte as regras e condições de cada ação antes de participar.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://vlirpvuramslfiftshio.supabase.co";
+const SUPABASE_KEY = "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
+
+const clienteSupabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+const lista = document.getElementById("listaAcoes");
+const contador = document.getElementById("contador");
+
+function escapar(valor) {
+  return String(valor ?? "").replace(/[&<>"']/g, caractere => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[caractere]);
+}
+
+function moeda(valor) {
+  return Number(valor || 0).toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+  });
+}
+
+async function carregarAcoes() {
+  const { data, error } = await clienteSupabase
+    .from("AÇÕES")
+    .select("id,nome,descricao,foto_url,valor_numero,total_numeros,status,created_at")
+    .eq("status", "ativa")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Erro ao carregar ações:", error);
+    contador.textContent = "";
+    lista.innerHTML = `
+      <div class="estado">
+        Não foi possível carregar as ações agora.<br>
+        <strong>Tente novamente em instantes.</strong>
+      </div>`;
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    contador.textContent = "0 ações";
+    lista.innerHTML = `
+      <div class="estado">
+        <strong>Nenhuma ação disponível no momento.</strong><br>
+        Volte em breve para conferir as novidades.
+      </div>`;
+    return;
+  }
+
+  contador.textContent = data.length + (data.length === 1
+    ? " ação disponível"
+    : " ações disponíveis");
+
+  lista.innerHTML = data.map(acao => {
+    const nome = escapar(acao.nome || "Ação OKL Lifestyle");
+    const descricao = escapar(acao.descricao || "Confira os detalhes desta ação.");
+    const foto = acao.foto_url
+      ? `<img src="${escapar(acao.foto_url)}" alt="${nome}" loading="lazy">`
+      : `<span class="sem-foto">Foto do prêmio em breve</span>`;
+
+    return `
+      <article class="card">
+        <div class="foto">${foto}</div>
+        <div class="conteudo">
+          <div class="status">● Ação disponível</div>
+          <h3>${nome}</h3>
+          <div class="descricao">${descricao}</div>
+          <div class="detalhes">
+            <div>
+              <div class="rotulo">Valor por bilhete</div>
+              <div class="preco">${moeda(acao.valor_numero)}</div>
+            </div>
+            <div>
+              <div class="rotulo">Total de bilhetes</div>
+              <div class="qtd">${Number(acao.total_numeros || 0).toLocaleString("pt-BR")}</div>
+            </div>
+          </div>
+          <a class="botao" href="index.html#acoes">VER COMO PARTICIPAR</a>
+        </div>
+      </article>`;
+  }).join("");
+}
+
+carregarAcoes();
+</script>
+</body>
+</html>
