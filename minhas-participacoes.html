@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Minhas Participações | OKL Lifestyle</title>
+<style>
+:root {
+  --gold: #d4af37;
+  --bg: #090909;
+  --card: #151515;
+  --text: #f5f5f5;
+  --muted: #aaa;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+}
+header {
+  padding: 22px 16px;
+  text-align: center;
+  border-bottom: 1px solid #332a12;
+}
+.logo {
+  color: var(--gold);
+  font-weight: 900;
+  font-size: 23px;
+  letter-spacing: 1px;
+}
+nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding: 15px 10px;
+  background: #111;
+}
+a { color: var(--gold); text-decoration: none; }
+nav a { font-size: 14px; }
+main {
+  width: min(760px, 100%);
+  margin: auto;
+  padding: 25px 16px 100px;
+}
+h1 { font-size: 27px; margin-bottom: 8px; }
+.intro { color: var(--muted); line-height: 1.6; }
+.card {
+  background: var(--card);
+  border: 1px solid #39301b;
+  border-radius: 14px;
+  padding: 18px;
+  margin-top: 18px;
+}
+.card h2 { color: var(--gold); font-size: 18px; }
+.info { line-height: 1.8; overflow-wrap: anywhere; }
+.status {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 20px;
+  background: #292929;
+  font-size: 12px;
+}
+.empty {
+  padding: 25px 18px;
+  text-align: center;
+  color: var(--muted);
+  line-height: 1.7;
+}
+button {
+  border: 0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  background: var(--gold);
+  color: #111;
+  font-weight: bold;
+  cursor: pointer;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+footer {
+  text-align: center;
+  padding: 25px;
+  color: var(--muted);
+  font-size: 12px;
+  border-top: 1px solid #292929;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">OKL LIFESTYLE</div>
+  <p style="color:#aaa;margin-bottom:0">CLUB DA SORTE • SHOW DE PRÊMIOS</p>
+</header>
+
+<nav>
+  <a href="index.html">Início</a>
+  <a href="acoes.html">Ações</a>
+  <a href="ultimas-acoes.html">Resultados</a>
+  <a href="participar.html">Participar</a>
+</nav>
+
+<main>
+  <h1>Minhas participações 🎟️</h1>
+  <p class="intro">
+    Consulte o resumo das suas participações registradas neste navegador.
+  </p>
+
+  <div id="historico">
+    <div class="card empty">Carregando suas participações...</div>
+  </div>
+
+  <div class="actions">
+    <button onclick="carregarHistorico()">Atualizar</button>
+    <a href="acoes.html" style="padding:12px 4px">Ver ações disponíveis →</a>
+  </div>
+
+  <p class="intro" style="font-size:12px;margin-top:25px">
+    Este histórico local pode não incluir pedidos feitos em outro aparelho
+    ou navegador. Consulte o comprovante do pedido para confirmar seus dados.
+    A situação exibida é a registrada no resumo salvo neste dispositivo.
+  </p>
+</main>
+
+<footer>
+  OKL Lifestyle • Club da Sorte
+</footer>
+
+<script>
+function escapar(valor) {
+  return String(valor ?? "").replace(/[&<>"']/g, caractere => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[caractere]);
+}
+
+function dinheiro(valor) {
+  const numero = Number(valor);
+  if (!Number.isFinite(numero)) return "Não informado";
+  return numero.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+  });
+}
+
+function dataFormatada(valor) {
+  if (!valor) return "Não informada";
+  const data = new Date(valor);
+  if (Number.isNaN(data.getTime())) return escapar(valor);
+  return data.toLocaleString("pt-BR");
+}
+
+function carregarHistorico() {
+  const area = document.getElementById("historico");
+  let pedidos = [];
+
+  try {
+    const salvo = localStorage.getItem("club_da_sorte_pedidos");
+    if (salvo) {
+      const dados = JSON.parse(salvo);
+      pedidos = Array.isArray(dados) ? dados : [dados];
+    }
+  } catch (erro) {
+    area.innerHTML = `
+      <div class="card empty">
+        Não foi possível ler o histórico salvo neste navegador.
+      </div>`;
+    return;
+  }
+
+  if (!pedidos.length) {
+    area.innerHTML = `
+      <div class="card empty">
+        <h2>Nenhuma participação encontrada</h2>
+        <p>
+          Se você já fez um pedido, ele pode ter sido registrado em outro
+          navegador ou o resumo local pode não estar disponível.
+        </p>
+        <a href="acoes.html">Ver ações disponíveis</a>
+      </div>`;
+    return;
+  }
+
+  area.innerHTML = pedidos.slice().reverse().map(p => {
+    const numeros = Array.isArray(p.numeros)
+      ? p.numeros.map(n =>
+          typeof n === "object" ? (n.numero ?? n.numero_bilhete ?? "") : n
+        ).filter(n => n !== "")
+      : [];
+
+    const pedidoId = p.pedido_id ?? p.id ?? "Não informado";
+    const quantidade = p.quantidade ?? numeros.length ?? "Não informada";
+    const valor = p.valor_total ?? p.valor ?? null;
+    const status = p.status ?? "Aguardando confirmação";
+    const nomeAcao = p.acao_nome ?? p.nome_acao ?? p.nome ?? "Ação";
+    const data = p.created_at ?? p.data ?? p.criado_em;
+
+    return `
+      <section class="card">
+        <h2>${escapar(nomeAcao)}</h2>
+        <div class="info">
+          <div><strong>Pedido:</strong> ${escapar(pedidoId)}</div>
+          <div><strong>Data:</strong> ${dataFormatada(data)}</div>
+          <div><strong>Quantidade:</strong> ${escapar(quantidade)}</div>
+          <div><strong>Valor:</strong> ${dinheiro(valor)}</div>
+          <div><strong>Situação:</strong>
+            <span class="status">${escapar(status)}</span>
+          </div>
+          <div><strong>Números registrados neste resumo:</strong><br>
+            ${numeros.length
+              ? numeros.map(escapar).join(", ")
+              : "Os números não estão disponíveis neste resumo local."}
+          </div>
+        </div>
+      </section>`;
+  }).join("");
+}
+
+carregarHistorico();
+</script>
+
+</body>
+</html>
