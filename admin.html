@@ -128,6 +128,7 @@ tr:last-child td{border-bottom:0}
   <button class="nav-btn" data-page="pedidos">▤ Pedidos e reservas</button>
   <button class="nav-btn" data-page="gratis">🎁 Bilhetes grátis</button>
   <button class="nav-btn" data-page="premiados">🏆 Bilhetes premiados</button>
+  <button class="nav-btn" data-page="indicadores">📊 Indicadores por ação</button>
 </aside>
 <main><div class="page">
 
@@ -241,6 +242,29 @@ tr:last-child td{border-bottom:0}
   </div>
 </section>
 
+<section id="page-indicadores" class="admin-page hidden">
+  <div class="page-head"><div><h1>Indicadores por ação</h1><p>Top comprador, menor e maior cota e participações confirmadas, sempre separados por ação.</p></div><button id="refreshIndicators" class="btn" type="button">Atualizar dados</button></div>
+  <div class="panel">
+    <label for="indicatorAction">Ação</label><select id="indicatorAction"></select>
+    <div id="indicatorFeedback" class="feedback"></div>
+  </div>
+  <div class="grid-2 section">
+    <div class="panel"><h2>🏆 Top comprador desta ação</h2><div id="topBuyerResult" class="number-detail">Selecione uma ação.</div></div>
+    <div class="panel"><h2>Menor e maior cota</h2><div id="extremeTicketsResult" class="number-detail">Selecione uma ação.</div></div>
+  </div>
+  <div class="panel section">
+    <h2>Prazos das cotas</h2>
+    <p class="muted small">Defina os prazos em horário local. Ao salvar, a configuração fica registrada no Supabase. A apuração automática no instante do prazo exige também uma rotina no banco; esta tela não substitui essa rotina.</p>
+    <div class="form-grid">
+      <div><label for="smallTicketDeadline">Prazo da menor cota</label><input id="smallTicketDeadline" type="datetime-local"></div>
+      <div><label for="largeTicketDeadline">Prazo da maior cota</label><input id="largeTicketDeadline" type="datetime-local"></div>
+    </div>
+    <div class="toolbar" style="margin-top:14px"><button id="saveCotaDeadlines" class="btn btn-gold" type="button">Salvar prazos</button></div>
+    <div id="cotaDeadlineFeedback" class="feedback"></div>
+  </div>
+  <div class="panel section"><div class="section-head"><h2>Participações recentes confirmadas</h2></div><div id="publicParticipationsResult" class="table-wrap"><p class="muted">Selecione uma ação.</p></div></div>
+</section>
+
 </div></main></div></div>
 
 <script>
@@ -316,6 +340,7 @@ function showPage(name){
   if(name==="pedidos")carregarPedidos();
   if(name==="gratis")carregarAcoesNosSelects();
   if(name==="premiados")carregarAcoesNosSelects().then(()=>carregarBilhetesPremiados());
+  if(name==="indicadores")carregarAcoesNosSelects().then(()=>{preencherSelectIndicadores(); carregarIndicadores();});
 }
 document.querySelectorAll(".nav-btn").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
 document.querySelectorAll("[data-goto]").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.goto)));
@@ -449,6 +474,7 @@ function preencherSelectAcoes(){
     if(state.actions.some(a=>String(a.id)===previous))winning.value=previous;
     atualizarLimiteNumeroPremiado();
   }
+  preencherSelectIndicadores();
 }
 
 $("actionPhoto").addEventListener("change",()=>{
@@ -1106,6 +1132,92 @@ $("winningTicketForm").addEventListener("submit",async e=>{
   }finally{
     button.disabled=false;
   }
+});
+
+
+/* INDICADORES PÚBLICOS POR AÇÃO */
+function preencherSelectIndicadores(){
+  const select=$("indicatorAction");
+  if(!select)return;
+  const previous=select.value;
+  select.innerHTML=state.actions.map(a=>`<option value="${escapeHtml(a.id)}">${escapeHtml(a.nome)}</option>`).join("")||'<option value="">Nenhuma ação cadastrada</option>';
+  if(state.actions.some(a=>String(a.id)===String(previous)))select.value=previous;
+}
+function nomeParcial(nome){
+  const partes=String(nome||"").trim().split(/\s+/).filter(Boolean);
+  if(!partes.length)return "Cliente";
+  if(partes.length===1)return partes[0];
+  return `${partes[0]} ${partes[partes.length-1][0].toUpperCase()}.`;
+}
+function dataLocalInput(value){
+  if(!value)return "";
+  const d=new Date(value);
+  if(Number.isNaN(d.getTime()))return "";
+  const local=new Date(d.getTime()-d.getTimezoneOffset()*60000);
+  return local.toISOString().slice(0,16);
+}
+function localInputToISO(value){
+  if(!value)return null;
+  const d=new Date(value);
+  if(Number.isNaN(d.getTime()))throw new Error("Informe uma data e hora válidas.");
+  return d.toISOString();
+}
+async function carregarIndicadores(){
+  const actionId=$("indicatorAction")?.value;
+  const action=state.actions.find(a=>String(a.id)===String(actionId));
+  if(!actionId||!action){
+    ["topBuyerResult","extremeTicketsResult","publicParticipationsResult"].forEach(id=>{if($(id))$(id).textContent="Selecione uma ação.";});
+    return;
+  }
+  feedback("indicatorFeedback","Carregando indicadores da ação…");
+  try{
+    const [top,extremes,participations,config]=await Promise.all([
+      db.rpc("top_comprador_acao",{p_acao_id:actionId}),
+      db.rpc("cotas_extremas_acao",{p_acao_id:actionId}),
+      db.rpc("participacoes_publicas",{p_acao_id:actionId}),
+      db.from("configuracoes_cotas").select("menor_cota_limite_em,maior_cota_limite_em,menor_cota_encerrada_em,maior_cota_encerrada_em,menor_cota_numero_final,menor_cota_nome_final,maior_cota_numero_final,maior_cota_nome_final").eq("acao_id",actionId).maybeSingle()
+    ]);
+    if(top.error)throw new Error("Top comprador: "+top.error.message);
+    if(extremes.error)throw new Error("Cotas: "+extremes.error.message);
+    if(participations.error)throw new Error("Participações: "+participations.error.message);
+    if(config.error)throw new Error("Prazos: "+config.error.message);
+    const buyer=(top.data||[])[0];
+    $("topBuyerResult").innerHTML=buyer?`<strong>${escapeHtml(buyer.nome_publico||"Cliente")}</strong><br>${escapeHtml(buyer.quantidade_numeros||0)} número(s) confirmados nesta ação.`:"Ainda não há compras confirmadas para esta ação.";
+    const cfg=config.data||{};
+    const list=extremes.data||[];
+    const min=list.find(x=>String(x.tipo_cota).toLowerCase().includes("menor"));
+    const max=list.find(x=>String(x.tipo_cota).toLowerCase().includes("maior"));
+    const minNum=cfg.menor_cota_encerrada_em&&cfg.menor_cota_numero_final!=null?cfg.menor_cota_numero_final:min?.numero_cota;
+    const minName=cfg.menor_cota_encerrada_em&&cfg.menor_cota_nome_final?cfg.menor_cota_nome_final:min?.nome_publico;
+    const maxNum=cfg.maior_cota_encerrada_em&&cfg.maior_cota_numero_final!=null?cfg.maior_cota_numero_final:max?.numero_cota;
+    const maxName=cfg.maior_cota_encerrada_em&&cfg.maior_cota_nome_final?cfg.maior_cota_nome_final:max?.nome_publico;
+    const fmt=(n)=>n==null?"—":numberLabel(n,action.total_numeros);
+    $("extremeTicketsResult").innerHTML=`<strong>Menor cota:</strong> ${escapeHtml(fmt(minNum))} — ${escapeHtml(minName||"Sem apuração")}${cfg.menor_cota_encerrada_em?` <span class="badge">Apurada em ${escapeHtml(new Date(cfg.menor_cota_encerrada_em).toLocaleString("pt-BR"))}</span>`:""}<hr style="border-color:var(--border)"><strong>Maior cota:</strong> ${escapeHtml(fmt(maxNum))} — ${escapeHtml(maxName||"Sem apuração")}${cfg.maior_cota_encerrada_em?` <span class="badge">Apurada em ${escapeHtml(new Date(cfg.maior_cota_encerrada_em).toLocaleString("pt-BR"))}</span>`:""}`;
+    $("smallTicketDeadline").value=dataLocalInput(cfg.menor_cota_limite_em);
+    $("largeTicketDeadline").value=dataLocalInput(cfg.maior_cota_limite_em);
+    const rows=participations.data||[];
+    $("publicParticipationsResult").innerHTML=rows.length?`<table><thead><tr><th>Cliente</th><th>Quantidade</th><th>Data</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${escapeHtml(r.nome_publico||"Cliente")}</td><td>${escapeHtml(r.quantidade??0)}</td><td>${escapeHtml(r.created_at?new Date(r.created_at).toLocaleString("pt-BR"):"—")}</td></tr>`).join("")}</tbody></table>`:'<p class="muted" style="padding:12px">Ainda não há participações confirmadas.</p>';
+    feedback("indicatorFeedback",`Indicadores carregados para “${action.nome}”.`);
+  }catch(error){
+    feedback("indicatorFeedback",error.message||"Não foi possível carregar os indicadores.","error");
+  }
+}
+$("indicatorAction")?.addEventListener("change",carregarIndicadores);
+$("refreshIndicators")?.addEventListener("click",carregarIndicadores);
+$("saveCotaDeadlines")?.addEventListener("click",async()=>{
+  const actionId=$("indicatorAction")?.value;
+  if(!actionId){feedback("cotaDeadlineFeedback","Selecione uma ação.","error");return;}
+  const button=$("saveCotaDeadlines");button.disabled=true;
+  try{
+    const menor=localInputToISO($("smallTicketDeadline").value);
+    const maior=localInputToISO($("largeTicketDeadline").value);
+    const payload={acao_id:actionId,menor_cota_limite_em:menor,maior_cota_limite_em:maior,updated_at:new Date().toISOString()};
+    const {error}=await db.from("configuracoes_cotas").upsert(payload,{onConflict:"acao_id"});
+    if(error)throw error;
+    feedback("cotaDeadlineFeedback","Prazos salvos. A apuração automática no instante do prazo precisa da rotina correspondente no banco.","success");
+    await carregarIndicadores();
+  }catch(error){feedback("cotaDeadlineFeedback",error.message||"Não foi possível salvar os prazos.","error");}
+  finally{button.disabled=false;}
 });
 
 verificarSessao();
