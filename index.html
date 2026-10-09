@@ -5,12 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#090909">
-  <meta name="description" content="OKL Lifestyle — Club da Sorte. Confira nossas ações e participe.">
+  <meta name="description" content="OKL Lifestyle — Club da Sorte • Show de Prêmios. Confira ações, participações e últimos resultados.">
   <title>OKL Lifestyle | Club da Sorte</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -37,7 +37,10 @@
       line-height: 1.55;
     }
 
-    a { color: inherit; text-decoration: none; }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
     button, a { -webkit-tap-highlight-color: transparent; }
 
@@ -51,9 +54,9 @@
       background: var(--gold);
       color: #111;
       text-align: center;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 800;
-      letter-spacing: 1.1px;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
     }
 
@@ -71,13 +74,13 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 22px;
+      gap: 18px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 11px;
+      gap: 10px;
       min-width: 0;
     }
 
@@ -97,29 +100,31 @@
 
     .brand-name {
       font-family: Montserrat, sans-serif;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 800;
-      letter-spacing: 1.4px;
+      letter-spacing: 1.1px;
+      white-space: nowrap;
     }
 
     .brand-sub {
       color: var(--gold);
       font-size: 9px;
-      letter-spacing: 2px;
+      letter-spacing: 1.8px;
       text-transform: uppercase;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 24px;
-      font-size: 13px;
+      gap: 22px;
+      font-size: 12px;
       color: #dedede;
     }
 
-    .nav-links a:hover { color: var(--gold-light); }
+    .nav-links a:hover,
+    .footer-links a:hover { color: var(--gold-light); }
 
-    .nav-cta, .button {
+    .button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -131,12 +136,13 @@
       border: 1px solid var(--gold);
       border-radius: 7px;
       font-weight: 800;
-      font-size: 13px;
+      font-size: 12px;
+      text-align: center;
       transition: .2s ease;
       cursor: pointer;
     }
 
-    .nav-cta:hover, .button:hover {
+    .button:hover {
       background: var(--gold-light);
       transform: translateY(-1px);
     }
@@ -177,7 +183,7 @@
     .hero-content {
       position: relative;
       z-index: 1;
-      max-width: 720px;
+      max-width: 730px;
     }
 
     .eyebrow {
@@ -186,9 +192,9 @@
       gap: 9px;
       margin-bottom: 22px;
       color: var(--gold-light);
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 800;
-      letter-spacing: 2.4px;
+      letter-spacing: 2px;
       text-transform: uppercase;
     }
 
@@ -201,7 +207,7 @@
 
     h1, h2, h3 {
       font-family: Montserrat, sans-serif;
-      line-height: 1.15;
+      line-height: 1.18;
     }
 
     h1 {
@@ -218,7 +224,7 @@
       max-width: 540px;
       margin: 0 0 30px;
       color: #bdbdbd;
-      font-size: 16px;
+      font-size: 15px;
       line-height: 1.8;
     }
 
@@ -229,7 +235,7 @@
     }
 
     .hero-note {
-      margin-top: 30px;
+      margin-top: 27px;
       color: #8d8d8d;
       font-size: 11px;
     }
@@ -253,7 +259,7 @@
       display: block;
       margin-bottom: 6px;
       color: var(--gold);
-      font-size: 19px;
+      font-size: 20px;
     }
 
     .trust-item strong {
@@ -265,7 +271,7 @@
       display: block;
       margin-top: 4px;
       color: var(--muted);
-      font-size: 11px;
+      font-size: 10px;
     }
 
     section { padding: 70px 0; }
@@ -287,7 +293,7 @@
     .section-heading p {
       margin: 10px 0 0;
       color: var(--muted);
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .section-kicker {
@@ -301,19 +307,21 @@
     .text-link {
       flex-shrink: 0;
       color: var(--gold-light);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
     }
 
     .text-link:hover { text-decoration: underline; }
 
-    .actions-grid {
+    .actions-grid,
+    .results-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 20px;
     }
 
-    .action-card {
+    .action-card,
+    .result-card {
       min-width: 0;
       overflow: hidden;
       background: var(--surface);
@@ -322,13 +330,14 @@
       transition: transform .2s, border-color .2s;
     }
 
-    .action-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(212,175,55,.65);
+    .action-card:hover,
+    .result-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(212,175,55,.6);
     }
 
     .action-image {
-      height: 235px;
+      height: 230px;
       display: grid;
       place-items: center;
       padding: 12px;
@@ -367,15 +376,16 @@
       background: rgba(212,175,55,.09);
       border: 1px solid rgba(212,175,55,.25);
       border-radius: 4px;
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: .7px;
     }
 
-    .action-info h3 {
+    .action-info h3,
+    .result-info h3 {
       margin: 0 0 8px;
-      font-size: 17px;
+      font-size: 16px;
     }
 
     .action-description {
@@ -388,27 +398,50 @@
     .action-price {
       margin-bottom: 17px;
       color: var(--gold-light);
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 800;
     }
 
     .action-price small {
       color: var(--muted);
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 500;
     }
 
     .card-button { width: 100%; }
 
-    .loading-message, .empty-message {
+    .loading-message,
+    .empty-message {
       grid-column: 1 / -1;
-      padding: 32px 20px;
+      padding: 30px 20px;
       text-align: center;
       color: var(--muted);
       background: var(--surface);
       border: 1px solid #29251b;
       border-radius: var(--radius);
       font-size: 13px;
+    }
+
+    .result-info { padding: 20px; }
+
+    .result-prize {
+      margin: 13px 0;
+      color: var(--gold-light);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .result-detail {
+      margin: 5px 0;
+      color: var(--muted);
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .results-footnote {
+      margin-top: 18px;
+      color: #777;
+      font-size: 11px;
     }
 
     .steps {
@@ -441,8 +474,8 @@
     .step p {
       margin: 0;
       color: var(--muted);
-      font-size: 13px;
-      line-height: 1.7;
+      font-size: 12px;
+      line-height: 1.8;
     }
 
     .cta-panel {
@@ -498,8 +531,6 @@
       color: #c4c4c4;
     }
 
-    .footer-links a:hover { color: var(--gold); }
-
     .footer-bottom {
       padding-top: 18px;
       border-top: 1px solid #222;
@@ -508,55 +539,50 @@
       text-align: center;
     }
 
-    .error-detail {
-      margin-top: 10px;
-      color: #d5a6a6;
-      font-size: 11px;
-      overflow-wrap: anywhere;
-    }
-
     @media (max-width: 850px) {
-      .nav-links { gap: 13px; }
-      .actions-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .action-image { height: 215px; }
+      .nav-links { gap: 12px; }
+      .actions-grid,
+      .results-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 620px) {
       .container { width: calc(100% - 28px); }
-      .announcement { font-size: 9px; letter-spacing: .7px; }
-      .nav { min-height: 68px; gap: 10px; }
+      .announcement { font-size: 9px; letter-spacing: .6px; }
+      .nav { min-height: 68px; gap: 8px; }
       .brand-mark { width: 39px; height: 39px; font-size: 14px; }
-      .brand-name { font-size: 12px; letter-spacing: .8px; }
-      .brand-sub { font-size: 8px; letter-spacing: 1.2px; }
-      .nav-links { gap: 12px; font-size: 11px; }
+      .brand-name { font-size: 11px; letter-spacing: .5px; }
+      .brand-sub { font-size: 8px; letter-spacing: 1px; }
+      .nav-links { gap: 10px; font-size: 11px; }
       .nav-links .desktop-link { display: none; }
-      .nav-cta { min-height: 38px; padding: 9px 11px; font-size: 11px; }
-      .hero { padding: 65px 0 55px; }
+      .nav-cta { min-height: 38px; padding: 9px 10px; font-size: 10px; }
+      .hero { padding: 62px 0 52px; }
       h1 { letter-spacing: -1.5px; }
       .hero-description { font-size: 14px; }
-      .trust-item { padding: 17px 6px; }
+      .trust-item { padding: 16px 5px; }
       .trust-item strong { font-size: 10px; }
       .trust-item span:last-child { font-size: 9px; }
-      section { padding: 52px 0; }
+      section { padding: 50px 0; }
       .section-heading { align-items: start; flex-direction: column; }
-      .actions-grid { grid-template-columns: 1fr; gap: 14px; }
+      .actions-grid,
+      .results-grid { grid-template-columns: 1fr; gap: 14px; }
       .action-card { display: grid; grid-template-columns: 42% 58%; }
       .action-image { height: auto; min-height: 205px; border-bottom: 0; border-right: 1px solid #26221a; }
-      .action-info { padding: 15px 12px; }
-      .action-info h3 { font-size: 14px; }
+      .action-info,
+      .result-info { padding: 15px 12px; }
+      .action-info h3,
+      .result-info h3 { font-size: 14px; }
       .action-description { font-size: 11px; min-height: 0; }
-      .action-price { font-size: 16px; }
-      .card-button { padding: 10px 8px; font-size: 11px; }
+      .action-price { font-size: 15px; }
+      .card-button { padding: 10px 8px; font-size: 10px; }
       .steps { grid-template-columns: 1fr; }
-      .step { padding: 22px; }
       .cta-panel { align-items: start; flex-direction: column; padding: 25px 20px; }
       .footer-main { flex-direction: column; }
     }
 
     @media (max-width: 370px) {
-      .nav-links { gap: 8px; }
+      .nav-links { gap: 7px; }
       .brand-name { font-size: 10px; }
-      .brand-sub { letter-spacing: .6px; }
+      .brand-sub { letter-spacing: .4px; }
       .action-card { grid-template-columns: 38% 62%; }
       .action-image { min-height: 190px; }
     }
@@ -584,7 +610,7 @@
         <a class="desktop-link" href="minhas-participacoes.html">Minhas participações</a>
       </nav>
 
-      <a class="nav-cta" href="acoes.html">Ver ações ↗</a>
+      <a class="button nav-cta" href="acoes.html">Ver ações ↗</a>
     </div>
   </header>
 
@@ -594,17 +620,17 @@
         <div class="eyebrow">Seu próximo prêmio pode estar aqui</div>
         <h1>O seu próximo prêmio começa com <span>uma participação.</span></h1>
         <p class="hero-description">
-          Confira as ações da OKL Lifestyle, escolha sua quantidade de números
-          e acompanhe suas participações em um só lugar.
+          Confira as ações da OKL Lifestyle, escolha a quantidade de números
+          desejada e acompanhe suas participações em um só lugar.
         </p>
         <div class="hero-actions">
-          <a class="button" href="acoes.html">CONFERIR AÇÕES <span>→</span></a>
+          <a class="button" href="acoes.html">CONFERIR AÇÕES →</a>
           <a class="button button-outline" href="minhas-participacoes.html">
             MINHAS PARTICIPAÇÕES
           </a>
         </div>
         <div class="hero-note">
-          Acompanhe as informações e as regras de cada ação antes de participar.
+          Consulte as regras e condições de cada ação antes de participar.
         </div>
       </div>
     </section>
@@ -637,15 +663,34 @@
           </div>
           <a class="text-link" href="acoes.html">Ver todas as ações →</a>
         </div>
-
         <div class="actions-grid" id="actionsGrid">
           <div class="loading-message">Carregando ações...</div>
         </div>
-        <div id="loadError" class="error-detail" hidden></div>
+        <div id="actionsError" style="margin-top:10px;color:#d5a6a6;font-size:11px" hidden></div>
       </div>
     </section>
 
-    <section style="background:#0d0d0d;border-top:1px solid #211e16;border-bottom:1px solid #211e16;">
+    <section id="ultimos-resultados" style="background:#0d0d0d;border-top:1px solid #211e16;border-bottom:1px solid #211e16">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <div class="section-kicker">Transparência</div>
+            <h2>Últimos resultados</h2>
+            <p>Consulte os resultados registrados das ações apuradas.</p>
+          </div>
+        </div>
+
+        <div class="results-grid" id="resultsGrid">
+          <div class="loading-message">Consultando resultados...</div>
+        </div>
+        <p class="results-footnote">
+          Os resultados exibidos dependem dos registros disponíveis no sistema.
+          Confira as regras e os detalhes de cada ação.
+        </p>
+      </div>
+    </section>
+
+    <section id="como-participar">
       <div class="container">
         <div class="section-heading">
           <div>
@@ -659,17 +704,17 @@
           <article class="step">
             <div class="step-number">01</div>
             <h3>Escolha sua ação</h3>
-            <p>Veja os prêmios, o valor por número e as regras disponíveis.</p>
+            <p>Confira os prêmios, o valor por número e as regras da ação.</p>
           </article>
           <article class="step">
             <div class="step-number">02</div>
             <h3>Escolha a quantidade</h3>
-            <p>Selecione o pacote de números desejado e siga as instruções de pagamento.</p>
+            <p>Selecione o pacote desejado e siga as instruções de pagamento.</p>
           </article>
           <article class="step">
             <div class="step-number">03</div>
             <h3>Acompanhe seu pedido</h3>
-            <p>Consulte suas participações e o status do pedido na página correspondente.</p>
+            <p>Consulte suas participações e o status do pedido na página de consulta.</p>
           </article>
         </div>
       </div>
@@ -721,17 +766,14 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    // Usa o projeto Supabase que você já informou.
-    // A chave publishable pode ser usada no navegador quando as políticas RLS
-    // estiverem configuradas corretamente. Nunca coloque a service_role aqui.
     const SUPABASE_URL = "https://vlirpvuramslfiftshio.supabase.co";
     const SUPABASE_KEY = "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
 
-    const grid = document.getElementById("actionsGrid");
-    const loadError = document.getElementById("loadError");
+    const actionsGrid = document.getElementById("actionsGrid");
+    const actionsError = document.getElementById("actionsError");
+    const resultsGrid = document.getElementById("resultsGrid");
 
-    document.getElementById("currentYear").textContent =
-      new Date().getFullYear();
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
 
     function escapeHTML(value) {
       return String(value ?? "").replace(/[&<>"']/g, char => ({
@@ -752,72 +794,84 @@
       });
     }
 
-    function showFallback(message) {
-      grid.innerHTML = `
+    function firstValue(row, keys) {
+      for (const key of keys) {
+        if (row[key] !== undefined && row[key] !== null && row[key] !== "") {
+          return row[key];
+        }
+      }
+      return null;
+    }
+
+    function showActionFallback(message) {
+      actionsGrid.innerHTML = `
         <div class="empty-message">
           <div style="font-size:28px;color:var(--gold);margin-bottom:12px">✦</div>
           <strong style="display:block;color:#f5f5f5;margin-bottom:8px">
             Confira nossas ações
           </strong>
-          <p style="margin:0 0 18px">
-            ${escapeHTML(message)}
-          </p>
+          <p>${escapeHTML(message)}</p>
           <a class="button" href="acoes.html">VER TODAS AS AÇÕES →</a>
         </div>`;
     }
 
     function renderAction(row) {
-      const title = row.nome ?? row.titulo ?? row.nome_acao ?? "Ação da OKL Lifestyle";
-      const description = row.descricao ?? row.descricao_curta ?? "Confira os detalhes desta ação.";
-      const image = row.foto_url ?? row.imagem_url ?? row.imagem ?? row.foto ?? "";
-      const price = row.valor_numero ?? row.preco_numero ?? row.valor_por_numero ?? row.preco;
-      const status = row.status ?? row.situacao ?? "Disponível";
+      const title = firstValue(row, ["nome", "titulo", "nome_acao"]) || "Ação da OKL Lifestyle";
+      const description = firstValue(row, ["descricao", "descricao_curta"]) || "Confira os detalhes desta ação.";
+      const image = firstValue(row, ["foto_url", "imagem_url", "imagem", "foto"]);
+      const price = firstValue(row, ["valor_numero", "preco_numero", "valor_por_numero", "preco"]);
+      const status = firstValue(row, ["status", "situacao"]) || "Disponível";
 
-      const safeTitle = escapeHTML(title);
-      const safeDescription = escapeHTML(description);
-      const safeImage = escapeHTML(image);
-      const safeStatus = escapeHTML(status);
+      const imageHTML = image && /^https?:\/\//i.test(String(image))
+        ? `<img src="${escapeHTML(image)}" alt="${escapeHTML(title)}" loading="lazy">`
+        : `<div class="image-placeholder"><span>✦</span>Prêmio da ação</div>`;
 
-      let imageHTML = `
-        <div class="image-placeholder">
-          <span>✦</span>
-          Prêmio da ação
-        </div>`;
-
-      if (image && /^https?:\/\//i.test(String(image))) {
-        imageHTML = `<img src="${safeImage}" alt="${safeTitle}" loading="lazy">`;
-      }
-
-      const priceHTML = price !== undefined && price !== null && price !== ""
+      const priceHTML = price !== null
         ? `${money(price)} <small>/ número</small>`
-        : `Confira os detalhes`;
+        : "Confira os detalhes";
 
       return `
         <article class="action-card">
           <div class="action-image">${imageHTML}</div>
           <div class="action-info">
-            <span class="status">${safeStatus}</span>
-            <h3>${safeTitle}</h3>
-            <p class="action-description">${safeDescription}</p>
+            <span class="status">${escapeHTML(status)}</span>
+            <h3>${escapeHTML(title)}</h3>
+            <p class="action-description">${escapeHTML(description)}</p>
             <div class="action-price">${priceHTML}</div>
             <a class="button card-button" href="acoes.html">VER AÇÃO →</a>
           </div>
         </article>`;
     }
 
-    async function loadActions() {
-      if (!window.supabase) {
-        showFallback("Não foi possível iniciar a conexão agora.");
-        return;
+    function renderResult(row) {
+      const title = firstValue(row, ["nome_acao", "acao_nome", "nome", "titulo"]) || "Ação apurada";
+      const winnerNumber = firstValue(row, ["numero_premiado", "numero_vencedor", "bilhete_premiado", "numero_sorteado"]);
+      const winnerName = firstValue(row, ["nome_ganhador", "ganhador", "nome_vencedor"]);
+      const prize = firstValue(row, ["premio", "nome_premio", "descricao_premio"]);
+      const date = firstValue(row, ["data_apuracao", "data_resultado", "apurado_em", "created_at"]);
+
+      let formattedDate = "";
+      if (date) {
+        const parsed = new Date(date);
+        if (!Number.isNaN(parsed.getTime())) {
+          formattedDate = parsed.toLocaleDateString("pt-BR");
+        }
       }
 
-      const client = window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-      );
+      return `
+        <article class="result-card">
+          <div class="result-info">
+            <span class="status">Resultado registrado</span>
+            <h3>${escapeHTML(title)}</h3>
+            ${prize ? `<p class="result-prize">${escapeHTML(prize)}</p>` : ""}
+            ${winnerNumber !== null ? `<p class="result-detail">Número vencedor: <strong style="color:var(--gold-light)">${escapeHTML(winnerNumber)}</strong></p>` : ""}
+            ${winnerName ? `<p class="result-detail">Ganhador: ${escapeHTML(winnerName)}</p>` : ""}
+            ${formattedDate ? `<p class="result-detail">Data: ${escapeHTML(formattedDate)}</p>` : ""}
+          </div>
+        </article>`;
+    }
 
-      // A consulta usa o nome comum "acoes". Se sua tabela tiver outro nome
-      // ou colunas diferentes, ajustaremos esta consulta ao esquema já criado.
+    async function loadActions(client) {
       const { data, error } = await client
         .from("acoes")
         .select("*")
@@ -825,22 +879,78 @@
 
       if (error) {
         console.error("Erro ao carregar ações:", error);
-        showFallback("A página de ações continua disponível. A listagem inicial precisa corresponder ao nome da tabela e às permissões do Supabase.");
-        loadError.textContent = "Detalhe técnico: " + error.message;
+        showActionFallback("Acesse a página de ações para conferir a listagem.");
+        actionsError.textContent =
+          "A listagem da página inicial precisa corresponder ao nome real da tabela e às permissões já configuradas no Supabase.";
+        actionsError.hidden = false;
         return;
       }
 
-      const actions = Array.isArray(data) ? data : [];
-
-      if (actions.length === 0) {
-        showFallback("No momento, não há ações para exibir aqui. Acesse a página de ações para conferir.");
+      if (!Array.isArray(data) || data.length === 0) {
+        showActionFallback("Não há ações para exibir nesta seção no momento.");
         return;
       }
 
-      grid.innerHTML = actions.map(renderAction).join("");
+      actionsGrid.innerHTML = data.map(renderAction).join("");
     }
 
-    loadActions();
+    async function loadResults(client) {
+      /*
+        IMPORTANTE:
+        Esta consulta usa a tabela comum "resultados" como tentativa inicial.
+        Se seus resultados estiverem guardados em outra tabela ou função,
+        a consulta deverá usar o nome e as colunas reais do seu Database.
+        Não são criados resultados fictícios.
+      */
+      const { data, error } = await client
+        .from("resultados")
+        .select("*")
+        .limit(3);
+
+      if (error) {
+        console.warn("Não foi possível consultar resultados:", error.message);
+        resultsGrid.innerHTML = `
+          <div class="empty-message">
+            <div style="font-size:28px;color:var(--gold);margin-bottom:12px">🏆</div>
+            <strong style="display:block;color:#f5f5f5;margin-bottom:8px">
+              Últimos resultados
+            </strong>
+            <p>Os resultados serão exibidos aqui quando a consulta estiver ligada à tabela correta.</p>
+          </div>`;
+        return;
+      }
+
+      if (!Array.isArray(data) || data.length === 0) {
+        resultsGrid.innerHTML = `
+          <div class="empty-message">
+            <div style="font-size:28px;color:var(--gold);margin-bottom:12px">🏆</div>
+            <strong style="display:block;color:#f5f5f5;margin-bottom:8px">
+              Nenhum resultado registrado ainda
+            </strong>
+            <p>Quando houver resultados registrados, eles poderão aparecer nesta seção.</p>
+          </div>`;
+        return;
+      }
+
+      resultsGrid.innerHTML = data.map(renderResult).join("");
+    }
+
+    async function init() {
+      if (!window.supabase) {
+        showActionFallback("Não foi possível iniciar a conexão com o sistema.");
+        resultsGrid.innerHTML = `
+          <div class="empty-message">Não foi possível consultar os resultados.</div>`;
+        return;
+      }
+
+      const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      await Promise.all([
+        loadActions(client),
+        loadResults(client)
+      ]);
+    }
+
+    init();
   </script>
 </body>
 </html>
