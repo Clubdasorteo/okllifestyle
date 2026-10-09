@@ -6,229 +6,153 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Minhas Participações | OKL Lifestyle</title>
 <style>
-:root {
-  --gold: #d4af37;
-  --bg: #090909;
-  --card: #151515;
-  --text: #f5f5f5;
-  --muted: #aaa;
-}
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Arial, sans-serif;
-}
-header {
-  padding: 22px 16px;
-  text-align: center;
-  border-bottom: 1px solid #332a12;
-}
-.logo {
-  color: var(--gold);
-  font-weight: 900;
-  font-size: 23px;
-  letter-spacing: 1px;
-}
-nav {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 18px;
-  padding: 15px 10px;
-  background: #111;
-}
-a { color: var(--gold); text-decoration: none; }
-nav a { font-size: 14px; }
-main {
-  width: min(760px, 100%);
-  margin: auto;
-  padding: 25px 16px 100px;
-}
-h1 { font-size: 27px; margin-bottom: 8px; }
-.intro { color: var(--muted); line-height: 1.6; }
-.card {
-  background: var(--card);
-  border: 1px solid #39301b;
-  border-radius: 14px;
-  padding: 18px;
-  margin-top: 18px;
-}
-.card h2 { color: var(--gold); font-size: 18px; }
-.info { line-height: 1.8; overflow-wrap: anywhere; }
-.status {
-  display: inline-block;
-  padding: 6px 10px;
-  border-radius: 20px;
-  background: #292929;
-  font-size: 12px;
-}
-.empty {
-  padding: 25px 18px;
-  text-align: center;
-  color: var(--muted);
-  line-height: 1.7;
-}
-button {
-  border: 0;
-  border-radius: 8px;
-  padding: 12px 16px;
-  background: var(--gold);
-  color: #111;
-  font-weight: bold;
-  cursor: pointer;
-}
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 20px;
-}
-footer {
-  text-align: center;
-  padding: 25px;
-  color: var(--muted);
-  font-size: 12px;
-  border-top: 1px solid #292929;
-}
+:root{--gold:#d4af37;--bg:#090909;--card:#151515;--text:#f5f5f5;--muted:#aaa}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+header{text-align:center;padding:22px 16px;border-bottom:1px solid #332a12}
+.logo{color:var(--gold);font-size:23px;font-weight:900;letter-spacing:1px}
+nav{display:flex;justify-content:center;flex-wrap:wrap;gap:18px;padding:15px 10px;background:#111}
+a{color:var(--gold);text-decoration:none}
+nav a{font-size:14px}
+main{width:min(760px,100%);margin:auto;padding:25px 16px 80px}
+h1{font-size:27px;margin-bottom:8px}
+h2{font-size:18px;color:var(--gold)}
+.intro{color:var(--muted);line-height:1.6}
+.card{background:var(--card);border:1px solid #39301b;border-radius:14px;padding:18px;margin-top:18px}
+label{display:block;margin:14px 0 7px}
+input{width:100%;padding:13px;background:#090909;color:white;border:1px solid #444;border-radius:8px;font-size:16px}
+button{border:0;border-radius:8px;padding:13px 16px;background:var(--gold);color:#111;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.6}
+.submit{width:100%;margin-top:18px}
+.status{display:inline-block;padding:6px 10px;border-radius:20px;background:#292929;font-size:12px}
+.info{line-height:1.8;overflow-wrap:anywhere}
+.message{display:none;padding:14px;border-radius:9px;margin-top:15px;line-height:1.6}
+.message.show{display:block}
+.message.error{background:#301717;border:1px solid #8a3939}
+.message.ok{background:#13271b;border:1px solid #2f7547}
+.empty{text-align:center;color:var(--muted);line-height:1.7}
+footer{text-align:center;padding:25px;color:var(--muted);font-size:12px;border-top:1px solid #292929}
 </style>
 </head>
 <body>
-
 <header>
   <div class="logo">OKL LIFESTYLE</div>
   <p style="color:#aaa;margin-bottom:0">CLUB DA SORTE • SHOW DE PRÊMIOS</p>
 </header>
-
 <nav>
   <a href="index.html">Início</a>
   <a href="acoes.html">Ações</a>
   <a href="ultimas-acoes.html">Resultados</a>
   <a href="participar.html">Participar</a>
 </nav>
-
 <main>
   <h1>Minhas participações 🎟️</h1>
-  <p class="intro">
-    Consulte o resumo das suas participações registradas neste navegador.
-  </p>
+  <p class="intro">Consulte suas participações registradas no sistema.</p>
+
+  <section class="card">
+    <h2>Consultar pedidos</h2>
+    <p class="intro">Informe os dados usados ao fazer a reserva.</p>
+    <form id="consulta">
+      <label for="cpf">CPF</label>
+      <input id="cpf" inputmode="numeric" maxlength="14" autocomplete="off" required>
+      <label for="telefone">WhatsApp com DDD</label>
+      <input id="telefone" type="tel" inputmode="tel" maxlength="20" required>
+      <button class="submit" id="buscar" type="submit">CONSULTAR PARTICIPAÇÕES</button>
+    </form>
+    <div id="mensagem" class="message" role="status" aria-live="polite"></div>
+  </section>
 
   <div id="historico">
-    <div class="card empty">Carregando suas participações...</div>
+    <section class="card empty">
+      Seus pedidos serão exibidos aqui após uma consulta autorizada ao sistema.
+    </section>
   </div>
-
-  <div class="actions">
-    <button onclick="carregarHistorico()">Atualizar</button>
-    <a href="acoes.html" style="padding:12px 4px">Ver ações disponíveis →</a>
-  </div>
-
-  <p class="intro" style="font-size:12px;margin-top:25px">
-    Este histórico local pode não incluir pedidos feitos em outro aparelho
-    ou navegador. Consulte o comprovante do pedido para confirmar seus dados.
-    A situação exibida é a registrada no resumo salvo neste dispositivo.
-  </p>
+  <p class="intro" style="font-size:12px">Os pedidos exibidos dependem dos registros existentes no banco de dados. Este navegador, sozinho, não confirma reservas nem pagamentos.</p>
 </main>
+<footer>OKL Lifestyle • Club da Sorte</footer>
 
-<footer>
-  OKL Lifestyle • Club da Sorte
-</footer>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-function escapar(valor) {
-  return String(valor ?? "").replace(/[&<>"']/g, caractere => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[caractere]);
-}
+const SUPABASE_URL="https://vlirpvuramslfiftshio.supabase.co";
+const SUPABASE_KEY="sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-function dinheiro(valor) {
-  const numero = Number(valor);
-  if (!Number.isFinite(numero)) return "Não informado";
-  return numero.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL"
-  });
-}
+const el=id=>document.getElementById(id);
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function brl(v){return Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});}
+function dataBR(v){if(!v)return "Não informada";const d=new Date(v);return Number.isNaN(d.getTime())?"Não informada":d.toLocaleString("pt-BR");}
+function aviso(texto,tipo="error"){const m=el("mensagem");m.className="message show "+tipo;m.textContent=texto;}
 
-function dataFormatada(valor) {
-  if (!valor) return "Não informada";
-  const data = new Date(valor);
-  if (Number.isNaN(data.getTime())) return escapar(valor);
-  return data.toLocaleString("pt-BR");
-}
+el("cpf").addEventListener("input",e=>{
+ let v=e.target.value.replace(/\D/g,"").slice(0,11);
+ if(v.length>9)v=v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/,"$1.$2.$3-$4");
+ else if(v.length>6)v=v.replace(/(\d{3})(\d{3})(\d{1,3})/,"$1.$2.$3");
+ else if(v.length>3)v=v.replace(/(\d{3})(\d{1,3})/,"$1.$2");
+ e.target.value=v;
+});
+el("telefone").addEventListener("input",e=>{
+ let v=e.target.value.replace(/\D/g,"").slice(0,11);
+ if(v.length>10)v=v.replace(/(\d{2})(\d{5})(\d{1,4})/,"($1) $2-$3");
+ else if(v.length>6)v=v.replace(/(\d{2})(\d{4})(\d{1,4})/,"($1) $2-$3");
+ else if(v.length>2)v=v.replace(/(\d{2})(\d+)/,"($1) $2");
+ e.target.value=v;
+});
 
-function carregarHistorico() {
-  const area = document.getElementById("historico");
-  let pedidos = [];
+el("consulta").addEventListener("submit",async e=>{
+ e.preventDefault();
+ const cpf=el("cpf").value.replace(/\D/g,"");
+ const telefone=el("telefone").value.replace(/\D/g,"");
+ if(cpf.length!==11){aviso("Confira o CPF informado.");return;}
+ if(telefone.length<10||telefone.length>11){aviso("Confira o WhatsApp informado.");return;}
 
-  try {
-    const salvo = localStorage.getItem("club_da_sorte_pedidos");
-    if (salvo) {
-      const dados = JSON.parse(salvo);
-      pedidos = Array.isArray(dados) ? dados : [dados];
-    }
-  } catch (erro) {
-    area.innerHTML = `
-      <div class="card empty">
-        Não foi possível ler o histórico salvo neste navegador.
-      </div>`;
-    return;
-  }
+ /*
+  * A consulta direta por CPF/telefone não é feita aqui:
+  * é necessário configurar uma função segura no servidor que valide
+  * os dois dados e devolva apenas os pedidos correspondentes.
+  * Não expomos todos os pedidos pessoais ao navegador.
+  */
+ el("buscar").disabled=true;
+ el("buscar").textContent="CONSULTANDO...";
+ try{
+   const {data,error}=await db.rpc("consultar_meus_pedidos",{
+     p_cpf:cpf,
+     p_telefone:telefone
+   });
+   if(error){
+     console.error(error);
+     aviso("A consulta segura ainda não está configurada no banco. Seus dados não foram alterados. Precisamos configurar essa função para habilitar a consulta.");
+     return;
+   }
 
-  if (!pedidos.length) {
-    area.innerHTML = `
-      <div class="card empty">
-        <h2>Nenhuma participação encontrada</h2>
-        <p>
-          Se você já fez um pedido, ele pode ter sido registrado em outro
-          navegador ou o resumo local pode não estar disponível.
-        </p>
-        <a href="acoes.html">Ver ações disponíveis</a>
-      </div>`;
-    return;
-  }
+   const pedidos=Array.isArray(data)?data:[];
+   if(!pedidos.length){
+     el("historico").innerHTML='<section class="card empty"><h2>Nenhuma participação encontrada</h2><p>Não encontramos pedidos para os dados informados.</p></section>';
+     aviso("Consulta concluída. Nenhum pedido foi encontrado.","ok");
+     return;
+   }
 
-  area.innerHTML = pedidos.slice().reverse().map(p => {
-    const numeros = Array.isArray(p.numeros)
-      ? p.numeros.map(n =>
-          typeof n === "object" ? (n.numero ?? n.numero_bilhete ?? "") : n
-        ).filter(n => n !== "")
-      : [];
-
-    const pedidoId = p.pedido_id ?? p.id ?? "Não informado";
-    const quantidade = p.quantidade ?? numeros.length ?? "Não informada";
-    const valor = p.valor_total ?? p.valor ?? null;
-    const status = p.status ?? "Aguardando confirmação";
-    const nomeAcao = p.acao_nome ?? p.nome_acao ?? p.nome ?? "Ação";
-    const data = p.created_at ?? p.data ?? p.criado_em;
-
-    return `
-      <section class="card">
-        <h2>${escapar(nomeAcao)}</h2>
-        <div class="info">
-          <div><strong>Pedido:</strong> ${escapar(pedidoId)}</div>
-          <div><strong>Data:</strong> ${dataFormatada(data)}</div>
-          <div><strong>Quantidade:</strong> ${escapar(quantidade)}</div>
-          <div><strong>Valor:</strong> ${dinheiro(valor)}</div>
-          <div><strong>Situação:</strong>
-            <span class="status">${escapar(status)}</span>
-          </div>
-          <div><strong>Números registrados neste resumo:</strong><br>
-            ${numeros.length
-              ? numeros.map(escapar).join(", ")
-              : "Os números não estão disponíveis neste resumo local."}
-          </div>
-        </div>
-      </section>`;
-  }).join("");
-}
-
-carregarHistorico();
+   el("historico").innerHTML=pedidos.map(p=>{
+     const nums=Array.isArray(p.numeros)?p.numeros:[];
+     return `<section class="card">
+       <h2>${esc(p.acao_nome||"Ação")}</h2>
+       <div class="info">
+       <div><strong>Pedido:</strong> ${esc(p.pedido_id??p.id)}</div>
+       <div><strong>Data:</strong> ${esc(dataBR(p.created_at))}</div>
+       <div><strong>Quantidade:</strong> ${esc(p.quantidade)}</div>
+       <div><strong>Valor:</strong> ${esc(brl(p.valor_total))}</div>
+       <div><strong>Situação:</strong> <span class="status">${esc(p.status||"Não informada")}</span></div>
+       <div><strong>Números:</strong> ${nums.length?nums.map(n=>esc(typeof n==="object"?(n.numero??""):n)).join(", "):"Não informados"}</div>
+       </div></section>`;
+   }).join("");
+   aviso("Consulta concluída.","ok");
+ }catch(err){
+   console.error(err);
+   aviso("Não foi possível concluir a consulta. Tente novamente mais tarde.");
+ }finally{
+   el("buscar").disabled=false;
+   el("buscar").textContent="CONSULTAR PARTICIPAÇÕES";
+ }
+});
 </script>
-
 </body>
 </html>
