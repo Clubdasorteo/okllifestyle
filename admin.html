@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -183,7 +182,23 @@ tr:last-child td{border-bottom:0}
 
 <section id="page-pedidos" class="admin-page hidden">
   <div class="page-head"><div><h1>Pedidos e reservas</h1><p>Consulte os pedidos registrados no banco de dados.</p></div><button id="refreshOrders" class="btn" type="button">Atualizar pedidos</button></div>
-  <div class="panel"><div class="toolbar"><input id="orderSearch" placeholder="Buscar por nome, telefone ou ID"><select id="orderStatusFilter"><option value="">Todos os status</option><option value="reservado">Reservado</option><option value="pendente">Pendente</option><option value="pago">Pago</option><option value="confirmado">Confirmado</option><option value="gratis">Gratuito</option><option value="cancelado">Cancelado</option></select></div><div id="ordersTable"></div><div id="ordersFeedback" class="feedback"></div></div>
+  <div class="panel">
+    <div class="toolbar">
+      <input id="orderSearch" placeholder="Buscar por nome, telefone ou ID">
+      <select id="orderStatusFilter">
+        <option value="">Todos os status</option>
+        <option value="reservado">Reservado</option>
+        <option value="pendente">Pendente</option>
+        <option value="pago">Pago</option>
+        <option value="confirmado">Confirmado</option>
+        <option value="gratis">Gratuito</option>
+        <option value="cancelado">Cancelado</option>
+        <option value="expirado">Expirado</option>
+      </select>
+    </div>
+    <div id="ordersTable"></div>
+    <div id="ordersFeedback" class="feedback"></div>
+  </div>
 </section>
 
 <section id="page-gratis" class="admin-page hidden">
@@ -275,7 +290,14 @@ function statusClass(status){
 }
 function statusLabel(status){
   const s=String(status||"").toLowerCase();
-  const labels={ativa:"Ativa",pausada:"Pausada",encerrada:"Encerrada",disponivel:"Disponível",reservado:"Reservado",vendido:"Vendido",gratuito:"Gratuito",gratis:"Gratuito","grátis":"Gratuito",pago:"Pago",confirmado:"Confirmado",pendente:"Pendente",cancelado:"Cancelado",aguardando:"Aguardando",contemplado:"Contemplado"};
+  const labels={
+    ativa:"Ativa",pausada:"Pausada",encerrada:"Encerrada",
+    disponivel:"Disponível",reservado:"Reservado",vendido:"Vendido",
+    gratuito:"Gratuito",gratis:"Gratuito","grátis":"Gratuito",
+    pago:"Pago",confirmado:"Confirmado",pendente:"Pendente",
+    cancelado:"Cancelado",expirado:"Expirado",
+    aguardando:"Aguardando",contemplado:"Contemplado"
+  };
   return labels[s]||status||"Não informado";
 }
 async function usuarioAdmin(){
@@ -656,10 +678,10 @@ $("numberSearch").addEventListener("input",renderNumeros);
 $("numberStatusFilter").addEventListener("change",renderNumeros);
 $("refreshNumbers").addEventListener("click",()=>carregarNumeros());
 
-/* PEDIDOS */
+/* PEDIDOS E EXCLUSÃO SEGURA */
 async function carregarPedidos(){
   const {data,error}=await db.from("pedidos")
-    .select("id,nome_cliente,telefone,quantidade,valor_total,status")
+    .select("id,acao_id,nome_cliente,telefone,quantidade,valor_total,status")
     .order("id",{ascending:false}).limit(500);
   if(error){
     $("ordersTable").innerHTML='<div class="empty">Não foi possível carregar pedidos: '+escapeHtml(error.message)+"</div>";
@@ -676,11 +698,91 @@ function renderPedidos(){
     const text=[o.id,o.nome_cliente,o.telefone,o.status].join(" ").toLowerCase();
     return text.includes(query)&&(!filter||String(o.status||"").toLowerCase()===filter);
   });
+
   if(!filtered.length){
     $("ordersTable").innerHTML='<div class="empty">Nenhum pedido encontrado.</div>';
     return;
   }
-  $("ordersTable").innerHTML=`<div class="table-wrap"><table><thead><tr><th>Pedido</th><th>Cliente</th><th>WhatsApp</th><th>Quantidade</th><th>Total</th><th>Status</th></tr></thead><tbody>${filtered.map(o=>`<tr><td>${escapeHtml(o.id)}</td><td>${escapeHtml(o.nome_cliente||"—")}</td><td>${escapeHtml(o.telefone||"—")}</td><td>${escapeHtml(o.quantidade??"—")}</td><td>${money(o.valor_total)}</td><td>${escapeHtml(statusLabel(o.status))}</td></tr>`).join("")}</tbody></table></div>`;
+
+  $("ordersTable").innerHTML=`<div class="table-wrap"><table>
+    <thead><tr>
+      <th>Pedido</th><th>Cliente</th><th>WhatsApp</th>
+      <th>Quantidade</th><th>Total</th><th>Status</th><th>Ações</th>
+    </tr></thead>
+    <tbody>${filtered.map(o=>{
+      const status=String(o.status||"").toLowerCase();
+      const canDelete=["cancelado","expirado"].includes(status);
+      return `<tr>
+        <td>${escapeHtml(o.id)}</td>
+        <td>${escapeHtml(o.nome_cliente||"—")}</td>
+        <td>${escapeHtml(o.telefone||"—")}</td>
+        <td>${escapeHtml(o.quantidade??"—")}</td>
+        <td>${money(o.valor_total)}</td>
+        <td>${escapeHtml(statusLabel(o.status))}</td>
+        <td>${canDelete
+          ?`<button class="btn btn-small btn-danger" type="button" data-order-delete="${escapeHtml(o.id)}">🗑️ Excluir</button>`
+          :'<span class="muted small">Protegido</span>'}
+        </td>
+      </tr>`;
+    }).join("")}</tbody>
+  </table></div>`;
+
+  document.querySelectorAll("[data-order-delete]").forEach(button=>{
+    button.addEventListener("click",async()=>{
+      const order=state.orders.find(o=>String(o.id)===button.dataset.orderDelete);
+      if(!order)return;
+
+      const status=String(order.status||"").toLowerCase();
+      if(!["cancelado","expirado"].includes(status)){
+        feedback("ordersFeedback","Só é possível excluir pedidos cancelados ou expirados.","error");
+        return;
+      }
+
+      const confirmed=window.confirm(
+        `Excluir definitivamente o pedido #${order.id}?\n\n`+
+        `Cliente: ${order.nome_cliente||"Não informado"}\n`+
+        `Status: ${statusLabel(order.status)}\n\n`+
+        "O Supabase verificará se a exclusão é segura. Esta ação não pode ser desfeita."
+      );
+      if(!confirmed)return;
+
+      button.disabled=true;
+      feedback("ordersFeedback",`Verificando e excluindo o pedido #${order.id}…`);
+
+      try{
+        await usuarioAdmin();
+
+        const {data,error}=await db.rpc("excluir_pedido_teste",{
+          p_pedido_id:Number(order.id)
+        });
+
+        if(error)throw error;
+        if(data?.sucesso!==true){
+          throw new Error(data?.mensagem||"O Supabase não confirmou a exclusão.");
+        }
+
+        feedback(
+          "ordersFeedback",
+          data.mensagem||`Pedido #${order.id} excluído com sucesso.`,
+          "success"
+        );
+
+        await carregarPedidos();
+
+        if(String($("numbersAction").value)===String(order.acao_id)){
+          await carregarNumeros(true);
+        }
+      }catch(error){
+        feedback(
+          "ordersFeedback",
+          "Não foi possível excluir o pedido: "+(error.message||"erro desconhecido"),
+          "error"
+        );
+      }finally{
+        button.disabled=false;
+      }
+    });
+  });
 }
 $("refreshOrders").addEventListener("click",carregarPedidos);
 $("orderSearch").addEventListener("input",renderPedidos);
@@ -893,8 +995,6 @@ function renderBilhetesPremiados(){
     button.addEventListener("click",async()=>{
       const ticket=state.winningTickets.find(t=>String(t.id)===button.dataset.winningDelete);
       if(!ticket)return;
-
-      /* A exclusão é permitida somente para registros cancelados. */
       if(ticket.status!=="cancelado"){
         feedback("winningFeedback","Só é possível excluir bilhetes cancelados. Bilhetes contemplados ficam protegidos.","error");
         return;
@@ -924,7 +1024,7 @@ function renderBilhetesPremiados(){
           throw new Error("O registro não foi excluído. Ele pode ter mudado de status ou a política de acesso do Supabase pode não permitir a exclusão. Atualize a lista e tente novamente.");
         }
 
-        feedback("winningFeedback",`Bilhete ${label} excluído definitivamente.`, "success");
+        feedback("winningFeedback",`Bilhete ${label} excluído definitivamente.`,"success");
         await carregarBilhetesPremiados();
 
         if(String($("numbersAction").value)===String(ticket.acao_id)){
