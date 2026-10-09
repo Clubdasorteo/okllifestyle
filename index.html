@@ -434,6 +434,14 @@ footer{margin-top:44px;padding:30px 20px;text-align:center;background:#050505;bo
 @media(max-width:760px){.top-inner{min-height:66px;padding:10px 14px}.top-inner .logo-img{width:88px}.nav-links{gap:10px}.nav-links a{font-size:11px}.nav-links a:not(.nav-cta){display:none}.hero{padding:42px 20px 24px;min-height:0}.hero-mark{display:none}.hero h1{font-size:clamp(32px,9vw,44px)}.hero p{font-size:15px}.container{width:calc(100% - 28px)}#acaoContainer .card{grid-template-columns:1fr}#acaoContainer .prize{min-height:230px;max-height:360px}#acaoContainer .prize img{max-height:330px}.options{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.option{min-height:82px;padding:12px 8px}.option strong{font-size:15px}.option span{font-size:14px}.highlights{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:390px){.options{grid-template-columns:1fr}.option{min-height:70px}.promo-strip{font-size:10px}}
 
+
+.prize{display:flex;align-items:center;justify-content:center;padding:18px;overflow:hidden}
+.prize img{display:block;width:100%;max-width:560px;max-height:420px;object-fit:contain;border-radius:10px}
+.options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.option{width:100%;min-height:88px;border:1px solid #303030;border-radius:12px;padding:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#f4f1e8;cursor:pointer}
+.option strong{color:#f1d989;font-size:16px}.option span{font-weight:800}
+.option.selected{outline:2px solid #d4af37}
+@media(max-width:600px){.options{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 
@@ -610,81 +618,51 @@ let acaoAtual = null;
 ========================= */
 
 async function carregarAcao(){
+    const container = document.getElementById("acaoContainer");
+    const opcoes = document.getElementById("optionsContainer");
+    container.innerHTML = '<div class="loading">Carregando ação...</div>';
+    opcoes.innerHTML = '<div class="loading">Carregando pacotes...</div>';
 
-    const container =
-        document.getElementById("acaoContainer");
+    try {
+        // Busca os registros sem depender de uma lista fixa de colunas.
+        const { data, error } = await supabase
+            .from("AÇÕES")
+            .select("*")
+            .limit(100);
 
-    try{
+        if (error) throw error;
 
-        const { data, error } =
-            await supabase
-                .from("AÇÕES")
-                .select(`
-                    id,
-                    nome,
-                    descricao,
-                    foto_url,
-                    valor_numero,
-                    total_numeros,
-                    status,
-                    created_at
-                `)
-                .eq("status","ativa")
-                .order("created_at",{ascending:false})
-                .limit(1)
-                .maybeSingle();
-
-
-        if(error){
-
-            throw error;
-
-        }
-
-
-        if(!data){
-
-            container.innerHTML = `
-                <div class="error">
-                    Nenhuma ação disponível no momento.
-                </div>
-            `;
-
-            return;
-
-        }
-
-
-        acaoAtual = data;
-
-
-        renderizarAcao(data);
-
-
-        criarOpcoes(data.valor_numero);
-
-
-        atualizarResumoAcao(data.id);
-
-    }
-
-    catch(error){
-
-        console.error(
-            "Erro ao carregar ação:",
-            error
+        const ativas = (data || []).filter(a =>
+            String(a.status || "").trim().toLocaleLowerCase("pt-BR") === "ativa"
         );
+        ativas.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+        const acao = ativas[0];
 
-        container.innerHTML = `
-            <div class="error" style="background:#15110b;border:1px solid #5a4218;border-radius:12px;padding:22px;color:#f0d98d">
-                Não foi possível carregar a ação agora. Atualize a página em alguns instantes. Se continuar, precisamos conferir a conexão com o Supabase.
-            </div>
-        `;
+        if (!acao) {
+            container.innerHTML = '<div class="error">Não encontrei uma ação com status “ativa”. Confira o status da ROKR na tabela AÇÕES.</div>';
+            opcoes.innerHTML = '';
+            return;
+        }
 
+        // Normaliza os nomes esperados pelo layout, preservando os dados cadastrados.
+        acaoAtual = {
+            ...acao,
+            nome: acao.nome || acao.titulo || acao.nome_acao || "Ação em destaque",
+            descricao: acao.descricao || acao.descrição || "",
+            foto_url: acao.foto_url || acao.imagem_url || acao.foto || "",
+            valor_numero: acao.valor_numero ?? acao.valor_cota ?? acao.valor ?? 0,
+            total_numeros: acao.total_numeros ?? acao.quantidade_numeros ?? acao.total_cotas ?? 0
+        };
+
+        renderizarAcao(acaoAtual);
+        criarOpcoes(acaoAtual.valor_numero);
+        atualizarResumoAcao(acaoAtual.id).catch(err => console.warn("Resumo indisponível:", err));
+    } catch (error) {
+        console.error("Erro ao carregar ação da tabela AÇÕES:", error);
+        container.innerHTML = '<div class="error" style="background:#15110b;border:1px solid #5a4218;border-radius:12px;padding:22px;color:#f0d98d">Não consegui carregar a ação do Supabase. Confira a conexão e as permissões de leitura da tabela AÇÕES. Abra o Console do navegador (F12) para ver o erro técnico.</div>';
+        opcoes.innerHTML = '';
     }
-
 }
-
 
 /* =========================
    MOSTRAR AÇÃO
