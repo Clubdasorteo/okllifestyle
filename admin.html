@@ -205,7 +205,7 @@ tr:last-child td{border-bottom:0}
 <section id="page-premiados" class="admin-page hidden">
   <div class="page-head"><div><h1>🏆 Bilhetes premiados</h1><p>Cadastre e corrija os números especiais e seus prêmios.</p></div></div>
   <div class="panel">
-    <div class="notice">Selecione a ação, informe o número e descreva o prêmio. Só bilhetes em estado “Aguardando” podem ser editados ou cancelados. Bilhetes contemplados ficam protegidos.</div>
+    <div class="notice">Selecione a ação, informe o número e descreva o prêmio. Só bilhetes em estado “Aguardando” podem ser editados ou cancelados. Bilhetes contemplados ficam protegidos. Bilhetes cancelados podem ser excluídos definitivamente.</div>
     <form id="winningTicketForm">
       <input id="winningEditId" type="hidden">
       <label for="winningAction">Ação *</label><select id="winningAction" required></select>
@@ -239,7 +239,6 @@ const ADMIN_UID = "a7039801-3bac-48d5-91a0-befd48b3944e";
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const $ = id => document.getElementById(id);
 
-/* Dados do mapa e dados da lista são mantidos separados. */
 const state = {
   actions: [],
   numbers: [],
@@ -592,8 +591,6 @@ async function carregarNumeros(silent=false){
     ]);
     if(numbersResult.error)throw numbersResult.error;
     if(ticketsResult.error)throw ticketsResult.error;
-
-    /* Cada carregamento do mapa atualiza apenas os dados do mapa. */
     if(String($("numbersAction").value)!==String(actionId))return;
     state.numbers=numbersResult.data||[];
     state.mapWinningTickets=ticketsResult.data||[];
@@ -727,7 +724,7 @@ $("freeTicketsForm").addEventListener("submit",async e=>{
   }
 });
 
-/* BILHETES PREMIADOS: CADASTRO, EDIÇÃO E CANCELAMENTO */
+/* BILHETES PREMIADOS: CADASTRO, EDIÇÃO, CANCELAMENTO E EXCLUSÃO */
 function acaoPremiadaSelecionada(){
   return state.actions.find(a=>String(a.id)===$("winningAction").value);
 }
@@ -800,6 +797,7 @@ async function carregarBilhetesPremiados(){
     $("winningTicketsList").innerHTML='<div class="empty">Erro ao carregar bilhetes premiados. Veja a mensagem acima.</div>';
   }
 }
+
 function renderBilhetesPremiados(){
   const selectedId=$("winningAction").value;
   const action=state.actions.find(a=>String(a.id)===String(selectedId));
@@ -811,8 +809,10 @@ function renderBilhetesPremiados(){
     $("winningTicketsList").innerHTML='<div class="empty">Nenhum bilhete premiado cadastrado para esta seleção.</div>';
     return;
   }
+
   $("winningTicketsList").innerHTML=`<div class="table-wrap"><table><thead><tr><th>Número</th><th>Prêmio</th><th>Status</th><th>Pedido associado</th><th>Data do cadastro</th><th>Ações</th></tr></thead><tbody>${tickets.map(t=>{
     const canManage=t.status==="aguardando";
+    const canDelete=t.status==="cancelado";
     return `<tr>
       <td><strong style="color:var(--gold2)">${escapeHtml(numberLabel(t.numero,action?.total_numeros))}</strong></td>
       <td>${escapeHtml(t.premio)}</td>
@@ -820,7 +820,9 @@ function renderBilhetesPremiados(){
       <td>${escapeHtml(t.pedido_id??"—")}</td>
       <td>${escapeHtml(t.created_at?new Date(t.created_at).toLocaleString("pt-BR"):"—")}</td>
       <td><div class="ticket-actions">
-        ${canManage?`<button class="btn btn-small" type="button" data-winning-edit="${escapeHtml(t.id)}">✏️ Editar</button><button class="btn btn-small btn-danger" type="button" data-winning-cancel="${escapeHtml(t.id)}">Cancelar</button>`:'<span class="muted small">Protegido</span>'}
+        ${canManage?`<button class="btn btn-small" type="button" data-winning-edit="${escapeHtml(t.id)}">✏️ Editar</button><button class="btn btn-small btn-danger" type="button" data-winning-cancel="${escapeHtml(t.id)}">Cancelar</button>`:""}
+        ${canDelete?`<button class="btn btn-small btn-danger" type="button" data-winning-delete="${escapeHtml(t.id)}">🗑️ Excluir</button>`:""}
+        ${!canManage&&!canDelete?'<span class="muted small">Protegido</span>':""}
       </div></td>
     </tr>`;
   }).join("")}</tbody></table></div>`;
@@ -881,6 +883,55 @@ function renderBilhetesPremiados(){
         }
       }catch(error){
         feedback("winningFeedback",error.message||"Não foi possível cancelar o bilhete.","error");
+      }finally{
+        button.disabled=false;
+      }
+    });
+  });
+
+  document.querySelectorAll("[data-winning-delete]").forEach(button=>{
+    button.addEventListener("click",async()=>{
+      const ticket=state.winningTickets.find(t=>String(t.id)===button.dataset.winningDelete);
+      if(!ticket)return;
+
+      /* A exclusão é permitida somente para registros cancelados. */
+      if(ticket.status!=="cancelado"){
+        feedback("winningFeedback","Só é possível excluir bilhetes cancelados. Bilhetes contemplados ficam protegidos.","error");
+        return;
+      }
+
+      const ticketAction=state.actions.find(a=>String(a.id)===String(ticket.acao_id));
+      const label=numberLabel(ticket.numero,ticketAction?.total_numeros);
+      const confirmed=window.confirm(
+        `EXCLUIR DEFINITIVAMENTE o bilhete ${label} — ${ticket.premio}?\n\n`+
+        "Esta ação não pode ser desfeita. O registro cancelado será removido do banco de dados."
+      );
+      if(!confirmed)return;
+
+      button.disabled=true;
+      try{
+        await usuarioAdmin();
+        const {data,error}=await db.from("bilhetes_premiados")
+          .delete()
+          .eq("id",ticket.id)
+          .eq("acao_id",ticket.acao_id)
+          .eq("status","cancelado")
+          .select("id")
+          .maybeSingle();
+
+        if(error)throw error;
+        if(!data){
+          throw new Error("O registro não foi excluído. Ele pode ter mudado de status ou a política de acesso do Supabase pode não permitir a exclusão. Atualize a lista e tente novamente.");
+        }
+
+        feedback("winningFeedback",`Bilhete ${label} excluído definitivamente.`, "success");
+        await carregarBilhetesPremiados();
+
+        if(String($("numbersAction").value)===String(ticket.acao_id)){
+          await carregarNumeros(true);
+        }
+      }catch(error){
+        feedback("winningFeedback","Não foi possível excluir o bilhete: "+(error.message||"erro desconhecido"),"error");
       }finally{
         button.disabled=false;
       }
