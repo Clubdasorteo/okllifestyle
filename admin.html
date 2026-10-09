@@ -34,7 +34,7 @@ input[type=file]{padding:9px}
 .topbar{height:68px;position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 22px;background:#101010;border-bottom:1px solid var(--border)}
 .topbar-right{display:flex;align-items:center;gap:10px}
 .layout{display:grid;grid-template-columns:235px minmax(0,1fr);min-height:calc(100vh - 68px)}
-.sidebar{padding:20px 13px;background:#101010;border-right:1px solid var(--border)}
+.sidebar{padding:20px 13px;background:#101010;border-right:1px solid var(--border);position:sticky;top:68px;height:calc(100vh - 68px);overflow-y:auto;align-self:start}
 .nav-label{padding:10px 12px;color:var(--muted);text-transform:uppercase;font-size:10px;letter-spacing:1.5px}
 .nav-btn{width:100%;display:flex;align-items:center;gap:10px;padding:13px 12px;margin-bottom:5px;border:1px solid transparent;border-radius:9px;background:transparent;color:#d9d4ca;text-align:left}
 .nav-btn:hover,.nav-btn.active{background:#211c12;color:var(--gold2);border-color:#443720}
@@ -86,7 +86,7 @@ tr:last-child td{border-bottom:0}
 .ticket-actions .btn{white-space:nowrap}
 @media(max-width:1050px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.number-grid{grid-template-columns:repeat(6,minmax(0,1fr))}}
 @media(max-width:760px){
-.topbar{padding:0 13px}.layout{display:block}.sidebar{display:none;position:sticky;top:68px;z-index:9;border-right:0;border-bottom:1px solid var(--border);padding:10px}
+.topbar{padding:0 13px}.layout{display:block}.sidebar{display:none;position:sticky;top:68px;z-index:9;border-right:0;border-bottom:1px solid var(--border);padding:10px;height:calc(100vh - 68px);overflow-y:auto}
 .sidebar.open{display:block}.mobile-menu{display:inline-block}main{padding:17px 12px 35px}
 .grid,.grid-2,.action-list{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}
 .full{grid-column:auto}.page-head{flex-direction:column}.number-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
@@ -128,8 +128,8 @@ tr:last-child td{border-bottom:0}
   <button class="nav-btn" data-page="pedidos">▤ Pedidos e reservas</button>
   <button class="nav-btn" data-page="gratis">🎁 Bilhetes grátis</button>
   <button class="nav-btn" data-page="premiados">🏆 Bilhetes premiados</button>
-  <button class="nav-btn" data-page="indicadores">📊 Indicadores por ação</button>
   <button class="nav-btn" data-page="rodadas">🎯 Promoções por rodada</button>
+  <button class="nav-btn" data-page="indicadores">📊 Indicadores por ação</button>
 </aside>
 <main><div class="page">
 
