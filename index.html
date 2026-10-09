@@ -43,6 +43,9 @@ nav a:hover{background:#202020;color:#f5c542}
 .campo label{display:block;margin-bottom:7px;font-size:14px;color:#ddd}
 .campo input{width:100%;padding:14px;border-radius:10px;border:1px solid #363636;background:#111;color:#fff;outline:none;font-size:16px}
 .campo input:focus{border-color:#f5c542}
+.campo input:invalid:focus{border-color:#ff6868}
+.aviso-quantidade{display:none;color:#ff8585;font-size:13px;margin-top:7px;line-height:1.4}
+.aviso-quantidade.visivel{display:block}
 .total-box{margin-top:20px;padding:18px;background:#151515;border-radius:12px;border:1px solid #333;display:flex;justify-content:space-between;align-items:center;gap:10px}
 .total-box span{color:#aaa}
 .total-box strong{font-size:26px;color:#f5c542}
@@ -118,8 +121,10 @@ Os números serão atribuídos automaticamente após a reserva.
 
 <div class="campo">
 <label for="quantidade">Ou digite a quantidade desejada</label>
-<input type="number" id="quantidade" min="10" step="1" placeholder="Ex.: 17, 25, 37, 83..." oninput="calcularTotal()">
+<input type="number" id="quantidade" min="10" step="1" placeholder="Ex.: 17, 25, 37, 83..." oninput="calcularTotal()" aria-describedby="avisoQuantidade">
+<p id="avisoQuantidade" class="aviso-quantidade" role="alert">A quantidade mínima é de 10 bilhetes. Digite um número inteiro.</p>
 </div>
+
 <div class="campo">
 <label for="nome">Nome</label>
 <input type="text" id="nome" placeholder="Digite seu nome" autocomplete="name">
@@ -249,9 +254,25 @@ function selecionarQuantidade(quantidade){
 }
 
 function calcularTotal(){
-    const quantidade=Number(document.getElementById("quantidade").value);
+    const campo=document.getElementById("quantidade");
+    const valorTexto=campo.value.trim();
+    const quantidade=Number(valorTexto);
     const valorPorNumero=Number(acaoAtual?.valor_numero||0);
-    document.getElementById("valorTotal").textContent=formatarMoeda(quantidade*valorPorNumero);
+    const total=document.getElementById("valorTotal");
+    const aviso=document.getElementById("avisoQuantidade");
+    const quantidadeValida=valorTexto!==""&&Number.isInteger(quantidade)&&quantidade>=10;
+
+    total.textContent=formatarMoeda(
+        quantidadeValida?quantidade*valorPorNumero:0
+    );
+
+    aviso.classList.toggle("visivel",valorTexto!==""&&!quantidadeValida);
+
+    campo.setCustomValidity(
+        valorTexto!==""&&!quantidadeValida
+            ?"A quantidade mínima é de 10 bilhetes. Digite um número inteiro."
+            :""
+    );
 }
 
 document.getElementById("cpf").addEventListener("input",function(){
@@ -272,15 +293,20 @@ async function continuarCompra(){
         return;
     }
 
-    const quantidade=Number(document.getElementById("quantidade").value);
+    const campoQuantidade=document.getElementById("quantidade");
+    const textoQuantidade=campoQuantidade.value.trim();
+    const quantidade=Number(textoQuantidade);
     const nome=document.getElementById("nome").value.trim();
     const cpf=document.getElementById("cpf").value.trim();
     const whatsapp=document.getElementById("whatsapp").value.trim();
 
-    if(!Number.isInteger(quantidade)||quantidade<10){
+    if(textoQuantidade===""||!Number.isInteger(quantidade)||quantidade<10){
+        calcularTotal();
+        campoQuantidade.focus();
         alert("A quantidade mínima é de 10 bilhetes. Digite um número inteiro.");
         return;
     }
+
     if(quantidade>Number(acaoAtual.total_numeros||0)){
         alert("A quantidade informada é maior que o total da ação.");
         return;
