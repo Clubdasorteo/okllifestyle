@@ -1,0 +1,369 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Participar | OKL Lifestyle</title>
+<meta name="theme-color" content="#080808">
+<style>
+:root{--gold:#d5ad55;--bg:#080808;--card:#151515;--muted:#aaa;--line:#333}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#fff;font-family:Arial,sans-serif}
+header{padding:15px 5%;display:flex;align-items:center;justify-content:space-between;gap:15px;border-bottom:1px solid #292929}
+.logo{width:100px;max-height:65px;object-fit:contain}
+nav{display:flex;gap:15px;flex-wrap:wrap}
+a{color:var(--gold);text-decoration:none}
+nav a{font-size:13px}
+main{width:min(760px,92%);margin:25px auto 100px}
+h1,h2{color:var(--gold)}
+h1{font-size:27px;margin-bottom:8px}
+.sub{color:var(--muted);line-height:1.5}
+.card{background:var(--card);border:1px solid #333;border-radius:15px;padding:18px;margin-top:18px}
+#fotoAcao{width:100%;max-height:350px;object-fit:contain;border-radius:10px;background:#0a0a0a}
+.preco{color:var(--gold);font-weight:bold;font-size:22px}
+label{display:block;margin:15px 0 7px;font-size:14px}
+input{width:100%;padding:13px;border-radius:9px;border:1px solid #444;background:#0b0b0b;color:#fff;font-size:16px}
+.pacotes{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}
+.pacote{padding:15px 5px;border-radius:9px;border:1px solid #555;background:#202020;color:#fff;font-weight:bold;cursor:pointer}
+.pacote.ativo{background:#4a3916;border-color:var(--gold);color:#ffe08a}
+button.principal{width:100%;padding:15px;border:0;border-radius:9px;background:var(--gold);color:#111;font-weight:bold;font-size:16px;cursor:pointer;margin-top:18px}
+button:disabled{opacity:.55;cursor:wait}
+.resumo{border-top:1px solid #333;margin-top:18px;padding-top:15px;line-height:1.9}
+.aviso{font-size:13px;color:#bbb;line-height:1.6}
+#mensagem{display:none;margin-top:18px;padding:15px;border-radius:10px;overflow-wrap:anywhere;line-height:1.6}
+.sucesso{display:block!important;background:#13271b;border:1px solid #2f7547}
+.erro{display:block!important;background:#301717;border:1px solid #8a3939}
+.numeros{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.numero{padding:7px 10px;background:#252525;border:1px solid #444;border-radius:6px;color:var(--gold)}
+footer{text-align:center;color:#888;padding:20px;font-size:12px}
+@media(max-width:500px){header{align-items:flex-start;flex-direction:column}.pacotes{grid-template-columns:repeat(2,1fr)}h1{font-size:23px}}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="https://clubdasorteo.github.io/okllifestyle/acoes.html">
+    <img class="logo" src="Design%20sem%20nome%20(1).jpg" alt="OKL Lifestyle">
+  </a>
+  <nav>
+    <a href="index.html">Início</a>
+    <a href="acoes.html">Ações</a>
+    <a href="minhas-participacoes.html">Minha área</a>
+    <a href="ultimas-acoes.html">Resultados</a>
+  </nav>
+</header>
+
+<main>
+  <h1>🎟️ Participar da ação</h1>
+  <p class="sub">Escolha a quantidade de bilhetes, informe seus dados e faça sua reserva.</p>
+
+  <section class="card" id="acaoCard">
+    <p id="carregando">Carregando ação...</p>
+    <div id="detalhesAcao" hidden>
+      <img id="fotoAcao" alt="Prêmio da ação" hidden>
+      <h2 id="nomeAcao"></h2>
+      <p id="descricaoAcao" class="sub"></p>
+      <p class="preco" id="precoAcao"></p>
+      <p class="aviso" id="disponibilidade"></p>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Escolha seus bilhetes</h2>
+    <p class="sub">Os números são atribuídos automaticamente pelo sistema após a reserva.</p>
+
+    <div class="pacotes">
+      <button type="button" class="pacote" data-qtd="10">10 bilhetes</button>
+      <button type="button" class="pacote" data-qtd="20">20 bilhetes</button>
+      <button type="button" class="pacote" data-qtd="50">50 bilhetes</button>
+      <button type="button" class="pacote" data-qtd="100">100 bilhetes</button>
+      <button type="button" class="pacote" data-qtd="200">200 bilhetes</button>
+      <button type="button" class="pacote" data-qtd="500">500 bilhetes</button>
+    </div>
+
+    <label for="quantidade">Ou informe outra quantidade (mínimo 10)</label>
+    <input id="quantidade" type="number" min="10" step="1" value="10" inputmode="numeric">
+
+    <div class="resumo">
+      <div>Quantidade: <strong id="resumoQtd">10</strong> bilhetes</div>
+      <div>Valor por bilhete: <strong id="resumoPreco">—</strong></div>
+      <div>Total: <strong class="preco" id="resumoTotal">—</strong></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Seus dados</h2>
+    <form id="formReserva">
+      <label for="nome">Nome completo</label>
+      <input id="nome" name="nome" autocomplete="name" maxlength="120" required>
+
+      <label for="cpf">CPF</label>
+      <input id="cpf" name="cpf" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="000.000.000-00" required>
+
+      <label for="telefone">WhatsApp com DDD</label>
+      <input id="telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="(00) 00000-0000" required>
+
+      <p class="aviso">Ao continuar, será criada uma reserva pendente. A reserva não confirma o pagamento. Confira as instruções de pagamento apresentadas pelo responsável pela ação.</p>
+
+      <button id="btnReservar" class="principal" type="submit">CONTINUAR E RESERVAR</button>
+    </form>
+    <div id="mensagem" role="status" aria-live="polite"></div>
+  </section>
+</main>
+
+<footer>OKL Lifestyle • Club da Sorte</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://vlirpvuramslfiftshio.supabase.co";
+const SUPABASE_KEY = "sb_publishable_xsvg1O6hHgmpbv1D_10PRw_xOysBwuj";
+const clienteSupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let acaoAtual = null;
+
+const el = id => document.getElementById(id);
+
+function moeda(valor) {
+  return Number(valor || 0).toLocaleString("pt-BR", {
+    style: "currency", currency: "BRL"
+  });
+}
+
+function escapar(valor) {
+  return String(valor ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  }[c]));
+}
+
+function mostrarMensagem(texto, tipo) {
+  const caixa = el("mensagem");
+  caixa.className = tipo;
+  caixa.textContent = texto;
+}
+
+function validarCPF(valor) {
+  const cpf = valor.replace(/\D/g, "");
+  if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+
+  let soma = 0;
+  for (let i = 0; i < 9; i++) soma += Number(cpf[i]) * (10 - i);
+  let digito = (soma * 10) % 11;
+  if (digito === 10) digito = 0;
+  if (digito !== Number(cpf[9])) return false;
+
+  soma = 0;
+  for (let i = 0; i < 10; i++) soma += Number(cpf[i]) * (11 - i);
+  digito = (soma * 10) % 11;
+  if (digito === 10) digito = 0;
+  return digito === Number(cpf[10]);
+}
+
+function atualizarResumo() {
+  const quantidade = Number(el("quantidade").value);
+  const valida = Number.isInteger(quantidade) && quantidade >= 10;
+  const valor = Number(acaoAtual?.valor_numero || 0);
+
+  el("resumoQtd").textContent = valida ? quantidade : "—";
+  el("resumoPreco").textContent = moeda(valor);
+  el("resumoTotal").textContent = valida ? moeda(quantidade * valor) : "—";
+
+  document.querySelectorAll(".pacote").forEach(botao => {
+    botao.classList.toggle(
+      "ativo",
+      valida && Number(botao.dataset.qtd) === quantidade
+    );
+  });
+}
+
+document.querySelectorAll(".pacote").forEach(botao => {
+  botao.addEventListener("click", () => {
+    el("quantidade").value = botao.dataset.qtd;
+    atualizarResumo();
+  });
+});
+
+el("quantidade").addEventListener("input", atualizarResumo);
+
+el("cpf").addEventListener("input", evento => {
+  let v = evento.target.value.replace(/\D/g, "").slice(0, 11);
+  if (v.length > 9) v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, "$1.$2.$3-$4");
+  else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{1,3})/, "$1.$2.$3");
+  else if (v.length > 3) v = v.replace(/(\d{3})(\d{1,3})/, "$1.$2");
+  evento.target.value = v;
+});
+
+el("telefone").addEventListener("input", evento => {
+  let v = evento.target.value.replace(/\D/g, "").slice(0, 11);
+  if (v.length > 10) v = v.replace(/(\d{2})(\d{5})(\d{1,4})/, "($1) $2-$3");
+  else if (v.length > 6) v = v.replace(/(\d{2})(\d{4})(\d{1,4})/, "($1) $2-$3");
+  else if (v.length > 2) v = v.replace(/(\d{2})(\d+)/, "($1) $2");
+  evento.target.value = v;
+});
+
+async function carregarAcao() {
+  const carregando = el("carregando");
+  const detalhes = el("detalhesAcao");
+  const idUrl = new URLSearchParams(window.location.search).get("acao");
+
+  let consulta = clienteSupabase
+    .from("AÇÕES")
+    .select("id,nome,descricao,foto_url,valor_numero,total_numeros,status,created_at")
+    .eq("status", "ativa");
+
+  if (idUrl) consulta = consulta.eq("id", idUrl);
+  else consulta = consulta.order("created_at", { ascending: false }).limit(1);
+
+  const { data, error } = await consulta;
+
+  if (error) {
+    carregando.textContent = "Não foi possível carregar a ação. Tente novamente mais tarde.";
+    console.error(error);
+    return;
+  }
+
+  const acao = Array.isArray(data) ? data[0] : null;
+  if (!acao) {
+    carregando.textContent = "Nenhuma ação ativa foi encontrada.";
+    return;
+  }
+
+  acaoAtual = acao;
+  carregando.hidden = true;
+  detalhes.hidden = false;
+
+  el("nomeAcao").textContent = acao.nome || "Ação";
+  el("descricaoAcao").textContent = acao.descricao || "";
+  el("precoAcao").textContent = moeda(acao.valor_numero) + " por bilhete";
+  el("disponibilidade").textContent =
+    "Total cadastrado na ação: " + Number(acao.total_numeros || 0).toLocaleString("pt-BR") + " bilhetes.";
+
+  if (acao.foto_url) {
+    const foto = el("fotoAcao");
+    foto.src = acao.foto_url;
+    foto.hidden = false;
+    foto.onerror = () => { foto.hidden = true; };
+  }
+
+  atualizarResumo();
+}
+
+el("formReserva").addEventListener("submit", async evento => {
+  evento.preventDefault();
+
+  if (!acaoAtual) {
+    mostrarMensagem("A ação ainda não foi carregada. Atualize a página e tente novamente.", "erro");
+    return;
+  }
+
+  const quantidade = Number(el("quantidade").value);
+  const nome = el("nome").value.trim();
+  const cpf = el("cpf").value.replace(/\D/g, "");
+  const telefone = el("telefone").value.replace(/\D/g, "");
+  const totalNumeros = Number(acaoAtual.total_numeros || 0);
+
+  if (!Number.isInteger(quantidade) || quantidade < 10) {
+    mostrarMensagem("Escolha pelo menos 10 bilhetes.", "erro");
+    return;
+  }
+
+  if (quantidade > totalNumeros) {
+    mostrarMensagem("A quantidade escolhida é maior que o total de bilhetes desta ação.", "erro");
+    return;
+  }
+
+  if (!nome) {
+    mostrarMensagem("Informe seu nome completo.", "erro");
+    return;
+  }
+
+  if (!validarCPF(cpf)) {
+    mostrarMensagem("Confira o CPF informado.", "erro");
+    return;
+  }
+
+  if (telefone.length < 10 || telefone.length > 11) {
+    mostrarMensagem("Informe um WhatsApp válido com DDD.", "erro");
+    return;
+  }
+
+  const botao = el("btnReservar");
+  botao.disabled = true;
+  botao.textContent = "CRIANDO RESERVA...";
+  el("mensagem").className = "";
+  el("mensagem").textContent = "";
+
+  try {
+    const { data, error } = await clienteSupabase.rpc(
+      "criar_pedido_e_reservar",
+      {
+        p_acao_id: acaoAtual.id,
+        p_quantidade: quantidade,
+        p_cpf: cpf,
+        p_telefone: telefone,
+        p_nome_cliente: nome
+      }
+    );
+
+    if (error) throw error;
+
+    // A função SQL retorna JSONB com os dados da reserva.
+    const pedido = typeof data === "string" ? JSON.parse(data) : data;
+
+    if (!pedido || !pedido.pedido_id) {
+      throw new Error("A reserva não retornou um número de pedido válido.");
+    }
+
+    const historico = JSON.parse(localStorage.getItem("club_da_sorte_pedidos") || "[]");
+    historico.unshift({
+      pedido_id: pedido.pedido_id,
+      acao_id: pedido.acao_id || acaoAtual.id,
+      acao_nome: acaoAtual.nome || "Ação",
+      quantidade: pedido.quantidade || quantidade,
+      valor_total: Number(pedido.valor_total ?? quantidade * acaoAtual.valor_numero),
+      status: pedido.status || "pendente",
+      numeros: Array.isArray(pedido.numeros) ? pedido.numeros : [],
+      reservado_ate: pedido.reservado_ate || null,
+      criado_em: new Date().toISOString()
+    });
+    localStorage.setItem("club_da_sorte_pedidos", JSON.stringify(historico.slice(0, 50)));
+
+    const numeros = Array.isArray(pedido.numeros) ? pedido.numeros : [];
+    const caixa = el("mensagem");
+    caixa.className = "sucesso";
+    caixa.innerHTML =
+      "<strong>Reserva criada com sucesso!</strong><br>" +
+      "Pedido: #" + escapar(pedido.pedido_id) + "<br>" +
+      "Ação: " + escapar(acaoAtual.nome || "Ação") + "<br>" +
+      "Quantidade: " + escapar(pedido.quantidade || quantidade) + " bilhetes<br>" +
+      "Total: " + escapar(moeda(pedido.valor_total ?? quantidade * acaoAtual.valor_numero)) + "<br>" +
+      "Status: PENDENTE<br>" +
+      "<p class='aviso'>A reserva tem prazo informado pelo sistema. Isso não significa que o pagamento foi confirmado. Siga as instruções de pagamento do responsável pela ação.</p>";
+
+    if (numeros.length) {
+      caixa.innerHTML += "<strong>Números reservados automaticamente:</strong><div class='numeros'>" +
+        numeros.map(n => "<span class='numero'>" + escapar(String(n).padStart(2, "0")) + "</span>").join("") +
+        "</div>";
+    }
+
+    caixa.innerHTML += "<p><a href='minhas-participacoes.html'>Ir para Minha área</a></p>";
+    caixa.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  } catch (erro) {
+    console.error(erro);
+    const texto = String(erro?.message || "");
+    if (/reserv|dispon|número|numero|bilhete/i.test(texto)) {
+      mostrarMensagem(texto, "erro");
+    } else {
+      mostrarMensagem("Não foi possível criar a reserva. " + (texto || "Tente novamente."), "erro");
+    }
+  } finally {
+    botao.disabled = false;
+    botao.textContent = "CONTINUAR E RESERVAR";
+  }
+});
+
+carregarAcao();
+</script>
+</body>
+</html>
