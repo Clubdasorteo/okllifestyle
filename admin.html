@@ -259,7 +259,11 @@ tr:last-child td{border-bottom:0}
       <div><label for="smallTicketDeadline">Prazo da menor cota</label><input id="smallTicketDeadline" type="datetime-local"></div>
       <div><label for="largeTicketDeadline">Prazo da maior cota</label><input id="largeTicketDeadline" type="datetime-local"></div>
     </div>
-    <div class="toolbar" style="margin-top:14px"><button id="saveCotaDeadlines" class="btn btn-gold" type="button">Salvar prazos</button></div>
+    <div class="toolbar" style="margin-top:14px;gap:8px;flex-wrap:wrap">
+      <button id="saveCotaDeadlines" class="btn btn-gold" type="button">Salvar / editar prazos</button>
+      <button id="clearCotaDeadlines" class="btn" type="button">Excluir prazos configurados</button>
+    </div>
+    <div class="notice small" style="margin-top:12px">Você pode alterar ou apagar os prazos enquanto a cota ainda não foi apurada. Quando uma cota já estiver congelada, o resultado fica preservado no histórico e não é apagado por este botão.</div>
     <div id="cotaDeadlineFeedback" class="feedback"></div>
   </div>
   <div class="panel section"><div class="section-head"><h2>Participações recentes confirmadas</h2></div><div id="publicParticipationsResult" class="table-wrap"><p class="muted">Selecione uma ação.</p></div></div>
@@ -1211,12 +1215,35 @@ $("saveCotaDeadlines")?.addEventListener("click",async()=>{
   try{
     const menor=localInputToISO($("smallTicketDeadline").value);
     const maior=localInputToISO($("largeTicketDeadline").value);
+    if(menor && new Date(menor).getTime()<=Date.now()) throw new Error("O prazo da menor cota precisa estar no futuro.");
+    if(maior && new Date(maior).getTime()<=Date.now()) throw new Error("O prazo da maior cota precisa estar no futuro.");
+    const {data:existing,error:readError}=await db.from("configuracoes_cotas").select("menor_cota_encerrada_em,maior_cota_encerrada_em").eq("acao_id",actionId).maybeSingle();
+    if(readError)throw readError;
+    if(menor && existing?.menor_cota_encerrada_em) throw new Error("A menor cota já foi congelada. O histórico foi preservado; não é possível reabrir por esta tela.");
+    if(maior && existing?.maior_cota_encerrada_em) throw new Error("A maior cota já foi congelada. O histórico foi preservado; não é possível reabrir por esta tela.");
     const payload={acao_id:actionId,menor_cota_limite_em:menor,maior_cota_limite_em:maior,updated_at:new Date().toISOString()};
     const {error}=await db.from("configuracoes_cotas").upsert(payload,{onConflict:"acao_id"});
     if(error)throw error;
-    feedback("cotaDeadlineFeedback","Prazos salvos. A apuração automática no instante do prazo precisa da rotina correspondente no banco.","success");
+    feedback("cotaDeadlineFeedback","Prazos salvos/atualizados. Atenção: o disparo e congelamento automático exigem a rotina agendada no Supabase.","success");
     await carregarIndicadores();
   }catch(error){feedback("cotaDeadlineFeedback",error.message||"Não foi possível salvar os prazos.","error");}
+  finally{button.disabled=false;}
+});
+$("clearCotaDeadlines")?.addEventListener("click",async()=>{
+  const actionId=$("indicatorAction")?.value;
+  if(!actionId){feedback("cotaDeadlineFeedback","Selecione uma ação.","error");return;}
+  if(!confirm("Excluir os prazos configurados para esta ação? Os resultados já congelados serão preservados."))return;
+  const button=$("clearCotaDeadlines");button.disabled=true;
+  try{
+    const {data:cfg,error:readError}=await db.from("configuracoes_cotas").select("menor_cota_encerrada_em,maior_cota_encerrada_em").eq("acao_id",actionId).maybeSingle();
+    if(readError)throw readError;
+    if(cfg?.menor_cota_encerrada_em || cfg?.maior_cota_encerrada_em) throw new Error("Há resultado congelado no histórico. Por segurança, os prazos não podem ser apagados por esta tela depois da apuração.");
+    const {error}=await db.from("configuracoes_cotas").update({menor_cota_limite_em:null,maior_cota_limite_em:null,updated_at:new Date().toISOString()}).eq("acao_id",actionId);
+    if(error)throw error;
+    $("smallTicketDeadline").value="";$("largeTicketDeadline").value="";
+    feedback("cotaDeadlineFeedback","Prazos excluídos. Nenhum resultado histórico foi apagado.","success");
+    await carregarIndicadores();
+  }catch(error){feedback("cotaDeadlineFeedback",error.message||"Não foi possível excluir os prazos.","error");}
   finally{button.disabled=false;}
 });
 
