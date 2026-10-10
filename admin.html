@@ -174,6 +174,7 @@ td{line-height:1.5}
   <button class="nav-btn" data-page="indicadores">📊 Indicadores por ação</button>
   <button class="nav-btn" data-page="rodadas">🎯 Promoções por rodada</button>
   <button class="nav-btn" data-page="sorteios">🎟️ Sorteios Loteria Federal</button>
+  <button class="nav-btn" data-page="pix">💠 Configuração de Pagamento / PIX</button>
 </aside>
 <main><div class="page">
 
@@ -341,6 +342,27 @@ td{line-height:1.5}
 
 </section>
 
+<section id="page-pix" class="admin-page hidden">
+  <div class="page-head"><div><h1>💠 Configuração de Pagamento / PIX</h1><p>Cadastre os dados de recebimento usados para configurar o pagamento das ações.</p></div></div>
+  <div class="panel">
+    <div class="notice">Esta tela salva os dados de configuração no Supabase com acesso restrito ao administrador. O cadastro, sozinho, não gera cobrança PIX dinâmica nem confirma pagamentos automaticamente; isso exige integração de cobrança com o banco ou provedor de pagamentos.</div>
+    <form id="pixConfigForm">
+      <div class="form-grid">
+        <div><label for="pixBank">Banco / instituição</label><input id="pixBank" maxlength="120" placeholder="Ex.: Santander"></div>
+        <div><label for="pixHolder">Titular da conta</label><input id="pixHolder" maxlength="160" placeholder="Nome do titular"></div>
+        <div><label for="pixAccountType">Tipo de conta (opcional)</label><select id="pixAccountType"><option value="">Selecione</option><option value="corrente">Corrente</option><option value="poupanca">Poupança</option><option value="pagamento">Conta de pagamento</option></select></div>
+        <div><label for="pixKeyType">Tipo de chave PIX</label><select id="pixKeyType" required><option value="">Selecione</option><option value="cpf">CPF</option><option value="cnpj">CNPJ</option><option value="email">E-mail</option><option value="telefone">Telefone</option><option value="aleatoria">Chave aleatória</option></select></div>
+        <div class="full"><label for="pixKey">Chave PIX</label><input id="pixKey" maxlength="200" required autocomplete="off" placeholder="Digite a chave PIX que receberá os pagamentos"></div>
+        <div><label for="pixReceiverName">Nome do recebedor no PIX</label><input id="pixReceiverName" maxlength="80" placeholder="Nome exibido no pagamento"></div>
+        <div><label for="pixReceiverCity">Cidade do recebedor</label><input id="pixReceiverCity" maxlength="40" placeholder="Ex.: VITORIA"></div>
+        <div class="full"><label><input id="pixEnabled" type="checkbox" style="display:inline-block;width:auto;min-height:0;margin-right:8px">Marcar esta configuração como ativa para uso futuro</label></div>
+      </div>
+      <div class="toolbar" style="margin-top:16px"><button id="savePixConfig" class="btn btn-gold" type="submit">Salvar configuração PIX</button><button id="reloadPixConfig" class="btn" type="button">Recarregar dados salvos</button></div>
+      <div id="pixConfigFeedback" class="feedback"></div>
+    </form>
+  </div>
+</section>
+
 <section id="page-sorteios" class="admin-page hidden">
   <div class="page-head">
     <div>
@@ -499,6 +521,7 @@ function showPage(name){
   if(name==="indicadores")carregarAcoesNosSelects().then(()=>{preencherSelectIndicadores(); carregarIndicadores();});
   if(name==="rodadas")carregarAcoesNosSelects().then(()=>{preencherSelectRodadas(); carregarRodadasCotas();});
   if(name==="sorteios")carregarAcoesNosSelects().then(()=>{preencherSelectSorteios(); carregarSorteiosFederais();});
+  if(name==="pix")carregarConfiguracaoPix();
 }
 document.querySelectorAll(".nav-btn").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
 document.querySelectorAll("[data-goto]").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.goto)));
@@ -1665,6 +1688,39 @@ $("calculateFederalWinner")?.addEventListener("click",async()=>{
 });
 $("resetFederalDraw")?.addEventListener("click",resetFormularioSorteio);
 $("refreshFederalDraws")?.addEventListener("click",carregarSorteiosFederais);
+
+async function carregarConfiguracaoPix(){
+  feedback("pixConfigFeedback","Carregando configuração…");
+  try{
+    await usuarioAdmin();
+    const {data,error}=await db.from("configuracao_pagamento_pix").select("id,banco,titular,tipo_conta,tipo_chave,chave_pix,nome_recebedor,cidade_recebedor,ativo,atualizado_em").eq("id",1).maybeSingle();
+    if(error)throw error;
+    const d=data||{};
+    $("pixBank").value=d.banco||"";
+    $("pixHolder").value=d.titular||"";
+    $("pixAccountType").value=d.tipo_conta||"";
+    $("pixKeyType").value=d.tipo_chave||"";
+    $("pixKey").value=d.chave_pix||"";
+    $("pixReceiverName").value=d.nome_recebedor||"";
+    $("pixReceiverCity").value=d.cidade_recebedor||"";
+    $("pixEnabled").checked=!!d.ativo;
+    feedback("pixConfigFeedback",data?"Configuração carregada. A chave PIX é exibida somente no painel administrativo.":"Nenhuma configuração salva ainda.",data?"success":"");
+  }catch(e){feedback("pixConfigFeedback",(e.message||"Falha ao carregar.")+". Se a tabela ainda não existe, execute o SQL de configuração PIX fornecido junto com este arquivo.","error");}
+}
+$("pixConfigForm")?.addEventListener("submit",async e=>{
+  e.preventDefault();
+  const b=$("savePixConfig");b.disabled=true;feedback("pixConfigFeedback","Salvando configuração…");
+  try{
+    await usuarioAdmin();
+    const payload={id:1,banco:$("pixBank").value.trim()||null,titular:$("pixHolder").value.trim()||null,tipo_conta:$("pixAccountType").value||null,tipo_chave:$("pixKeyType").value,chave_pix:$("pixKey").value.trim(),nome_recebedor:$("pixReceiverName").value.trim()||null,cidade_recebedor:$("pixReceiverCity").value.trim()||null,ativo:$("pixEnabled").checked,atualizado_em:new Date().toISOString(),atualizado_por:ADMIN_UID};
+    if(!payload.tipo_chave||!payload.chave_pix)throw new Error("Selecione o tipo e informe a chave PIX.");
+    const {error}=await db.from("configuracao_pagamento_pix").upsert(payload,{onConflict:"id"});
+    if(error)throw error;
+    feedback("pixConfigFeedback","Configuração PIX salva no Supabase. A geração de QR Code/cobrança e a confirmação automática ainda dependem da integração de pagamentos.","success");
+  }catch(e){feedback("pixConfigFeedback",e.message||"Não foi possível salvar a configuração.","error");}
+  finally{b.disabled=false;}
+});
+$("reloadPixConfig")?.addEventListener("click",carregarConfiguracaoPix);
 
 verificarSessao();
 })();
