@@ -173,6 +173,7 @@ td{line-height:1.5}
   <button class="nav-btn" data-page="premiados">🏆 Bilhetes premiados</button>
   <button class="nav-btn" data-page="indicadores">📊 Indicadores por ação</button>
   <button class="nav-btn" data-page="rodadas">🎯 Promoções por rodada</button>
+  <button class="nav-btn" data-page="sorteios">🎟️ Sorteios Loteria Federal</button>
 </aside>
 <main><div class="page">
 
@@ -337,6 +338,82 @@ td{line-height:1.5}
     <div id="cotaRoundsFeedback" class="feedback"></div>
     <div id="cotaRoundsList" class="table-wrap" style="margin-top:14px"><p class="muted" style="padding:12px">Selecione uma ação para ver as rodadas.</p></div>
   </div>
+
+</section>
+
+<section id="page-sorteios" class="admin-page hidden">
+  <div class="page-head">
+    <div>
+      <h1>🎟️ Sorteios pela Loteria Federal</h1>
+      <p>Cadastre datas, resultado oficial e controle o que será divulgado no site público.</p>
+    </div>
+    <button id="refreshFederalDraws" class="btn" type="button">Atualizar histórico</button>
+  </div>
+
+  <div class="panel section">
+    <div class="section-head"><h2 id="federalFormTitle">Cadastrar sorteio</h2></div>
+    <p class="muted small">Confira o resultado na fonte oficial da Loteria Federal antes de marcar como concluído ou divulgado. Os dados completos do ganhador ficam restritos ao painel administrativo.</p>
+    <input id="federalDrawId" type="hidden">
+    <div class="form-grid">
+      <div>
+        <label for="federalDrawAction">Ação relacionada</label>
+        <select id="federalDrawAction" required></select>
+      </div>
+      <div>
+        <label for="federalDrawDate">Data e hora do sorteio</label>
+        <input id="federalDrawDate" type="datetime-local">
+      </div>
+      <div>
+        <label for="federalExtraction">Extração da Loteria Federal</label>
+        <input id="federalExtraction" type="text" maxlength="100" placeholder="Ex.: extração nº 5xxx">
+      </div>
+      <div>
+        <label for="federalOfficialResult">Resultado oficial conferido</label>
+        <input id="federalOfficialResult" type="text" maxlength="200" placeholder="Registre os números oficiais consultados">
+      </div>
+      <div>
+        <label for="federalWinningNumber">Número vencedor da ação</label>
+        <input id="federalWinningNumber" type="text" maxlength="30" placeholder="Número/cota contemplada">
+      </div>
+      <div>
+        <label for="federalWinnerName">Nome completo do ganhador (somente painel)</label>
+        <input id="federalWinnerName" type="text" maxlength="200" placeholder="Nome para controle administrativo">
+      </div>
+      <div>
+        <label for="federalPrize">Prêmio</label>
+        <input id="federalPrize" type="text" maxlength="250" placeholder="Descrição do prêmio">
+      </div>
+      <div>
+        <label for="federalDrawStatus">Status</label>
+        <select id="federalDrawStatus">
+          <option value="pendente">Pendente</option>
+          <option value="concluido">Concluído</option>
+          <option value="cancelado">Cancelado</option>
+        </select>
+      </div>
+    </div>
+    <div class="toolbar" style="margin-top:14px;gap:18px;flex-wrap:wrap">
+      <label style="display:flex;align-items:center;gap:9px">
+        <input id="federalShowCountdown" type="checkbox" style="width:auto">
+        Mostrar contagem regressiva no site público
+      </label>
+      <label style="display:flex;align-items:center;gap:9px">
+        <input id="federalDisclosed" type="checkbox" style="width:auto">
+        Autorizar divulgação pública do resultado
+      </label>
+    </div>
+    <div class="toolbar" style="margin-top:14px;gap:8px;flex-wrap:wrap">
+      <button id="saveFederalDraw" class="btn btn-gold" type="button">Salvar sorteio</button>
+      <button id="resetFederalDraw" class="btn" type="button">Limpar formulário</button>
+    </div>
+    <div id="federalDrawFeedback" class="feedback" role="status" aria-live="polite"></div>
+  </div>
+
+  <div class="panel section">
+    <div class="section-head"><h2>Histórico de sorteios</h2></div>
+    <div id="federalDrawHistory" class="table-wrap"><p class="muted">Carregando histórico…</p></div>
+  </div>
+</section>
 </section>
 </div></main></div></div>
 
@@ -415,6 +492,7 @@ function showPage(name){
   if(name==="premiados")carregarAcoesNosSelects().then(()=>carregarBilhetesPremiados());
   if(name==="indicadores")carregarAcoesNosSelects().then(()=>{preencherSelectIndicadores(); carregarIndicadores();});
   if(name==="rodadas")carregarAcoesNosSelects().then(()=>{preencherSelectRodadas(); carregarRodadasCotas();});
+  if(name==="sorteios")carregarAcoesNosSelects().then(()=>{preencherSelectSorteios(); carregarSorteiosFederais();});
 }
 document.querySelectorAll(".nav-btn").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
 document.querySelectorAll("[data-goto]").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.goto)));
@@ -1401,6 +1479,150 @@ $("clearCotaDeadlines")?.addEventListener("click",async()=>{
   }catch(error){feedback("cotaDeadlineFeedback",error.message||"Não foi possível excluir os prazos.","error");}
   finally{button.disabled=false;}
 });
+
+
+// -------------------------
+// Sorteios pela Loteria Federal
+// -------------------------
+function preencherSelectSorteios(){
+  const select=$("federalDrawAction");
+  if(!select)return;
+  const previous=select.value;
+  select.innerHTML='<option value="">Selecione uma ação</option>'+state.actions.map(a=>
+    `<option value="${escapeHtml(a.id)}">${escapeHtml(a.nome||"Ação sem nome")}</option>`
+  ).join("");
+  if(state.actions.some(a=>String(a.id)===previous))select.value=previous;
+}
+function resetFormularioSorteio(){
+  $("federalDrawId").value="";
+  $("federalFormTitle").textContent="Cadastrar sorteio";
+  $("federalDrawAction").value="";
+  $("federalDrawDate").value="";
+  $("federalExtraction").value="";
+  $("federalOfficialResult").value="";
+  $("federalWinningNumber").value="";
+  $("federalWinnerName").value="";
+  $("federalPrize").value="";
+  $("federalDrawStatus").value="pendente";
+  $("federalShowCountdown").checked=false;
+  $("federalDisclosed").checked=false;
+  $("saveFederalDraw").textContent="Salvar sorteio";
+  feedback("federalDrawFeedback","");
+}
+function dataHoraInput(valor){
+  if(!valor)return "";
+  const d=new Date(valor);
+  if(Number.isNaN(d.getTime()))return "";
+  const local=new Date(d.getTime()-d.getTimezoneOffset()*60000);
+  return local.toISOString().slice(0,16);
+}
+function dataHoraBR(valor){
+  if(!valor)return "Não definida";
+  const d=new Date(valor);
+  return Number.isNaN(d.getTime())?"Não definida":d.toLocaleString("pt-BR");
+}
+function statusSorteioLabel(status){
+  return ({pendente:"Pendente",concluido:"Concluído",cancelado:"Cancelado"})[status]||status||"Pendente";
+}
+async function carregarSorteiosFederais(){
+  const container=$("federalDrawHistory");
+  if(!container)return;
+  container.innerHTML='<p class="muted">Carregando histórico…</p>';
+  try{
+    const {data,error}=await db.from("historico_sorteios")
+      .select("id,acao_id,nome_acao,data_sorteio,loteria_extracao,resultado_oficial,numero_ganhador,nome_ganhador,premio,status,divulgado,mostrar_contagem,created_at,atualizado_em")
+      .order("data_sorteio",{ascending:false,nullsFirst:false})
+      .order("created_at",{ascending:false});
+    if(error)throw error;
+    const rows=data||[];
+    if(!rows.length){
+      container.innerHTML='<p class="muted" style="padding:12px">Nenhum sorteio cadastrado ainda.</p>';
+      return;
+    }
+    container.innerHTML=`<table><thead><tr><th>Ação</th><th>Data</th><th>Status</th><th>Número vencedor</th><th>Divulgação</th><th>Contagem</th><th>Ações</th></tr></thead><tbody>${
+      rows.map(r=>`<tr>
+        <td><strong>${escapeHtml(r.nome_acao||"Ação")}</strong><div class="small muted">${escapeHtml(r.premio||"Prêmio não informado")}</div></td>
+        <td>${escapeHtml(dataHoraBR(r.data_sorteio))}</td>
+        <td>${escapeHtml(statusSorteioLabel(r.status))}</td>
+        <td>${escapeHtml(r.numero_ganhador||"—")}</td>
+        <td>${r.divulgado?"Autorizada":"Oculta"}</td>
+        <td>${r.mostrar_contagem?"Ativada":"Desativada"}</td>
+        <td><div class="toolbar" style="gap:6px;flex-wrap:wrap">
+          <button class="btn btn-small" type="button" data-edit-federal="${escapeHtml(r.id)}">Editar</button>
+        </div></td>
+      </tr>
+      <tr><td colspan="7"><span class="small muted">Extração: ${escapeHtml(r.loteria_extracao||"—")} · Resultado oficial registrado: ${escapeHtml(r.resultado_oficial||"—")} · Ganhador (restrito ao painel): ${escapeHtml(r.nome_ganhador||"Não informado")}</span></td></tr>`
+    ).join("")}</tbody></table>`;
+    container.querySelectorAll("[data-edit-federal]").forEach(btn=>btn.addEventListener("click",()=>{
+      const row=rows.find(r=>String(r.id)===btn.dataset.editFederal);
+      if(!row)return;
+      $("federalDrawId").value=row.id;
+      $("federalFormTitle").textContent="Editar sorteio";
+      $("federalDrawAction").value=row.acao_id||"";
+      $("federalDrawDate").value=dataHoraInput(row.data_sorteio);
+      $("federalExtraction").value=row.loteria_extracao||"";
+      $("federalOfficialResult").value=row.resultado_oficial||"";
+      $("federalWinningNumber").value=row.numero_ganhador||"";
+      $("federalWinnerName").value=row.nome_ganhador||"";
+      $("federalPrize").value=row.premio||"";
+      $("federalDrawStatus").value=row.status||"pendente";
+      $("federalShowCountdown").checked=!!row.mostrar_contagem;
+      $("federalDisclosed").checked=!!row.divulgado;
+      $("saveFederalDraw").textContent="Salvar alterações";
+      feedback("federalDrawFeedback","Sorteio carregado para edição.");
+      $("federalFormTitle").scrollIntoView({behavior:"smooth",block:"center"});
+    }));
+  }catch(error){
+    container.innerHTML='<p class="error" style="padding:12px">Não foi possível carregar o histórico.</p>';
+    feedback("federalDrawFeedback","Erro ao consultar historico_sorteios: "+(error.message||"verifique as permissões da tabela."),"error");
+  }
+}
+$("saveFederalDraw")?.addEventListener("click",async()=>{
+  const button=$("saveFederalDraw");
+  button.disabled=true;
+  try{
+    await usuarioAdmin();
+    const actionId=$("federalDrawAction").value;
+    if(!actionId)throw new Error("Selecione a ação relacionada.");
+    const action=state.actions.find(a=>String(a.id)===String(actionId));
+    if(!action)throw new Error("A ação selecionada não foi encontrada. Atualize a lista de ações.");
+    const drawDate=$("federalDrawDate").value?new Date($("federalDrawDate").value).toISOString():null;
+    const status=$("federalDrawStatus").value;
+    const disclosed=$("federalDisclosed").checked;
+    const winningNumber=$("federalWinningNumber").value.trim();
+    const officialResult=$("federalOfficialResult").value.trim();
+    if(disclosed && status!=="concluido")throw new Error("Para autorizar a divulgação, marque o sorteio como Concluído depois de conferir o resultado oficial.");
+    if(disclosed && (!officialResult || !winningNumber))throw new Error("Para divulgar, preencha o resultado oficial conferido e o número vencedor.");
+    const payload={
+      acao_id:actionId,
+      nome_acao:action.nome||"Ação",
+      data_sorteio:drawDate,
+      loteria_extracao:$("federalExtraction").value.trim()||null,
+      resultado_oficial:officialResult||null,
+      numero_ganhador:winningNumber||null,
+      nome_ganhador:$("federalWinnerName").value.trim()||null,
+      premio:$("federalPrize").value.trim()||action.premio||null,
+      status,
+      divulgado:disclosed,
+      mostrar_contagem:$("federalShowCountdown").checked,
+      atualizado_em:new Date().toISOString()
+    };
+    const id=$("federalDrawId").value;
+    const result=id
+      ?await db.from("historico_sorteios").update(payload).eq("id",id).select("id").single()
+      :await db.from("historico_sorteios").insert(payload).select("id").single();
+    if(result.error)throw result.error;
+    feedback("federalDrawFeedback",id?"Sorteio atualizado com sucesso.":"Sorteio cadastrado com sucesso.");
+    resetFormularioSorteio();
+    await carregarSorteiosFederais();
+  }catch(error){
+    feedback("federalDrawFeedback",error.message||"Não foi possível salvar o sorteio.","error");
+  }finally{
+    button.disabled=false;
+  }
+});
+$("resetFederalDraw")?.addEventListener("click",resetFormularioSorteio);
+$("refreshFederalDraws")?.addEventListener("click",carregarSorteiosFederais);
 
 verificarSessao();
 })();
